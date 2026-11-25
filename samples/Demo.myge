@@ -1,0 +1,383 @@
+{
+  "formatVersion": 1,
+  "project": {
+    "name": "Demo Makine",
+    "company": "MYG TECH",
+    "revision": "A",
+    "machineName": "Demo Makine",
+    "projectNumber": "MYG-2026-001",
+    "customer": "Örnek Müşteri",
+    "preparedBy": "M. Gültekin",
+    "checkedBy": "-",
+    "date": "25.11.2026",
+    "logoPath": ""
+  },
+  "pages": [
+    {
+      "id": "page-5c6d53a4",
+      "name": "Kapak",
+      "type": "cover",
+      "format": "a3",
+      "orientation": "landscape",
+      "width": 420,
+      "height": 297,
+      "titleBlock": {},
+      "objects": []
+    },
+    {
+      "id": "page-6dea5c8e",
+      "name": "Güç Devresi",
+      "type": "schematic",
+      "format": "a3",
+      "orientation": "landscape",
+      "width": 420,
+      "height": 297,
+      "titleBlock": {},
+      "objects": [
+        {
+          "kind": "device",
+          "reference": "-Q1",
+          "connectionPoints": [
+            {
+              "id": "1",
+              "x": -10,
+              "y": -10,
+              "direction": "up"
+            },
+            {
+              "id": "2",
+              "x": -10,
+              "y": 10,
+              "direction": "down"
+            },
+            {
+              "id": "3",
+              "x": 0,
+              "y": -10,
+              "direction": "up"
+            },
+            {
+              "id": "4",
+              "x": 0,
+              "y": 10,
+              "direction": "down"
+            },
+            {
+              "id": "5",
+              "x": 10,
+              "y": -10,
+              "direction": "up"
+            },
+            {
+              "id": "6",
+              "x": 10,
+              "y": 10,
+              "direction": "down"
+            }
+          ],
+          "symbolId": "iec.mcb",
+          "x": 80,
+          "y": 60,
+          "rotation": 0,
+          "scale": 1,
+          "id": "013333ec-2706-41a4-ac82-8ab00ba84f88"
+        },
+        {
+          "kind": "device",
+          "reference": "-K1",
+          "connectionPoints": [
+            {
+              "id": "1",
+              "x": -10,
+              "y": -10,
+              "direction": "up"
+            },
+            {
+              "id": "2",
+              "x": -10,
+              "y": 10,
+              "direction": "down"
+            },
+            {
+              "id": "3",
+              "x": 0,
+              "y": -10,
+              "direction": "up"
+            },
+            {
+              "id": "4",
+              "x": 0,
+              "y": 10,
+              "direction": "down"
+            },
+            {
+              "id": "5",
+              "x": 10,
+              "y": -10,
+              "direction": "up"
+            },
+            {
+              "id": "6",
+              "x": 10,
+              "y": 10,
+              "direction": "down"
+            }
+          ],
+          "symbolId": "iec.contactor.3p",
+          "x": 80,
+          "y": 110,
+          "rotation": 0,
+          "scale": 1,
+          "id": "3228229b-68a0-4bd6-b886-92c0a9c361ce"
+        },
+        {
+          "kind": "device",
+          "reference": "-M1",
+          "connectionPoints": [
+            {
+              "id": "U1",
+              "x": -10,
+              "y": -10,
+              "direction": "up"
+            },
+            {
+              "id": "V1",
+              "x": 0,
+              "y": -10,
+              "direction": "up"
+            },
+            {
+              "id": "W1",
+              "x": 10,
+              "y": -10,
+              "direction": "up"
+            }
+          ],
+          "symbolId": "iec.motor.3ph",
+          "x": 80,
+          "y": 170,
+          "rotation": 0,
+          "scale": 1,
+          "id": "0242b4ad-1eef-4952-a5a1-7de73b2c128f"
+        },
+        {
+          "kind": "device",
+          "reference": "-F1",
+          "connectionPoints": [
+            {
+              "id": "1",
+              "x": 0,
+              "y": -10,
+              "direction": "up"
+            },
+            {
+              "id": "2",
+              "x": 0,
+              "y": 10,
+              "direction": "down"
+            }
+          ],
+          "symbolId": "iec.fuse",
+          "x": 250,
+          "y": 50,
+          "rotation": 0,
+          "scale": 1,
+          "id": "89ed8048-319f-4597-91de-27e6ce62a77d"
+        },
+        {
+          "kind": "device",
+          "reference": "-S1",
+          "connectionPoints": [
+            {
+              "id": "11",
+              "x": 0,
+              "y": -10,
+              "direction": "up"
+            },
+            {
+              "id": "12",
+              "x": 0,
+              "y": 10,
+              "direction": "down"
+            }
+          ],
+          "symbolId": "iec.estop",
+          "x": 250,
+          "y": 80,
+          "rotation": 0,
+          "scale": 1,
+          "id": "21d16b07-71a6-4564-a8e8-529b48c34cf5"
+        },
+        {
+          "kind": "device",
+          "reference": "-S2",
+          "connectionPoints": [
+            {
+              "id": "13",
+              "x": 0,
+              "y": -10,
+              "direction": "up"
+            },
+            {
+              "id": "14",
+              "x": 0,
+              "y": 10,
+              "direction": "down"
+            }
+          ],
+          "symbolId": "iec.pushbutton.no",
+          "x": 250,
+          "y": 110,
+          "rotation": 0,
+          "scale": 1,
+          "id": "e41cb002-d390-4b26-8590-bd0e09b42dfb"
+        },
+        {
+          "kind": "junction",
+          "x": 250,
+          "y": 130,
+          "size": 1.2,
+          "visible": true,
+          "id": "31a2d64c-3f87-4c8f-92ba-9dcaf9b94b23"
+        },
+        {
+          "kind": "device",
+          "reference": "-K1",
+          "connectionPoints": [
+            {
+              "id": "A1",
+              "x": 0,
+              "y": -10,
+              "direction": "up"
+            },
+            {
+              "id": "A2",
+              "x": 0,
+              "y": 10,
+              "direction": "down"
+            }
+          ],
+          "symbolId": "iec.coil",
+          "x": 250,
+          "y": 150,
+          "rotation": 0,
+          "scale": 1,
+          "id": "a8b37d89-f211-448f-b9af-c5ff640202c8"
+        },
+        {
+          "kind": "device",
+          "reference": "-H1",
+          "connectionPoints": [
+            {
+              "id": "X1",
+              "x": 0,
+              "y": -10,
+              "direction": "up"
+            },
+            {
+              "id": "X2",
+              "x": 0,
+              "y": 10,
+              "direction": "down"
+            }
+          ],
+          "symbolId": "iec.lamp",
+          "x": 290,
+          "y": 150,
+          "rotation": 0,
+          "scale": 1,
+          "id": "28669b37-1557-4ae4-bd6b-885f8b363388"
+        },
+        {
+          "kind": "junction",
+          "x": 290,
+          "y": 130,
+          "size": 1.2,
+          "visible": true,
+          "id": "63b18725-4a74-496b-8113-74006323d04d"
+        },
+        {
+          "kind": "device",
+          "reference": "-B1",
+          "connectionPoints": [
+            {
+              "id": "BN",
+              "x": 0,
+              "y": -10,
+              "direction": "up"
+            },
+            {
+              "id": "BU",
+              "x": 0,
+              "y": 10,
+              "direction": "down"
+            },
+            {
+              "id": "BK",
+              "x": 10,
+              "y": 0,
+              "direction": "right"
+            }
+          ],
+          "symbolId": "iec.sensor.pnp",
+          "x": 340,
+          "y": 110,
+          "rotation": 0,
+          "scale": 1,
+          "id": "df996eb1-4442-409b-a9a7-2ffdd7dc6702"
+        },
+        {
+          "kind": "device",
+          "reference": "-X1",
+          "connectionPoints": [
+            {
+              "id": "1",
+              "x": 0,
+              "y": -5,
+              "direction": "up"
+            },
+            {
+              "id": "2",
+              "x": 0,
+              "y": 5,
+              "direction": "down"
+            }
+          ],
+          "symbolId": "iec.terminal",
+          "x": 340,
+          "y": 150,
+          "rotation": 0,
+          "scale": 1,
+          "id": "843dd4f5-f2ba-455f-9482-f348fc35c636"
+        },
+        {
+          "kind": "text",
+          "x": 60,
+          "y": 30,
+          "text": "Güç devresi",
+          "height": 4,
+          "rotation": 0,
+          "id": "7bf6bb93-85db-4a23-b9da-2a2224f948d5"
+        },
+        {
+          "kind": "text",
+          "x": 230,
+          "y": 30,
+          "text": "Kumanda devresi 24VDC",
+          "height": 4,
+          "rotation": 0,
+          "id": "fa82c365-e4ed-472b-a7e5-afa3450fb62b"
+        },
+        {
+          "kind": "rectangle",
+          "x": 220,
+          "y": 25,
+          "width": 150,
+          "height": 150,
+          "thickness": 0.35,
+          "id": "4ff28c9a-e8ee-4113-a49f-0e6902de1d6a"
+        }
+      ]
+    }
+  ]
+}

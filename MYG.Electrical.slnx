@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/MYG.Electrical.App/MYG.Electrical.App.csproj" />
+    <Project Path="src/MYG.Electrical.Core/MYG.Electrical.Core.csproj" />
+    <Project Path="src/MYG.Electrical.Drawing/MYG.Electrical.Drawing.csproj" />
+    <Project Path="src/MYG.Electrical.Infrastructure/MYG.Electrical.Infrastructure.csproj" />
+    <Project Path="src/MYG.Electrical.Symbols/MYG.Electrical.Symbols.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/MYG.Electrical.Core.Tests/MYG.Electrical.Core.Tests.csproj" />
+    <Project Path="tests/MYG.Electrical.Drawing.Tests/MYG.Electrical.Drawing.Tests.csproj" />
+    <Project Path="tests/MYG.Electrical.Serialization.Tests/MYG.Electrical.Serialization.Tests.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,349 @@
+<Window x:Class="MYG.Electrical.App.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:MYG.Electrical.App.ViewModels"
+        xmlns:conv="clr-namespace:MYG.Electrical.App.Converters"
+        xmlns:draw="clr-namespace:MYG.Electrical.Drawing;assembly=MYG.Electrical.Drawing"
+        xmlns:sym="clr-namespace:MYG.Electrical.Core.Symbols;assembly=MYG.Electrical.Core"
+        Title="{Binding Title}"
+        Width="1600" Height="950" MinWidth="1000" MinHeight="600"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource AnthraciteBrush}"
+        Foreground="{StaticResource TextBrush}">
+
+    <Window.Resources>
+        <conv:EnumEqualsConverter x:Key="EnumEquals" />
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+
+        <!-- Özellik satırı şablonları -->
+        <DataTemplate DataType="{x:Type vm:SectionRow}">
+            <TextBlock Text="{Binding Label}" Style="{StaticResource PanelHeader}" Margin="0,12,0,4" />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:TextRow}">
+            <Grid Margin="0,2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Label}" VerticalAlignment="Center" Foreground="{StaticResource MutedTextBrush}" TextTrimming="CharacterEllipsis" />
+                <TextBox Grid.Column="1" Text="{Binding Value, UpdateSourceTrigger=LostFocus}" IsReadOnly="{Binding IsReadOnly}" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:NumberRow}">
+            <Grid Margin="0,2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Label}" VerticalAlignment="Center" Foreground="{StaticResource MutedTextBrush}" />
+                <TextBox Grid.Column="1" Text="{Binding Value, UpdateSourceTrigger=LostFocus}" IsReadOnly="{Binding IsReadOnly}" HorizontalContentAlignment="Right" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ChoiceRow}">
+            <Grid Margin="0,2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Label}" VerticalAlignment="Center" Foreground="{StaticResource MutedTextBrush}" />
+                <ComboBox Grid.Column="1" ItemsSource="{Binding Options}" SelectedItem="{Binding Value}" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:BoolRow}">
+            <CheckBox Content="{Binding Label}" IsChecked="{Binding Value}" Margin="100,4,0,4" />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:FileRow}">
+            <Grid Margin="0,2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Label}" VerticalAlignment="Center" Foreground="{StaticResource MutedTextBrush}" />
+                <TextBox Grid.Column="1" Text="{Binding Value, UpdateSourceTrigger=LostFocus}" />
+                <Button Grid.Column="2" Content="…" Command="{Binding BrowseCommand}" Style="{StaticResource ToolButton}" ToolTip="Gözat" />
+                <Button Grid.Column="3" Content="✕" Command="{Binding ClearCommand}" Style="{StaticResource ToolButton}" ToolTip="Temizle" />
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding Key="N" Modifiers="Control" Command="{Binding NewCommand}" />
+        <KeyBinding Key="O" Modifiers="Control" Command="{Binding OpenCommand}" />
+        <KeyBinding Key="S" Modifiers="Control" Command="{Binding SaveCommand}" />
+        <KeyBinding Key="S" Modifiers="Control+Shift" Command="{Binding SaveAsCommand}" />
+        <KeyBinding Key="P" Modifiers="Control" Command="{Binding ExportPdfCommand}" />
+        <KeyBinding Key="Z" Modifiers="Control" Command="{Binding UndoCommand}" />
+        <KeyBinding Key="Y" Modifiers="Control" Command="{Binding RedoCommand}" />
+        <KeyBinding Key="C" Modifiers="Control" Command="{Binding CopyCommand}" />
+        <KeyBinding Key="X" Modifiers="Control" Command="{Binding CutCommand}" />
+        <KeyBinding Key="V" Modifiers="Control" Command="{Binding PasteCommand}" />
+        <KeyBinding Key="A" Modifiers="Control" Command="{Binding SelectAllCommand}" />
+        <KeyBinding Key="Add" Modifiers="Control" Command="{Binding ZoomInCommand}" />
+        <KeyBinding Key="Subtract" Modifiers="Control" Command="{Binding ZoomOutCommand}" />
+    </Window.InputBindings>
+
+    <DockPanel>
+        <!-- ===== Üst menü ===== -->
+        <Menu DockPanel.Dock="Top" Background="{StaticResource AnthraciteBrush}">
+            <MenuItem Header="_Dosya">
+                <MenuItem Header="_Yeni proje" Command="{Binding NewCommand}" InputGestureText="Ctrl+N" />
+                <MenuItem Header="_Aç…" Command="{Binding OpenCommand}" InputGestureText="Ctrl+O" />
+                <Separator />
+                <MenuItem Header="_Kaydet" Command="{Binding SaveCommand}" InputGestureText="Ctrl+S" />
+                <MenuItem Header="_Farklı kaydet…" Command="{Binding SaveAsCommand}" InputGestureText="Ctrl+Shift+S" />
+                <Separator />
+                <MenuItem Header="Tüm projeyi _PDF'e aktar…" Command="{Binding ExportPdfCommand}" InputGestureText="Ctrl+P" />
+                <MenuItem Header="Aktif sayfayı PDF'e aktar…" Command="{Binding ExportPagePdfCommand}" />
+                <Separator />
+                <MenuItem Header="Çı_kış" Click="OnExitClick" InputGestureText="Alt+F4" />
+            </MenuItem>
+            <MenuItem Header="_Düzen">
+                <MenuItem Header="Geri al" Command="{Binding UndoCommand}" InputGestureText="Ctrl+Z" />
+                <MenuItem Header="İleri al" Command="{Binding RedoCommand}" InputGestureText="Ctrl+Y" />
+                <Separator />
+                <MenuItem Header="Kes" Command="{Binding CutCommand}" InputGestureText="Ctrl+X" />
+                <MenuItem Header="Kopyala" Command="{Binding CopyCommand}" InputGestureText="Ctrl+C" />
+                <MenuItem Header="Yapıştır" Command="{Binding PasteCommand}" InputGestureText="Ctrl+V" />
+                <MenuItem Header="Sil" Command="{Binding DeleteCommand}" InputGestureText="Del" />
+                <Separator />
+                <MenuItem Header="Tümünü seç" Command="{Binding SelectAllCommand}" InputGestureText="Ctrl+A" />
+                <MenuItem Header="Döndür (90°)" Command="{Binding RotateCommand}" InputGestureText="R" />
+            </MenuItem>
+            <MenuItem Header="_Görünüm">
+                <MenuItem Header="Yakınlaştır" Command="{Binding ZoomInCommand}" InputGestureText="Ctrl++" />
+                <MenuItem Header="Uzaklaştır" Command="{Binding ZoomOutCommand}" InputGestureText="Ctrl+-" />
+                <MenuItem Header="Sayfaya sığdır" Command="{Binding ZoomFitCommand}" InputGestureText="F" />
+                <Separator />
+                <MenuItem Header="Grid" IsCheckable="True" IsChecked="{Binding GridVisible}" />
+                <MenuItem Header="Snap (grid'e yapış)" IsCheckable="True" IsChecked="{Binding SnapEnabled}" />
+                <MenuItem Header="Bağlantı noktası işaretleri" IsCheckable="True" IsChecked="{Binding ShowConnectionPoints}" />
+            </MenuItem>
+            <MenuItem Header="_Ekle">
+                <MenuItem Header="Sembol (kütüphaneden seçin)" Command="{Binding SetToolCommand}" CommandParameter="Symbol" />
+                <MenuItem Header="Bağlantı noktası (junction)" Command="{Binding SetToolCommand}" CommandParameter="Junction" InputGestureText="J" />
+                <MenuItem Header="Metin" Command="{Binding SetToolCommand}" CommandParameter="Text" InputGestureText="T" />
+            </MenuItem>
+            <MenuItem Header="Çi_zim">
+                <MenuItem Header="Seç" Command="{Binding SetToolCommand}" CommandParameter="Select" InputGestureText="S" />
+                <MenuItem Header="Çizgi" Command="{Binding SetToolCommand}" CommandParameter="Line" InputGestureText="L" />
+                <MenuItem Header="Dikdörtgen" Command="{Binding SetToolCommand}" CommandParameter="Rectangle" />
+            </MenuItem>
+            <MenuItem Header="_Sayfa">
+                <MenuItem Header="Yeni şema sayfası" Command="{Binding AddSchematicPageCommand}" />
+                <MenuItem Header="Yeni kapak sayfası" Command="{Binding AddCoverPageCommand}" />
+                <Separator />
+                <MenuItem Header="Yukarı taşı" Command="{Binding MovePageUpCommand}" />
+                <MenuItem Header="Aşağı taşı" Command="{Binding MovePageDownCommand}" />
+                <MenuItem Header="Sonraki sayfa" Command="{Binding NextPageCommand}" InputGestureText="PgDn" />
+                <MenuItem Header="Önceki sayfa" Command="{Binding PreviousPageCommand}" InputGestureText="PgUp" />
+                <Separator />
+                <MenuItem Header="Aktif sayfayı sil" Command="{Binding DeletePageCommand}" />
+            </MenuItem>
+            <MenuItem Header="_Araçlar">
+                <MenuItem Header="Log klasörünü aç" Command="{Binding OpenLogFolderCommand}" />
+            </MenuItem>
+            <MenuItem Header="_Yardım">
+                <MenuItem Header="Hakkında / Kısayollar" Command="{Binding AboutCommand}" />
+            </MenuItem>
+        </Menu>
+
+        <!-- ===== Araç çubuğu ===== -->
+        <Border DockPanel.Dock="Top" Background="{StaticResource PanelHeaderBrush}" BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1">
+            <StackPanel Orientation="Horizontal" Margin="6,3">
+                <ToggleButton Style="{StaticResource ToolToggle}" ToolTip="Seç (S)"
+                              IsChecked="{Binding ActiveTool, Converter={StaticResource EnumEquals}, ConverterParameter=Select}">
+                    <Path Style="{StaticResource ToolIcon}" Fill="{Binding Stroke, RelativeSource={RelativeSource Self}}" Data="M0,0 L0,12 L3.5,9 L6,14 L8,13 L5.5,8 L10,8 Z" />
+                </ToggleButton>
+                <ToggleButton Style="{StaticResource ToolToggle}" ToolTip="Çizgi (L)"
+                              IsChecked="{Binding ActiveTool, Converter={StaticResource EnumEquals}, ConverterParameter=Line}">
+                    <Path Style="{StaticResource ToolIcon}" Data="M1,13 L13,1" />
+                </ToggleButton>
+                <ToggleButton Style="{StaticResource ToolToggle}" ToolTip="Dikdörtgen"
+                              IsChecked="{Binding ActiveTool, Converter={StaticResource EnumEquals}, ConverterParameter=Rectangle}">
+                    <Path Style="{StaticResource ToolIcon}" Data="M1,3 H13 V11 H1 Z" />
+                </ToggleButton>
+                <ToggleButton Style="{StaticResource ToolToggle}" ToolTip="Metin (T)"
+                              IsChecked="{Binding ActiveTool, Converter={StaticResource EnumEquals}, ConverterParameter=Text}">
+                    <TextBlock Text="A" FontWeight="Bold" FontSize="15" Width="16" TextAlignment="Center" />
+                </ToggleButton>
+                <ToggleButton Style="{StaticResource ToolToggle}" ToolTip="Sembol ekle (kütüphaneden seçili sembol)"
+                              IsChecked="{Binding ActiveTool, Converter={StaticResource EnumEquals}, ConverterParameter=Symbol}">
+                    <Path Style="{StaticResource ToolIcon}" Data="M7,0 V4 M3,4 H11 V10 H3 Z M7,10 V14" />
+                </ToggleButton>
+                <ToggleButton Style="{StaticResource ToolToggle}" ToolTip="Bağlantı noktası ekle (J)"
+                              IsChecked="{Binding ActiveTool, Converter={StaticResource EnumEquals}, ConverterParameter=Junction}">
+                    <Path Style="{StaticResource ToolIcon}" Fill="{Binding Stroke, RelativeSource={RelativeSource Self}}"
+                          Data="M0,7 H14 M7,7 V14 M5,7 A2,2 0 1 1 9,7 A2,2 0 1 1 5,7 Z" />
+                </ToggleButton>
+
+                <Rectangle Width="1" Margin="6,4" Fill="{StaticResource BorderBrush}" />
+
+                <Button Style="{StaticResource ToolButton}" ToolTip="Sil (Del)" Command="{Binding DeleteCommand}">
+                    <Path Style="{StaticResource ToolIcon}" Data="M2,2 L12,12 M12,2 L2,12" />
+                </Button>
+                <Button Style="{StaticResource ToolButton}" ToolTip="Döndür 90° (R)" Command="{Binding RotateCommand}">
+                    <Path Style="{StaticResource ToolIcon}" Data="M12,7 A5,5 0 1 1 7,2 M7,2 L10,0 M7,2 L9,5" />
+                </Button>
+                <Button Style="{StaticResource ToolButton}" ToolTip="Geri al (Ctrl+Z)" Command="{Binding UndoCommand}">
+                    <Path Style="{StaticResource ToolIcon}" Data="M4,2 L1,5 L4,8 M1,5 H9 A4,4 0 0 1 9,13 H5" />
+                </Button>
+                <Button Style="{StaticResource ToolButton}" ToolTip="İleri al (Ctrl+Y)" Command="{Binding RedoCommand}">
+                    <Path Style="{StaticResource ToolIcon}" Data="M10,2 L13,5 L10,8 M13,5 H5 A4,4 0 0 0 5,13 H9" />
+                </Button>
+
+                <Rectangle Width="1" Margin="6,4" Fill="{StaticResource BorderBrush}" />
+
+                <Button Style="{StaticResource ToolButton}" ToolTip="Yakınlaştır" Command="{Binding ZoomInCommand}">
+                    <Path Style="{StaticResource ToolIcon}" Data="M6,1 A5,5 0 1 1 6,11 A5,5 0 1 1 6,1 Z M9.5,9.5 L14,14 M3.5,6 H8.5 M6,3.5 V8.5" />
+                </Button>
+                <Button Style="{StaticResource ToolButton}" ToolTip="Uzaklaştır" Command="{Binding ZoomOutCommand}">
+                    <Path Style="{StaticResource ToolIcon}" Data="M6,1 A5,5 0 1 1 6,11 A5,5 0 1 1 6,1 Z M9.5,9.5 L14,14 M3.5,6 H8.5" />
+                </Button>
+                <Button Style="{StaticResource ToolButton}" ToolTip="Sayfaya sığdır (F)" Command="{Binding ZoomFitCommand}">
+                    <Path Style="{StaticResource ToolIcon}" Data="M1,5 V1 H5 M9,1 H13 V5 M13,9 V13 H9 M5,13 H1 V9" />
+                </Button>
+
+                <Rectangle Width="1" Margin="6,4" Fill="{StaticResource BorderBrush}" />
+
+                <ToggleButton Style="{StaticResource ToolToggle}" ToolTip="Grid göster/gizle" IsChecked="{Binding GridVisible}">
+                    <Path Style="{StaticResource ToolIcon}" Data="M1,1 H13 V13 H1 Z M5,1 V13 M9,1 V13 M1,5 H13 M1,9 H13" StrokeThickness="1" />
+                </ToggleButton>
+                <ToggleButton Style="{StaticResource ToolToggle}" ToolTip="Snap aç/kapat" IsChecked="{Binding SnapEnabled}">
+                    <Path Style="{StaticResource ToolIcon}" Data="M3,1 V8 A4,4 0 0 0 11,8 V1 M3,4 H6 M8,4 H11" />
+                </ToggleButton>
+
+                <TextBlock Text="{Binding StatusMessage}" Style="{StaticResource StatusText}" Margin="16,0,0,0" />
+            </StackPanel>
+        </Border>
+
+        <!-- ===== Alt durum çubuğu ===== -->
+        <Border DockPanel.Dock="Bottom" Background="{StaticResource PanelHeaderBrush}" BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,0" Height="26">
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Right" Text="{Binding ActivePageText}" Style="{StaticResource StatusText}" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding CursorText}" Style="{StaticResource StatusText}" MinWidth="170" />
+                    <TextBlock Text="│" Style="{StaticResource StatusText}" />
+                    <TextBlock Text="{Binding ZoomText}" Style="{StaticResource StatusText}" MinWidth="60" />
+                    <TextBlock Text="│" Style="{StaticResource StatusText}" />
+                    <TextBlock Text="{Binding GridText}" Style="{StaticResource StatusText}" />
+                    <TextBlock Text="│" Style="{StaticResource StatusText}" />
+                    <TextBlock Text="{Binding WireCountText}" Style="{StaticResource StatusText}" />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- ===== Ana alan ===== -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="270" MinWidth="180" />
+                <ColumnDefinition Width="4" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="4" />
+                <ColumnDefinition Width="300" MinWidth="200" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Sol panel -->
+            <Grid Background="{StaticResource PanelBrush}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" MaxHeight="140" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="2*" MinHeight="90" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="3*" MinHeight="120" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="PROJE AĞACI" Style="{StaticResource PanelHeader}" />
+                <TreeView Grid.Row="1" ItemsSource="{Binding ProjectTree}" BorderThickness="0" Background="Transparent"
+                          SelectedItemChanged="OnTreeSelectedItemChanged">
+                    <TreeView.Resources>
+                        <HierarchicalDataTemplate DataType="{x:Type vm:ProjectNodeViewModel}" ItemsSource="{Binding Pages}">
+                            <TextBlock Text="{Binding Name}" FontWeight="SemiBold" />
+                        </HierarchicalDataTemplate>
+                        <DataTemplate DataType="{x:Type vm:PageItemViewModel}">
+                            <TextBlock Text="{Binding Display}" />
+                        </DataTemplate>
+                    </TreeView.Resources>
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="TreeViewItem" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+                            <Setter Property="IsExpanded" Value="True" />
+                        </Style>
+                    </TreeView.ItemContainerStyle>
+                </TreeView>
+
+                <DockPanel Grid.Row="2">
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Margin="0,4,6,0">
+                        <Button Style="{StaticResource ToolButton}" Content="+" FontWeight="Bold" ToolTip="Yeni şema sayfası" Command="{Binding AddSchematicPageCommand}" />
+                        <Button Style="{StaticResource ToolButton}" Content="▲" ToolTip="Yukarı taşı" Command="{Binding MovePageUpCommand}" />
+                        <Button Style="{StaticResource ToolButton}" Content="▼" ToolTip="Aşağı taşı" Command="{Binding MovePageDownCommand}" />
+                        <Button Style="{StaticResource ToolButton}" Content="✕" ToolTip="Aktif sayfayı sil" Command="{Binding DeletePageCommand}" />
+                    </StackPanel>
+                    <TextBlock Text="SAYFALAR" Style="{StaticResource PanelHeader}" />
+                </DockPanel>
+                <ListBox Grid.Row="3" ItemsSource="{Binding Pages}" SelectedItem="{Binding SelectedPage}" BorderThickness="0" Background="Transparent">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="2,1">
+                                <TextBlock Text="{Binding Display}" />
+                                <TextBlock Text="{Binding Details}" FontSize="11" Foreground="{StaticResource MutedTextBrush}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <StackPanel Grid.Row="4">
+                    <TextBlock Text="SEMBOL KÜTÜPHANESİ (IEC)" Style="{StaticResource PanelHeader}" />
+                    <TextBox Text="{Binding SymbolFilter, UpdateSourceTrigger=PropertyChanged}" Margin="8,0,8,4" ToolTip="Sembol ara" />
+                </StackPanel>
+                <ListBox Grid.Row="5" ItemsSource="{Binding SymbolsView}" SelectedItem="{Binding SelectedSymbol}"
+                         DisplayMemberPath="Name" BorderThickness="0" Background="Transparent">
+                    <ListBox.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" Foreground="{StaticResource SelectionBrush}" FontWeight="SemiBold" Margin="6,8,0,2" />
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                        </GroupStyle>
+                    </ListBox.GroupStyle>
+                </ListBox>
+            </Grid>
+
+            <GridSplitter Grid.Column="1" Style="{StaticResource PanelSplitter}" />
+
+            <!-- Orta: çizim alanı -->
+            <Border Grid.Column="2" Background="{StaticResource WorkspaceBrush}">
+                <draw:DrawingCanvas x:Name="Canvas"
+                                    Session="{Binding Session}"
+                                    ActiveTool="{Binding ActiveTool, Mode=TwoWay}"
+                                    PendingSymbol="{Binding SelectedSymbol}">
+                    <!-- Tek tuş kısayolları yalnızca çizim alanı odaktayken çalışır (metin kutularında yazmayı engellemez) -->
+                    <draw:DrawingCanvas.InputBindings>
+                        <KeyBinding Key="Delete" Command="{Binding DeleteCommand}" />
+                        <KeyBinding Key="R" Command="{Binding RotateCommand}" />
+                        <KeyBinding Key="F" Command="{Binding ZoomFitCommand}" />
+                        <KeyBinding Key="PageDown" Command="{Binding NextPageCommand}" />
+                        <KeyBinding Key="PageUp" Command="{Binding PreviousPageCommand}" />
+                        <KeyBinding Key="S" Command="{Binding SetToolCommand}" CommandParameter="Select" />
+                        <KeyBinding Key="L" Command="{Binding SetToolCommand}" CommandParameter="Line" />
+                        <KeyBinding Key="T" Command="{Binding SetToolCommand}" CommandParameter="Text" />
+                        <KeyBinding Key="J" Command="{Binding SetToolCommand}" CommandParameter="Junction" />
+                    </draw:DrawingCanvas.InputBindings>
+                </draw:DrawingCanvas>
+            </Border>
+
+            <GridSplitter Grid.Column="3" Style="{StaticResource PanelSplitter}" />
+
+            <!-- Sağ panel: özellikler -->
+            <DockPanel Grid.Column="4" Background="{StaticResource PanelBrush}">
+                <TextBlock DockPanel.Dock="Top" Text="ÖZELLİKLER" Style="{StaticResource PanelHeader}" />
+                <TextBlock DockPanel.Dock="Top" Text="{Binding Properties.Header}" FontSize="15" FontWeight="SemiBold" Margin="10,0,10,6" />
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding Properties.Rows}" Margin="10,0,10,10" KeyboardNavigation.TabNavigation="Cycle" />
+                </ScrollViewer>
+            </DockPanel>
+        </Grid>
+    </DockPanel>
+</Window>
