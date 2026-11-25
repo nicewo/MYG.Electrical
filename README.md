@@ -21,9 +21,26 @@ otomatik kablolama**dır: hizalı ve birbirine bakan pinler kendiliğinden bağl
 - Resim ekleme: resim projeye gömülür; renk seçiciyle saydamlık ve 0–100 hassasiyet (yakın renkleri de siler), PDF'te de saydam
 - Kapak sayfası ve düzenlenebilir antet (firma, logo, proje no, müşteri, hazırlayan, kontrol, tarih, revizyon)
 - `.myge` JSON proje dosyası (`formatVersion` zorunlu)
+- GitHub Releases'tan kurulum ve otomatik güncelleme (Velopack)
 - Vektörel PDF (tek sayfa / tüm proje, istenirse farklı kağıt boyutuna ölçekli)
 
-## Kurulum ve çalıştırma
+## İndir ve kur
+
+1. [Son sürüm (Releases)](https://github.com/nicewo/MYG.Electrical/releases/latest) sayfasından
+   **`MYG.Electrical-win-Setup.exe`** dosyasını indirip çalıştırın. Yönetici izni gerekmez; program
+   `%LocalAppData%\MYG.Electrical` altına kurulur ve Başlat menüsüne eklenir. .NET kurulu olması gerekmez.
+2. İmzasız olduğu için Windows SmartScreen "Windows bilgisayarınızı korudu" diyebilir:
+   **Ek bilgi → Yine de çalıştır**.
+3. Kurulumsuz kullanmak için `MYG.Electrical-win-Portable.zip` da var.
+
+**Otomatik güncelleme:** Program her açılışta internet varsa GitHub'daki son sürümü denetler, yeniyse arka planda
+indirir ve "şimdi yeniden başlatılsın mı?" diye sorar (Hayır → program kapanınca kurulur). Elle denetlemek için:
+Yardım → Güncellemeleri denetle. İnternet yoksa sessizce atlanır.
+
+**Yayın süreci:** `main` dalına her push'ta GitHub Actions derler, testleri çalıştırır ve testler geçerse
+`v0.2.<çalıştırma no>` sürümünü Release olarak yayınlar (Velopack: kurulum dosyası + delta güncelleme paketi).
+
+## Geliştirme
 
 Gereksinim: Windows 10/11, [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
 
@@ -34,6 +51,8 @@ dotnet build
 dotnet test --solution MYG.Electrical.slnx
 dotnet run --project src/MYG.Electrical.App
 ```
+
+Geliştirme derlemesinde (`dotnet run`) otomatik güncelleme devre dışıdır; yalnızca Setup.exe ile kurulan sürümde çalışır.
 
 Örnek proje: `samples/Demo.myge` (Dosya → Aç).
 

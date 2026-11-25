@@ -41,10 +41,14 @@ public partial class App : Application
 
         var catalog = BuiltInSymbolLibrary.Instance;
         var dialogs = new DialogService();
-        var vm = new MainViewModel(dialogs, new ProjectFileService(_log), new PdfExporter(catalog, _log), _log, catalog);
+        var updates = new UpdateService(_log);
+        var vm = new MainViewModel(dialogs, new ProjectFileService(_log), new PdfExporter(catalog, _log), _log, catalog, updates);
         var window = new MainWindow(vm);
         MainWindow = window;
         window.Show();
+
+        // İnternet varsa GitHub'daki son sürümü arka planda denetle ve indir
+        window.ContentRendered += (_, _) => _ = vm.CheckForUpdatesAsync(manual: false);
 
         var fileArg = e.Args.FirstOrDefault(a => a.EndsWith(Core.Pages.ProjectDocument.FileExtension, StringComparison.OrdinalIgnoreCase));
         if (fileArg is not null)

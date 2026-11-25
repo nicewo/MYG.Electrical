@@ -152,6 +152,8 @@
                 <MenuItem Header="Log klasörünü aç" Command="{Binding OpenLogFolderCommand}" />
             </MenuItem>
             <MenuItem Header="_Yardım">
+                <MenuItem Header="Güncellemeleri denetle" Command="{Binding CheckUpdatesCommand}" />
+                <Separator />
                 <MenuItem Header="Hakkında / Kısayollar" Command="{Binding AboutCommand}" />
             </MenuItem>
         </Menu>
@@ -241,6 +243,7 @@
         <!-- ===== Alt durum çubuğu ===== -->
         <Border DockPanel.Dock="Bottom" Background="{StaticResource PanelHeaderBrush}" BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,0" Height="26">
             <DockPanel>
+                <TextBlock DockPanel.Dock="Right" Text="{Binding VersionText}" Style="{StaticResource StatusText}" />
                 <TextBlock DockPanel.Dock="Right" Text="{Binding ActivePageText}" Style="{StaticResource StatusText}" />
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{Binding CursorText}" Style="{StaticResource StatusText}" MinWidth="170" />

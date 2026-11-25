@@ -8,6 +8,7 @@
     <PackageVersion Include="PDFsharp" Version="6.2.4" />
     <!-- PDFsharp'ın getirdiği eski sürümdeki güvenlik açığını kapatmak için sabitlendi -->
     <PackageVersion Include="System.Security.Cryptography.Pkcs" Version="10.0.15" />
+    <PackageVersion Include="Velopack" Version="1.2.161" />
     <PackageVersion Include="Serilog" Version="4.4.0" />
     <PackageVersion Include="Serilog.Sinks.File" Version="7.0.0" />
     <PackageVersion Include="xunit.v3" Version="4.0.3" />

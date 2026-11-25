@@ -26,6 +26,8 @@ public sealed class MainViewModel : ObservableObject
     private readonly PdfExporter _pdf;
     private readonly ILogger _log;
     private readonly ISymbolCatalog _catalog;
+    private readonly UpdateService _updates;
+    private bool _checkingUpdates;
 
     private EditorSession _session;
     private string? _filePath;
@@ -38,8 +40,10 @@ public sealed class MainViewModel : ObservableObject
     private string _zoomText = "100 %";
     private string _statusMessage = "Hazır";
 
-    public MainViewModel(IDialogService dialogs, ProjectFileService files, PdfExporter pdf, ILogger log, ISymbolCatalog catalog)
+    public MainViewModel(IDialogService dialogs, ProjectFileService files, PdfExporter pdf, ILogger log, ISymbolCatalog catalog,
+        UpdateService updates)
     {
+        _updates = updates;
         _dialogs = dialogs;
         _files = files;
         _pdf = pdf;
@@ -83,8 +87,9 @@ public sealed class MainViewModel : ObservableObject
         NextPageCommand = new RelayCommand(() => StepPage(+1));
         PreviousPageCommand = new RelayCommand(() => StepPage(-1));
         OpenLogFolderCommand = new RelayCommand(OpenLogFolder);
+        CheckUpdatesCommand = new RelayCommand(() => _ = CheckForUpdatesAsync(manual: true), () => !_checkingUpdates);
         AboutCommand = new RelayCommand(() => _dialogs.ShowInfo(
-            "MYG Electrical V0.1\nIEC elektrik şeması çizim programı\n\nMYG TECH · .NET 10 · WPF\n\n" +
+            $"MYG Electrical {VersionText}\nIEC elektrik şeması çizim programı\n\nMYG TECH · .NET 10 · WPF\n{UpdateService.RepositoryUrl}\n\n" +
             "Kısayollar: R döndür · Del sil · Ctrl+Z/Y geri/ileri · Ctrl+C/X/V · Esc iptal · Orta tuş: kaydır · Tekerlek: yakınlaştır"));
     }
 
@@ -283,6 +288,9 @@ public sealed class MainViewModel : ObservableObject
     public RelayCommand NextPageCommand { get; }
     public RelayCommand PreviousPageCommand { get; }
     public RelayCommand OpenLogFolderCommand { get; }
+    public RelayCommand CheckUpdatesCommand { get; }
+
+    public string VersionText => "v" + _updates.CurrentVersion;
     public RelayCommand AboutCommand { get; }
 
     // ---------- Canvas geri bildirimleri ----------
@@ -502,6 +510,60 @@ public sealed class MainViewModel : ObservableObject
         if (index >= 0 && index < pages.Count)
         {
             Session.ActivePage = pages[index];
+        }
+    }
+
+    // ---------- Güncelleme ----------
+
+    /// <summary>
+    /// GitHub'daki son sürümü denetler; yeniyse arka planda indirir ve kullanıcıya şimdi mi yoksa kapanışta mı
+    /// kurulacağını sorar (kaydedilmemiş çalışma kaybolmasın diye zorla yeniden başlatılmaz).
+    /// </summary>
+    public async Task CheckForUpdatesAsync(bool manual)
+    {
+        if (_checkingUpdates)
+        {
+            return;
+        }
+        if (!_updates.IsInstalled)
+        {
+            if (manual)
+            {
+                _dialogs.ShowInfo("Otomatik güncelleme yalnızca GitHub'daki Setup.exe ile kurulmuş sürümde çalışır.\n" +
+                                  $"Şu an geliştirme derlemesi çalışıyor ({VersionText}).");
+            }
+            return;
+        }
+
+        _checkingUpdates = true;
+        StatusMessage = "Güncelleme denetleniyor…";
+        try
+        {
+            if (!await _updates.CheckAndDownloadAsync())
+            {
+                StatusMessage = $"Güncel sürüm: {VersionText}";
+                if (manual)
+                {
+                    _dialogs.ShowInfo($"En güncel sürümü kullanıyorsunuz ({VersionText}).\n(İnternet yoksa denetlenemez; ayrıntı log dosyasında.)");
+                }
+                return;
+            }
+
+            StatusMessage = $"Yeni sürüm indirildi: v{_updates.PendingVersion}";
+            if (_dialogs.Confirm($"MYG Electrical v{_updates.PendingVersion} indirildi (şu an {VersionText}).\n\n" +
+                                 "Şimdi kurulup program yeniden başlatılsın mı?\nHayır derseniz program kapanınca kurulur."))
+            {
+                if (ConfirmDiscardChanges())
+                {
+                    _updates.ApplyAndRestart();
+                    return;
+                }
+            }
+            _updates.ApplyOnExit();
+        }
+        finally
+        {
+            _checkingUpdates = false;
         }
     }
 

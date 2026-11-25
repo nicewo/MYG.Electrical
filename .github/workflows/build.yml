@@ -1,21 +1,75 @@
 name: build
 
+# main'e her push: derle → test et → Windows paketini üret → GitHub Release olarak yayınla.
+# Kurulu uygulamalar açılışta bu Release'leri denetleyip kendini günceller (Velopack).
+# Pull request'lerde yalnızca derleme ve test çalışır.
+
 on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write # Release oluşturmak için
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  VERSION: 0.2.${{ github.run_number }}
+  VPK_VERSION: 1.2.161
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
 
 jobs:
   build:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
+
       - name: Restore
         run: dotnet restore MYG.Electrical.slnx
+
       - name: Build
-        run: dotnet build MYG.Electrical.slnx -c Release --no-restore
+        run: dotnet build MYG.Electrical.slnx -c Release --no-restore -p:Version=${{ env.VERSION }}
+
       - name: Test
         run: dotnet test --solution MYG.Electrical.slnx -c Release --no-build
+
+      - name: Publish (win-x64, self-contained)
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: >
+          dotnet publish src/MYG.Electrical.App/MYG.Electrical.App.csproj
+          -c Release -r win-x64 --self-contained true
+          -p:Version=${{ env.VERSION }} -o publish
+
+      - name: Install vpk
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: dotnet tool install -g vpk --version ${{ env.VPK_VERSION }}
+
+      - name: Download previous release (delta update için)
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        continue-on-error: true # ilk sürümde önceki release yok
+        run: vpk download github --repoUrl https://github.com/${{ github.repository }} --token ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pack
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        shell: pwsh
+        run: |
+          git log -1 --pretty=format:"%B" | Out-File -Encoding utf8 release-notes.md
+          vpk pack --packId MYG.Electrical --packVersion $env:VERSION --packDir publish `
+            --mainExe MYG.Electrical.exe --packTitle "MYG Electrical" --packAuthors "MYG TECH" `
+            --releaseNotes release-notes.md
+
+      - name: Publish GitHub Release
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: >
+          vpk upload github --repoUrl https://github.com/${{ github.repository }}
+          --publish --releaseName "MYG Electrical v${{ env.VERSION }}" --tag v${{ env.VERSION }}
+          --token ${{ secrets.GITHUB_TOKEN }}

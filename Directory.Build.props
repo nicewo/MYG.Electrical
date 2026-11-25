@@ -7,7 +7,8 @@
     <AnalysisLevel>latest</AnalysisLevel>
     <Company>MYG TECH</Company>
     <Product>MYG Electrical</Product>
-    <Version>0.1.0</Version>
+    <!-- CI her main push'unda 0.2.<çalıştırma no> sürümünü verir; yerel derleme 0.2.0 -->
+    <Version>0.2.0</Version>
     <!-- WPF projelerinin Windows dışı makinelerde (CI/Linux) derlenebilmesi için -->
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>

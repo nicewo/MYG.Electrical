@@ -6,6 +6,8 @@
     <AssemblyName>MYG.Electrical</AssemblyName>
     <RootNamespace>MYG.Electrical.App</RootNamespace>
     <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+    <!-- Velopack kurulum/güncelleme kancaları uygulama başlamadan çalışmalı -->
+    <StartupObject>MYG.Electrical.App.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\MYG.Electrical.Core\MYG.Electrical.Core.csproj" />
@@ -15,5 +17,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Serilog" />
+    <PackageReference Include="Velopack" />
   </ItemGroup>
 </Project>
