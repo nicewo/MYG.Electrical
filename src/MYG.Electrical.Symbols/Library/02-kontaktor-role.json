@@ -1,0 +1,1679 @@
+{
+  "formatVersion": 1,
+  "library": "MYG IEC 60617",
+  "version": "1.0.0",
+  "title": "Kontaktör ve Röle",
+  "symbols": [
+    {
+      "id": "iec.contactor.3p",
+      "name": "Kontaktör (3 kutup)",
+      "category": "Kontaktör ve Röle/Kontaktörler",
+      "description": "Kontaktör ana kontakları (1-2, 3-4, 5-6). Bobin (A1-A2) aynı etiketle ayrı yerleştirilir.",
+      "keywords": [
+        "contactor",
+        "güç kontağı",
+        "ana kontak",
+        "1L1"
+      ],
+      "referencePrefix": "K",
+      "role": "contact",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": -10,
+          "x2": -10,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": 10,
+          "x2": -10,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": 4,
+          "x2": -13.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "arc",
+          "centerX": -10,
+          "centerY": -4,
+          "radius": 1.2,
+          "startAngle": 0,
+          "sweepAngle": 180
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 4,
+          "x2": -3.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "arc",
+          "centerX": 0,
+          "centerY": -4,
+          "radius": 1.2,
+          "startAngle": 0,
+          "sweepAngle": 180
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": -10,
+          "x2": 10,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": 10,
+          "x2": 10,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": 4,
+          "x2": 6.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "arc",
+          "centerX": 10,
+          "centerY": -4,
+          "radius": 1.2,
+          "startAngle": 0,
+          "sweepAngle": 180
+        },
+        {
+          "kind": "line",
+          "x1": -11.75,
+          "y1": 0,
+          "x2": 8.25,
+          "y2": 0,
+          "dashed": true
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": -10,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "2",
+          "x": -10,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "3",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "4",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "5",
+          "x": 10,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "6",
+          "x": 10,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "1",
+          "b": "2"
+        },
+        {
+          "a": "3",
+          "b": "4"
+        },
+        {
+          "a": "5",
+          "b": "6"
+        }
+      ]
+    },
+    {
+      "id": "iec.contactor.3p.aux",
+      "name": "Kontaktör 3 kutup + 1NO",
+      "category": "Kontaktör ve Röle/Kontaktörler",
+      "keywords": [
+        "contactor",
+        "yardımcı kontak",
+        "13-14"
+      ],
+      "referencePrefix": "K",
+      "role": "contact",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": -10,
+          "x2": -10,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": 10,
+          "x2": -10,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": 4,
+          "x2": -13.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 4,
+          "x2": -3.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": -10,
+          "x2": 10,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": 10,
+          "x2": 10,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": 4,
+          "x2": 6.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "arc",
+          "centerX": -10,
+          "centerY": -4,
+          "radius": 1.2,
+          "startAngle": 0,
+          "sweepAngle": 180
+        },
+        {
+          "kind": "arc",
+          "centerX": 0,
+          "centerY": -4,
+          "radius": 1.2,
+          "startAngle": 0,
+          "sweepAngle": 180
+        },
+        {
+          "kind": "arc",
+          "centerX": 10,
+          "centerY": -4,
+          "radius": 1.2,
+          "startAngle": 0,
+          "sweepAngle": 180
+        },
+        {
+          "kind": "line",
+          "x1": 20,
+          "y1": -10,
+          "x2": 20,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 20,
+          "y1": 10,
+          "x2": 20,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 20,
+          "y1": 4,
+          "x2": 16.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": -11.75,
+          "y1": 0,
+          "x2": 18.25,
+          "y2": 0,
+          "dashed": true
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": -10,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "2",
+          "x": -10,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "3",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "4",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "5",
+          "x": 10,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "6",
+          "x": 10,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "13",
+          "x": 20,
+          "y": -10,
+          "direction": "up",
+          "function": "contactNo"
+        },
+        {
+          "id": "14",
+          "x": 20,
+          "y": 10,
+          "direction": "down",
+          "function": "contactNo"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "1",
+          "b": "2"
+        },
+        {
+          "a": "3",
+          "b": "4"
+        },
+        {
+          "a": "5",
+          "b": "6"
+        },
+        {
+          "a": "13",
+          "b": "14"
+        }
+      ]
+    },
+    {
+      "id": "iec.coil",
+      "name": "Bobin",
+      "category": "Kontaktör ve Röle/Bobinler",
+      "description": "Kontaktör/röle bobini; aynı etiketli kontaklar bu cihaza aittir.",
+      "keywords": [
+        "coil",
+        "A1",
+        "A2",
+        "kontaktör bobini"
+      ],
+      "referencePrefix": "K",
+      "role": "main",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -5,
+          "y": -3,
+          "width": 10,
+          "height": 6
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 3,
+          "x2": 0,
+          "y2": 10
+        }
+      ],
+      "pins": [
+        {
+          "id": "A1",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "coil"
+        },
+        {
+          "id": "A2",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "coil"
+        }
+      ],
+      "defaultProperties": {
+        "Bobin gerilimi": "24VDC"
+      }
+    },
+    {
+      "id": "iec.coil.ondelay",
+      "name": "Zaman rölesi bobini (çekmede gecikmeli)",
+      "category": "Kontaktör ve Röle/Bobinler",
+      "keywords": [
+        "timer",
+        "TON",
+        "zaman rölesi"
+      ],
+      "referencePrefix": "K",
+      "role": "main",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -5,
+          "y": -3,
+          "width": 10,
+          "height": 6
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 3,
+          "x2": 0,
+          "y2": 10
+        },
+        {
+          "kind": "rect",
+          "x": -11,
+          "y": -3,
+          "width": 6,
+          "height": 6
+        },
+        {
+          "kind": "line",
+          "x1": -11,
+          "y1": -3,
+          "x2": -5,
+          "y2": 3
+        },
+        {
+          "kind": "line",
+          "x1": -11,
+          "y1": 3,
+          "x2": -5,
+          "y2": -3
+        }
+      ],
+      "pins": [
+        {
+          "id": "A1",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "coil"
+        },
+        {
+          "id": "A2",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "coil"
+        }
+      ],
+      "defaultProperties": {
+        "Bobin gerilimi": "24VDC",
+        "Süre": ""
+      }
+    },
+    {
+      "id": "iec.coil.offdelay",
+      "name": "Zaman rölesi bobini (düşmede gecikmeli)",
+      "category": "Kontaktör ve Röle/Bobinler",
+      "keywords": [
+        "timer",
+        "TOF",
+        "zaman rölesi"
+      ],
+      "referencePrefix": "K",
+      "role": "main",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -5,
+          "y": -3,
+          "width": 10,
+          "height": 6
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 3,
+          "x2": 0,
+          "y2": 10
+        },
+        {
+          "kind": "rect",
+          "x": -11,
+          "y": -3,
+          "width": 6,
+          "height": 6,
+          "filled": true
+        }
+      ],
+      "pins": [
+        {
+          "id": "A1",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "coil"
+        },
+        {
+          "id": "A2",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "coil"
+        }
+      ],
+      "defaultProperties": {
+        "Bobin gerilimi": "24VDC",
+        "Süre": ""
+      }
+    },
+    {
+      "id": "iec.relay",
+      "name": "Röle (bobin + NO)",
+      "category": "Kontaktör ve Röle/Röleler",
+      "keywords": [
+        "relay",
+        "röle"
+      ],
+      "referencePrefix": "K",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -5,
+          "y": -3,
+          "width": 10,
+          "height": 6
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 3,
+          "x2": 0,
+          "y2": 10
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": -10,
+          "x2": 15,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": 10,
+          "x2": 15,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": 4,
+          "x2": 11.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 0,
+          "x2": 13.25,
+          "y2": 0,
+          "dashed": true
+        }
+      ],
+      "pins": [
+        {
+          "id": "A1",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "coil"
+        },
+        {
+          "id": "A2",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "coil"
+        },
+        {
+          "id": "13",
+          "x": 15,
+          "y": -10,
+          "direction": "up",
+          "function": "contactNo"
+        },
+        {
+          "id": "14",
+          "x": 15,
+          "y": 10,
+          "direction": "down",
+          "function": "contactNo"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "13",
+          "b": "14"
+        }
+      ],
+      "defaultProperties": {
+        "Bobin gerilimi": "24VDC"
+      }
+    },
+    {
+      "id": "iec.relay.co",
+      "name": "Röle (bobin + CO)",
+      "category": "Kontaktör ve Röle/Röleler",
+      "keywords": [
+        "röle",
+        "değişken",
+        "interface"
+      ],
+      "referencePrefix": "K",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -5,
+          "y": -3,
+          "width": 10,
+          "height": 6
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 3,
+          "x2": 0,
+          "y2": 10
+        },
+        {
+          "kind": "line",
+          "x1": 20,
+          "y1": 10,
+          "x2": 20,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 20,
+          "y1": 4,
+          "x2": 16.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": 20,
+          "y1": -10,
+          "x2": 20,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": -10,
+          "x2": 15,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": -4.5,
+          "x2": 16.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 0,
+          "x2": 18.25,
+          "y2": 0,
+          "dashed": true
+        }
+      ],
+      "pins": [
+        {
+          "id": "A1",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "coil"
+        },
+        {
+          "id": "A2",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "coil"
+        },
+        {
+          "id": "12",
+          "x": 15,
+          "y": -10,
+          "direction": "up",
+          "function": "contactNc"
+        },
+        {
+          "id": "14",
+          "x": 20,
+          "y": -10,
+          "direction": "up",
+          "function": "contactNo"
+        },
+        {
+          "id": "11",
+          "x": 20,
+          "y": 10,
+          "direction": "down",
+          "function": "contactCommon"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "11",
+          "b": "12"
+        },
+        {
+          "a": "11",
+          "b": "14"
+        }
+      ],
+      "defaultProperties": {
+        "Bobin gerilimi": "24VDC"
+      }
+    },
+    {
+      "id": "iec.contact.no",
+      "name": "Açık kontak (NO)",
+      "category": "Kontaktör ve Röle/Yardımcı kontaklar",
+      "keywords": [
+        "NO",
+        "normalde açık",
+        "13-14"
+      ],
+      "referencePrefix": "K",
+      "role": "contact",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 4,
+          "x2": -3.5,
+          "y2": -4.5
+        }
+      ],
+      "pins": [
+        {
+          "id": "13",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "contactNo"
+        },
+        {
+          "id": "14",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "contactNo"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "13",
+          "b": "14"
+        }
+      ]
+    },
+    {
+      "id": "iec.contact.nc",
+      "name": "Kapalı kontak (NC)",
+      "category": "Kontaktör ve Röle/Yardımcı kontaklar",
+      "keywords": [
+        "NC",
+        "normalde kapalı",
+        "11-12"
+      ],
+      "referencePrefix": "K",
+      "role": "contact",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -4,
+          "x2": 4,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 4,
+          "x2": 4.5,
+          "y2": -5
+        }
+      ],
+      "pins": [
+        {
+          "id": "11",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "contactNc"
+        },
+        {
+          "id": "12",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "contactNc"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "11",
+          "b": "12"
+        }
+      ]
+    },
+    {
+      "id": "iec.contact.co",
+      "name": "Değişken kontak (CO)",
+      "category": "Kontaktör ve Röle/Yardımcı kontaklar",
+      "keywords": [
+        "CO",
+        "changeover",
+        "11-12-14",
+        "değişken"
+      ],
+      "referencePrefix": "K",
+      "role": "contact",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 4,
+          "x2": -3.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -10,
+          "x2": -5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -4.5,
+          "x2": -3.5,
+          "y2": -4.5
+        }
+      ],
+      "pins": [
+        {
+          "id": "12",
+          "x": -5,
+          "y": -10,
+          "direction": "up",
+          "function": "contactNc"
+        },
+        {
+          "id": "14",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "contactNo"
+        },
+        {
+          "id": "11",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "contactCommon"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "11",
+          "b": "12"
+        },
+        {
+          "a": "11",
+          "b": "14"
+        }
+      ]
+    },
+    {
+      "id": "iec.contact.no.ondelay",
+      "name": "Gecikmeli kapanan kontak (çekmede, NO)",
+      "category": "Kontaktör ve Röle/Zaman kontakları",
+      "keywords": [
+        "zaman rölesi",
+        "timer",
+        "gecikmeli",
+        "TON"
+      ],
+      "referencePrefix": "K",
+      "role": "contact",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 4,
+          "x2": -3.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": -8,
+          "y1": 0,
+          "x2": -1.75,
+          "y2": 0,
+          "dashed": true
+        },
+        {
+          "kind": "arc",
+          "centerX": -8,
+          "centerY": 0,
+          "radius": 2.5,
+          "startAngle": 90,
+          "sweepAngle": 180
+        }
+      ],
+      "pins": [
+        {
+          "id": "17",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "contactNo"
+        },
+        {
+          "id": "18",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "contactNo"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "17",
+          "b": "18"
+        }
+      ]
+    },
+    {
+      "id": "iec.contact.nc.ondelay",
+      "name": "Gecikmeli açan kontak (çekmede, NC)",
+      "category": "Kontaktör ve Röle/Zaman kontakları",
+      "keywords": [
+        "zaman rölesi",
+        "timer",
+        "gecikmeli",
+        "TON"
+      ],
+      "referencePrefix": "K",
+      "role": "contact",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -4,
+          "x2": 4,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 4,
+          "x2": 4.5,
+          "y2": -5
+        },
+        {
+          "kind": "line",
+          "x1": -8,
+          "y1": 0,
+          "x2": 0.25,
+          "y2": 0,
+          "dashed": true
+        },
+        {
+          "kind": "arc",
+          "centerX": -8,
+          "centerY": 0,
+          "radius": 2.5,
+          "startAngle": 90,
+          "sweepAngle": 180
+        }
+      ],
+      "pins": [
+        {
+          "id": "15",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "contactNc"
+        },
+        {
+          "id": "16",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "contactNc"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "15",
+          "b": "16"
+        }
+      ]
+    },
+    {
+      "id": "iec.contact.no.offdelay",
+      "name": "Gecikmeli açan kontak (düşmede, NO)",
+      "category": "Kontaktör ve Röle/Zaman kontakları",
+      "keywords": [
+        "zaman rölesi",
+        "timer",
+        "gecikmeli",
+        "TOF"
+      ],
+      "referencePrefix": "K",
+      "role": "contact",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 4,
+          "x2": -3.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": -8,
+          "y1": 0,
+          "x2": -1.75,
+          "y2": 0,
+          "dashed": true
+        },
+        {
+          "kind": "arc",
+          "centerX": -8,
+          "centerY": 0,
+          "radius": 2.5,
+          "startAngle": -90,
+          "sweepAngle": 180
+        }
+      ],
+      "pins": [
+        {
+          "id": "17",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "contactNo"
+        },
+        {
+          "id": "18",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "contactNo"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "17",
+          "b": "18"
+        }
+      ]
+    },
+    {
+      "id": "iec.relay.phase",
+      "name": "Faz sırası / faz kontrol rölesi",
+      "category": "Kontaktör ve Röle/İzleme röleleri",
+      "keywords": [
+        "faz sırası",
+        "faz koruma",
+        "phase sequence",
+        "asimetri"
+      ],
+      "referencePrefix": "K",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -20,
+          "y": -10,
+          "width": 40,
+          "height": 20
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": -2,
+          "text": "L1 L2 L3",
+          "height": 2.5
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 1.5,
+          "text": "FAZ",
+          "height": 2.5
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": -15,
+          "x2": -10,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -15,
+          "x2": 0,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": -15,
+          "x2": 10,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": 10,
+          "x2": -10,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": 10,
+          "x2": 10,
+          "y2": 15
+        }
+      ],
+      "pins": [
+        {
+          "id": "L1",
+          "x": -10,
+          "y": -15,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "L2",
+          "x": 0,
+          "y": -15,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "L3",
+          "x": 10,
+          "y": -15,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "11",
+          "x": -10,
+          "y": 15,
+          "direction": "down",
+          "function": "contactCommon"
+        },
+        {
+          "id": "12",
+          "x": 0,
+          "y": 15,
+          "direction": "down",
+          "function": "contactNc"
+        },
+        {
+          "id": "14",
+          "x": 10,
+          "y": 15,
+          "direction": "down",
+          "function": "contactNo"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "11",
+          "b": "12"
+        },
+        {
+          "a": "11",
+          "b": "14"
+        }
+      ],
+      "defaultProperties": {
+        "Gerilim": "400VAC"
+      }
+    },
+    {
+      "id": "iec.relay.safety",
+      "name": "Güvenlik rölesi",
+      "category": "Kontaktör ve Röle/Güvenlik",
+      "keywords": [
+        "safety relay",
+        "PNOZ",
+        "acil stop rölesi",
+        "güvenlik"
+      ],
+      "referencePrefix": "K",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -35,
+          "y": -15,
+          "width": 70,
+          "height": 30
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "SAFETY",
+          "height": 3
+        },
+        {
+          "kind": "line",
+          "x1": -30,
+          "y1": -20,
+          "x2": -30,
+          "y2": -15
+        },
+        {
+          "kind": "line",
+          "x1": -20,
+          "y1": -20,
+          "x2": -20,
+          "y2": -15
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": -20,
+          "x2": -10,
+          "y2": -15
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -20,
+          "x2": 0,
+          "y2": -15
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": -20,
+          "x2": 10,
+          "y2": -15
+        },
+        {
+          "kind": "line",
+          "x1": 20,
+          "y1": -20,
+          "x2": 20,
+          "y2": -15
+        },
+        {
+          "kind": "line",
+          "x1": 30,
+          "y1": -20,
+          "x2": 30,
+          "y2": -15
+        },
+        {
+          "kind": "line",
+          "x1": -20,
+          "y1": 15,
+          "x2": -20,
+          "y2": 20
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": 15,
+          "x2": -10,
+          "y2": 20
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 15,
+          "x2": 0,
+          "y2": 20
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": 15,
+          "x2": 10,
+          "y2": 20
+        },
+        {
+          "kind": "line",
+          "x1": 20,
+          "y1": 15,
+          "x2": 20,
+          "y2": 20
+        }
+      ],
+      "pins": [
+        {
+          "id": "A1",
+          "x": -30,
+          "y": -20,
+          "direction": "up",
+          "function": "supplyPositive"
+        },
+        {
+          "id": "S11",
+          "x": -20,
+          "y": -20,
+          "direction": "up",
+          "function": "output"
+        },
+        {
+          "id": "S12",
+          "x": -10,
+          "y": -20,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "S21",
+          "x": 0,
+          "y": -20,
+          "direction": "up",
+          "function": "output"
+        },
+        {
+          "id": "S22",
+          "x": 10,
+          "y": -20,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "13",
+          "x": 20,
+          "y": -20,
+          "direction": "up",
+          "function": "contactNo"
+        },
+        {
+          "id": "23",
+          "x": 30,
+          "y": -20,
+          "direction": "up",
+          "function": "contactNo"
+        },
+        {
+          "id": "A2",
+          "x": -20,
+          "y": 20,
+          "direction": "down",
+          "function": "supplyNegative"
+        },
+        {
+          "id": "S33",
+          "x": -10,
+          "y": 20,
+          "direction": "down",
+          "function": "input"
+        },
+        {
+          "id": "S34",
+          "x": 0,
+          "y": 20,
+          "direction": "down",
+          "function": "input"
+        },
+        {
+          "id": "14",
+          "x": 10,
+          "y": 20,
+          "direction": "down",
+          "function": "contactNo"
+        },
+        {
+          "id": "24",
+          "x": 20,
+          "y": 20,
+          "direction": "down",
+          "function": "contactNo"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "13",
+          "b": "14"
+        },
+        {
+          "a": "23",
+          "b": "24"
+        }
+      ],
+      "defaultProperties": {
+        "Kategori / PL": ""
+      }
+    },
+    {
+      "id": "iec.relay.ssr",
+      "name": "Katı hal rölesi (SSR)",
+      "category": "Kontaktör ve Röle/Röleler",
+      "keywords": [
+        "SSR",
+        "solid state",
+        "katı hal"
+      ],
+      "referencePrefix": "K",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -10,
+          "y": -10,
+          "width": 20,
+          "height": 20
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "SSR",
+          "height": 3
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -15,
+          "x2": -5,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -15,
+          "x2": 5,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 10,
+          "x2": -5,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 10,
+          "x2": 5,
+          "y2": 15
+        }
+      ],
+      "pins": [
+        {
+          "id": "3",
+          "x": -5,
+          "y": -15,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "1",
+          "x": 5,
+          "y": -15,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "4",
+          "x": -5,
+          "y": 15,
+          "direction": "down",
+          "function": "input"
+        },
+        {
+          "id": "2",
+          "x": 5,
+          "y": 15,
+          "direction": "down",
+          "function": "power"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "1",
+          "b": "2"
+        }
+      ],
+      "defaultProperties": {
+        "Yük akımı": "",
+        "Kontrol gerilimi": "3-32VDC"
+      }
+    }
+  ]
+}

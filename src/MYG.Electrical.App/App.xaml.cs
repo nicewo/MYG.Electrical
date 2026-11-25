@@ -1,3 +1,4 @@
+using System.IO;
 using System.Windows;
 using System.Windows.Threading;
 using MYG.Electrical.App.Services;
@@ -39,7 +40,14 @@ public partial class App : Application
         };
         _log.Information("MYG Electrical başlatıldı ({Version})", typeof(App).Assembly.GetName().Version);
 
-        var catalog = BuiltInSymbolLibrary.Instance;
+        // Yerleşik IEC kütüphanesi + kullanıcı sembolleri (%AppData%\MYG.Electrical\Symbols\*.json)
+        var userSymbols = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MYG.Electrical", "Symbols");
+        var catalog = BuiltInSymbolLibrary.CreateCatalog(userSymbols);
+        _log.Information("Sembol kütüphanesi: {Count} sembol", catalog.All.Count);
+        foreach (var warning in catalog.Warnings)
+        {
+            _log.Warning("Sembol kütüphanesi: {Warning}", warning);
+        }
         var dialogs = new DialogService();
         var updates = new UpdateService(_log);
         var shell = new ShellService(_log, dialogs);

@@ -1,0 +1,582 @@
+{
+  "formatVersion": 1,
+  "library": "MYG IEC 60617",
+  "version": "1.0.0",
+  "title": "Kurulum ve Diğer",
+  "symbols": [
+    {
+      "id": "iec.resistor",
+      "name": "Direnç",
+      "category": "Kurulum ve Diğer/Pasif elemanlar",
+      "keywords": [
+        "direnç",
+        "resistor"
+      ],
+      "referencePrefix": "R",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -2,
+          "y": -5,
+          "width": 4,
+          "height": 10
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -5
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 5,
+          "x2": 0,
+          "y2": 10
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": 0,
+          "y": -10,
+          "direction": "up"
+        },
+        {
+          "id": "2",
+          "x": 0,
+          "y": 10,
+          "direction": "down"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "1",
+          "b": "2",
+          "kind": "permanent"
+        }
+      ],
+      "defaultProperties": {
+        "Değer": ""
+      }
+    },
+    {
+      "id": "iec.capacitor",
+      "name": "Kondansatör",
+      "category": "Kurulum ve Diğer/Pasif elemanlar",
+      "keywords": [
+        "kondansatör",
+        "kapasitör"
+      ],
+      "referencePrefix": "C",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": -4,
+          "y1": -1,
+          "x2": 4,
+          "y2": -1
+        },
+        {
+          "kind": "line",
+          "x1": -4,
+          "y1": 1,
+          "x2": 4,
+          "y2": 1
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -1
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 1,
+          "x2": 0,
+          "y2": 10
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": 0,
+          "y": -10,
+          "direction": "up"
+        },
+        {
+          "id": "2",
+          "x": 0,
+          "y": 10,
+          "direction": "down"
+        }
+      ],
+      "defaultProperties": {
+        "Değer": ""
+      }
+    },
+    {
+      "id": "iec.diode",
+      "name": "Diyot",
+      "category": "Kurulum ve Diğer/Yarı iletkenler",
+      "keywords": [
+        "diyot",
+        "serbest geçiş",
+        "1N4007"
+      ],
+      "referencePrefix": "R",
+      "primitives": [
+        {
+          "kind": "polygon",
+          "points": [
+            -3,
+            -2.5,
+            3,
+            -2.5,
+            0,
+            2.5
+          ]
+        },
+        {
+          "kind": "line",
+          "x1": -3,
+          "y1": 2.5,
+          "x2": 3,
+          "y2": 2.5
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -2.5
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 2.5,
+          "x2": 0,
+          "y2": 10
+        }
+      ],
+      "pins": [
+        {
+          "id": "A",
+          "x": 0,
+          "y": -10,
+          "direction": "up"
+        },
+        {
+          "id": "K",
+          "x": 0,
+          "y": 10,
+          "direction": "down"
+        }
+      ]
+    },
+    {
+      "id": "iec.led",
+      "name": "LED",
+      "category": "Kurulum ve Diğer/Yarı iletkenler",
+      "keywords": [
+        "LED",
+        "gösterge"
+      ],
+      "referencePrefix": "P",
+      "primitives": [
+        {
+          "kind": "polygon",
+          "points": [
+            -3,
+            -2.5,
+            3,
+            -2.5,
+            0,
+            2.5
+          ]
+        },
+        {
+          "kind": "line",
+          "x1": -3,
+          "y1": 2.5,
+          "x2": 3,
+          "y2": 2.5
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -2.5
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 2.5,
+          "x2": 0,
+          "y2": 10
+        },
+        {
+          "kind": "line",
+          "x1": 4,
+          "y1": -1,
+          "x2": 6.5,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 4,
+          "y1": 1,
+          "x2": 6.5,
+          "y2": -1
+        }
+      ],
+      "pins": [
+        {
+          "id": "A",
+          "x": 0,
+          "y": -10,
+          "direction": "up"
+        },
+        {
+          "id": "K",
+          "x": 0,
+          "y": 10,
+          "direction": "down"
+        }
+      ]
+    },
+    {
+      "id": "iec.heater",
+      "name": "Isıtıcı / rezistans",
+      "category": "Kurulum ve Diğer/Isıtma",
+      "keywords": [
+        "ısıtıcı",
+        "rezistans",
+        "heater"
+      ],
+      "referencePrefix": "E",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -5,
+          "y": -3,
+          "width": 10,
+          "height": 6
+        },
+        {
+          "kind": "line",
+          "x1": -2.5,
+          "y1": -3,
+          "x2": -2.5,
+          "y2": 3
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -3,
+          "x2": 0,
+          "y2": 3
+        },
+        {
+          "kind": "line",
+          "x1": 2.5,
+          "y1": -3,
+          "x2": 2.5,
+          "y2": 3
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 3,
+          "x2": 0,
+          "y2": 10
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "2",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        }
+      ],
+      "defaultProperties": {
+        "Güç": ""
+      }
+    },
+    {
+      "id": "iec.heater.3ph",
+      "name": "Isıtıcı (3 faz, yıldız)",
+      "category": "Kurulum ve Diğer/Isıtma",
+      "keywords": [
+        "rezistans",
+        "3 faz",
+        "fırın"
+      ],
+      "referencePrefix": "E",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": -10,
+          "x2": -10,
+          "y2": -5
+        },
+        {
+          "kind": "rect",
+          "x": -12,
+          "y": -5,
+          "width": 4,
+          "height": 10
+        },
+        {
+          "kind": "line",
+          "x1": -12,
+          "y1": 5,
+          "x2": -8,
+          "y2": -5
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": 5,
+          "x2": -10,
+          "y2": 7
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -5
+        },
+        {
+          "kind": "rect",
+          "x": -2,
+          "y": -5,
+          "width": 4,
+          "height": 10
+        },
+        {
+          "kind": "line",
+          "x1": -2,
+          "y1": 5,
+          "x2": 2,
+          "y2": -5
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 5,
+          "x2": 0,
+          "y2": 7
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": -10,
+          "x2": 10,
+          "y2": -5
+        },
+        {
+          "kind": "rect",
+          "x": 8,
+          "y": -5,
+          "width": 4,
+          "height": 10
+        },
+        {
+          "kind": "line",
+          "x1": 8,
+          "y1": 5,
+          "x2": 12,
+          "y2": -5
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": 5,
+          "x2": 10,
+          "y2": 7
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": 7,
+          "x2": 10,
+          "y2": 7
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": -10,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "2",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "3",
+          "x": 10,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        }
+      ],
+      "defaultProperties": {
+        "Güç": ""
+      }
+    },
+    {
+      "id": "iec.valve.solenoid",
+      "name": "Selenoid valf bobini",
+      "category": "Kurulum ve Diğer/Valfler",
+      "keywords": [
+        "valf",
+        "selenoid",
+        "pnömatik",
+        "bobin"
+      ],
+      "referencePrefix": "Y",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -5,
+          "y": -3,
+          "width": 10,
+          "height": 6
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 3,
+          "x2": 5,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 3,
+          "x2": 0,
+          "y2": 10
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "coil"
+        },
+        {
+          "id": "2",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "coil"
+        }
+      ],
+      "defaultProperties": {
+        "Gerilim": "24VDC"
+      }
+    },
+    {
+      "id": "iec.light",
+      "name": "Aydınlatma armatürü",
+      "category": "Kurulum ve Diğer/Aydınlatma",
+      "keywords": [
+        "armatür",
+        "aydınlatma",
+        "lamba"
+      ],
+      "referencePrefix": "E",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": -6,
+          "y1": 0,
+          "x2": 6,
+          "y2": 0
+        },
+        {
+          "kind": "line",
+          "x1": -6,
+          "y1": -2,
+          "x2": -6,
+          "y2": 2
+        },
+        {
+          "kind": "line",
+          "x1": 6,
+          "y1": -2,
+          "x2": 6,
+          "y2": 2
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -10,
+          "x2": -5,
+          "y2": 0
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -10,
+          "x2": 5,
+          "y2": 0
+        }
+      ],
+      "pins": [
+        {
+          "id": "L",
+          "x": -5,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "N",
+          "x": 5,
+          "y": -10,
+          "direction": "up",
+          "function": "neutral"
+        }
+      ]
+    }
+  ]
+}

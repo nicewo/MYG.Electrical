@@ -1,0 +1,620 @@
+{
+  "formatVersion": 1,
+  "library": "MYG IEC 60617",
+  "version": "1.0.0",
+  "title": "Klemens ve Konnektör",
+  "symbols": [
+    {
+      "id": "iec.terminal",
+      "name": "Klemens",
+      "category": "Klemens ve Konnektör/Klemensler",
+      "keywords": [
+        "terminal",
+        "klemens",
+        "sıra klemens"
+      ],
+      "referencePrefix": "X",
+      "primitives": [
+        {
+          "kind": "circle",
+          "centerX": 0,
+          "centerY": 0,
+          "radius": 1.5
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -5,
+          "x2": 0,
+          "y2": -1.5
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 1.5,
+          "x2": 0,
+          "y2": 5
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": 0,
+          "y": -5,
+          "direction": "up",
+          "function": "terminal"
+        },
+        {
+          "id": "2",
+          "x": 0,
+          "y": 5,
+          "direction": "down",
+          "function": "terminal"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "1",
+          "b": "2",
+          "kind": "permanent"
+        }
+      ]
+    },
+    {
+      "id": "iec.terminal.pe",
+      "name": "PE klemensi",
+      "category": "Klemens ve Konnektör/Klemensler",
+      "keywords": [
+        "PE",
+        "toprak klemensi",
+        "sarı-yeşil"
+      ],
+      "referencePrefix": "X",
+      "primitives": [
+        {
+          "kind": "circle",
+          "centerX": 0,
+          "centerY": 0,
+          "radius": 1.5
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -5,
+          "x2": 0,
+          "y2": -1.5
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 1.5,
+          "x2": 0,
+          "y2": 5
+        },
+        {
+          "kind": "line",
+          "x1": 3,
+          "y1": -1.5,
+          "x2": 3,
+          "y2": 1.5
+        },
+        {
+          "kind": "line",
+          "x1": 4,
+          "y1": -1,
+          "x2": 4,
+          "y2": 1
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -0.5,
+          "x2": 5,
+          "y2": 0.5
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": 0,
+          "y": -5,
+          "direction": "up",
+          "function": "protectiveEarth"
+        },
+        {
+          "id": "2",
+          "x": 0,
+          "y": 5,
+          "direction": "down",
+          "function": "protectiveEarth"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "1",
+          "b": "2",
+          "kind": "permanent"
+        }
+      ]
+    },
+    {
+      "id": "iec.terminal.fused",
+      "name": "Sigortalı klemens",
+      "category": "Klemens ve Konnektör/Klemensler",
+      "keywords": [
+        "sigortalı klemens",
+        "fuse terminal"
+      ],
+      "referencePrefix": "X",
+      "primitives": [
+        {
+          "kind": "circle",
+          "centerX": 0,
+          "centerY": -6,
+          "radius": 1.5
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -7.5
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -4.5,
+          "x2": 0,
+          "y2": 10
+        },
+        {
+          "kind": "rect",
+          "x": -1.5,
+          "y": -2,
+          "width": 3,
+          "height": 7
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "terminal"
+        },
+        {
+          "id": "2",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "terminal"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "1",
+          "b": "2",
+          "kind": "permanent"
+        }
+      ]
+    },
+    {
+      "id": "iec.terminal.disconnect",
+      "name": "Ayırmalı klemens",
+      "category": "Klemens ve Konnektör/Klemensler",
+      "keywords": [
+        "ayırmalı",
+        "test klemensi"
+      ],
+      "referencePrefix": "X",
+      "primitives": [
+        {
+          "kind": "circle",
+          "centerX": 0,
+          "centerY": -6,
+          "radius": 1.5
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -7.5
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -4.5,
+          "x2": 0,
+          "y2": -1.5
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 2,
+          "x2": 0,
+          "y2": 10
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 2,
+          "x2": -2,
+          "y2": -1.5
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "terminal"
+        },
+        {
+          "id": "2",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "terminal"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "1",
+          "b": "2"
+        }
+      ]
+    },
+    {
+      "id": "iec.connector.plug",
+      "name": "Konnektör (erkek)",
+      "category": "Klemens ve Konnektör/Konnektörler",
+      "keywords": [
+        "konnektör",
+        "fiş",
+        "soket",
+        "plug"
+      ],
+      "referencePrefix": "X",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -5,
+          "x2": 0,
+          "y2": 0
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 2,
+          "x2": 0,
+          "y2": 5
+        },
+        {
+          "kind": "rect",
+          "x": -1,
+          "y": 0,
+          "width": 2,
+          "height": 2,
+          "filled": true
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": 0,
+          "y": -5,
+          "direction": "up",
+          "function": "terminal"
+        },
+        {
+          "id": "2",
+          "x": 0,
+          "y": 5,
+          "direction": "down",
+          "function": "terminal"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "1",
+          "b": "2",
+          "kind": "permanent"
+        }
+      ]
+    },
+    {
+      "id": "iec.connector.socket",
+      "name": "Konnektör (dişi)",
+      "category": "Klemens ve Konnektör/Konnektörler",
+      "keywords": [
+        "konnektör",
+        "fiş",
+        "soket",
+        "plug"
+      ],
+      "referencePrefix": "X",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -5,
+          "x2": 0,
+          "y2": -1
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 2,
+          "x2": 0,
+          "y2": 5
+        },
+        {
+          "kind": "arc",
+          "centerX": 0,
+          "centerY": 1,
+          "radius": 2,
+          "startAngle": 180,
+          "sweepAngle": 180
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": 0,
+          "y": -5,
+          "direction": "up",
+          "function": "terminal"
+        },
+        {
+          "id": "2",
+          "x": 0,
+          "y": 5,
+          "direction": "down",
+          "function": "terminal"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "1",
+          "b": "2",
+          "kind": "permanent"
+        }
+      ]
+    },
+    {
+      "id": "iec.connector.m12",
+      "name": "M12 konnektör (4 pin)",
+      "category": "Klemens ve Konnektör/Konnektörler",
+      "keywords": [
+        "M12",
+        "sensör kablosu",
+        "konnektör"
+      ],
+      "referencePrefix": "X",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -20,
+          "y": -5,
+          "width": 40,
+          "height": 10
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "M12",
+          "height": 2.5
+        },
+        {
+          "kind": "line",
+          "x1": -15,
+          "y1": -10,
+          "x2": -15,
+          "y2": -5
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -10,
+          "x2": -5,
+          "y2": -5
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -10,
+          "x2": 5,
+          "y2": -5
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": -10,
+          "x2": 15,
+          "y2": -5
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": -15,
+          "y": -10,
+          "direction": "up",
+          "function": "supplyPositive"
+        },
+        {
+          "id": "2",
+          "x": -5,
+          "y": -10,
+          "direction": "up"
+        },
+        {
+          "id": "3",
+          "x": 5,
+          "y": -10,
+          "direction": "up",
+          "function": "supplyNegative"
+        },
+        {
+          "id": "4",
+          "x": 15,
+          "y": -10,
+          "direction": "up",
+          "function": "output"
+        }
+      ]
+    },
+    {
+      "id": "iec.earth",
+      "name": "Toprak (PE)",
+      "category": "Klemens ve Konnektör/Toprak",
+      "keywords": [
+        "toprak",
+        "PE",
+        "earth",
+        "ground"
+      ],
+      "referencePrefix": "",
+      "role": "graphic",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -5,
+          "x2": 0,
+          "y2": 0
+        },
+        {
+          "kind": "line",
+          "x1": -3,
+          "y1": 0,
+          "x2": 3,
+          "y2": 0
+        },
+        {
+          "kind": "line",
+          "x1": -2,
+          "y1": 1,
+          "x2": 2,
+          "y2": 1
+        },
+        {
+          "kind": "line",
+          "x1": -1,
+          "y1": 2,
+          "x2": 1,
+          "y2": 2
+        }
+      ],
+      "pins": [
+        {
+          "id": "PE",
+          "x": 0,
+          "y": -5,
+          "direction": "up",
+          "function": "protectiveEarth"
+        }
+      ]
+    },
+    {
+      "id": "iec.chassis",
+      "name": "Gövde / şasi bağlantısı",
+      "category": "Klemens ve Konnektör/Toprak",
+      "keywords": [
+        "şasi",
+        "gövde",
+        "chassis"
+      ],
+      "referencePrefix": "",
+      "role": "graphic",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -5,
+          "x2": 0,
+          "y2": 0
+        },
+        {
+          "kind": "line",
+          "x1": -3,
+          "y1": 0,
+          "x2": 3,
+          "y2": 0
+        },
+        {
+          "kind": "line",
+          "x1": -3,
+          "y1": 0,
+          "x2": -4.5,
+          "y2": 2
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 0,
+          "x2": -1.5,
+          "y2": 2
+        },
+        {
+          "kind": "line",
+          "x1": 3,
+          "y1": 0,
+          "x2": 1.5,
+          "y2": 2
+        }
+      ],
+      "pins": [
+        {
+          "id": "PE",
+          "x": 0,
+          "y": -5,
+          "direction": "up",
+          "function": "protectiveEarth"
+        }
+      ]
+    },
+    {
+      "id": "iec.shield",
+      "name": "Kablo ekranı (blendaj)",
+      "category": "Klemens ve Konnektör/Toprak",
+      "keywords": [
+        "ekran",
+        "blendaj",
+        "shield"
+      ],
+      "referencePrefix": "",
+      "role": "graphic",
+      "primitives": [
+        {
+          "kind": "circle",
+          "centerX": 0,
+          "centerY": 0,
+          "radius": 3,
+          "dashed": true
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 3,
+          "x2": 0,
+          "y2": 5
+        }
+      ],
+      "pins": [
+        {
+          "id": "SH",
+          "x": 0,
+          "y": 5,
+          "direction": "down",
+          "function": "shield"
+        }
+      ]
+    }
+  ]
+}

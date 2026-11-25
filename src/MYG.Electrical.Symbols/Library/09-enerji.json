@@ -1,0 +1,647 @@
+{
+  "formatVersion": 1,
+  "library": "MYG IEC 60617",
+  "version": "1.0.0",
+  "title": "Enerji",
+  "symbols": [
+    {
+      "id": "iec.psu.24vdc",
+      "name": "Güç kaynağı 24VDC",
+      "category": "Enerji/Güç kaynakları",
+      "keywords": [
+        "SMPS",
+        "24V",
+        "güç kaynağı",
+        "power supply",
+        "adaptör"
+      ],
+      "referencePrefix": "T",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -20,
+          "y": -10,
+          "width": 40,
+          "height": 20
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": -15,
+          "x2": -10,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -15,
+          "x2": 0,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": -15,
+          "x2": 10,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": -15,
+          "y1": 10,
+          "x2": -15,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 10,
+          "x2": -5,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 10,
+          "x2": 5,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": 10,
+          "x2": 15,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": -20,
+          "y1": 10,
+          "x2": 20,
+          "y2": -10
+        },
+        {
+          "kind": "text",
+          "x": -10,
+          "y": -4,
+          "text": "~",
+          "height": 6
+        },
+        {
+          "kind": "text",
+          "x": 10,
+          "y": 4,
+          "text": "=",
+          "height": 6
+        }
+      ],
+      "pins": [
+        {
+          "id": "L",
+          "x": -10,
+          "y": -15,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "N",
+          "x": 0,
+          "y": -15,
+          "direction": "up",
+          "function": "neutral"
+        },
+        {
+          "id": "PE",
+          "x": 10,
+          "y": -15,
+          "direction": "up",
+          "function": "protectiveEarth"
+        },
+        {
+          "id": "+1",
+          "x": -15,
+          "y": 15,
+          "direction": "down",
+          "function": "supplyPositive"
+        },
+        {
+          "id": "+2",
+          "x": -5,
+          "y": 15,
+          "direction": "down",
+          "function": "supplyPositive"
+        },
+        {
+          "id": "-1",
+          "x": 5,
+          "y": 15,
+          "direction": "down",
+          "function": "supplyNegative"
+        },
+        {
+          "id": "-2",
+          "x": 15,
+          "y": 15,
+          "direction": "down",
+          "function": "supplyNegative"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "+1",
+          "b": "+2",
+          "kind": "permanent"
+        },
+        {
+          "a": "-1",
+          "b": "-2",
+          "kind": "permanent"
+        }
+      ],
+      "defaultProperties": {
+        "Çıkış": "24VDC",
+        "Akım": ""
+      }
+    },
+    {
+      "id": "iec.dist.24vdc",
+      "name": "24VDC dağıtım bloğu (sigortalı)",
+      "category": "Enerji/Dağıtım",
+      "keywords": [
+        "24VDC",
+        "dağıtım",
+        "sigortalı dağıtım",
+        "potansiyel"
+      ],
+      "referencePrefix": "F",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -20,
+          "y": -5,
+          "width": 40,
+          "height": 10
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -5
+        },
+        {
+          "kind": "line",
+          "x1": -15,
+          "y1": 5,
+          "x2": -15,
+          "y2": 10
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 5,
+          "x2": -5,
+          "y2": 10
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 5,
+          "x2": 5,
+          "y2": 10
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": 5,
+          "x2": 15,
+          "y2": 10
+        }
+      ],
+      "pins": [
+        {
+          "id": "+IN",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "supplyPositive"
+        },
+        {
+          "id": "+1",
+          "x": -15,
+          "y": 10,
+          "direction": "down",
+          "function": "supplyPositive"
+        },
+        {
+          "id": "+2",
+          "x": -5,
+          "y": 10,
+          "direction": "down",
+          "function": "supplyPositive"
+        },
+        {
+          "id": "+3",
+          "x": 5,
+          "y": 10,
+          "direction": "down",
+          "function": "supplyPositive"
+        },
+        {
+          "id": "+4",
+          "x": 15,
+          "y": 10,
+          "direction": "down",
+          "function": "supplyPositive"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "+IN",
+          "b": "+1"
+        },
+        {
+          "a": "+IN",
+          "b": "+2"
+        },
+        {
+          "a": "+IN",
+          "b": "+3"
+        },
+        {
+          "a": "+IN",
+          "b": "+4"
+        }
+      ]
+    },
+    {
+      "id": "iec.battery",
+      "name": "Akü / batarya",
+      "category": "Enerji/Güç kaynakları",
+      "keywords": [
+        "akü",
+        "batarya",
+        "UPS"
+      ],
+      "referencePrefix": "G",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": -4,
+          "y1": -1,
+          "x2": 4,
+          "y2": -1
+        },
+        {
+          "kind": "line",
+          "x1": -2,
+          "y1": 1,
+          "x2": 2,
+          "y2": 1
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -1
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 1,
+          "x2": 0,
+          "y2": 10
+        }
+      ],
+      "pins": [
+        {
+          "id": "+",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "supplyPositive"
+        },
+        {
+          "id": "-",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "supplyNegative"
+        }
+      ],
+      "defaultProperties": {
+        "Gerilim": "24V"
+      }
+    },
+    {
+      "id": "iec.socket",
+      "name": "Priz (topraklı)",
+      "category": "Enerji/Prizler",
+      "keywords": [
+        "priz",
+        "socket",
+        "servis prizi"
+      ],
+      "referencePrefix": "X",
+      "primitives": [
+        {
+          "kind": "arc",
+          "centerX": 0,
+          "centerY": 2,
+          "radius": 5,
+          "startAngle": 180,
+          "sweepAngle": 180
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 2,
+          "x2": 5,
+          "y2": 2
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -3,
+          "x2": 0,
+          "y2": 2
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -10,
+          "x2": -5,
+          "y2": 2
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -10,
+          "x2": 5,
+          "y2": 2
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -3
+        }
+      ],
+      "pins": [
+        {
+          "id": "L",
+          "x": -5,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "PE",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "protectiveEarth"
+        },
+        {
+          "id": "N",
+          "x": 5,
+          "y": -10,
+          "direction": "up",
+          "function": "neutral"
+        }
+      ]
+    },
+    {
+      "id": "iec.transformer.1ph",
+      "name": "Trafo (1 faz)",
+      "category": "Enerji/Trafolar",
+      "keywords": [
+        "trafo",
+        "transformatör"
+      ],
+      "referencePrefix": "T",
+      "primitives": [
+        {
+          "kind": "circle",
+          "centerX": 0,
+          "centerY": -3,
+          "radius": 4
+        },
+        {
+          "kind": "circle",
+          "centerX": 0,
+          "centerY": 3,
+          "radius": 4
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -10,
+          "x2": -5,
+          "y2": -6
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -6,
+          "x2": -2.5,
+          "y2": -6
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -10,
+          "x2": 5,
+          "y2": -6
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -6,
+          "x2": 2.5,
+          "y2": -6
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 10,
+          "x2": -5,
+          "y2": 6
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 6,
+          "x2": -2.5,
+          "y2": 6
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 10,
+          "x2": 5,
+          "y2": 6
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 6,
+          "x2": 2.5,
+          "y2": 6
+        }
+      ],
+      "pins": [
+        {
+          "id": "1U1",
+          "x": -5,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "1U2",
+          "x": 5,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "2U1",
+          "x": -5,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "2U2",
+          "x": 5,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        }
+      ],
+      "defaultProperties": {
+        "Güç": "",
+        "Primer": "",
+        "Sekonder": ""
+      }
+    },
+    {
+      "id": "iec.transformer.control",
+      "name": "Kumanda trafosu 400/24V",
+      "category": "Enerji/Trafolar",
+      "keywords": [
+        "kumanda trafosu",
+        "24VAC"
+      ],
+      "referencePrefix": "T",
+      "primitives": [
+        {
+          "kind": "circle",
+          "centerX": 0,
+          "centerY": -3,
+          "radius": 4
+        },
+        {
+          "kind": "circle",
+          "centerX": 0,
+          "centerY": 3,
+          "radius": 4
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -10,
+          "x2": -5,
+          "y2": -6
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -6,
+          "x2": -2.5,
+          "y2": -6
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -10,
+          "x2": 5,
+          "y2": -6
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -6,
+          "x2": 2.5,
+          "y2": -6
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 10,
+          "x2": -5,
+          "y2": 6
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 6,
+          "x2": -2.5,
+          "y2": 6
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 10,
+          "x2": 5,
+          "y2": 6
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 6,
+          "x2": 2.5,
+          "y2": 6
+        }
+      ],
+      "pins": [
+        {
+          "id": "400V",
+          "x": -5,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "0",
+          "x": 5,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "24V",
+          "x": -5,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "0V",
+          "x": 5,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        }
+      ],
+      "defaultProperties": {
+        "Güç": "",
+        "Primer": "",
+        "Sekonder": ""
+      }
+    }
+  ]
+}

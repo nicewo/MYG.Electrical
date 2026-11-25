@@ -5,4 +5,8 @@
   <ItemGroup>
     <ProjectReference Include="..\MYG.Electrical.Core\MYG.Electrical.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <!-- tools/symbolgen/generate.py ile üretilir; kaynak adı: MYG.Electrical.Symbols.Library.<dosya>.json -->
+    <EmbeddedResource Include="Library\*.json" LogicalName="MYG.Electrical.Symbols.Library.%(Filename)%(Extension)" />
+  </ItemGroup>
 </Project>

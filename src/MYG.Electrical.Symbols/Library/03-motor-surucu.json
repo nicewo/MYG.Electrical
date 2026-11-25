@@ -1,0 +1,1327 @@
+{
+  "formatVersion": 1,
+  "library": "MYG IEC 60617",
+  "version": "1.0.0",
+  "title": "Motor ve Sürücü",
+  "symbols": [
+    {
+      "id": "iec.motor.3ph",
+      "name": "Motor (3 faz)",
+      "category": "Motor ve Sürücü/Motorlar",
+      "keywords": [
+        "asenkron",
+        "motor",
+        "3~"
+      ],
+      "referencePrefix": "M",
+      "primitives": [
+        {
+          "kind": "circle",
+          "centerX": 0,
+          "centerY": 8,
+          "radius": 8
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 6.5,
+          "text": "M",
+          "height": 5
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 11.5,
+          "text": "3~",
+          "height": 3
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": -10,
+          "x2": -10,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": -3,
+          "x2": -5,
+          "y2": 1.7550020016016017
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": 0
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": -10,
+          "x2": 10,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": -3,
+          "x2": 5,
+          "y2": 1.7550020016016017
+        }
+      ],
+      "pins": [
+        {
+          "id": "U1",
+          "x": -10,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "V1",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "W1",
+          "x": 10,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        }
+      ],
+      "defaultProperties": {
+        "Güç": "",
+        "Gerilim": "400V",
+        "Akım": "",
+        "Devir": ""
+      }
+    },
+    {
+      "id": "iec.motor.3ph.pe",
+      "name": "Motor (3 faz + PE)",
+      "category": "Motor ve Sürücü/Motorlar",
+      "keywords": [
+        "motor",
+        "3~",
+        "PE",
+        "topraklı"
+      ],
+      "referencePrefix": "M",
+      "primitives": [
+        {
+          "kind": "circle",
+          "centerX": 0,
+          "centerY": 8,
+          "radius": 8
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 6.5,
+          "text": "M",
+          "height": 5
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 11.5,
+          "text": "3~",
+          "height": 3
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": -10,
+          "x2": -10,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": -3,
+          "x2": -5,
+          "y2": 1.7550020016016017
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": 0
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": -10,
+          "x2": 10,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": -3,
+          "x2": 5,
+          "y2": 1.7550020016016017
+        },
+        {
+          "kind": "line",
+          "x1": 20,
+          "y1": -10,
+          "x2": 20,
+          "y2": 8
+        },
+        {
+          "kind": "line",
+          "x1": 20,
+          "y1": 8,
+          "x2": 8,
+          "y2": 8
+        }
+      ],
+      "pins": [
+        {
+          "id": "U1",
+          "x": -10,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "V1",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "W1",
+          "x": 10,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "PE",
+          "x": 20,
+          "y": -10,
+          "direction": "up",
+          "function": "protectiveEarth"
+        }
+      ],
+      "defaultProperties": {
+        "Güç": "",
+        "Gerilim": "400V",
+        "Akım": "",
+        "Devir": ""
+      }
+    },
+    {
+      "id": "iec.motor.1ph",
+      "name": "Motor (1 faz)",
+      "category": "Motor ve Sürücü/Motorlar",
+      "keywords": [
+        "motor",
+        "monofaze",
+        "1~"
+      ],
+      "referencePrefix": "M",
+      "primitives": [
+        {
+          "kind": "circle",
+          "centerX": 0,
+          "centerY": 8,
+          "radius": 8
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 6.5,
+          "text": "M",
+          "height": 5
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 11.5,
+          "text": "1~",
+          "height": 3
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -10,
+          "x2": -5,
+          "y2": 1.7550020016016017
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -10,
+          "x2": 5,
+          "y2": 1.7550020016016017
+        }
+      ],
+      "pins": [
+        {
+          "id": "L",
+          "x": -5,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "N",
+          "x": 5,
+          "y": -10,
+          "direction": "up",
+          "function": "neutral"
+        }
+      ],
+      "defaultProperties": {
+        "Güç": "",
+        "Gerilim": ""
+      }
+    },
+    {
+      "id": "iec.motor.dc",
+      "name": "DC motor",
+      "category": "Motor ve Sürücü/Motorlar",
+      "keywords": [
+        "DC motor",
+        "fırçalı"
+      ],
+      "referencePrefix": "M",
+      "primitives": [
+        {
+          "kind": "circle",
+          "centerX": 0,
+          "centerY": 8,
+          "radius": 8
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 6.5,
+          "text": "M",
+          "height": 5
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 11.5,
+          "text": "=",
+          "height": 3
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -10,
+          "x2": -5,
+          "y2": 1.7550020016016017
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -10,
+          "x2": 5,
+          "y2": 1.7550020016016017
+        }
+      ],
+      "pins": [
+        {
+          "id": "+",
+          "x": -5,
+          "y": -10,
+          "direction": "up",
+          "function": "supplyPositive"
+        },
+        {
+          "id": "-",
+          "x": 5,
+          "y": -10,
+          "direction": "up",
+          "function": "supplyNegative"
+        }
+      ],
+      "defaultProperties": {
+        "Güç": "",
+        "Gerilim": ""
+      }
+    },
+    {
+      "id": "iec.motor.brake",
+      "name": "Motor freni (elektromanyetik)",
+      "category": "Motor ve Sürücü/Motorlar",
+      "keywords": [
+        "fren",
+        "brake",
+        "balata"
+      ],
+      "referencePrefix": "M",
+      "role": "contact",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -5,
+          "y": -3,
+          "width": 10,
+          "height": 6
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 3,
+          "x2": 5,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 3,
+          "x2": 0,
+          "y2": 10
+        }
+      ],
+      "pins": [
+        {
+          "id": "BD1",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "coil"
+        },
+        {
+          "id": "BD2",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "coil"
+        }
+      ],
+      "defaultProperties": {
+        "Gerilim": ""
+      }
+    },
+    {
+      "id": "iec.pump.3ph",
+      "name": "Pompa motoru (3 faz)",
+      "category": "Motor ve Sürücü/Motorlar",
+      "keywords": [
+        "pompa",
+        "pump"
+      ],
+      "referencePrefix": "M",
+      "primitives": [
+        {
+          "kind": "circle",
+          "centerX": 0,
+          "centerY": 8,
+          "radius": 8
+        },
+        {
+          "kind": "polygon",
+          "points": [
+            -4,
+            12,
+            4,
+            12,
+            0,
+            3
+          ]
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": -10,
+          "x2": -10,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": -3,
+          "x2": -5,
+          "y2": 1.7550020016016017
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": 0
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": -10,
+          "x2": 10,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": -3,
+          "x2": 5,
+          "y2": 1.7550020016016017
+        }
+      ],
+      "pins": [
+        {
+          "id": "U1",
+          "x": -10,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "V1",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "W1",
+          "x": 10,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        }
+      ],
+      "defaultProperties": {
+        "Güç": ""
+      }
+    },
+    {
+      "id": "iec.fan.1ph",
+      "name": "Fan (1 faz)",
+      "category": "Motor ve Sürücü/Motorlar",
+      "keywords": [
+        "fan",
+        "havalandırma",
+        "pano fanı"
+      ],
+      "referencePrefix": "M",
+      "primitives": [
+        {
+          "kind": "circle",
+          "centerX": 0,
+          "centerY": 8,
+          "radius": 8
+        },
+        {
+          "kind": "polygon",
+          "points": [
+            0,
+            8,
+            -2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "kind": "polygon",
+          "points": [
+            0,
+            8,
+            5.2,
+            11,
+            3.2,
+            13.5
+          ]
+        },
+        {
+          "kind": "polygon",
+          "points": [
+            0,
+            8,
+            -5.2,
+            11,
+            -3.2,
+            13.5
+          ]
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -10,
+          "x2": -5,
+          "y2": 1.7550020016016017
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -10,
+          "x2": 5,
+          "y2": 1.7550020016016017
+        }
+      ],
+      "pins": [
+        {
+          "id": "L",
+          "x": -5,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "N",
+          "x": 5,
+          "y": -10,
+          "direction": "up",
+          "function": "neutral"
+        }
+      ]
+    },
+    {
+      "id": "iec.vfd.3ph",
+      "name": "Frekans inverteri (3 faz giriş)",
+      "category": "Motor ve Sürücü/Sürücüler",
+      "description": "Sürücü güç bölümü. Kumanda klemensleri aynı etiketle 'Sürücü kumanda klemensleri' sembolüyle eklenir.",
+      "keywords": [
+        "VFD",
+        "inverter",
+        "sürücü",
+        "22 kW",
+        "frekans"
+      ],
+      "referencePrefix": "T",
+      "role": "main",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -20,
+          "y": -15,
+          "width": 40,
+          "height": 30
+        },
+        {
+          "kind": "line",
+          "x1": -15,
+          "y1": -20,
+          "x2": -15,
+          "y2": -15
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -20,
+          "x2": -5,
+          "y2": -15
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -20,
+          "x2": 5,
+          "y2": -15
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": -20,
+          "x2": 15,
+          "y2": -15
+        },
+        {
+          "kind": "line",
+          "x1": -15,
+          "y1": 15,
+          "x2": -15,
+          "y2": 20
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 15,
+          "x2": -5,
+          "y2": 20
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 15,
+          "x2": 5,
+          "y2": 20
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": 15,
+          "x2": 15,
+          "y2": 20
+        },
+        {
+          "kind": "line",
+          "x1": -20,
+          "y1": 15,
+          "x2": 20,
+          "y2": -15
+        },
+        {
+          "kind": "text",
+          "x": -10,
+          "y": -7,
+          "text": "~",
+          "height": 6
+        },
+        {
+          "kind": "text",
+          "x": 10,
+          "y": 7,
+          "text": "~",
+          "height": 6
+        }
+      ],
+      "pins": [
+        {
+          "id": "L1",
+          "x": -15,
+          "y": -20,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "L2",
+          "x": -5,
+          "y": -20,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "L3",
+          "x": 5,
+          "y": -20,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "PE",
+          "x": 15,
+          "y": -20,
+          "direction": "up",
+          "function": "protectiveEarth"
+        },
+        {
+          "id": "U",
+          "x": -15,
+          "y": 20,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "V",
+          "x": -5,
+          "y": 20,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "W",
+          "x": 5,
+          "y": 20,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "PE2",
+          "x": 15,
+          "y": 20,
+          "direction": "down",
+          "function": "protectiveEarth"
+        }
+      ],
+      "defaultProperties": {
+        "Güç": "",
+        "Giriş gerilimi": "",
+        "Çıkış akımı": ""
+      }
+    },
+    {
+      "id": "iec.vfd.1ph",
+      "name": "Frekans inverteri (1 faz giriş)",
+      "category": "Motor ve Sürücü/Sürücüler",
+      "description": "Sürücü güç bölümü. Kumanda klemensleri aynı etiketle 'Sürücü kumanda klemensleri' sembolüyle eklenir.",
+      "keywords": [
+        "VFD",
+        "inverter",
+        "sürücü",
+        "2 kW",
+        "monofaze giriş"
+      ],
+      "referencePrefix": "T",
+      "role": "main",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -20,
+          "y": -15,
+          "width": 40,
+          "height": 30
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": -20,
+          "x2": -10,
+          "y2": -15
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -20,
+          "x2": 0,
+          "y2": -15
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": -20,
+          "x2": 10,
+          "y2": -15
+        },
+        {
+          "kind": "line",
+          "x1": -15,
+          "y1": 15,
+          "x2": -15,
+          "y2": 20
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 15,
+          "x2": -5,
+          "y2": 20
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 15,
+          "x2": 5,
+          "y2": 20
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": 15,
+          "x2": 15,
+          "y2": 20
+        },
+        {
+          "kind": "line",
+          "x1": -20,
+          "y1": 15,
+          "x2": 20,
+          "y2": -15
+        },
+        {
+          "kind": "text",
+          "x": -10,
+          "y": -7,
+          "text": "~",
+          "height": 6
+        },
+        {
+          "kind": "text",
+          "x": 10,
+          "y": 7,
+          "text": "~",
+          "height": 6
+        }
+      ],
+      "pins": [
+        {
+          "id": "L",
+          "x": -10,
+          "y": -20,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "N",
+          "x": 0,
+          "y": -20,
+          "direction": "up",
+          "function": "neutral"
+        },
+        {
+          "id": "PE",
+          "x": 10,
+          "y": -20,
+          "direction": "up",
+          "function": "protectiveEarth"
+        },
+        {
+          "id": "U",
+          "x": -15,
+          "y": 20,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "V",
+          "x": -5,
+          "y": 20,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "W",
+          "x": 5,
+          "y": 20,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "PE2",
+          "x": 15,
+          "y": 20,
+          "direction": "down",
+          "function": "protectiveEarth"
+        }
+      ],
+      "defaultProperties": {
+        "Güç": "",
+        "Giriş gerilimi": "",
+        "Çıkış akımı": ""
+      }
+    },
+    {
+      "id": "iec.vfd.control",
+      "name": "Sürücü kumanda klemensleri",
+      "category": "Motor ve Sürücü/Sürücüler",
+      "keywords": [
+        "inverter",
+        "frekans",
+        "DI",
+        "AI",
+        "röle çıkışı"
+      ],
+      "referencePrefix": "T",
+      "role": "contact",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -35,
+          "y": -10,
+          "width": 70,
+          "height": 20
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "VFD I/O",
+          "height": 3
+        },
+        {
+          "kind": "line",
+          "x1": -30,
+          "y1": -15,
+          "x2": -30,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": -20,
+          "y1": -15,
+          "x2": -20,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": -15,
+          "x2": -10,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -15,
+          "x2": 0,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": -15,
+          "x2": 10,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 20,
+          "y1": -15,
+          "x2": 20,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 30,
+          "y1": -15,
+          "x2": 30,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": -30,
+          "y1": 10,
+          "x2": -30,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": -20,
+          "y1": 10,
+          "x2": -20,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": 10,
+          "x2": -10,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": 10,
+          "x2": 10,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": 20,
+          "y1": 10,
+          "x2": 20,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": 30,
+          "y1": 10,
+          "x2": 30,
+          "y2": 15
+        }
+      ],
+      "pins": [
+        {
+          "id": "DI1",
+          "x": -30,
+          "y": -15,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "DI2",
+          "x": -20,
+          "y": -15,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "DI3",
+          "x": -10,
+          "y": -15,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "DI4",
+          "x": 0,
+          "y": -15,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "DI5",
+          "x": 10,
+          "y": -15,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "COM",
+          "x": 20,
+          "y": -15,
+          "direction": "up",
+          "function": "supplyNegative"
+        },
+        {
+          "id": "+24V",
+          "x": 30,
+          "y": -15,
+          "direction": "up",
+          "function": "supplyPositive"
+        },
+        {
+          "id": "AI1",
+          "x": -30,
+          "y": 15,
+          "direction": "down",
+          "function": "input"
+        },
+        {
+          "id": "+10V",
+          "x": -20,
+          "y": 15,
+          "direction": "down",
+          "function": "supplyPositive"
+        },
+        {
+          "id": "GND",
+          "x": -10,
+          "y": 15,
+          "direction": "down",
+          "function": "supplyNegative"
+        },
+        {
+          "id": "AO1",
+          "x": 0,
+          "y": 15,
+          "direction": "down",
+          "function": "output"
+        },
+        {
+          "id": "RA",
+          "x": 10,
+          "y": 15,
+          "direction": "down",
+          "function": "contactNo"
+        },
+        {
+          "id": "RB",
+          "x": 20,
+          "y": 15,
+          "direction": "down",
+          "function": "contactNc"
+        },
+        {
+          "id": "RC",
+          "x": 30,
+          "y": 15,
+          "direction": "down",
+          "function": "contactCommon"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "RC",
+          "b": "RA"
+        },
+        {
+          "a": "RC",
+          "b": "RB"
+        }
+      ]
+    },
+    {
+      "id": "iec.vfd.comm",
+      "name": "Sürücü haberleşme (RS485)",
+      "category": "Motor ve Sürücü/Sürücüler",
+      "keywords": [
+        "Modbus",
+        "RS485",
+        "inverter"
+      ],
+      "referencePrefix": "T",
+      "role": "contact",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -15,
+          "y": -10,
+          "width": 30,
+          "height": 20
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "RS485",
+          "height": 2.5
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": -5,
+          "x2": 20,
+          "y2": -5
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": 5,
+          "x2": 20,
+          "y2": 5
+        }
+      ],
+      "pins": [
+        {
+          "id": "A",
+          "x": 20,
+          "y": -5,
+          "direction": "right",
+          "function": "communication"
+        },
+        {
+          "id": "B",
+          "x": 20,
+          "y": 5,
+          "direction": "right",
+          "function": "communication"
+        }
+      ]
+    },
+    {
+      "id": "iec.softstarter",
+      "name": "Yumuşak yolverici",
+      "category": "Motor ve Sürücü/Sürücüler",
+      "keywords": [
+        "soft starter",
+        "yol verici"
+      ],
+      "referencePrefix": "T",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -20,
+          "y": -10,
+          "width": 40,
+          "height": 20
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": -15,
+          "x2": -10,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -15,
+          "x2": 0,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": -15,
+          "x2": 10,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": 10,
+          "x2": -10,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": 10,
+          "x2": 10,
+          "y2": 15
+        },
+        {
+          "kind": "polygon",
+          "points": [
+            -6,
+            4,
+            -2,
+            -4,
+            2,
+            4
+          ],
+          "open": true
+        },
+        {
+          "kind": "line",
+          "x1": 4,
+          "y1": -4,
+          "x2": 4,
+          "y2": 4
+        }
+      ],
+      "pins": [
+        {
+          "id": "1L1",
+          "x": -10,
+          "y": -15,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "3L2",
+          "x": 0,
+          "y": -15,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "5L3",
+          "x": 10,
+          "y": -15,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "2T1",
+          "x": -10,
+          "y": 15,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "4T2",
+          "x": 0,
+          "y": 15,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "6T3",
+          "x": 10,
+          "y": 15,
+          "direction": "down",
+          "function": "power"
+        }
+      ],
+      "defaultProperties": {
+        "Güç": ""
+      }
+    }
+  ]
+}

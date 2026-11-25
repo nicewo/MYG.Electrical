@@ -1,0 +1,2357 @@
+{
+  "formatVersion": 1,
+  "library": "MYG IEC 60617",
+  "version": "1.0.0",
+  "title": "Koruma",
+  "symbols": [
+    {
+      "id": "iec.fuse",
+      "name": "Sigorta",
+      "category": "Koruma/Sigortalar",
+      "keywords": [
+        "fuse",
+        "buşon",
+        "NH",
+        "cam sigorta"
+      ],
+      "referencePrefix": "F",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": 10
+        },
+        {
+          "kind": "rect",
+          "x": -2,
+          "y": -5,
+          "width": 4,
+          "height": 10
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "2",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "1",
+          "b": "2",
+          "kind": "permanent"
+        }
+      ],
+      "defaultProperties": {
+        "Anma akımı": ""
+      }
+    },
+    {
+      "id": "iec.fuse.3p",
+      "name": "Sigorta (3 kutup)",
+      "category": "Koruma/Sigortalar",
+      "keywords": [
+        "NH",
+        "3 faz sigorta"
+      ],
+      "referencePrefix": "F",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": -10,
+          "x2": -10,
+          "y2": 10
+        },
+        {
+          "kind": "rect",
+          "x": -12,
+          "y": -5,
+          "width": 4,
+          "height": 10
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": 10
+        },
+        {
+          "kind": "rect",
+          "x": -2,
+          "y": -5,
+          "width": 4,
+          "height": 10
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": -10,
+          "x2": 10,
+          "y2": 10
+        },
+        {
+          "kind": "rect",
+          "x": 8,
+          "y": -5,
+          "width": 4,
+          "height": 10
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": -10,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "2",
+          "x": -10,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "3",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "4",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "5",
+          "x": 10,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "6",
+          "x": 10,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "1",
+          "b": "2",
+          "kind": "permanent"
+        },
+        {
+          "a": "3",
+          "b": "4",
+          "kind": "permanent"
+        },
+        {
+          "a": "5",
+          "b": "6",
+          "kind": "permanent"
+        }
+      ],
+      "defaultProperties": {
+        "Anma akımı": ""
+      }
+    },
+    {
+      "id": "iec.fuse.disconnector",
+      "name": "Sigortalı ayırıcı (1 kutup)",
+      "category": "Koruma/Sigortalar",
+      "keywords": [
+        "sigortalı ayırıcı",
+        "kartuş",
+        "klemens sigorta"
+      ],
+      "referencePrefix": "F",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 6
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 6,
+          "x2": -3.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "polygon",
+          "points": [
+            0.2,
+            5.6,
+            -3.3,
+            -3,
+            -5.1,
+            -2.3,
+            -1.6,
+            6.3
+          ]
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "2",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "1",
+          "b": "2"
+        }
+      ],
+      "defaultProperties": {
+        "Anma akımı": ""
+      }
+    },
+    {
+      "id": "iec.mcb",
+      "name": "Otomatik sigorta (3 kutup)",
+      "category": "Koruma/Otomatik sigortalar",
+      "keywords": [
+        "MCB",
+        "C16",
+        "B16",
+        "kesici",
+        "3P"
+      ],
+      "referencePrefix": "F",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": -10,
+          "x2": -10,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": 10,
+          "x2": -10,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": 4,
+          "x2": -13.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": -11,
+          "y1": -5,
+          "x2": -9,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": -9,
+          "y1": -5,
+          "x2": -11,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 4,
+          "x2": -3.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": -1,
+          "y1": -5,
+          "x2": 1,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 1,
+          "y1": -5,
+          "x2": -1,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": -10,
+          "x2": 10,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": 10,
+          "x2": 10,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": 4,
+          "x2": 6.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": 9,
+          "y1": -5,
+          "x2": 11,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 11,
+          "y1": -5,
+          "x2": 9,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": -17.75,
+          "y1": 0,
+          "x2": 8.25,
+          "y2": 0,
+          "dashed": true
+        },
+        {
+          "kind": "rect",
+          "x": -20.75,
+          "y": -1.5,
+          "width": 3,
+          "height": 3
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": -10,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "2",
+          "x": -10,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "3",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "4",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "5",
+          "x": 10,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "6",
+          "x": 10,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "1",
+          "b": "2"
+        },
+        {
+          "a": "3",
+          "b": "4"
+        },
+        {
+          "a": "5",
+          "b": "6"
+        }
+      ],
+      "defaultProperties": {
+        "Anma akımı": "",
+        "Karakteristik": "C"
+      }
+    },
+    {
+      "id": "iec.mcb.1p",
+      "name": "Otomatik sigorta (1 kutup)",
+      "category": "Koruma/Otomatik sigortalar",
+      "keywords": [
+        "MCB",
+        "1P",
+        "C6",
+        "B10"
+      ],
+      "referencePrefix": "F",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 4,
+          "x2": -3.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": -1,
+          "y1": -5,
+          "x2": 1,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 1,
+          "y1": -5,
+          "x2": -1,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": -7.75,
+          "y1": 0,
+          "x2": -1.75,
+          "y2": 0,
+          "dashed": true
+        },
+        {
+          "kind": "rect",
+          "x": -10.75,
+          "y": -1.5,
+          "width": 3,
+          "height": 3
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "2",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "1",
+          "b": "2"
+        }
+      ],
+      "defaultProperties": {
+        "Anma akımı": "",
+        "Karakteristik": "C"
+      }
+    },
+    {
+      "id": "iec.mcb.2p",
+      "name": "Otomatik sigorta (2 kutup)",
+      "category": "Koruma/Otomatik sigortalar",
+      "keywords": [
+        "MCB",
+        "2P"
+      ],
+      "referencePrefix": "F",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -10,
+          "x2": -5,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 10,
+          "x2": -5,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 4,
+          "x2": -8.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -10,
+          "x2": 5,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 10,
+          "x2": 5,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 4,
+          "x2": 1.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": -6,
+          "y1": -5,
+          "x2": -4,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": -4,
+          "y1": -5,
+          "x2": -6,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 4,
+          "y1": -5,
+          "x2": 6,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 6,
+          "y1": -5,
+          "x2": 4,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": -12.75,
+          "y1": 0,
+          "x2": 3.25,
+          "y2": 0,
+          "dashed": true
+        },
+        {
+          "kind": "rect",
+          "x": -15.75,
+          "y": -1.5,
+          "width": 3,
+          "height": 3
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": -5,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "2",
+          "x": -5,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "3",
+          "x": 5,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "4",
+          "x": 5,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "1",
+          "b": "2"
+        },
+        {
+          "a": "3",
+          "b": "4"
+        }
+      ],
+      "defaultProperties": {
+        "Anma akımı": "",
+        "Karakteristik": "C"
+      }
+    },
+    {
+      "id": "iec.mcb.4p",
+      "name": "Otomatik sigorta (4 kutup)",
+      "category": "Koruma/Otomatik sigortalar",
+      "keywords": [
+        "MCB",
+        "4P"
+      ],
+      "referencePrefix": "F",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": -15,
+          "y1": -10,
+          "x2": -15,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": -15,
+          "y1": 10,
+          "x2": -15,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": -15,
+          "y1": 4,
+          "x2": -18.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -10,
+          "x2": -5,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 10,
+          "x2": -5,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 4,
+          "x2": -8.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -10,
+          "x2": 5,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 10,
+          "x2": 5,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 4,
+          "x2": 1.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": -10,
+          "x2": 15,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": 10,
+          "x2": 15,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": 4,
+          "x2": 11.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": -16,
+          "y1": -5,
+          "x2": -14,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": -14,
+          "y1": -5,
+          "x2": -16,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": -6,
+          "y1": -5,
+          "x2": -4,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": -4,
+          "y1": -5,
+          "x2": -6,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 4,
+          "y1": -5,
+          "x2": 6,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 6,
+          "y1": -5,
+          "x2": 4,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 14,
+          "y1": -5,
+          "x2": 16,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 16,
+          "y1": -5,
+          "x2": 14,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": -22.75,
+          "y1": 0,
+          "x2": 13.25,
+          "y2": 0,
+          "dashed": true
+        },
+        {
+          "kind": "rect",
+          "x": -25.75,
+          "y": -1.5,
+          "width": 3,
+          "height": 3
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": -15,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "2",
+          "x": -15,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "3",
+          "x": -5,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "4",
+          "x": -5,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "5",
+          "x": 5,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "6",
+          "x": 5,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "7",
+          "x": 15,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "8",
+          "x": 15,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "1",
+          "b": "2"
+        },
+        {
+          "a": "3",
+          "b": "4"
+        },
+        {
+          "a": "5",
+          "b": "6"
+        },
+        {
+          "a": "7",
+          "b": "8"
+        }
+      ],
+      "defaultProperties": {
+        "Anma akımı": "",
+        "Karakteristik": "C"
+      }
+    },
+    {
+      "id": "iec.mcb.1pn",
+      "name": "Otomatik sigorta (1P+N)",
+      "category": "Koruma/Otomatik sigortalar",
+      "keywords": [
+        "MCB",
+        "1P+N",
+        "faz nötr"
+      ],
+      "referencePrefix": "F",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -10,
+          "x2": -5,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 10,
+          "x2": -5,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 4,
+          "x2": -8.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -10,
+          "x2": 5,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 10,
+          "x2": 5,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 4,
+          "x2": 1.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": -6,
+          "y1": -5,
+          "x2": -4,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": -4,
+          "y1": -5,
+          "x2": -6,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": -12.75,
+          "y1": 0,
+          "x2": 3.25,
+          "y2": 0,
+          "dashed": true
+        },
+        {
+          "kind": "rect",
+          "x": -15.75,
+          "y": -1.5,
+          "width": 3,
+          "height": 3
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": -5,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "2",
+          "x": -5,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "N",
+          "x": 5,
+          "y": -10,
+          "direction": "up",
+          "function": "neutral"
+        },
+        {
+          "id": "N'",
+          "x": 5,
+          "y": 10,
+          "direction": "down",
+          "function": "neutral"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "1",
+          "b": "2"
+        },
+        {
+          "a": "N",
+          "b": "N'"
+        }
+      ],
+      "defaultProperties": {
+        "Anma akımı": "",
+        "Karakteristik": "C"
+      }
+    },
+    {
+      "id": "iec.mpcb.3p",
+      "name": "Motor koruma şalteri (3 kutup)",
+      "category": "Koruma/Motor koruma",
+      "keywords": [
+        "MPCB",
+        "GV2",
+        "motor koruma",
+        "termik manyetik"
+      ],
+      "referencePrefix": "Q",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": -10,
+          "x2": -10,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": 10,
+          "x2": -10,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": 4,
+          "x2": -13.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 4,
+          "x2": -3.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": -10,
+          "x2": 10,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": 10,
+          "x2": 10,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": 4,
+          "x2": 6.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": -11,
+          "y1": -5,
+          "x2": -9,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": -9,
+          "y1": -5,
+          "x2": -11,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": -1,
+          "y1": -5,
+          "x2": 1,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 1,
+          "y1": -5,
+          "x2": -1,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 9,
+          "y1": -5,
+          "x2": 11,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 11,
+          "y1": -5,
+          "x2": 9,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": -17.75,
+          "y1": 0,
+          "x2": 8.25,
+          "y2": 0,
+          "dashed": true
+        },
+        {
+          "kind": "rect",
+          "x": -23.75,
+          "y": -3,
+          "width": 6,
+          "height": 6
+        },
+        {
+          "kind": "text",
+          "x": -20.75,
+          "y": 0,
+          "text": "I>",
+          "height": 2
+        },
+        {
+          "kind": "rect",
+          "x": -29.75,
+          "y": -3,
+          "width": 6,
+          "height": 6
+        },
+        {
+          "kind": "polygon",
+          "points": [
+            -28.25,
+            -1.5,
+            -26.75,
+            -1.5,
+            -26.75,
+            1.5,
+            -25.25,
+            1.5
+          ],
+          "open": true
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": -10,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "2",
+          "x": -10,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "3",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "4",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "5",
+          "x": 10,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "6",
+          "x": 10,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "1",
+          "b": "2"
+        },
+        {
+          "a": "3",
+          "b": "4"
+        },
+        {
+          "a": "5",
+          "b": "6"
+        }
+      ],
+      "defaultProperties": {
+        "Ayar aralığı": "",
+        "Anma akımı": ""
+      }
+    },
+    {
+      "id": "iec.overload.3p",
+      "name": "Termik röle (3 kutup)",
+      "category": "Koruma/Motor koruma",
+      "description": "Aşırı akım rölesi ana yolu; yardımcı kontakları 95-96 / 97-98 aynı etiketle.",
+      "keywords": [
+        "termik",
+        "overload",
+        "LRD",
+        "aşırı akım"
+      ],
+      "referencePrefix": "F",
+      "role": "main",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": -10,
+          "x2": -10,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": 3,
+          "x2": -10,
+          "y2": 10
+        },
+        {
+          "kind": "polygon",
+          "points": [
+            -10,
+            -3,
+            -11.5,
+            -3,
+            -11.5,
+            0,
+            -8.5,
+            0,
+            -8.5,
+            3,
+            -10,
+            3
+          ],
+          "open": true
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 3,
+          "x2": 0,
+          "y2": 10
+        },
+        {
+          "kind": "polygon",
+          "points": [
+            0,
+            -3,
+            -1.5,
+            -3,
+            -1.5,
+            0,
+            1.5,
+            0,
+            1.5,
+            3,
+            0,
+            3
+          ],
+          "open": true
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": -10,
+          "x2": 10,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": 3,
+          "x2": 10,
+          "y2": 10
+        },
+        {
+          "kind": "polygon",
+          "points": [
+            10,
+            -3,
+            8.5,
+            -3,
+            8.5,
+            0,
+            11.5,
+            0,
+            11.5,
+            3,
+            10,
+            3
+          ],
+          "open": true
+        },
+        {
+          "kind": "rect",
+          "x": -14,
+          "y": -6,
+          "width": 28,
+          "height": 12,
+          "dashed": true
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": -10,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "2",
+          "x": -10,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "3",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "4",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "5",
+          "x": 10,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "6",
+          "x": 10,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "1",
+          "b": "2",
+          "kind": "permanent"
+        },
+        {
+          "a": "3",
+          "b": "4",
+          "kind": "permanent"
+        },
+        {
+          "a": "5",
+          "b": "6",
+          "kind": "permanent"
+        }
+      ],
+      "defaultProperties": {
+        "Ayar akımı": ""
+      }
+    },
+    {
+      "id": "iec.overload.contact.nc",
+      "name": "Termik kontağı (95-96 NC)",
+      "category": "Koruma/Motor koruma",
+      "keywords": [
+        "termik",
+        "95",
+        "96",
+        "97",
+        "98"
+      ],
+      "referencePrefix": "F",
+      "role": "contact",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -4,
+          "x2": 4,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 4,
+          "x2": 4.5,
+          "y2": -5
+        },
+        {
+          "kind": "polygon",
+          "points": [
+            -9,
+            -3,
+            -10.5,
+            -3,
+            -10.5,
+            0,
+            -7.5,
+            0,
+            -7.5,
+            3,
+            -9,
+            3
+          ],
+          "open": true
+        },
+        {
+          "kind": "line",
+          "x1": -7.5,
+          "y1": 0,
+          "x2": 0.25,
+          "y2": 0,
+          "dashed": true
+        }
+      ],
+      "pins": [
+        {
+          "id": "95",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "contactNc"
+        },
+        {
+          "id": "96",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "contactNc"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "95",
+          "b": "96"
+        }
+      ]
+    },
+    {
+      "id": "iec.overload.contact.no",
+      "name": "Termik kontağı (97-98 NO)",
+      "category": "Koruma/Motor koruma",
+      "keywords": [
+        "termik",
+        "95",
+        "96",
+        "97",
+        "98"
+      ],
+      "referencePrefix": "F",
+      "role": "contact",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 4,
+          "x2": -3.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "polygon",
+          "points": [
+            -9,
+            -3,
+            -10.5,
+            -3,
+            -10.5,
+            0,
+            -7.5,
+            0,
+            -7.5,
+            3,
+            -9,
+            3
+          ],
+          "open": true
+        },
+        {
+          "kind": "line",
+          "x1": -7.5,
+          "y1": 0,
+          "x2": -1.75,
+          "y2": 0,
+          "dashed": true
+        }
+      ],
+      "pins": [
+        {
+          "id": "97",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "contactNo"
+        },
+        {
+          "id": "98",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "contactNo"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "97",
+          "b": "98"
+        }
+      ]
+    },
+    {
+      "id": "iec.rcd.2p",
+      "name": "Kaçak akım rölesi (2 kutup)",
+      "category": "Koruma/Kaçak akım",
+      "keywords": [
+        "RCD",
+        "kaçak akım",
+        "30mA",
+        "300mA",
+        "ΔI"
+      ],
+      "referencePrefix": "F",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -10,
+          "x2": -5,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 10,
+          "x2": -5,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 4,
+          "x2": -8.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -10,
+          "x2": 5,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 10,
+          "x2": 5,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 4,
+          "x2": 1.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": -14.75,
+          "y1": 0,
+          "x2": 3.25,
+          "y2": 0,
+          "dashed": true
+        },
+        {
+          "kind": "rect",
+          "x": -20.75,
+          "y": -3,
+          "width": 6,
+          "height": 6
+        },
+        {
+          "kind": "text",
+          "x": -17.75,
+          "y": 0,
+          "text": "ΔI",
+          "height": 2
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": -5,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "2",
+          "x": -5,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "N",
+          "x": 5,
+          "y": -10,
+          "direction": "up",
+          "function": "neutral"
+        },
+        {
+          "id": "N'",
+          "x": 5,
+          "y": 10,
+          "direction": "down",
+          "function": "neutral"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "1",
+          "b": "2"
+        },
+        {
+          "a": "N",
+          "b": "N'"
+        }
+      ],
+      "defaultProperties": {
+        "Kaçak akım": "30mA",
+        "Anma akımı": ""
+      }
+    },
+    {
+      "id": "iec.rcd.4p",
+      "name": "Kaçak akım rölesi (4 kutup)",
+      "category": "Koruma/Kaçak akım",
+      "keywords": [
+        "RCD",
+        "kaçak akım",
+        "30mA",
+        "300mA",
+        "ΔI"
+      ],
+      "referencePrefix": "F",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": -15,
+          "y1": -10,
+          "x2": -15,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": -15,
+          "y1": 10,
+          "x2": -15,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": -15,
+          "y1": 4,
+          "x2": -18.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -10,
+          "x2": -5,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 10,
+          "x2": -5,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 4,
+          "x2": -8.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -10,
+          "x2": 5,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 10,
+          "x2": 5,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 4,
+          "x2": 1.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": -10,
+          "x2": 15,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": 10,
+          "x2": 15,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": 4,
+          "x2": 11.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": -24.75,
+          "y1": 0,
+          "x2": 13.25,
+          "y2": 0,
+          "dashed": true
+        },
+        {
+          "kind": "rect",
+          "x": -30.75,
+          "y": -3,
+          "width": 6,
+          "height": 6
+        },
+        {
+          "kind": "text",
+          "x": -27.75,
+          "y": 0,
+          "text": "ΔI",
+          "height": 2
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": -15,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "2",
+          "x": -15,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "3",
+          "x": -5,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "4",
+          "x": -5,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "5",
+          "x": 5,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "6",
+          "x": 5,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "N",
+          "x": 15,
+          "y": -10,
+          "direction": "up",
+          "function": "neutral"
+        },
+        {
+          "id": "N'",
+          "x": 15,
+          "y": 10,
+          "direction": "down",
+          "function": "neutral"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "1",
+          "b": "2"
+        },
+        {
+          "a": "3",
+          "b": "4"
+        },
+        {
+          "a": "5",
+          "b": "6"
+        },
+        {
+          "a": "N",
+          "b": "N'"
+        }
+      ],
+      "defaultProperties": {
+        "Kaçak akım": "30mA",
+        "Anma akımı": ""
+      }
+    },
+    {
+      "id": "iec.rcbo.2p",
+      "name": "Kaçak akım korumalı sigorta (RCBO 1P+N)",
+      "category": "Koruma/Kaçak akım",
+      "keywords": [
+        "RCBO",
+        "kaçak akım",
+        "sigorta"
+      ],
+      "referencePrefix": "F",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -10,
+          "x2": -5,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 10,
+          "x2": -5,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 4,
+          "x2": -8.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -10,
+          "x2": 5,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 10,
+          "x2": 5,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 4,
+          "x2": 1.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": -6,
+          "y1": -5,
+          "x2": -4,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": -4,
+          "y1": -5,
+          "x2": -6,
+          "y2": -3
+        },
+        {
+          "kind": "line",
+          "x1": -14.75,
+          "y1": 0,
+          "x2": 3.25,
+          "y2": 0,
+          "dashed": true
+        },
+        {
+          "kind": "rect",
+          "x": -20.75,
+          "y": -3,
+          "width": 6,
+          "height": 6
+        },
+        {
+          "kind": "text",
+          "x": -17.75,
+          "y": 0,
+          "text": "ΔI",
+          "height": 2
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": -5,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "2",
+          "x": -5,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "N",
+          "x": 5,
+          "y": -10,
+          "direction": "up",
+          "function": "neutral"
+        },
+        {
+          "id": "N'",
+          "x": 5,
+          "y": 10,
+          "direction": "down",
+          "function": "neutral"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "1",
+          "b": "2"
+        },
+        {
+          "a": "N",
+          "b": "N'"
+        }
+      ],
+      "defaultProperties": {
+        "Kaçak akım": "30mA",
+        "Anma akımı": "",
+        "Karakteristik": "C"
+      }
+    },
+    {
+      "id": "iec.surge.arrester",
+      "name": "Parafudr (aşırı gerilim koruma)",
+      "category": "Koruma/Aşırı gerilim",
+      "keywords": [
+        "SPD",
+        "parafudr",
+        "surge",
+        "yıldırım"
+      ],
+      "referencePrefix": "F",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -3,
+          "y": -5,
+          "width": 6,
+          "height": 10
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -5
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 5,
+          "x2": 0,
+          "y2": 10
+        },
+        {
+          "kind": "polygon",
+          "points": [
+            -1.5,
+            3,
+            1.5,
+            -3
+          ],
+          "open": true
+        },
+        {
+          "kind": "polygon",
+          "points": [
+            1.5,
+            -3,
+            0.3,
+            -2.4,
+            1.2,
+            -1.6
+          ],
+          "filled": true
+        }
+      ],
+      "pins": [
+        {
+          "id": "L",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "PE",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "protectiveEarth"
+        }
+      ],
+      "defaultProperties": {
+        "Uc": "275V"
+      }
+    },
+    {
+      "id": "iec.disconnector.3p",
+      "name": "Yük ayırıcı / ana şalter (3 kutup)",
+      "category": "Koruma/Ayırıcılar",
+      "keywords": [
+        "ana şalter",
+        "pako",
+        "yük ayırıcı",
+        "main switch"
+      ],
+      "referencePrefix": "Q",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": -10,
+          "x2": -10,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": 10,
+          "x2": -10,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": 4,
+          "x2": -13.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 4,
+          "x2": -3.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": -10,
+          "x2": 10,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": 10,
+          "x2": 10,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": 4,
+          "x2": 6.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": -11.2,
+          "y1": -4,
+          "x2": -8.8,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": -1.2,
+          "y1": -4,
+          "x2": 1.2,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 8.8,
+          "y1": -4,
+          "x2": 11.2,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": -18.75,
+          "y1": 0,
+          "x2": 8.25,
+          "y2": 0,
+          "dashed": true
+        },
+        {
+          "kind": "line",
+          "x1": -18.75,
+          "y1": -3,
+          "x2": -18.75,
+          "y2": 3
+        },
+        {
+          "kind": "line",
+          "x1": -18.75,
+          "y1": 3,
+          "x2": -16.75,
+          "y2": 3
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": -10,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "2",
+          "x": -10,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "3",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "4",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "5",
+          "x": 10,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "6",
+          "x": 10,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "1",
+          "b": "2"
+        },
+        {
+          "a": "3",
+          "b": "4"
+        },
+        {
+          "a": "5",
+          "b": "6"
+        }
+      ],
+      "defaultProperties": {
+        "Anma akımı": ""
+      }
+    }
+  ]
+}

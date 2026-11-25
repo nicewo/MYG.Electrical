@@ -55,6 +55,25 @@ public sealed class WpfSceneSink(DrawingContext dc) : ISceneSink
         dc.DrawGeometry(null, GetPen(stroke), geometry);
     }
 
+    public void DrawPolygon(IReadOnlyList<Point2D> points, bool closed, StrokeStyle? stroke, uint? fill = null)
+    {
+        if (points.Count < 2)
+        {
+            return;
+        }
+        var geometry = new StreamGeometry();
+        using (var ctx = geometry.Open())
+        {
+            ctx.BeginFigure(WpfConvert.ToPoint(points[0]), isFilled: fill is not null, isClosed: closed);
+            for (var i = 1; i < points.Count; i++)
+            {
+                ctx.LineTo(WpfConvert.ToPoint(points[i]), isStroked: true, isSmoothJoin: true);
+            }
+        }
+        geometry.Freeze();
+        dc.DrawGeometry(fill is { } f ? GetBrush(f) : null, stroke is { } s ? GetPen(s) : null, geometry);
+    }
+
     public void DrawText(string text, Point2D position, double height, uint color, TextAlign align = TextAlign.Left, bool bold = false)
     {
         if (string.IsNullOrEmpty(text))

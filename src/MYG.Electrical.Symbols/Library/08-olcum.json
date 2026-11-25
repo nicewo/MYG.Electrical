@@ -1,0 +1,658 @@
+{
+  "formatVersion": 1,
+  "library": "MYG IEC 60617",
+  "version": "1.0.0",
+  "title": "Ölçüm",
+  "symbols": [
+    {
+      "id": "iec.ammeter",
+      "name": "Ampermetre",
+      "category": "Ölçüm/Göstergeler",
+      "keywords": [
+        "ampermetre",
+        "akım"
+      ],
+      "referencePrefix": "P",
+      "primitives": [
+        {
+          "kind": "circle",
+          "centerX": 0,
+          "centerY": 0,
+          "radius": 5
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "A",
+          "height": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -5
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 5,
+          "x2": 0,
+          "y2": 10
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": 0,
+          "y": -10,
+          "direction": "up"
+        },
+        {
+          "id": "2",
+          "x": 0,
+          "y": 10,
+          "direction": "down"
+        }
+      ]
+    },
+    {
+      "id": "iec.voltmeter",
+      "name": "Voltmetre",
+      "category": "Ölçüm/Göstergeler",
+      "keywords": [
+        "voltmetre",
+        "gerilim"
+      ],
+      "referencePrefix": "P",
+      "primitives": [
+        {
+          "kind": "circle",
+          "centerX": 0,
+          "centerY": 0,
+          "radius": 5
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "V",
+          "height": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -5
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 5,
+          "x2": 0,
+          "y2": 10
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": 0,
+          "y": -10,
+          "direction": "up"
+        },
+        {
+          "id": "2",
+          "x": 0,
+          "y": 10,
+          "direction": "down"
+        }
+      ]
+    },
+    {
+      "id": "iec.ct",
+      "name": "Akım trafosu (CT)",
+      "category": "Ölçüm/Akım trafoları",
+      "keywords": [
+        "CT",
+        "akım trafosu",
+        "100/5",
+        "S1 S2"
+      ],
+      "referencePrefix": "T",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": 10
+        },
+        {
+          "kind": "circle",
+          "centerX": 0,
+          "centerY": 0,
+          "radius": 3
+        },
+        {
+          "kind": "line",
+          "x1": 3,
+          "y1": 0,
+          "x2": 10,
+          "y2": 0
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": 0,
+          "x2": 10,
+          "y2": 5
+        },
+        {
+          "kind": "line",
+          "x1": -3,
+          "y1": 0,
+          "x2": -10,
+          "y2": 0
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": 0,
+          "x2": -10,
+          "y2": 5
+        }
+      ],
+      "pins": [
+        {
+          "id": "P1",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "P2",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "S1",
+          "x": -10,
+          "y": 5,
+          "direction": "down",
+          "function": "output"
+        },
+        {
+          "id": "S2",
+          "x": 10,
+          "y": 5,
+          "direction": "down",
+          "function": "output"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "P1",
+          "b": "P2",
+          "kind": "permanent"
+        }
+      ],
+      "defaultProperties": {
+        "Oran": "100/5A",
+        "Sınıf": "0.5"
+      }
+    },
+    {
+      "id": "iec.poweranalyzer",
+      "name": "Enerji analizörü",
+      "category": "Ölçüm/Analizörler",
+      "keywords": [
+        "power analyzer",
+        "analizör",
+        "Modbus",
+        "kWh",
+        "enerji"
+      ],
+      "referencePrefix": "P",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -60,
+          "y": -15,
+          "width": 120,
+          "height": 30
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "ENERJİ ANALİZÖRÜ",
+          "height": 3
+        },
+        {
+          "kind": "line",
+          "x1": -25,
+          "y1": -20,
+          "x2": -25,
+          "y2": -15
+        },
+        {
+          "kind": "line",
+          "x1": -15,
+          "y1": -20,
+          "x2": -15,
+          "y2": -15
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -20,
+          "x2": -5,
+          "y2": -15
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -20,
+          "x2": 5,
+          "y2": -15
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": -20,
+          "x2": 15,
+          "y2": -15
+        },
+        {
+          "kind": "line",
+          "x1": 25,
+          "y1": -20,
+          "x2": 25,
+          "y2": -15
+        },
+        {
+          "kind": "line",
+          "x1": -35,
+          "y1": 15,
+          "x2": -35,
+          "y2": 20
+        },
+        {
+          "kind": "line",
+          "x1": -25,
+          "y1": 15,
+          "x2": -25,
+          "y2": 20
+        },
+        {
+          "kind": "line",
+          "x1": -15,
+          "y1": 15,
+          "x2": -15,
+          "y2": 20
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 15,
+          "x2": -5,
+          "y2": 20
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 15,
+          "x2": 5,
+          "y2": 20
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": 15,
+          "x2": 15,
+          "y2": 20
+        },
+        {
+          "kind": "line",
+          "x1": 25,
+          "y1": 15,
+          "x2": 25,
+          "y2": 20
+        },
+        {
+          "kind": "line",
+          "x1": 35,
+          "y1": 15,
+          "x2": 35,
+          "y2": 20
+        }
+      ],
+      "pins": [
+        {
+          "id": "V1",
+          "x": -25,
+          "y": -20,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "V2",
+          "x": -15,
+          "y": -20,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "V3",
+          "x": -5,
+          "y": -20,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "VN",
+          "x": 5,
+          "y": -20,
+          "direction": "up",
+          "function": "neutral"
+        },
+        {
+          "id": "A1",
+          "x": 15,
+          "y": -20,
+          "direction": "up",
+          "function": "supplyPositive"
+        },
+        {
+          "id": "A2",
+          "x": 25,
+          "y": -20,
+          "direction": "up",
+          "function": "supplyNegative"
+        },
+        {
+          "id": "I1+",
+          "x": -35,
+          "y": 20,
+          "direction": "down",
+          "function": "input"
+        },
+        {
+          "id": "I1-",
+          "x": -25,
+          "y": 20,
+          "direction": "down",
+          "function": "input"
+        },
+        {
+          "id": "I2+",
+          "x": -15,
+          "y": 20,
+          "direction": "down",
+          "function": "input"
+        },
+        {
+          "id": "I2-",
+          "x": -5,
+          "y": 20,
+          "direction": "down",
+          "function": "input"
+        },
+        {
+          "id": "I3+",
+          "x": 5,
+          "y": 20,
+          "direction": "down",
+          "function": "input"
+        },
+        {
+          "id": "I3-",
+          "x": 15,
+          "y": 20,
+          "direction": "down",
+          "function": "input"
+        },
+        {
+          "id": "A",
+          "x": 25,
+          "y": 20,
+          "direction": "down",
+          "function": "communication"
+        },
+        {
+          "id": "B",
+          "x": 35,
+          "y": 20,
+          "direction": "down",
+          "function": "communication"
+        }
+      ],
+      "defaultProperties": {
+        "Model": "",
+        "CT oranı": ""
+      }
+    },
+    {
+      "id": "iec.energymeter",
+      "name": "Elektrik sayacı (kWh)",
+      "category": "Ölçüm/Sayaçlar",
+      "keywords": [
+        "sayaç",
+        "kWh",
+        "energy meter"
+      ],
+      "referencePrefix": "P",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -20,
+          "y": -10,
+          "width": 40,
+          "height": 20
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "kWh",
+          "height": 3
+        },
+        {
+          "kind": "line",
+          "x1": -15,
+          "y1": -15,
+          "x2": -15,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -15,
+          "x2": -5,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -15,
+          "x2": 5,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": -15,
+          "x2": 15,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": -15,
+          "y1": 10,
+          "x2": -15,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 10,
+          "x2": -5,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 10,
+          "x2": 5,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": 10,
+          "x2": 15,
+          "y2": 15
+        }
+      ],
+      "pins": [
+        {
+          "id": "L1",
+          "x": -15,
+          "y": -15,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "L2",
+          "x": -5,
+          "y": -15,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "L3",
+          "x": 5,
+          "y": -15,
+          "direction": "up",
+          "function": "power"
+        },
+        {
+          "id": "N",
+          "x": 15,
+          "y": -15,
+          "direction": "up",
+          "function": "neutral"
+        },
+        {
+          "id": "L1'",
+          "x": -15,
+          "y": 15,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "L2'",
+          "x": -5,
+          "y": 15,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "L3'",
+          "x": 5,
+          "y": 15,
+          "direction": "down",
+          "function": "power"
+        },
+        {
+          "id": "N'",
+          "x": 15,
+          "y": 15,
+          "direction": "down",
+          "function": "neutral"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "L1",
+          "b": "L1'",
+          "kind": "permanent"
+        },
+        {
+          "a": "L2",
+          "b": "L2'",
+          "kind": "permanent"
+        },
+        {
+          "a": "L3",
+          "b": "L3'",
+          "kind": "permanent"
+        },
+        {
+          "a": "N",
+          "b": "N'",
+          "kind": "permanent"
+        }
+      ]
+    },
+    {
+      "id": "iec.hourmeter",
+      "name": "Çalışma saati sayacı",
+      "category": "Ölçüm/Sayaçlar",
+      "keywords": [
+        "saat sayacı",
+        "hour meter"
+      ],
+      "referencePrefix": "P",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -5,
+          "y": -4,
+          "width": 10,
+          "height": 8
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "h",
+          "height": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 4,
+          "x2": 0,
+          "y2": 10
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": 0,
+          "y": -10,
+          "direction": "up"
+        },
+        {
+          "id": "2",
+          "x": 0,
+          "y": 10,
+          "direction": "down"
+        }
+      ]
+    }
+  ]
+}

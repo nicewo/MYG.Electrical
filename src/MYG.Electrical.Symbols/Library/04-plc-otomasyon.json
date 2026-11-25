@@ -1,0 +1,1094 @@
+{
+  "formatVersion": 1,
+  "library": "MYG IEC 60617",
+  "version": "1.0.0",
+  "title": "PLC ve Otomasyon",
+  "symbols": [
+    {
+      "id": "iec.plc.cpu",
+      "name": "PLC CPU",
+      "category": "PLC ve Otomasyon/PLC",
+      "description": "PLC ana ünitesi. G/Ç modülleri ve tek kanal G/Ç sembolleri aynı etiketle bağlanabilir.",
+      "keywords": [
+        "PLC",
+        "CPU",
+        "S7-1200",
+        "DVP",
+        "kontrolör"
+      ],
+      "referencePrefix": "A",
+      "role": "main",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -30,
+          "y": -20,
+          "width": 60,
+          "height": 40
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "CPU",
+          "height": 3
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": -25,
+          "x2": -10,
+          "y2": -20
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -25,
+          "x2": 0,
+          "y2": -20
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": -25,
+          "x2": 10,
+          "y2": -20
+        },
+        {
+          "kind": "line",
+          "x1": 30,
+          "y1": -10,
+          "x2": 35,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 30,
+          "y1": 0,
+          "x2": 35,
+          "y2": 0
+        },
+        {
+          "kind": "line",
+          "x1": 30,
+          "y1": 10,
+          "x2": 35,
+          "y2": 10
+        }
+      ],
+      "pins": [
+        {
+          "id": "L+",
+          "x": -10,
+          "y": -25,
+          "direction": "up",
+          "function": "supplyPositive"
+        },
+        {
+          "id": "M",
+          "x": 0,
+          "y": -25,
+          "direction": "up",
+          "function": "supplyNegative"
+        },
+        {
+          "id": "PE",
+          "x": 10,
+          "y": -25,
+          "direction": "up",
+          "function": "protectiveEarth"
+        },
+        {
+          "id": "ETH",
+          "x": 35,
+          "y": -10,
+          "direction": "right",
+          "function": "communication"
+        },
+        {
+          "id": "A",
+          "x": 35,
+          "y": 0,
+          "direction": "right",
+          "function": "communication"
+        },
+        {
+          "id": "B",
+          "x": 35,
+          "y": 10,
+          "direction": "right",
+          "function": "communication"
+        }
+      ],
+      "defaultProperties": {
+        "Model": "",
+        "Firmware": ""
+      }
+    },
+    {
+      "id": "iec.plc.di8",
+      "name": "PLC dijital giriş modülü (8 DI)",
+      "category": "PLC ve Otomasyon/G-Ç modülleri",
+      "keywords": [
+        "PLC",
+        "dijital giriş",
+        "DI",
+        "input"
+      ],
+      "referencePrefix": "A",
+      "role": "contact",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -40,
+          "y": -10,
+          "width": 80,
+          "height": 20
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "DI 8",
+          "height": 3
+        },
+        {
+          "kind": "line",
+          "x1": -35,
+          "y1": -15,
+          "x2": -35,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": -25,
+          "y1": -15,
+          "x2": -25,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": -15,
+          "y1": -15,
+          "x2": -15,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -15,
+          "x2": -5,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -15,
+          "x2": 5,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": -15,
+          "x2": 15,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 25,
+          "y1": -15,
+          "x2": 25,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 35,
+          "y1": -15,
+          "x2": 35,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 15
+        }
+      ],
+      "pins": [
+        {
+          "id": "DI0",
+          "x": -35,
+          "y": -15,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "DI1",
+          "x": -25,
+          "y": -15,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "DI2",
+          "x": -15,
+          "y": -15,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "DI3",
+          "x": -5,
+          "y": -15,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "DI4",
+          "x": 5,
+          "y": -15,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "DI5",
+          "x": 15,
+          "y": -15,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "DI6",
+          "x": 25,
+          "y": -15,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "DI7",
+          "x": 35,
+          "y": -15,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "1M",
+          "x": 0,
+          "y": 15,
+          "direction": "down",
+          "function": "supplyNegative"
+        }
+      ],
+      "defaultProperties": {
+        "Adres başlangıcı": ""
+      }
+    },
+    {
+      "id": "iec.plc.do8",
+      "name": "PLC dijital çıkış modülü (8 DO)",
+      "category": "PLC ve Otomasyon/G-Ç modülleri",
+      "keywords": [
+        "PLC",
+        "dijital çıkış",
+        "DO",
+        "output"
+      ],
+      "referencePrefix": "A",
+      "role": "contact",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -40,
+          "y": -10,
+          "width": 80,
+          "height": 20
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "DO 8",
+          "height": 3
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -15,
+          "x2": -5,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -15,
+          "x2": 5,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": -35,
+          "y1": 10,
+          "x2": -35,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": -25,
+          "y1": 10,
+          "x2": -25,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": -15,
+          "y1": 10,
+          "x2": -15,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 10,
+          "x2": -5,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 10,
+          "x2": 5,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": 10,
+          "x2": 15,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": 25,
+          "y1": 10,
+          "x2": 25,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": 35,
+          "y1": 10,
+          "x2": 35,
+          "y2": 15
+        }
+      ],
+      "pins": [
+        {
+          "id": "1L+",
+          "x": -5,
+          "y": -15,
+          "direction": "up",
+          "function": "supplyPositive"
+        },
+        {
+          "id": "1M",
+          "x": 5,
+          "y": -15,
+          "direction": "up",
+          "function": "supplyNegative"
+        },
+        {
+          "id": "DO0",
+          "x": -35,
+          "y": 15,
+          "direction": "down",
+          "function": "output"
+        },
+        {
+          "id": "DO1",
+          "x": -25,
+          "y": 15,
+          "direction": "down",
+          "function": "output"
+        },
+        {
+          "id": "DO2",
+          "x": -15,
+          "y": 15,
+          "direction": "down",
+          "function": "output"
+        },
+        {
+          "id": "DO3",
+          "x": -5,
+          "y": 15,
+          "direction": "down",
+          "function": "output"
+        },
+        {
+          "id": "DO4",
+          "x": 5,
+          "y": 15,
+          "direction": "down",
+          "function": "output"
+        },
+        {
+          "id": "DO5",
+          "x": 15,
+          "y": 15,
+          "direction": "down",
+          "function": "output"
+        },
+        {
+          "id": "DO6",
+          "x": 25,
+          "y": 15,
+          "direction": "down",
+          "function": "output"
+        },
+        {
+          "id": "DO7",
+          "x": 35,
+          "y": 15,
+          "direction": "down",
+          "function": "output"
+        }
+      ],
+      "defaultProperties": {
+        "Adres başlangıcı": ""
+      }
+    },
+    {
+      "id": "iec.plc.ai4",
+      "name": "PLC analog giriş modülü (4 AI)",
+      "category": "PLC ve Otomasyon/G-Ç modülleri",
+      "keywords": [
+        "PLC",
+        "analog giriş",
+        "4-20mA",
+        "0-10V"
+      ],
+      "referencePrefix": "A",
+      "role": "contact",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -20,
+          "y": -10,
+          "width": 40,
+          "height": 20
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "AI 4",
+          "height": 3
+        },
+        {
+          "kind": "line",
+          "x1": -15,
+          "y1": -15,
+          "x2": -15,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -15,
+          "x2": -5,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -15,
+          "x2": 5,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": -15,
+          "x2": 15,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 15
+        }
+      ],
+      "pins": [
+        {
+          "id": "AI0",
+          "x": -15,
+          "y": -15,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "AI1",
+          "x": -5,
+          "y": -15,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "AI2",
+          "x": 5,
+          "y": -15,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "AI3",
+          "x": 15,
+          "y": -15,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "M",
+          "x": 0,
+          "y": 15,
+          "direction": "down",
+          "function": "supplyNegative"
+        }
+      ],
+      "defaultProperties": {
+        "Adres başlangıcı": ""
+      }
+    },
+    {
+      "id": "iec.plc.ao2",
+      "name": "PLC analog çıkış modülü (2 AO)",
+      "category": "PLC ve Otomasyon/G-Ç modülleri",
+      "keywords": [
+        "PLC",
+        "analog çıkış",
+        "0-10V"
+      ],
+      "referencePrefix": "A",
+      "role": "contact",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -20,
+          "y": -10,
+          "width": 40,
+          "height": 20
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "AO 2",
+          "height": 3
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -15,
+          "x2": 0,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": -15,
+          "y1": 10,
+          "x2": -15,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 10,
+          "x2": -5,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": 10,
+          "x2": 5,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": 15,
+          "y1": 10,
+          "x2": 15,
+          "y2": 15
+        }
+      ],
+      "pins": [
+        {
+          "id": "L+",
+          "x": 0,
+          "y": -15,
+          "direction": "up",
+          "function": "supplyPositive"
+        },
+        {
+          "id": "AO0",
+          "x": -15,
+          "y": 15,
+          "direction": "down",
+          "function": "output"
+        },
+        {
+          "id": "M0",
+          "x": -5,
+          "y": 15,
+          "direction": "down",
+          "function": "supplyNegative"
+        },
+        {
+          "id": "AO1",
+          "x": 5,
+          "y": 15,
+          "direction": "down",
+          "function": "output"
+        },
+        {
+          "id": "M1",
+          "x": 15,
+          "y": 15,
+          "direction": "down",
+          "function": "supplyNegative"
+        }
+      ],
+      "defaultProperties": {
+        "Adres başlangıcı": ""
+      }
+    },
+    {
+      "id": "iec.plc.input",
+      "name": "PLC giriş (tek kanal)",
+      "category": "PLC ve Otomasyon/Tek kanal G-Ç",
+      "description": "PLC'nin tek bir G/Ç kanalı (EPLAN tarzı dağıtık gösterim). Etiket PLC ile aynı olmalı.",
+      "keywords": [
+        "PLC",
+        "giriş",
+        "I/O",
+        "adres"
+      ],
+      "referencePrefix": "A",
+      "role": "contact",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -5,
+          "y": -4,
+          "width": 10,
+          "height": 8
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "I",
+          "height": 2.5
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "input"
+        }
+      ],
+      "defaultProperties": {
+        "Adres": ""
+      }
+    },
+    {
+      "id": "iec.plc.output",
+      "name": "PLC çıkış (tek kanal)",
+      "category": "PLC ve Otomasyon/Tek kanal G-Ç",
+      "description": "PLC'nin tek bir G/Ç kanalı (EPLAN tarzı dağıtık gösterim). Etiket PLC ile aynı olmalı.",
+      "keywords": [
+        "PLC",
+        "çıkış",
+        "I/O",
+        "adres"
+      ],
+      "referencePrefix": "A",
+      "role": "contact",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -5,
+          "y": -4,
+          "width": 10,
+          "height": 8
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "Q",
+          "height": 2.5
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 4,
+          "x2": 0,
+          "y2": 10
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "output"
+        }
+      ],
+      "defaultProperties": {
+        "Adres": ""
+      }
+    },
+    {
+      "id": "iec.hmi",
+      "name": "Operatör paneli (HMI)",
+      "category": "PLC ve Otomasyon/HMI",
+      "keywords": [
+        "HMI",
+        "panel",
+        "dokunmatik",
+        "Delta DOP",
+        "operatör"
+      ],
+      "referencePrefix": "A",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -25,
+          "y": -15,
+          "width": 50,
+          "height": 30
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "HMI",
+          "height": 3
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": -20,
+          "x2": -10,
+          "y2": -15
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -20,
+          "x2": 0,
+          "y2": -15
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": -20,
+          "x2": 10,
+          "y2": -15
+        },
+        {
+          "kind": "line",
+          "x1": 25,
+          "y1": -10,
+          "x2": 30,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 25,
+          "y1": 0,
+          "x2": 30,
+          "y2": 0
+        },
+        {
+          "kind": "line",
+          "x1": 25,
+          "y1": 10,
+          "x2": 30,
+          "y2": 10
+        },
+        {
+          "kind": "rect",
+          "x": -20,
+          "y": -10,
+          "width": 30,
+          "height": 20,
+          "dashed": true
+        }
+      ],
+      "pins": [
+        {
+          "id": "+24V",
+          "x": -10,
+          "y": -20,
+          "direction": "up",
+          "function": "supplyPositive"
+        },
+        {
+          "id": "0V",
+          "x": 0,
+          "y": -20,
+          "direction": "up",
+          "function": "supplyNegative"
+        },
+        {
+          "id": "PE",
+          "x": 10,
+          "y": -20,
+          "direction": "up",
+          "function": "protectiveEarth"
+        },
+        {
+          "id": "ETH",
+          "x": 30,
+          "y": -10,
+          "direction": "right",
+          "function": "communication"
+        },
+        {
+          "id": "A",
+          "x": 30,
+          "y": 0,
+          "direction": "right",
+          "function": "communication"
+        },
+        {
+          "id": "B",
+          "x": 30,
+          "y": 10,
+          "direction": "right",
+          "function": "communication"
+        }
+      ],
+      "defaultProperties": {
+        "Model": "",
+        "Ekran": ""
+      }
+    },
+    {
+      "id": "iec.eth.switch",
+      "name": "Ethernet switch",
+      "category": "PLC ve Otomasyon/Haberleşme",
+      "keywords": [
+        "switch",
+        "ethernet",
+        "Profinet",
+        "Modbus TCP"
+      ],
+      "referencePrefix": "A",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -25,
+          "y": -10,
+          "width": 50,
+          "height": 20
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "SWITCH",
+          "height": 3
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -15,
+          "x2": -5,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -15,
+          "x2": 5,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": -20,
+          "y1": 10,
+          "x2": -20,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": 10,
+          "x2": -10,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": 10,
+          "x2": 10,
+          "y2": 15
+        },
+        {
+          "kind": "line",
+          "x1": 20,
+          "y1": 10,
+          "x2": 20,
+          "y2": 15
+        }
+      ],
+      "pins": [
+        {
+          "id": "+24V",
+          "x": -5,
+          "y": -15,
+          "direction": "up",
+          "function": "supplyPositive"
+        },
+        {
+          "id": "0V",
+          "x": 5,
+          "y": -15,
+          "direction": "up",
+          "function": "supplyNegative"
+        },
+        {
+          "id": "P1",
+          "x": -20,
+          "y": 15,
+          "direction": "down",
+          "function": "communication"
+        },
+        {
+          "id": "P2",
+          "x": -10,
+          "y": 15,
+          "direction": "down",
+          "function": "communication"
+        },
+        {
+          "id": "P3",
+          "x": 0,
+          "y": 15,
+          "direction": "down",
+          "function": "communication"
+        },
+        {
+          "id": "P4",
+          "x": 10,
+          "y": 15,
+          "direction": "down",
+          "function": "communication"
+        },
+        {
+          "id": "P5",
+          "x": 20,
+          "y": 15,
+          "direction": "down",
+          "function": "communication"
+        }
+      ]
+    },
+    {
+      "id": "iec.comm.rs485",
+      "name": "RS485 haberleşme portu",
+      "category": "PLC ve Otomasyon/Haberleşme",
+      "keywords": [
+        "RS485",
+        "Modbus RTU",
+        "haberleşme"
+      ],
+      "referencePrefix": "X",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -10,
+          "y": -10,
+          "width": 20,
+          "height": 20
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "485",
+          "height": 2.5
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -15,
+          "x2": -5,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -15,
+          "x2": 5,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 15
+        }
+      ],
+      "pins": [
+        {
+          "id": "A",
+          "x": -5,
+          "y": -15,
+          "direction": "up",
+          "function": "communication"
+        },
+        {
+          "id": "B",
+          "x": 5,
+          "y": -15,
+          "direction": "up",
+          "function": "communication"
+        },
+        {
+          "id": "SH",
+          "x": 0,
+          "y": 15,
+          "direction": "down",
+          "function": "shield"
+        }
+      ]
+    }
+  ]
+}

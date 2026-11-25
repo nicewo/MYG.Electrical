@@ -40,6 +40,29 @@ internal sealed class PdfSceneSink(XGraphics gfx, ILogger logger) : ISceneSink
     public void DrawArc(Point2D center, double radius, double startAngle, double sweepAngle, StrokeStyle stroke) =>
         gfx.DrawArc(Pen(stroke), center.X - radius, center.Y - radius, 2 * radius, 2 * radius, startAngle, sweepAngle);
 
+    public void DrawPolygon(IReadOnlyList<Point2D> points, bool closed, StrokeStyle? stroke, uint? fill = null)
+    {
+        if (points.Count < 2)
+        {
+            return;
+        }
+        var pts = points.Select(p => new XPoint(p.X, p.Y)).ToArray();
+        var pen = stroke is { } s ? Pen(s) : null;
+        if (closed || fill is not null)
+        {
+            var brush = fill is { } f ? new XSolidBrush(Color(f)) : null;
+            if (pen is null && brush is null)
+            {
+                return;
+            }
+            gfx.DrawPolygon(pen, brush, pts, XFillMode.Winding);
+        }
+        else if (pen is not null)
+        {
+            gfx.DrawLines(pen, pts);
+        }
+    }
+
     public void DrawText(string text, Point2D position, double height, uint color, TextAlign align = TextAlign.Left, bool bold = false)
     {
         if (string.IsNullOrEmpty(text))

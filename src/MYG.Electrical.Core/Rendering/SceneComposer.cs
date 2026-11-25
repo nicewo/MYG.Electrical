@@ -128,6 +128,10 @@ public sealed class SceneComposer(ISymbolCatalog catalog, Func<string, Resources
                 case ArcPrimitive a:
                     sink.DrawArc(s.LocalToGlobal(new(a.CenterX, a.CenterY)), a.Radius * s.Scale, a.StartAngle + s.Rotation, a.SweepAngle, stroke);
                     break;
+                case PolygonPrimitive poly:
+                    var pts = poly.Vertices().Select(v => s.LocalToGlobal(v)).ToList();
+                    sink.DrawPolygon(pts, poly.Closed, stroke, poly.Filled ? stroke.Color : null);
+                    break;
                 case TextPrimitive t:
                     sink.DrawText(t.Text, s.LocalToGlobal(new(t.X, t.Y)), t.Height * s.Scale, DrawingStyles.Black, TextAlign.Center);
                     break;

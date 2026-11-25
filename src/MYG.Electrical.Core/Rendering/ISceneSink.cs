@@ -25,6 +25,9 @@ public interface ISceneSink
     /// <summary>Açılar derece; 0° = +X, pozitif yön saat yönü (Y aşağı).</summary>
     void DrawArc(Point2D center, double radius, double startAngle, double sweepAngle, StrokeStyle stroke);
 
+    /// <summary>Çokgen veya açık çoklu çizgi.</summary>
+    void DrawPolygon(IReadOnlyList<Point2D> points, bool closed, StrokeStyle? stroke, uint? fill = null);
+
     void DrawText(string text, Point2D position, double height, uint color, TextAlign align = TextAlign.Left, bool bold = false);
 
     /// <summary>Dosyadan resim çizer (en-boy oranı korunur); dosya yoksa sessizce atlar.</summary>

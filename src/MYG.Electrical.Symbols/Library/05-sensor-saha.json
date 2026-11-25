@@ -1,0 +1,1535 @@
+{
+  "formatVersion": 1,
+  "library": "MYG IEC 60617",
+  "version": "1.0.0",
+  "title": "Sensör ve Saha",
+  "symbols": [
+    {
+      "id": "iec.sensor.pnp",
+      "name": "Endüktif sensör (PNP)",
+      "category": "Sensör ve Saha/Yaklaşım sensörleri",
+      "keywords": [
+        "endüktif",
+        "proximity",
+        "PNP",
+        "3 telli"
+      ],
+      "referencePrefix": "B",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -6,
+          "x2": 6,
+          "y2": 0
+        },
+        {
+          "kind": "line",
+          "x1": 6,
+          "y1": 0,
+          "x2": 0,
+          "y2": 6
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 6,
+          "x2": -6,
+          "y2": 0
+        },
+        {
+          "kind": "line",
+          "x1": -6,
+          "y1": 0,
+          "x2": 0,
+          "y2": -6
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "PNP",
+          "height": 2
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -6
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 6,
+          "x2": 0,
+          "y2": 10
+        },
+        {
+          "kind": "line",
+          "x1": 6,
+          "y1": 0,
+          "x2": 10,
+          "y2": 0
+        }
+      ],
+      "pins": [
+        {
+          "id": "BN",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "supplyPositive",
+          "description": "+24V (kahverengi)"
+        },
+        {
+          "id": "BU",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "supplyNegative",
+          "description": "0V (mavi)"
+        },
+        {
+          "id": "BK",
+          "x": 10,
+          "y": 0,
+          "direction": "right",
+          "function": "output",
+          "description": "Çıkış (siyah)"
+        }
+      ]
+    },
+    {
+      "id": "iec.sensor.npn",
+      "name": "Endüktif sensör (NPN)",
+      "category": "Sensör ve Saha/Yaklaşım sensörleri",
+      "keywords": [
+        "endüktif",
+        "proximity",
+        "NPN"
+      ],
+      "referencePrefix": "B",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -6,
+          "x2": 6,
+          "y2": 0
+        },
+        {
+          "kind": "line",
+          "x1": 6,
+          "y1": 0,
+          "x2": 0,
+          "y2": 6
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 6,
+          "x2": -6,
+          "y2": 0
+        },
+        {
+          "kind": "line",
+          "x1": -6,
+          "y1": 0,
+          "x2": 0,
+          "y2": -6
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "NPN",
+          "height": 2
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -6
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 6,
+          "x2": 0,
+          "y2": 10
+        },
+        {
+          "kind": "line",
+          "x1": 6,
+          "y1": 0,
+          "x2": 10,
+          "y2": 0
+        }
+      ],
+      "pins": [
+        {
+          "id": "BN",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "supplyPositive",
+          "description": "+24V (kahverengi)"
+        },
+        {
+          "id": "BU",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "supplyNegative",
+          "description": "0V (mavi)"
+        },
+        {
+          "id": "BK",
+          "x": 10,
+          "y": 0,
+          "direction": "right",
+          "function": "output",
+          "description": "Çıkış (siyah)"
+        }
+      ]
+    },
+    {
+      "id": "iec.sensor.cap",
+      "name": "Kapasitif sensör (PNP)",
+      "category": "Sensör ve Saha/Yaklaşım sensörleri",
+      "keywords": [
+        "kapasitif",
+        "seviye",
+        "PNP"
+      ],
+      "referencePrefix": "B",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -6,
+          "x2": 6,
+          "y2": 0
+        },
+        {
+          "kind": "line",
+          "x1": 6,
+          "y1": 0,
+          "x2": 0,
+          "y2": 6
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 6,
+          "x2": -6,
+          "y2": 0
+        },
+        {
+          "kind": "line",
+          "x1": -6,
+          "y1": 0,
+          "x2": 0,
+          "y2": -6
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "CAP",
+          "height": 2
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -6
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 6,
+          "x2": 0,
+          "y2": 10
+        },
+        {
+          "kind": "line",
+          "x1": 6,
+          "y1": 0,
+          "x2": 10,
+          "y2": 0
+        }
+      ],
+      "pins": [
+        {
+          "id": "BN",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "supplyPositive",
+          "description": "+24V (kahverengi)"
+        },
+        {
+          "id": "BU",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "supplyNegative",
+          "description": "0V (mavi)"
+        },
+        {
+          "id": "BK",
+          "x": 10,
+          "y": 0,
+          "direction": "right",
+          "function": "output",
+          "description": "Çıkış (siyah)"
+        }
+      ]
+    },
+    {
+      "id": "iec.sensor.photo",
+      "name": "Optik sensör (PNP)",
+      "category": "Sensör ve Saha/Yaklaşım sensörleri",
+      "keywords": [
+        "fotosel",
+        "optik",
+        "reflektör",
+        "PNP"
+      ],
+      "referencePrefix": "B",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -6,
+          "x2": 6,
+          "y2": 0
+        },
+        {
+          "kind": "line",
+          "x1": 6,
+          "y1": 0,
+          "x2": 0,
+          "y2": 6
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 6,
+          "x2": -6,
+          "y2": 0
+        },
+        {
+          "kind": "line",
+          "x1": -6,
+          "y1": 0,
+          "x2": 0,
+          "y2": -6
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "OPT",
+          "height": 2
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -6
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 6,
+          "x2": 0,
+          "y2": 10
+        },
+        {
+          "kind": "line",
+          "x1": 6,
+          "y1": 0,
+          "x2": 10,
+          "y2": 0
+        }
+      ],
+      "pins": [
+        {
+          "id": "BN",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "supplyPositive",
+          "description": "+24V (kahverengi)"
+        },
+        {
+          "id": "BU",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "supplyNegative",
+          "description": "0V (mavi)"
+        },
+        {
+          "id": "BK",
+          "x": 10,
+          "y": 0,
+          "direction": "right",
+          "function": "output",
+          "description": "Çıkış (siyah)"
+        }
+      ]
+    },
+    {
+      "id": "iec.limitswitch",
+      "name": "Limit switch (NO)",
+      "category": "Sensör ve Saha/Limit switch",
+      "keywords": [
+        "limit",
+        "sınır",
+        "pozisyon"
+      ],
+      "referencePrefix": "B",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 4,
+          "x2": -3.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": -6,
+          "y1": 0,
+          "x2": -1.75,
+          "y2": 0,
+          "dashed": true
+        },
+        {
+          "kind": "line",
+          "x1": -6,
+          "y1": -2,
+          "x2": -9,
+          "y2": 0
+        },
+        {
+          "kind": "line",
+          "x1": -9,
+          "y1": 0,
+          "x2": -6,
+          "y2": 2
+        },
+        {
+          "kind": "line",
+          "x1": -6,
+          "y1": 2,
+          "x2": -6,
+          "y2": -2
+        }
+      ],
+      "pins": [
+        {
+          "id": "13",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "contactNo"
+        },
+        {
+          "id": "14",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "contactNo"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "13",
+          "b": "14"
+        }
+      ]
+    },
+    {
+      "id": "iec.limitswitch.nc",
+      "name": "Limit switch (NC)",
+      "category": "Sensör ve Saha/Limit switch",
+      "keywords": [
+        "limit",
+        "sınır",
+        "NC"
+      ],
+      "referencePrefix": "B",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -4,
+          "x2": 4,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 4,
+          "x2": 4.5,
+          "y2": -5
+        },
+        {
+          "kind": "line",
+          "x1": -6,
+          "y1": 0,
+          "x2": 0.25,
+          "y2": 0,
+          "dashed": true
+        },
+        {
+          "kind": "line",
+          "x1": -6,
+          "y1": -2,
+          "x2": -9,
+          "y2": 0
+        },
+        {
+          "kind": "line",
+          "x1": -9,
+          "y1": 0,
+          "x2": -6,
+          "y2": 2
+        },
+        {
+          "kind": "line",
+          "x1": -6,
+          "y1": 2,
+          "x2": -6,
+          "y2": -2
+        }
+      ],
+      "pins": [
+        {
+          "id": "11",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "contactNc"
+        },
+        {
+          "id": "12",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "contactNc"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "11",
+          "b": "12"
+        }
+      ]
+    },
+    {
+      "id": "iec.safety.switch",
+      "name": "Emniyet kapı switchi (zorlamalı açma NC)",
+      "category": "Sensör ve Saha/Kapı ve emniyet",
+      "keywords": [
+        "kapı switch",
+        "emniyet",
+        "interlock",
+        "güvenlik switchi"
+      ],
+      "referencePrefix": "B",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -4,
+          "x2": 4,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 4,
+          "x2": 4.5,
+          "y2": -5
+        },
+        {
+          "kind": "line",
+          "x1": -7,
+          "y1": 0,
+          "x2": 0.25,
+          "y2": 0,
+          "dashed": true
+        },
+        {
+          "kind": "circle",
+          "centerX": -10,
+          "centerY": 0,
+          "radius": 3
+        },
+        {
+          "kind": "polygon",
+          "points": [
+            -11.5,
+            1.5,
+            -8.5,
+            1.5,
+            -10,
+            -1.5
+          ],
+          "filled": true
+        }
+      ],
+      "pins": [
+        {
+          "id": "11",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "contactNc"
+        },
+        {
+          "id": "12",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "contactNc"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "11",
+          "b": "12"
+        }
+      ]
+    },
+    {
+      "id": "iec.door.sensor",
+      "name": "Kapı sensörü (manyetik, NO)",
+      "category": "Sensör ve Saha/Kapı ve emniyet",
+      "keywords": [
+        "kapı",
+        "reed",
+        "manyetik",
+        "door"
+      ],
+      "referencePrefix": "B",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 4,
+          "x2": -3.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": -8,
+          "y1": 0,
+          "x2": -1.75,
+          "y2": 0,
+          "dashed": true
+        },
+        {
+          "kind": "polygon",
+          "points": [
+            -13,
+            -3,
+            -8,
+            -3,
+            -8,
+            3,
+            -13,
+            3
+          ]
+        },
+        {
+          "kind": "line",
+          "x1": -10.5,
+          "y1": -3,
+          "x2": -10.5,
+          "y2": 3
+        }
+      ],
+      "pins": [
+        {
+          "id": "13",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "contactNo"
+        },
+        {
+          "id": "14",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "contactNo"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "13",
+          "b": "14"
+        }
+      ]
+    },
+    {
+      "id": "iec.pressureswitch.no",
+      "name": "Basınç şalteri (NO)",
+      "category": "Sensör ve Saha/Basınç",
+      "keywords": [
+        "presostat",
+        "basınç şalteri",
+        "pressure switch"
+      ],
+      "referencePrefix": "B",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 4,
+          "x2": -3.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": -9,
+          "y1": 0,
+          "x2": -1.75,
+          "y2": 0,
+          "dashed": true
+        },
+        {
+          "kind": "rect",
+          "x": -15,
+          "y": -3,
+          "width": 6,
+          "height": 6
+        },
+        {
+          "kind": "text",
+          "x": -12,
+          "y": 0,
+          "text": "P",
+          "height": 2.5
+        }
+      ],
+      "pins": [
+        {
+          "id": "13",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "contactNo"
+        },
+        {
+          "id": "14",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "contactNo"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "13",
+          "b": "14"
+        }
+      ]
+    },
+    {
+      "id": "iec.pressureswitch.nc",
+      "name": "Basınç şalteri (NC)",
+      "category": "Sensör ve Saha/Basınç",
+      "keywords": [
+        "presostat",
+        "basınç şalteri",
+        "pressure switch"
+      ],
+      "referencePrefix": "B",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -4,
+          "x2": 4,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 4,
+          "x2": 4.5,
+          "y2": -5
+        },
+        {
+          "kind": "line",
+          "x1": -9,
+          "y1": 0,
+          "x2": 0.25,
+          "y2": 0,
+          "dashed": true
+        },
+        {
+          "kind": "rect",
+          "x": -15,
+          "y": -3,
+          "width": 6,
+          "height": 6
+        },
+        {
+          "kind": "text",
+          "x": -12,
+          "y": 0,
+          "text": "P",
+          "height": 2.5
+        }
+      ],
+      "pins": [
+        {
+          "id": "11",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "contactNc"
+        },
+        {
+          "id": "12",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "contactNc"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "11",
+          "b": "12"
+        }
+      ]
+    },
+    {
+      "id": "iec.thermostat.nc",
+      "name": "Termostat (NC)",
+      "category": "Sensör ve Saha/Sıcaklık",
+      "keywords": [
+        "termostat",
+        "sıcaklık şalteri"
+      ],
+      "referencePrefix": "B",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -4,
+          "x2": 4,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 4,
+          "x2": 4.5,
+          "y2": -5
+        },
+        {
+          "kind": "line",
+          "x1": -9,
+          "y1": 0,
+          "x2": 0.25,
+          "y2": 0,
+          "dashed": true
+        },
+        {
+          "kind": "rect",
+          "x": -15,
+          "y": -3,
+          "width": 6,
+          "height": 6
+        },
+        {
+          "kind": "text",
+          "x": -12,
+          "y": 0,
+          "text": "θ",
+          "height": 2.5
+        }
+      ],
+      "pins": [
+        {
+          "id": "11",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "contactNc"
+        },
+        {
+          "id": "12",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "contactNc"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "11",
+          "b": "12"
+        }
+      ]
+    },
+    {
+      "id": "iec.levelswitch.no",
+      "name": "Seviye şalteri / flatör (NO)",
+      "category": "Sensör ve Saha/Seviye",
+      "keywords": [
+        "flatör",
+        "seviye",
+        "float"
+      ],
+      "referencePrefix": "B",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 4,
+          "x2": -3.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": -9,
+          "y1": 0,
+          "x2": -1.75,
+          "y2": 0,
+          "dashed": true
+        },
+        {
+          "kind": "rect",
+          "x": -15,
+          "y": -3,
+          "width": 6,
+          "height": 6
+        },
+        {
+          "kind": "text",
+          "x": -12,
+          "y": 0,
+          "text": "L",
+          "height": 2.5
+        }
+      ],
+      "pins": [
+        {
+          "id": "13",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "contactNo"
+        },
+        {
+          "id": "14",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "contactNo"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "13",
+          "b": "14"
+        }
+      ]
+    },
+    {
+      "id": "iec.flowswitch.no",
+      "name": "Akış şalteri (NO)",
+      "category": "Sensör ve Saha/Akış",
+      "keywords": [
+        "akış",
+        "flow switch"
+      ],
+      "referencePrefix": "B",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 4
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 4,
+          "x2": -3.5,
+          "y2": -4.5
+        },
+        {
+          "kind": "line",
+          "x1": -9,
+          "y1": 0,
+          "x2": -1.75,
+          "y2": 0,
+          "dashed": true
+        },
+        {
+          "kind": "rect",
+          "x": -15,
+          "y": -3,
+          "width": 6,
+          "height": 6
+        },
+        {
+          "kind": "text",
+          "x": -12,
+          "y": 0,
+          "text": "F",
+          "height": 2.5
+        }
+      ],
+      "pins": [
+        {
+          "id": "13",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "contactNo"
+        },
+        {
+          "id": "14",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "contactNo"
+        }
+      ],
+      "internalConnections": [
+        {
+          "a": "13",
+          "b": "14"
+        }
+      ]
+    },
+    {
+      "id": "iec.pt100.2w",
+      "name": "PT100 sıcaklık sensörü (2 telli)",
+      "category": "Sensör ve Saha/Sıcaklık",
+      "keywords": [
+        "PT100",
+        "RTD",
+        "sıcaklık",
+        "termistör"
+      ],
+      "referencePrefix": "B",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -2,
+          "y": -6,
+          "width": 4,
+          "height": 12
+        },
+        {
+          "kind": "line",
+          "x1": -4,
+          "y1": 5,
+          "x2": 4,
+          "y2": -5
+        },
+        {
+          "kind": "text",
+          "x": 5,
+          "y": 4,
+          "text": "θ",
+          "height": 3
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -6
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 6,
+          "x2": 0,
+          "y2": 10
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "2",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "input"
+        }
+      ]
+    },
+    {
+      "id": "iec.pt100.3w",
+      "name": "PT100 sıcaklık sensörü (3 telli)",
+      "category": "Sensör ve Saha/Sıcaklık",
+      "keywords": [
+        "PT100",
+        "RTD",
+        "sıcaklık",
+        "termistör"
+      ],
+      "referencePrefix": "B",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -2,
+          "y": -6,
+          "width": 4,
+          "height": 12
+        },
+        {
+          "kind": "line",
+          "x1": -4,
+          "y1": 5,
+          "x2": 4,
+          "y2": -5
+        },
+        {
+          "kind": "text",
+          "x": 5,
+          "y": 4,
+          "text": "θ",
+          "height": 3
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -10,
+          "x2": 0,
+          "y2": -6
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 6,
+          "x2": 0,
+          "y2": 10
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 8,
+          "x2": -5,
+          "y2": 8
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": 8,
+          "x2": -5,
+          "y2": 10
+        }
+      ],
+      "pins": [
+        {
+          "id": "1",
+          "x": 0,
+          "y": -10,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "2",
+          "x": 0,
+          "y": 10,
+          "direction": "down",
+          "function": "input"
+        },
+        {
+          "id": "3",
+          "x": -5,
+          "y": 10,
+          "direction": "down",
+          "function": "input"
+        }
+      ]
+    },
+    {
+      "id": "iec.thermocouple",
+      "name": "Termokupl",
+      "category": "Sensör ve Saha/Sıcaklık",
+      "keywords": [
+        "termokupl",
+        "TC",
+        "K tipi",
+        "J tipi"
+      ],
+      "referencePrefix": "B",
+      "primitives": [
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -10,
+          "x2": -5,
+          "y2": -5
+        },
+        {
+          "kind": "line",
+          "x1": -5,
+          "y1": -5,
+          "x2": 0,
+          "y2": 0
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -10,
+          "x2": 5,
+          "y2": -5
+        },
+        {
+          "kind": "line",
+          "x1": 5,
+          "y1": -5,
+          "x2": 0,
+          "y2": 0
+        },
+        {
+          "kind": "circle",
+          "centerX": 0,
+          "centerY": 0,
+          "radius": 0.8,
+          "filled": true
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 4,
+          "text": "TC",
+          "height": 2.5
+        }
+      ],
+      "pins": [
+        {
+          "id": "+",
+          "x": -5,
+          "y": -10,
+          "direction": "up",
+          "function": "input"
+        },
+        {
+          "id": "-",
+          "x": 5,
+          "y": -10,
+          "direction": "up",
+          "function": "input"
+        }
+      ],
+      "defaultProperties": {
+        "Tip": "K"
+      }
+    },
+    {
+      "id": "iec.transmitter",
+      "name": "Transmitter (4-20 mA, 2 telli)",
+      "category": "Sensör ve Saha/Transmitterler",
+      "keywords": [
+        "transmitter",
+        "4-20mA",
+        "basınç",
+        "analog"
+      ],
+      "referencePrefix": "B",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -10,
+          "y": -10,
+          "width": 20,
+          "height": 20
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "PT",
+          "height": 3
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -15,
+          "x2": 0,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": 10,
+          "x2": 0,
+          "y2": 15
+        }
+      ],
+      "pins": [
+        {
+          "id": "+",
+          "x": 0,
+          "y": -15,
+          "direction": "up",
+          "function": "supplyPositive"
+        },
+        {
+          "id": "-",
+          "x": 0,
+          "y": 15,
+          "direction": "down",
+          "function": "output"
+        }
+      ],
+      "defaultProperties": {
+        "Ölçüm aralığı": "",
+        "Çıkış": "4-20mA"
+      }
+    },
+    {
+      "id": "iec.encoder",
+      "name": "Enkoder (inkremental)",
+      "category": "Sensör ve Saha/Enkoderler",
+      "keywords": [
+        "encoder",
+        "enkoder",
+        "pulse",
+        "A/B/Z"
+      ],
+      "referencePrefix": "B",
+      "primitives": [
+        {
+          "kind": "rect",
+          "x": -25,
+          "y": -10,
+          "width": 50,
+          "height": 20
+        },
+        {
+          "kind": "text",
+          "x": 0,
+          "y": 0,
+          "text": "ENC",
+          "height": 3
+        },
+        {
+          "kind": "line",
+          "x1": -20,
+          "y1": -15,
+          "x2": -20,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": -10,
+          "y1": -15,
+          "x2": -10,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 0,
+          "y1": -15,
+          "x2": 0,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 10,
+          "y1": -15,
+          "x2": 10,
+          "y2": -10
+        },
+        {
+          "kind": "line",
+          "x1": 20,
+          "y1": -15,
+          "x2": 20,
+          "y2": -10
+        }
+      ],
+      "pins": [
+        {
+          "id": "+V",
+          "x": -20,
+          "y": -15,
+          "direction": "up",
+          "function": "supplyPositive"
+        },
+        {
+          "id": "0V",
+          "x": -10,
+          "y": -15,
+          "direction": "up",
+          "function": "supplyNegative"
+        },
+        {
+          "id": "A",
+          "x": 0,
+          "y": -15,
+          "direction": "up",
+          "function": "output"
+        },
+        {
+          "id": "B",
+          "x": 10,
+          "y": -15,
+          "direction": "up",
+          "function": "output"
+        },
+        {
+          "id": "Z",
+          "x": 20,
+          "y": -15,
+          "direction": "up",
+          "function": "output"
+        }
+      ],
+      "defaultProperties": {
+        "Çözünürlük": ""
+      }
+    }
+  ]
+}
