@@ -1,3 +1,11 @@
+<div align="center">
+  <a href="https://myusufgultekin.web.app/"><img src="./assets/myg-project-banner.svg" alt="MYG ELECTRICAL — MYG Tech" width="100%"></a>
+  <p><a href="https://github.com/nicewo/MYG.Electrical/releases/latest"><img src="https://img.shields.io/github/v/release/nicewo/MYG.Electrical?style=for-the-badge&label=LATEST%20RELEASE" alt="Latest release"></a> <a href="https://github.com/nicewo/MYG.Electrical/actions/workflows/build.yml"><img src="https://img.shields.io/github/actions/workflow/status/nicewo/MYG.Electrical/build.yml?style=for-the-badge&label=BUILD" alt="Build"></a> <img src="https://img.shields.io/badge/WINDOWS-10%2F11-2563EB?style=for-the-badge&logo=windows&logoColor=white" alt="Windows"></p>
+  <p><a href="https://myusufgultekin.web.app/">MYG TECH</a> · <a href="https://github.com/nicewo">GitHub Profile</a></p>
+</div>
+
+---
+
 <p align="center">
   <img src="src/MYG.Electrical.App/Assets/myg-electrical.png" width="150" alt="MYG Electrical">
 </p>
