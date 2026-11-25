@@ -76,7 +76,13 @@ UTF-8 JSON, camelCase alan adları, enum değerleri metin. Uzantı: `.myge`.
 - **Tanınmayan alan içeren dosya açılmaz.** Eski bir program sürümü yeni alanları sessizce atıp dosyayı
   geri kaydederse veri kaybolurdu; bunun yerine hangi alanın tanınmadığını söyleyen bir hata verilir.
 - Programın desteklediğinden **yeni** bir `formatVersion` taşıyan dosya da açılmaz ("programı güncelleyin").
-- Kayıt önce geçici dosyaya yazılır, sonra asıl dosyanın yerine taşınır (yarım kayıt eski dosyayı bozmaz).
+- **Güvenli kayıt:** JSON üretilir → geri okunabildiği doğrulanır → geçici dosyaya yazılıp diske boşaltılır →
+  asıl dosya tek adımda değiştirilir; önceki sürüm `<dosya>.myge.bak` olarak saklanır. Kayıt herhangi bir adımda
+  başarısız olursa mevcut dosya hiç değişmez.
+- **Açılışta onarım:** Tekrar eden nesne/sayfa kimlikleri, geçersiz sayfa ölçüleri, boş nesne kayıtları, bozuk
+  base64 resim verisi ve eksik resim kaynakları onarılır; kullanıcıya liste halinde bildirilir ve proje "değişti"
+  olarak işaretlenir. Bozuk/eksik resimler çarpılı yer tutucu olarak çizilir.
+- **Tanınmayan nesne türü** (`kind`) varsa dosya açılmaz; hata mesajı sayfa adını ve nesne sırasını verir.
 
 ## Sürüm geçmişi
 

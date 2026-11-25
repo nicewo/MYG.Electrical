@@ -2,6 +2,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
+using MYG.Electrical.Core.Model;
 using MYG.Electrical.Core.Pages;
 
 namespace MYG.Electrical.Infrastructure.Serialization;
@@ -41,7 +42,10 @@ public static class ProjectSerializer
         return JsonSerializer.Serialize(snapshot, Options);
     }
 
-    public static ProjectDocument Deserialize(string json)
+    public static ProjectDocument Deserialize(string json) => DeserializeWithReport(json).Document;
+
+    /// <summary>Dosyayı okur, eski sürümleri yükseltir, onarılabilir sorunları düzeltip uyarı olarak döndürür.</summary>
+    public static ProjectLoadResult DeserializeWithReport(string json)
     {
         JsonNode? root;
         try
@@ -50,7 +54,7 @@ public static class ProjectSerializer
         }
         catch (JsonException ex)
         {
-            throw new ProjectFormatException("Proje dosyası geçerli bir JSON değil.", ex);
+            throw new ProjectFormatException("Proje dosyası geçerli bir JSON değil (dosya yarım kalmış veya bozulmuş olabilir).", ex);
         }
 
         if (root is not JsonObject obj || obj[FormatVersionProperty] is not JsonValue versionNode
@@ -69,17 +73,75 @@ public static class ProjectSerializer
         }
 
         Migrate(obj, version);
+        var warnings = new List<string>();
+        CheckObjectKinds(obj);
+        RepairResourceData(obj, warnings);
 
+        ProjectDocument doc;
         try
         {
-            var doc = obj.Deserialize<ProjectDocument>(Options)
+            doc = obj.Deserialize<ProjectDocument>(Options)
                 ?? throw new ProjectFormatException("Proje dosyası boş.");
-            doc.FormatVersion = ProjectDocument.CurrentFormatVersion;
-            return doc;
         }
         catch (JsonException ex)
         {
             throw new ProjectFormatException($"Proje dosyası okunamadı ({ex.Path}): {ex.Message}", ex);
+        }
+        doc.FormatVersion = ProjectDocument.CurrentFormatVersion;
+        warnings.AddRange(ProjectValidator.Repair(doc));
+        return new ProjectLoadResult(doc, warnings);
+    }
+
+    /// <summary>Programın tanıdığı nesne türleri (DrawingObject üzerindeki JsonDerivedType kayıtları).</summary>
+    public static IReadOnlySet<string> KnownObjectKinds { get; } = typeof(DrawingObject)
+        .GetCustomAttributes(typeof(JsonDerivedTypeAttribute), inherit: false)
+        .Cast<JsonDerivedTypeAttribute>()
+        .Select(a => (string)a.TypeDiscriminator!)
+        .ToHashSet(StringComparer.Ordinal);
+
+    /// <summary>Tanınmayan nesne türünde, nerede olduğunu söyleyen anlaşılır hata (nesne sessizce atılmaz).</summary>
+    private static void CheckObjectKinds(JsonObject root)
+    {
+        var pages = root["pages"] as JsonArray ?? [];
+        for (var p = 0; p < pages.Count; p++)
+        {
+            if (pages[p] is not JsonObject page || page["objects"] is not JsonArray objects)
+            {
+                continue;
+            }
+            for (var i = 0; i < objects.Count; i++)
+            {
+                if (objects[i] is null)
+                {
+                    continue;
+                }
+                var kind = objects[i] is JsonObject o && o["kind"] is JsonValue v && v.TryGetValue<string>(out var k) ? k : null;
+                if (kind is null || !KnownObjectKinds.Contains(kind))
+                {
+                    var pageName = (page["name"] as JsonValue)?.ToString() ?? $"#{p + 1}";
+                    throw new ProjectFormatException(
+                        $"'{pageName}' sayfasının {i + 1}. nesnesi tanınmayan türde: '{kind ?? "(tür yok)"}'. " +
+                        "Dosya daha yeni bir sürümden gelmiş veya elle bozulmuş olabilir; veri kaybını önlemek için açılmadı.");
+                }
+            }
+        }
+    }
+
+    /// <summary>Bozuk base64 resim verisi tüm projeyi açılmaz yapmasın: o kaynak boşaltılır ve uyarı verilir.</summary>
+    private static void RepairResourceData(JsonObject root, List<string> warnings)
+    {
+        foreach (var res in (root["resources"] as JsonArray ?? []).OfType<JsonObject>())
+        {
+            if (res["data"] is not JsonValue data || !data.TryGetValue<string>(out var b64))
+            {
+                continue;
+            }
+            var buffer = new byte[b64.Length];
+            if (!Convert.TryFromBase64String(b64, buffer, out _))
+            {
+                res["data"] = string.Empty;
+                warnings.Add($"'{res["fileName"]}' kaynağının verisi bozuk; resim yer tutucu ile gösterilecek.");
+            }
         }
     }
 

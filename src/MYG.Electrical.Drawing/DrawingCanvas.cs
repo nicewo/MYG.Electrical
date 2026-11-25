@@ -209,6 +209,7 @@ public sealed class DrawingCanvas : FrameworkElement
             oldSession.WiresChanged -= OnWiresChanged;
             oldSession.ActivePageChanged -= OnActivePageChanged;
         }
+        WpfSceneSink.ClearResourceCache();
         _composer = newSession is null ? null : new SceneComposer(newSession.Catalog, newSession.Document.FindResource);
         if (newSession is not null)
         {

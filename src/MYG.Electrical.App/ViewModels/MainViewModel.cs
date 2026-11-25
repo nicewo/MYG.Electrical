@@ -332,10 +332,16 @@ public sealed class MainViewModel : ObservableObject
         }
         try
         {
-            var doc = await _files.OpenAsync(path);
+            var result = await _files.OpenAsync(path);
             _filePath = path;
-            Session = CreateSession(doc);
+            Session = CreateSession(result.Document);
             StatusMessage = $"Açıldı: {Path.GetFileName(path)}";
+            if (result.Warnings.Count > 0)
+            {
+                Session.IsDirty = true; // onarılan veriler kaydedilsin
+                OnPropertyChanged(nameof(Title));
+                _dialogs.ShowInfo("Proje açıldı, ancak bazı sorunlar onarıldı:\n\n• " + string.Join("\n• ", result.Warnings.Take(10)));
+            }
         }
         catch (ProjectFormatException ex)
         {

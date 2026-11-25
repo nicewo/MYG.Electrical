@@ -102,7 +102,7 @@ public class ProjectSerializerTests
     [InlineData("""{ "formatVersion": 99, "pages": [] }""", "daha yeni")]
     [InlineData("""{ "formatVersion": 0, "pages": [] }""", "Geçersiz")]
     [InlineData("bu json değil", "JSON")]
-    [InlineData("""{ "formatVersion": 1, "pages": [ { "objects": [ { "kind": "bilinmeyen" } ] } ] }""", "okunamadı")]
+    [InlineData("""{ "formatVersion": 1, "pages": [ { "objects": [ { "kind": "bilinmeyen" } ] } ] }""", "tanınmayan")]
     public void Invalid_files_raise_readable_errors(string json, string expectedMessagePart)
     {
         var ex = Assert.Throws<ProjectFormatException>(() => ProjectSerializer.Deserialize(json));
@@ -134,10 +134,11 @@ public class ProjectSerializerTests
         {
             await service.SaveAsync(SampleProject(), path, TestContext.Current.CancellationToken);
             await service.SaveAsync(SampleProject(), path, TestContext.Current.CancellationToken); // üzerine yazma
-            var loaded = await service.OpenAsync(path, TestContext.Current.CancellationToken);
+            var loaded = (await service.OpenAsync(path, TestContext.Current.CancellationToken)).Document;
 
             Assert.Equal(7, loaded.Pages[1].Objects.Count);
-            Assert.Single(Directory.GetFiles(dir)); // geçici dosya kalmamalı
+            Assert.Equal(2, Directory.GetFiles(dir).Length); // proje + .bak; geçici dosya kalmamalı
+            Assert.True(File.Exists(path + ProjectFileService.BackupExtension));
         }
         finally
         {

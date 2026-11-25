@@ -4,45 +4,75 @@ using Serilog;
 
 namespace MYG.Electrical.Infrastructure.Serialization;
 
-/// <summary>Proje dosyalarını diske güvenli şekilde yazar/okur.</summary>
+/// <summary>
+/// Proje dosyalarını diske güvenli şekilde yazar/okur.
+/// Kayıt sırası: JSON üret → geri okunabildiğini doğrula → geçici dosyaya yaz ve diske boşalt →
+/// asıl dosyayı tek adımda değiştir (önceki sürüm <c>.bak</c> olarak saklanır). Hiçbir adımda yarım dosya oluşmaz.
+/// </summary>
 public sealed class ProjectFileService(ILogger logger)
 {
+    public const string BackupExtension = ".bak";
+    private const int WriteBufferSize = 1 << 16;
     private static readonly UTF8Encoding Utf8NoBom = new(encoderShouldEmitUTF8Identifier: false);
 
-    public async Task SaveAsync(ProjectDocument document, string path, CancellationToken ct = default)
+    public Task SaveAsync(ProjectDocument document, string path, CancellationToken ct = default)
     {
-        var json = ProjectSerializer.Serialize(document);
-        var directory = Path.GetDirectoryName(Path.GetFullPath(path))!;
-        Directory.CreateDirectory(directory);
-
-        // Önce geçici dosyaya yaz, sonra değiştir: yarım kalmış kayıt eski dosyayı bozmaz.
-        var temp = Path.Combine(directory, $".{Path.GetFileName(path)}.{Guid.NewGuid():N}.tmp");
-        await File.WriteAllTextAsync(temp, json, Utf8NoBom, ct).ConfigureAwait(false);
-        File.Move(temp, path, overwrite: true);
-        logger.Information("Proje kaydedildi: {Path} ({Pages} sayfa)", path, document.Pages.Count);
+        ct.ThrowIfCancellationRequested();
+        return Task.Run(() => Save(document, path), ct);
     }
 
-    /// <summary>Senkron kayıt (UI'da kapanış onayı gibi beklenmesi gereken akışlar için).</summary>
+    /// <summary>Senkron kayıt (kapanış onayı gibi beklenmesi gereken akışlar için).</summary>
     public void Save(ProjectDocument document, string path)
     {
         var json = ProjectSerializer.Serialize(document);
-        var directory = Path.GetDirectoryName(Path.GetFullPath(path))!;
+        // Yazmadan önce doğrula: okunamayacak bir dosya asla diske gitmesin.
+        _ = ProjectSerializer.Deserialize(json);
+
+        var fullPath = Path.GetFullPath(path);
+        var directory = Path.GetDirectoryName(fullPath)!;
         Directory.CreateDirectory(directory);
-        var temp = Path.Combine(directory, $".{Path.GetFileName(path)}.{Guid.NewGuid():N}.tmp");
-        File.WriteAllText(temp, json, Utf8NoBom);
-        File.Move(temp, path, overwrite: true);
-        logger.Information("Proje kaydedildi: {Path} ({Pages} sayfa)", path, document.Pages.Count);
+        var temp = Path.Combine(directory, $".{Path.GetFileName(fullPath)}.{Guid.NewGuid():N}.tmp");
+        try
+        {
+            using (var stream = new FileStream(temp, FileMode.CreateNew, FileAccess.Write, FileShare.None, WriteBufferSize, FileOptions.WriteThrough))
+            {
+                var bytes = Utf8NoBom.GetBytes(json);
+                stream.Write(bytes);
+                stream.Flush(flushToDisk: true);
+            }
+
+            if (File.Exists(fullPath))
+            {
+                File.Replace(temp, fullPath, fullPath + BackupExtension, ignoreMetadataErrors: true);
+            }
+            else
+            {
+                File.Move(temp, fullPath);
+            }
+        }
+        finally
+        {
+            if (File.Exists(temp))
+            {
+                File.Delete(temp);
+            }
+        }
+        logger.Information("Proje kaydedildi: {Path} ({Pages} sayfa, {Bytes} bayt)", fullPath, document.Pages.Count, json.Length);
     }
 
-    public async Task<ProjectDocument> OpenAsync(string path, CancellationToken ct = default)
+    public async Task<ProjectLoadResult> OpenAsync(string path, CancellationToken ct = default)
     {
         if (!File.Exists(path))
         {
             throw new ProjectFormatException($"Dosya bulunamadı: {path}");
         }
         var json = await File.ReadAllTextAsync(path, ct).ConfigureAwait(false);
-        var doc = ProjectSerializer.Deserialize(json);
-        logger.Information("Proje açıldı: {Path} ({Pages} sayfa)", path, doc.Pages.Count);
-        return doc;
+        var result = ProjectSerializer.DeserializeWithReport(json);
+        logger.Information("Proje açıldı: {Path} ({Pages} sayfa)", path, result.Document.Pages.Count);
+        foreach (var warning in result.Warnings)
+        {
+            logger.Warning("Açılış uyarısı: {Warning}", warning);
+        }
+        return result;
     }
 }

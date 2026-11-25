@@ -56,12 +56,11 @@ public sealed class SceneComposer(ISymbolCatalog catalog, Func<string, Resources
     private void ComposeImage(ImageObject img, ISceneSink sink)
     {
         var id = string.IsNullOrEmpty(img.RenderResourceId) ? img.SourceResourceId : img.RenderResourceId;
-        if (resources?.Invoke(id) is { } res)
+        if (resources?.Invoke(id) is { Data.Length: > 0 } res && sink.DrawImageData(res.Id, res.Data, img.Bounds))
         {
-            sink.DrawImageData(res.Id, res.Data, img.Bounds);
             return;
         }
-        // Kaynak bulunamadı: çarpılı yer tutucu
+        // Kaynak yok veya resim çözülemedi: çarpılı yer tutucu
         var missing = new StrokeStyle(DrawingStyles.PinMarker, DrawingStyles.ThinLine, Dashed: true);
         var b = img.Bounds;
         sink.DrawRectangle(b, missing);

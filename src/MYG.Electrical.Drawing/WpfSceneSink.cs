@@ -82,7 +82,7 @@ public sealed class WpfSceneSink(DrawingContext dc) : ISceneSink
         dc.DrawImage(img, new Rect(rect.X + (rect.Width - w) / 2, rect.Y + (rect.Height - h) / 2, w, h));
     }
 
-    public void DrawImageData(string cacheKey, byte[] data, Rect2D rect)
+    public bool DrawImageData(string cacheKey, byte[] data, Rect2D rect)
     {
         if (!DataImages.TryGetValue(cacheKey, out var img))
         {
@@ -96,14 +96,22 @@ public sealed class WpfSceneSink(DrawingContext dc) : ISceneSink
             }
             DataImages[cacheKey] = img;
         }
-        if (img is not null && rect.Width > 0 && rect.Height > 0)
+        if (img is null)
+        {
+            return false;
+        }
+        if (rect.Width > 0 && rect.Height > 0)
         {
             dc.DrawImage(img, WpfConvert.ToRect(rect));
         }
+        return true;
     }
 
     /// <summary>Logo dosyası değiştiğinde önbelleği temizlemek için.</summary>
     public static void ClearImageCache() => Images.Clear();
+
+    /// <summary>Proje değişince gömülü resim önbelleğini boşaltır (bellek birikmesin).</summary>
+    public static void ClearResourceCache() => DataImages.Clear();
 
     private static BitmapSource? LoadImage(string path)
     {

@@ -34,5 +34,6 @@ public interface ISceneSink
     /// Bellekteki resmi dikdörtgene gerilerek çizer. <paramref name="cacheKey"/> aynı veri için sabit olmalıdır
     /// (kaynak kimliği); hedef çözülmüş resmi bu anahtarla önbelleğe alabilir.
     /// </summary>
-    void DrawImageData(string cacheKey, byte[] data, Rect2D rect);
+    /// <returns>Resim çözülemediyse false (çağıran yer tutucu çizer).</returns>
+    bool DrawImageData(string cacheKey, byte[] data, Rect2D rect);
 }

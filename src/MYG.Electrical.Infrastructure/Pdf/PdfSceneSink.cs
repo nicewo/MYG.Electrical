@@ -76,11 +76,11 @@ internal sealed class PdfSceneSink(XGraphics gfx, ILogger logger) : ISceneSink
         }
     }
 
-    public void DrawImageData(string cacheKey, byte[] data, Rect2D rect)
+    public bool DrawImageData(string cacheKey, byte[] data, Rect2D rect)
     {
         if (rect.Width <= 0 || rect.Height <= 0)
         {
-            return;
+            return true;
         }
         try
         {
@@ -91,10 +91,12 @@ internal sealed class PdfSceneSink(XGraphics gfx, ILogger logger) : ISceneSink
                 _images[cacheKey] = image;
             }
             gfx.DrawImage(image, rect.X, rect.Y, rect.Width, rect.Height);
+            return true;
         }
         catch (Exception ex) when (ex is IOException or InvalidOperationException or NotSupportedException or ArgumentException)
         {
             logger.Warning(ex, "Resim PDF'e eklenemedi: {Resource}", cacheKey);
+            return false;
         }
     }
 
