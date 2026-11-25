@@ -16,6 +16,7 @@ public sealed class LineObject : DrawingObject, IRotatable
     public Point2D End => new(X2, Y2);
 
     public override Point2D Anchor => new((X1 + X2) / 2, (Y1 + Y2) / 2);
+    public override Point2D SnapPoint => Start;
 
     /// <summary>Çizgi kendi orta noktası etrafında 90° adımlarla döner; açı bilgisi tutulmaz.</summary>
     double IRotatable.Rotation

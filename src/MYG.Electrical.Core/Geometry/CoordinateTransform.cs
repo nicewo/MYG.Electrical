@@ -67,6 +67,13 @@ public static class CoordinateTransform
 
     public static Point2D Snap(Point2D p, double gridSpacing) => new(Snap(p.X, gridSpacing), Snap(p.Y, gridSpacing));
 
+    /// <summary>
+    /// Sürükleme vektörünü, tutulan nesnenin referans noktası (<paramref name="snapOrigin"/>) grid'e oturacak şekilde
+    /// düzeltir. Grid dışında kalmış bir nesne de ilk sürüklemede hizaya gelir.
+    /// </summary>
+    public static Point2D SnapDelta(Point2D snapOrigin, Point2D rawDelta, double gridSpacing) =>
+        Snap(snapOrigin + rawDelta, gridSpacing) - snapOrigin;
+
     /// <summary>Noktanın bir doğru parçasına en kısa uzaklığı.</summary>
     public static double DistanceToSegment(Point2D p, Point2D a, Point2D b)
     {

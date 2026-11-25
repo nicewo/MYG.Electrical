@@ -13,6 +13,9 @@ public interface IDialogService
     /// <summary>Kaydedilmemiş değişiklikler için Evet/Hayır/İptal. İptal → null.</summary>
     bool? ConfirmSaveChanges(string projectName);
 
+    /// <summary>Evet/Hayır onayı (ör. dolu sayfayı silme).</summary>
+    bool Confirm(string message);
+
     void ShowError(string message);
     void ShowInfo(string message);
 }
@@ -27,4 +30,7 @@ public interface ICanvasController
 
     /// <summary>Yerleştirme önizlemesini 90° döndürür.</summary>
     void RotatePlacement();
+
+    /// <summary>Logo gibi dosyadan okunan resimler değişince önbelleği yeniler.</summary>
+    void InvalidateFileImages();
 }

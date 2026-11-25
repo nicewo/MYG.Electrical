@@ -30,6 +30,12 @@ public partial class MainWindow : Window, ICanvasController
     public void RefreshAll() => Canvas.RefreshAll();
     public void RotatePlacement() => Canvas.RotatePlacement();
 
+    public void InvalidateFileImages()
+    {
+        MYG.Electrical.Drawing.WpfSceneSink.ClearImageCache();
+        Canvas.RefreshAll();
+    }
+
     protected override void OnClosing(CancelEventArgs e)
     {
         if (!_vm.ConfirmDiscardChanges())

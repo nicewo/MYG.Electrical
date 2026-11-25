@@ -117,4 +117,24 @@ public class GeometryTests
         Assert.Equal(20, r.Width, 9);
         Assert.Equal(10, r.Height, 9);
     }
+
+    [Theory]
+    [InlineData(100, 50, 7.4, 0, 5, 0)]     // grid üzerindeki nesne: 7,4 mm → 5 mm
+    [InlineData(101.3, 50, 2, 0, 3.7, 0)]   // grid dışındaki nesne (101,3): 103,3 → 105'e oturur
+    [InlineData(100, 50, 2.4, -2.6, 0, -5)]
+    public void Drag_delta_snaps_grabbed_point_onto_grid(double ox, double oy, double dx, double dy, double ex, double ey)
+    {
+        var d = CoordinateTransform.SnapDelta(new Point2D(ox, oy), new Point2D(dx, dy), 5);
+        Assert.Equal(ex, d.X, 9);
+        Assert.Equal(ey, d.Y, 9);
+    }
+
+    [Fact]
+    public void Snap_point_is_insertion_point_start_or_top_left()
+    {
+        Assert.Equal(new Point2D(1, 2), new LineObject { X1 = 1, Y1 = 2, X2 = 8, Y2 = 2 }.SnapPoint);
+        Assert.Equal(new Point2D(3, 4), new RectangleObject { X = 3, Y = 4, Width = 7, Height = 9 }.SnapPoint);
+        Assert.Equal(new Point2D(5, 6), new DeviceObject { X = 5, Y = 6 }.SnapPoint);
+        Assert.Equal(new Point2D(7, 8), new ImageObject { X = 7, Y = 8, Width = 3, Height = 3 }.SnapPoint);
+    }
 }

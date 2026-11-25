@@ -52,6 +52,9 @@ public sealed class DialogService : IDialogService
         };
     }
 
+    public bool Confirm(string message) =>
+        MessageBox.Show(Owner!, message, AppTitle, MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes;
+
     public void ShowError(string message) => MessageBox.Show(Owner!, message, AppTitle, MessageBoxButton.OK, MessageBoxImage.Error);
 
     public void ShowInfo(string message) => MessageBox.Show(Owner!, message, AppTitle, MessageBoxButton.OK, MessageBoxImage.Information);

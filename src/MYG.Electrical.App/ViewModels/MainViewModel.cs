@@ -45,7 +45,7 @@ public sealed class MainViewModel : ObservableObject
         _pdf = pdf;
         _log = log;
         _catalog = catalog;
-        Properties = new PropertiesViewModel(dialogs, EditImage);
+        Properties = new PropertiesViewModel(dialogs, EditImage, () => Canvas?.InvalidateFileImages());
 
         SymbolsView = CollectionViewSource.GetDefaultView(catalog.All);
         SymbolsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(SymbolDefinition.Category)));
@@ -69,6 +69,7 @@ public sealed class MainViewModel : ObservableObject
         PasteCommand = new RelayCommand(() => Session.Paste(), () => Session.CanPaste);
         SelectAllCommand = new RelayCommand(() => Session.SelectAll());
         RotateCommand = new RelayCommand(Rotate, () => ActiveTool.IsPlacementTool() || HasSelection());
+        NudgeCommand = new RelayCommand(p => Nudge(p as string), _ => HasSelection());
         ZoomInCommand = new RelayCommand(() => Canvas?.ZoomIn());
         ZoomOutCommand = new RelayCommand(() => Canvas?.ZoomOut());
         ZoomFitCommand = new RelayCommand(() => Canvas?.ZoomToFit());
@@ -273,6 +274,7 @@ public sealed class MainViewModel : ObservableObject
     public RelayCommand ZoomFitCommand { get; }
     public RelayCommand SetToolCommand { get; }
     public RelayCommand InsertImageCommand { get; }
+    public RelayCommand NudgeCommand { get; }
     public RelayCommand AddSchematicPageCommand { get; }
     public RelayCommand AddCoverPageCommand { get; }
     public RelayCommand DeletePageCommand { get; }
@@ -397,8 +399,12 @@ public sealed class MainViewModel : ObservableObject
             {
                 PageIndices = activePageOnly ? [doc.Pages.IndexOf(Session.ActivePage)] : null,
             };
-            _pdf.Export(doc, path, options);
+            var warnings = _pdf.Export(doc, path, options);
             StatusMessage = $"PDF oluşturuldu: {Path.GetFileName(path)}";
+            if (warnings.Count > 0)
+            {
+                _dialogs.ShowInfo("PDF oluşturuldu, ancak:\n\n• " + string.Join("\n• ", warnings));
+            }
             Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or InvalidOperationException or System.ComponentModel.Win32Exception)
@@ -481,14 +487,10 @@ public sealed class MainViewModel : ObservableObject
     private void DeleteActivePage()
     {
         var page = Session.ActivePage;
-        if (page.Objects.Count > 0)
+        if (page.Objects.Count > 0
+            && !_dialogs.Confirm($"'{page.Name}' sayfası ve üzerindeki {page.Objects.Count} nesne silinecek (Ctrl+Z ile geri alınabilir). Devam edilsin mi?"))
         {
-            var answer = System.Windows.MessageBox.Show($"'{page.Name}' sayfası ve üzerindeki {page.Objects.Count} nesne silinecek. Devam edilsin mi?",
-                "MYG Electrical", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Warning);
-            if (answer != System.Windows.MessageBoxResult.Yes)
-            {
-                return;
-            }
+            return;
         }
         Session.RemovePage(page);
     }
@@ -507,6 +509,29 @@ public sealed class MainViewModel : ObservableObject
     {
         Directory.CreateDirectory(LogSetup.LogDirectory);
         Process.Start(new ProcessStartInfo(LogSetup.LogDirectory) { UseShellExecute = true });
+    }
+
+    /// <summary>
+    /// Ok tuşlarıyla seçimi kaydırır. Parametre: "Left", "Right", "Up", "Down"; sonuna ":fine" eklenirse 1 mm,
+    /// aksi halde bir grid adımı.
+    /// </summary>
+    private void Nudge(string? direction)
+    {
+        if (string.IsNullOrEmpty(direction))
+        {
+            return;
+        }
+        const double fineStepMm = 1.0;
+        var parts = direction.Split(':');
+        var step = parts.Length > 1 && parts[1] == "fine" ? fineStepMm : Session.Settings.GridSpacing;
+        var (dx, dy) = parts[0] switch
+        {
+            "Left" => (-step, 0.0),
+            "Right" => (step, 0.0),
+            "Up" => (0.0, -step),
+            _ => (0.0, step),
+        };
+        Session.MoveSelection(dx, dy);
     }
 
     /// <summary>R: yerleştirme aracındaysa önizlemeyi, değilse seçimi döndürür.</summary>

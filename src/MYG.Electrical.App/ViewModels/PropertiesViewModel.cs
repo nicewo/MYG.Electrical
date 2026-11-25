@@ -9,7 +9,7 @@ using MYG.Electrical.Core.Pages;
 namespace MYG.Electrical.App.ViewModels;
 
 /// <summary>Sağ panel: seçili nesne, yoksa sayfa ve proje (kapak/antet) özellikleri.</summary>
-public sealed class PropertiesViewModel(IDialogService dialogs, Action<ImageObject> editImage) : ObservableObject
+public sealed class PropertiesViewModel(IDialogService dialogs, Action<ImageObject> editImage, Action fileImagesChanged) : ObservableObject
 {
     private static readonly IReadOnlyList<string> Rotations = ["0", "90", "180", "270"];
     private static readonly IReadOnlyList<string> Formats = Enum.GetNames<PageFormat>();
@@ -251,8 +251,8 @@ public sealed class PropertiesViewModel(IDialogService dialogs, Action<ImageObje
         Rows.Add(new FileRow("Logo", () => info.LogoPath,
             v =>
             {
-                Drawing.WpfSceneSink.ClearImageCache();
                 s.SetDocumentProperty("Logo", () => info.LogoPath, x => info.LogoPath = x, v);
+                fileImagesChanged();
             },
             dialogs.OpenImageFile));
     }

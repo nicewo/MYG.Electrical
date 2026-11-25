@@ -1,4 +1,5 @@
 using MYG.Electrical.Core.AutoWire;
+using MYG.Electrical.Core.Editing;
 using MYG.Electrical.Core.Geometry;
 using MYG.Electrical.Core.Pages;
 using MYG.Electrical.Core.Rendering;
@@ -17,14 +18,17 @@ public sealed class PdfExporter(ISymbolCatalog catalog, ILogger logger)
 {
     private readonly AutoWireEngine _wireEngine = new();
 
-    public void Export(ProjectDocument document, string path, PdfExportOptions? options = null)
+    /// <returns>Kullanıcıya gösterilecek uyarılar (ör. sayfa dışına taşan nesneler).</returns>
+    public IReadOnlyList<string> Export(ProjectDocument document, string path, PdfExportOptions? options = null)
     {
         using var stream = File.Create(path);
-        Export(document, stream, options);
-        logger.Information("PDF oluşturuldu: {Path}", path);
+        var warnings = Export(document, stream, options);
+        logger.Information("PDF oluşturuldu: {Path} ({Warnings} uyarı)", path, warnings.Count);
+        return warnings;
     }
 
-    public void Export(ProjectDocument document, Stream output, PdfExportOptions? options = null)
+    /// <returns>Kullanıcıya gösterilecek uyarılar (ör. sayfa dışına taşan nesneler).</returns>
+    public IReadOnlyList<string> Export(ProjectDocument document, Stream output, PdfExportOptions? options = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         options ??= new PdfExportOptions();
@@ -35,6 +39,11 @@ public sealed class PdfExporter(ISymbolCatalog catalog, ILogger logger)
         {
             throw new InvalidOperationException("Dışa aktarılacak sayfa yok.");
         }
+        if (indices.Any(i => i < 0 || i >= document.Pages.Count))
+        {
+            throw new ArgumentOutOfRangeException(nameof(options), "Geçersiz sayfa numarası.");
+        }
+        var warnings = new List<string>();
 
         var composer = new SceneComposer(catalog, document.FindResource);
         using var pdf = new PdfDocument();
@@ -46,6 +55,11 @@ public sealed class PdfExporter(ISymbolCatalog catalog, ILogger logger)
         foreach (var index in indices)
         {
             var page = document.Pages[index];
+            var outside = page.Objects.Count(o => !page.Bounds.Contains(ObjectBounds.Get(o, catalog)));
+            if (outside > 0)
+            {
+                warnings.Add($"{index + 1}. sayfa '{page.Name}': {outside} nesne sayfa sınırının dışına taşıyor, PDF'te kesilecek.");
+            }
             var (paperW, paperH) = options.TargetFormat is { } fmt
                 ? PageSizes.Get(fmt, page.Orientation)
                 : (page.Width, page.Height);
@@ -67,5 +81,6 @@ public sealed class PdfExporter(ISymbolCatalog catalog, ILogger logger)
         }
 
         pdf.Save(output);
+        return warnings;
     }
 }

@@ -25,6 +25,9 @@ public abstract class DrawingObject
     /// <summary>Taşıma/döndürme referans noktası.</summary>
     public abstract Point2D Anchor { get; }
 
+    /// <summary>Sürüklerken grid'e oturtulan nokta (sembolde ekleme noktası, çizgide başlangıç, dikdörtgende sol üst).</summary>
+    public virtual Point2D SnapPoint => Anchor;
+
     /// <summary>Bu nesne otomatik kablolamayı etkiler mi?</summary>
     [JsonIgnore]
     public virtual bool AffectsWiring => false;

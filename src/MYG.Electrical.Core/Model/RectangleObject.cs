@@ -12,6 +12,7 @@ public sealed class RectangleObject : DrawingObject, IRotatable
 
     public Rect2D Bounds => new(X, Y, Width, Height);
     public override Point2D Anchor => Bounds.Center;
+    public override Point2D SnapPoint => new(X, Y);
 
     /// <summary>Dikdörtgen merkezi etrafında döner (90° → en/boy yer değiştirir).</summary>
     double IRotatable.Rotation

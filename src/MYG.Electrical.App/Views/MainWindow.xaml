@@ -341,7 +341,28 @@
                                     PendingSymbol="{Binding SelectedSymbol}"
                                     PendingImage="{Binding PendingImage}">
                     <!-- Tek tuş kısayolları yalnızca çizim alanı odaktayken çalışır (metin kutularında yazmayı engellemez) -->
+                    <draw:DrawingCanvas.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Kes" Command="{Binding CutCommand}" InputGestureText="Ctrl+X" />
+                            <MenuItem Header="Kopyala" Command="{Binding CopyCommand}" InputGestureText="Ctrl+C" />
+                            <MenuItem Header="Yapıştır" Command="{Binding PasteCommand}" InputGestureText="Ctrl+V" />
+                            <MenuItem Header="Sil" Command="{Binding DeleteCommand}" InputGestureText="Del" />
+                            <Separator />
+                            <MenuItem Header="Döndür 90°" Command="{Binding RotateCommand}" InputGestureText="R" />
+                            <Separator />
+                            <MenuItem Header="Tümünü seç" Command="{Binding SelectAllCommand}" InputGestureText="Ctrl+A" />
+                            <MenuItem Header="Sayfaya sığdır" Command="{Binding ZoomFitCommand}" InputGestureText="F" />
+                        </ContextMenu>
+                    </draw:DrawingCanvas.ContextMenu>
                     <draw:DrawingCanvas.InputBindings>
+                        <KeyBinding Key="Left" Command="{Binding NudgeCommand}" CommandParameter="Left" />
+                        <KeyBinding Key="Right" Command="{Binding NudgeCommand}" CommandParameter="Right" />
+                        <KeyBinding Key="Up" Command="{Binding NudgeCommand}" CommandParameter="Up" />
+                        <KeyBinding Key="Down" Command="{Binding NudgeCommand}" CommandParameter="Down" />
+                        <KeyBinding Key="Left" Modifiers="Shift" Command="{Binding NudgeCommand}" CommandParameter="Left:fine" />
+                        <KeyBinding Key="Right" Modifiers="Shift" Command="{Binding NudgeCommand}" CommandParameter="Right:fine" />
+                        <KeyBinding Key="Up" Modifiers="Shift" Command="{Binding NudgeCommand}" CommandParameter="Up:fine" />
+                        <KeyBinding Key="Down" Modifiers="Shift" Command="{Binding NudgeCommand}" CommandParameter="Down:fine" />
                         <KeyBinding Key="Delete" Command="{Binding DeleteCommand}" />
                         <KeyBinding Key="R" Command="{Binding RotateCommand}" />
                         <KeyBinding Key="F" Command="{Binding ZoomFitCommand}" />

@@ -49,7 +49,9 @@ dotnet run --project src/MYG.Electrical.App
 | Ctrl+C / X / V | Kopyala / Kes / Yapıştır |
 | F | Sayfaya sığdır |
 | Tekerlek / Orta tuş | Yakınlaştır / Kaydır |
-| Esc / Sağ tık | İşlemi iptal et, seçim aracına dön |
+| ← → ↑ ↓ / Shift+ok | Seçimi bir grid adımı / 1 mm kaydır |
+| Sağ tık | Seç aracında bağlam menüsü (kes, kopyala, yapıştır, sil, döndür); başka araçta iptal |
+| Esc | İşlemi iptal et, seçim aracına dön |
 | PgUp / PgDn | Önceki / sonraki sayfa |
 
 ## Proje yapısı

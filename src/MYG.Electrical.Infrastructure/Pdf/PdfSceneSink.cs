@@ -8,6 +8,7 @@ namespace MYG.Electrical.Infrastructure.Pdf;
 /// <summary>Sahne şekillerini PDFsharp XGraphics üzerine vektörel olarak çizer. Koordinatlar mm.</summary>
 internal sealed class PdfSceneSink(XGraphics gfx, ILogger logger) : ISceneSink
 {
+    private static readonly double[] DashPattern = [4, 3];
     private readonly Dictionary<(double Size, bool Bold), XFont> _fonts = [];
     private readonly Dictionary<string, XImage> _images = [];
 
@@ -111,12 +112,20 @@ internal sealed class PdfSceneSink(XGraphics gfx, ILogger logger) : ISceneSink
         return font;
     }
 
-    private static XPen Pen(StrokeStyle s) => new(Color(s.Color), s.Thickness)
+    private static XPen Pen(StrokeStyle s)
     {
-        DashStyle = s.Dashed ? XDashStyle.Dash : XDashStyle.Solid,
-        LineCap = XLineCap.Round,
-        LineJoin = XLineJoin.Round,
-    };
+        var pen = new XPen(Color(s.Color), s.Thickness)
+        {
+            LineCap = XLineCap.Round,
+            LineJoin = XLineJoin.Round,
+        };
+        if (s.Dashed)
+        {
+            // Ekranla aynı desen: çizgi kalınlığının 4 katı dolu, 3 katı boş
+            pen.DashPattern = DashPattern;
+        }
+        return pen;
+    }
 
     private static XColor Color(uint argb) =>
         XColor.FromArgb((int)(argb >> 24), (int)((argb >> 16) & 0xFF), (int)((argb >> 8) & 0xFF), (int)(argb & 0xFF));

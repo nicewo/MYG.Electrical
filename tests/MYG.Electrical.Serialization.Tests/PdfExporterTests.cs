@@ -101,4 +101,27 @@ public class PdfExporterTests
         using var pdf = ExportAndRead(doc);
         Assert.Equal(2, pdf.PageCount);
     }
+
+    [Fact]
+    public void Objects_outside_page_produce_warning()
+    {
+        var doc = ProjectDocument.CreateNew();
+        doc.Pages[1].Objects.Add(new Core.Model.LineObject { X1 = 400, Y1 = 100, X2 = 480, Y2 = 100 });
+        doc.Pages[1].Objects.Add(new Core.Model.LineObject { X1 = 10, Y1 = 10, X2 = 20, Y2 = 10 });
+
+        var warnings = Exporter.Export(doc, new MemoryStream());
+
+        var w = Assert.Single(warnings);
+        Assert.Contains("1 nesne", w);
+        Assert.Contains("Güç Devresi", w);
+    }
+
+    [Fact]
+    public void Clean_project_exports_without_warnings() =>
+        Assert.Empty(Exporter.Export(ProjectSerializerTests.SampleProject(), new MemoryStream()));
+
+    [Fact]
+    public void Invalid_page_index_is_rejected() =>
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            Exporter.Export(ProjectDocument.CreateNew(), new MemoryStream(), new PdfExportOptions { PageIndices = [5] }));
 }

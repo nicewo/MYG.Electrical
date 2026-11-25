@@ -29,7 +29,8 @@ public sealed class DrawingCanvas : FrameworkElement
     private static readonly Brush SelectionBrush = Frozen(new SolidColorBrush(Color.FromRgb(0x2F, 0x80, 0xED)));
     private static readonly Brush ActiveToolBrush = Frozen(new SolidColorBrush(Color.FromRgb(0xF2, 0x8C, 0x28)));
     private static readonly Brush RubberFill = Frozen(new SolidColorBrush(Color.FromArgb(0x30, 0x2F, 0x80, 0xED)));
-    private static readonly Pen SelectionPen = Frozen(new Pen(SelectionBrush, 1) { DashStyle = DashStyles.Dash });
+    private static readonly Pen SelectionPen = Frozen(new Pen(SelectionBrush, 1.5));
+    private static readonly Brush SelectionFill = Frozen(new SolidColorBrush(Color.FromArgb(0x22, 0x2F, 0x80, 0xED)));
     private static readonly Pen RubberPen = Frozen(new Pen(SelectionBrush, 1));
     private static readonly Pen PreviewPen = Frozen(new Pen(ActiveToolBrush, 1.2) { DashStyle = DashStyles.Dash });
     private static readonly Pen SnapPen = Frozen(new Pen(ActiveToolBrush, 1));
@@ -52,6 +53,8 @@ public sealed class DrawingCanvas : FrameworkElement
     private Point _lastPanPoint;
     private IReadOnlyList<DrawingObject>? _dragObjects;
     private Point2D _dragStart;
+    private Point2D _dragSnapOrigin;
+    private bool _suppressContextMenu;
     private Point2D _dragApplied;
     private Point2D? _rubberStart;
     private bool _rubberAdditive;
@@ -396,7 +399,7 @@ public sealed class DrawingCanvas : FrameworkElement
         foreach (var obj in Session.SelectedObjects)
         {
             var b = ObjectBounds.Get(obj, Session.Catalog);
-            dc.DrawRectangle(null, SelectionPen, ScreenRect(b, SelectionPaddingPixels));
+            dc.DrawRectangle(SelectionFill, SelectionPen, ScreenRect(b, SelectionPaddingPixels));
         }
 
         if (_rubberStart is { } rs)
@@ -463,7 +466,22 @@ public sealed class DrawingCanvas : FrameworkElement
                 CaptureMouse();
                 break;
             case MouseButton.Right:
-                CancelOperation(resetTool: true);
+                if (ActiveTool == EditorTool.Select && _dragObjects is null && _rubberStart is null)
+                {
+                    // Sağ tık menüsü: tıklanan nesne seçili değilse onu seç (menü komutları ona uygulanır)
+                    var hit = Session.HitTest(world, View.ScreenLengthToWorld(GeometryConstants.HitTolerancePixels));
+                    if (hit is not null && !Session.IsSelected(hit.Id))
+                    {
+                        Session.Select(hit);
+                    }
+                    _suppressContextMenu = false;
+                }
+                else
+                {
+                    // Bir araç veya işlem sürerken sağ tık = iptal (menü açılmaz)
+                    CancelOperation(resetTool: true);
+                    _suppressContextMenu = true;
+                }
                 break;
             case MouseButton.Left:
                 OnLeftDown(world, Keyboard.Modifiers.HasFlag(ModifierKeys.Control));
@@ -493,6 +511,7 @@ public sealed class DrawingCanvas : FrameworkElement
                     }
                     _dragObjects = session.SelectedObjects;
                     _dragStart = world;
+                    _dragSnapOrigin = hit.SnapPoint;
                     _dragApplied = Point2D.Zero;
                 }
                 else
@@ -577,7 +596,8 @@ public sealed class DrawingCanvas : FrameworkElement
             var total = _cursorWorld - _dragStart;
             if (Session.Settings.SnapEnabled)
             {
-                total = CoordinateTransform.Snap(total, Session.Settings.GridSpacing);
+                // Tutulan nesnenin referans noktası grid'e oturur (grid dışında kalmış nesne de hizaya gelir)
+                total = CoordinateTransform.SnapDelta(_dragSnapOrigin, total, Session.Settings.GridSpacing);
             }
             var step = total - _dragApplied;
             if (step != Point2D.Zero)
@@ -639,6 +659,16 @@ public sealed class DrawingCanvas : FrameworkElement
     {
         RedrawGhost();
         RedrawOverlay();
+    }
+
+    protected override void OnContextMenuOpening(System.Windows.Controls.ContextMenuEventArgs e)
+    {
+        if (_suppressContextMenu || ActiveTool != EditorTool.Select)
+        {
+            e.Handled = true;
+        }
+        _suppressContextMenu = false;
+        base.OnContextMenuOpening(e);
     }
 
     protected override void OnKeyDown(KeyEventArgs e)
