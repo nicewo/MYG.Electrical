@@ -42,7 +42,8 @@ public partial class App : Application
         var catalog = BuiltInSymbolLibrary.Instance;
         var dialogs = new DialogService();
         var updates = new UpdateService(_log);
-        var vm = new MainViewModel(dialogs, new ProjectFileService(_log), new PdfExporter(catalog, _log), _log, catalog, updates);
+        var shell = new ShellService(_log, dialogs);
+        var vm = new MainViewModel(dialogs, new ProjectFileService(_log), new PdfExporter(catalog, _log), _log, catalog, updates, shell);
         var window = new MainWindow(vm);
         MainWindow = window;
         window.Show();

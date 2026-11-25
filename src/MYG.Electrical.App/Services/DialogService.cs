@@ -37,6 +37,10 @@ public sealed class DialogService : IDialogService
         return dlg.ShowDialog(Owner) == true ? dlg.FileName : null;
     }
 
+    public void ShowAbout(ViewModels.AboutViewModel vm) => new Views.AboutWindow(vm) { Owner = Owner }.ShowDialog();
+
+    public void ShowShortcuts() => new Views.ShortcutsWindow { Owner = Owner }.ShowDialog();
+
     public bool ShowImageDialog(ViewModels.ImageDialogViewModel vm) =>
         new Views.ImageDialog(vm) { Owner = Owner }.ShowDialog() == true;
 

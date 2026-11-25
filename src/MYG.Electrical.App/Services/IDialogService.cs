@@ -10,6 +10,9 @@ public interface IDialogService
     /// <summary>Resim ekle/ayarla penceresi. Tamam → true.</summary>
     bool ShowImageDialog(ViewModels.ImageDialogViewModel vm);
 
+    void ShowAbout(ViewModels.AboutViewModel vm);
+    void ShowShortcuts();
+
     /// <summary>Kaydedilmemiş değişiklikler için Evet/Hayır/İptal. İptal → null.</summary>
     bool? ConfirmSaveChanges(string projectName);
 
@@ -33,4 +36,10 @@ public interface ICanvasController
 
     /// <summary>Logo gibi dosyadan okunan resimler değişince önbelleği yeniler.</summary>
     void InvalidateFileImages();
+}
+
+/// <summary>Bağlantıları ve klasörleri işletim sisteminin varsayılan uygulamasıyla açar.</summary>
+public interface IShellService
+{
+    void OpenUrl(string url);
 }

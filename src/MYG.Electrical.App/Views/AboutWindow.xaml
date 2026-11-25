@@ -1,0 +1,78 @@
+<Window x:Class="MYG.Electrical.App.Views.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MYG Electrical Hakkında" Icon="/Assets/myg-electrical.ico"
+        Width="640" SizeToContent="Height" ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
+        Background="{StaticResource AnthraciteBrush}" Foreground="{StaticResource TextBrush}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Üst bant: uygulama logosu, ad, sürüm -->
+        <Border Background="{StaticResource PanelHeaderBrush}" BorderBrush="{StaticResource SelectionBrush}" BorderThickness="0,0,0,2" Padding="24,20">
+            <DockPanel>
+                <Image Source="/Assets/myg-electrical.png" Width="112" Height="112" DockPanel.Dock="Left" Margin="0,0,20,0"
+                       RenderOptions.BitmapScalingMode="HighQuality" />
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="{Binding ProductName}" FontSize="28" FontWeight="SemiBold" />
+                    <TextBlock Text="{Binding VersionLine}" Foreground="{StaticResource MutedTextBrush}" Margin="0,2,0,8" />
+                    <TextBlock Text="{Binding Description}" TextWrapping="Wrap" />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- Geliştirici ve marka -->
+        <Grid Grid.Row="1" Margin="24,20,24,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Text="{Binding DevelopedBy}" Foreground="{StaticResource MutedTextBrush}" />
+                <TextBlock Text="{Binding Developer}" FontSize="17" FontWeight="SemiBold" Margin="0,6,0,0" />
+                <TextBlock Text="{Binding DeveloperTitle}" Foreground="#FFC2C6CC" />
+                <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                    <TextBlock Text="Web: " Foreground="{StaticResource MutedTextBrush}" />
+                    <Button Style="{StaticResource LinkButton}" Content="{Binding Website}" Command="{Binding OpenWebsiteCommand}" ToolTip="Varsayılan tarayıcıda aç" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                    <TextBlock Text="GitHub: " Foreground="{StaticResource MutedTextBrush}" />
+                    <Button Style="{StaticResource LinkButton}" Content="{Binding Repository}" Command="{Binding OpenRepositoryCommand}" ToolTip="Kaynak kodu ve sürümler" />
+                </StackPanel>
+            </StackPanel>
+            <Image Grid.Column="1" Source="{StaticResource MygTechLogo}" Width="190" VerticalAlignment="Center" Margin="16,0,0,0"
+                   ToolTip="MYG Tech" />
+        </Grid>
+
+        <!-- Lisans ve bileşenler -->
+        <StackPanel Grid.Row="2" Margin="24,8,24,8">
+            <TextBlock Text="LİSANS" Style="{StaticResource PanelHeader}" Margin="0,8,0,4" />
+            <TextBlock Text="{Binding LicenseNotice}" TextWrapping="Wrap" Foreground="#FFC2C6CC" />
+            <TextBlock Text="ÜÇÜNCÜ TARAF BİLEŞENLER" Style="{StaticResource PanelHeader}" Margin="0,14,0,4" />
+            <ItemsControl ItemsSource="{Binding Components}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding StringFormat='• {0}'}" Foreground="{StaticResource MutedTextBrush}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Button Style="{StaticResource LinkButton}" Content="Lisans metinleri (THIRD-PARTY-NOTICES)" Command="{Binding OpenNoticesCommand}" Margin="0,6,0,0" />
+        </StackPanel>
+
+        <!-- Alt düğmeler -->
+        <Border Grid.Row="3" Background="{StaticResource PanelBrush}" BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,0" Padding="24,12" Margin="0,12,0,0">
+            <DockPanel>
+                <Button DockPanel.Dock="Right" Content="Kapat" IsCancel="True" IsDefault="True" MinWidth="90" Click="OnCloseClick" />
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Güncellemeleri denetle" Command="{Binding CheckUpdatesCommand}" Margin="0,0,8,0" Padding="12,4" />
+                    <Button Content="Sürüm notları" Command="{Binding OpenReleasesCommand}" Padding="12,4" />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+    </Grid>
+</Window>

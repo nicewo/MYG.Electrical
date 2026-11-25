@@ -27,6 +27,7 @@ public sealed class MainViewModel : ObservableObject
     private readonly ILogger _log;
     private readonly ISymbolCatalog _catalog;
     private readonly UpdateService _updates;
+    private readonly IShellService _shell;
     private bool _checkingUpdates;
 
     private EditorSession _session;
@@ -41,8 +42,9 @@ public sealed class MainViewModel : ObservableObject
     private string _statusMessage = "Hazır";
 
     public MainViewModel(IDialogService dialogs, ProjectFileService files, PdfExporter pdf, ILogger log, ISymbolCatalog catalog,
-        UpdateService updates)
+        UpdateService updates, IShellService shell)
     {
+        _shell = shell;
         _updates = updates;
         _dialogs = dialogs;
         _files = files;
@@ -88,9 +90,14 @@ public sealed class MainViewModel : ObservableObject
         PreviousPageCommand = new RelayCommand(() => StepPage(-1));
         OpenLogFolderCommand = new RelayCommand(OpenLogFolder);
         CheckUpdatesCommand = new RelayCommand(() => _ = CheckForUpdatesAsync(manual: true), () => !_checkingUpdates);
-        AboutCommand = new RelayCommand(() => _dialogs.ShowInfo(
-            $"MYG Electrical {VersionText}\nIEC elektrik şeması çizim programı\n\nMYG TECH · .NET 10 · WPF\n{UpdateService.RepositoryUrl}\n\n" +
-            "Kısayollar: R döndür · Del sil · Ctrl+Z/Y geri/ileri · Ctrl+C/X/V · Esc iptal · Orta tuş: kaydır · Tekerlek: yakınlaştır"));
+        AboutCommand = new RelayCommand(() => _dialogs.ShowAbout(
+            new AboutViewModel(_updates.CurrentVersion, _updates.IsInstalled, _shell, () => _ = CheckForUpdatesAsync(manual: true))));
+        ShortcutsCommand = new RelayCommand(() => _dialogs.ShowShortcuts());
+        UserGuideCommand = new RelayCommand(() => _shell.OpenUrl(BrandInfo.UserGuideUrl));
+        SourceCodeCommand = new RelayCommand(() => _shell.OpenUrl(BrandInfo.RepositoryUrl));
+        WebsiteCommand = new RelayCommand(() => _shell.OpenUrl(BrandInfo.WebsiteUrl));
+        ReportIssueCommand = new RelayCommand(() => _shell.OpenUrl(BrandInfo.IssuesUrl));
+        OpenSampleCommand = new RelayCommand(() => _ = OpenSampleAsync(), () => File.Exists(SamplePath));
     }
 
     // ---------- Durum ----------
@@ -292,6 +299,15 @@ public sealed class MainViewModel : ObservableObject
 
     public string VersionText => "v" + _updates.CurrentVersion;
     public RelayCommand AboutCommand { get; }
+    public RelayCommand ShortcutsCommand { get; }
+    public RelayCommand UserGuideCommand { get; }
+    public RelayCommand SourceCodeCommand { get; }
+    public RelayCommand WebsiteCommand { get; }
+    public RelayCommand ReportIssueCommand { get; }
+    public RelayCommand OpenSampleCommand { get; }
+
+    /// <summary>Kurulumla gelen örnek proje.</summary>
+    private static string SamplePath => Path.Combine(AppContext.BaseDirectory, "Samples", "Demo.myge");
 
     // ---------- Canvas geri bildirimleri ----------
 
@@ -564,6 +580,30 @@ public sealed class MainViewModel : ObservableObject
         finally
         {
             _checkingUpdates = false;
+        }
+    }
+
+    /// <summary>
+    /// Örnek projeyi kaydedilmemiş yeni proje olarak açar: kaydederken konum sorulur, böylece program klasörüne
+    /// (güncellemede silinir) yazılmaz.
+    /// </summary>
+    private async Task OpenSampleAsync()
+    {
+        if (!ConfirmDiscardChanges())
+        {
+            return;
+        }
+        try
+        {
+            var result = await _files.OpenAsync(SamplePath);
+            _filePath = null;
+            Session = CreateSession(result.Document);
+            StatusMessage = "Örnek proje açıldı (kaydederken yeni konum seçin)";
+        }
+        catch (Exception ex) when (ex is ProjectFormatException or IOException or UnauthorizedAccessException)
+        {
+            _log.Warning(ex, "Örnek proje açılamadı");
+            _dialogs.ShowError($"Örnek proje açılamadı:\n{ex.Message}");
         }
     }
 

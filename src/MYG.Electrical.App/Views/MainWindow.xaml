@@ -73,6 +73,7 @@
     </Window.Resources>
 
     <Window.InputBindings>
+        <KeyBinding Key="F1" Command="{Binding UserGuideCommand}" />
         <KeyBinding Key="N" Modifiers="Control" Command="{Binding NewCommand}" />
         <KeyBinding Key="O" Modifiers="Control" Command="{Binding OpenCommand}" />
         <KeyBinding Key="S" Modifiers="Control" Command="{Binding SaveCommand}" />
@@ -153,9 +154,16 @@
                 <MenuItem Header="Log klasörünü aç" Command="{Binding OpenLogFolderCommand}" />
             </MenuItem>
             <MenuItem Header="_Yardım">
-                <MenuItem Header="Güncellemeleri denetle" Command="{Binding CheckUpdatesCommand}" />
+                <MenuItem Header="Kullanım kılavuzu" Command="{Binding UserGuideCommand}" InputGestureText="F1" />
+                <MenuItem Header="Klavye kısayolları" Command="{Binding ShortcutsCommand}" />
+                <MenuItem Header="Örnek projeyi aç" Command="{Binding OpenSampleCommand}" />
                 <Separator />
-                <MenuItem Header="Hakkında / Kısayollar" Command="{Binding AboutCommand}" />
+                <MenuItem Header="GitHub kaynak kodu" Command="{Binding SourceCodeCommand}" />
+                <MenuItem Header="Hata bildir / öneri" Command="{Binding ReportIssueCommand}" />
+                <MenuItem Header="MYG Tech web sitesi" Command="{Binding WebsiteCommand}" />
+                <Separator />
+                <MenuItem Header="Güncellemeleri denetle" Command="{Binding CheckUpdatesCommand}" />
+                <MenuItem Header="MYG Electrical hakkında" Command="{Binding AboutCommand}" />
             </MenuItem>
         </Menu>
 
