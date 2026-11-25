@@ -74,6 +74,9 @@ public sealed class PropertiesViewModel(IDialogService dialogs, Action<ImageObje
         var selected = _session.SelectedObjects;
         switch (selected.Count)
         {
+            case 0 when _session.SelectedWire is not null:
+                BuildWireRows();
+                break;
             case 0:
                 Header = "Sayfa ve Proje";
                 BuildPageRows(_session.ActivePage);
@@ -104,13 +107,35 @@ public sealed class PropertiesViewModel(IDialogService dialogs, Action<ImageObje
                 Header = $"Cihaz {d.Reference}";
                 Rows.Add(new TextRow("Tanım", () => d.Reference, v => s.RenameReference(d, v)));
                 Rows.Add(new TextRow("Sembol", () => def?.Name ?? d.SymbolId, null));
+                Rows.Add(new TextRow("İşlev metni", () => d.Description, v => Set("İşlev metni", () => d.Description, x => d.Description = x, v.Trim())));
                 AddSymbolTransformRows(d, Num);
+                AddDeviceRecordRows(d);
                 Rows.Add(new SectionRow("Bağlantı noktaları"));
                 foreach (var pin in d.ConnectionPoints)
                 {
                     var p = pin;
-                    Rows.Add(new TextRow(p.Id, () => DescribePin(d, p), null));
+                    Rows.Add(new TextRow(d.PinLabel(p.Id), () => DescribePin(d, p), null));
                 }
+                break;
+
+            case PotentialObject pot:
+                Header = $"Potansiyel {pot.Name}";
+                Rows.Add(new TextRow("Ad", () => pot.Name, v => SetPotentialName(pot, v.Trim())));
+                Rows.Add(new ChoiceRow("Tür", PotentialKindNames.Values.ToList(), () => PotentialKindNames[pot.PotentialKind],
+                    v => Set("Potansiyel türü", () => pot.PotentialKind, x => pot.PotentialKind = x, PotentialKindNames.First(k => k.Value == v).Key)));
+                Rows.Add(new TextRow("Gerilim", () => pot.Voltage, v => Set("Gerilim", () => pot.Voltage, x => pot.Voltage = x, v.Trim())));
+                Rows.Add(new TextRow("Açıklama", () => pot.Description, v => Set("Açıklama", () => pot.Description, x => pot.Description = x, v.Trim())));
+                AddConnectorTransformRows(pot, Num);
+                Rows.Add(new TextRow("Not", () => "Renk yalnızca görsel yardımdır; potansiyel adı ve türü ayrıca saklanır.", null));
+                break;
+
+            case PageLinkObject link:
+                Header = $"Sayfa bağlantısı {link.Name}";
+                Rows.Add(new TextRow("Ad", () => link.Name, v => Set("Bağlantı adı", () => link.Name, x => link.Name = x, v.Trim())));
+                Rows.Add(new TextRow("Açıklama", () => link.Description, v => Set("Açıklama", () => link.Description, x => link.Description = x, v.Trim())));
+                Rows.Add(new TextRow("Karşı uç", () => DescribeLinkTargets(link), null));
+                Rows.Add(new TextRow("Potansiyel", () => DescribePotential(s.Network.PotentialOf(link.Pin.Ref)), null));
+                AddConnectorTransformRows(link, Num);
                 break;
 
             case SymbolObject sym:
@@ -173,6 +198,131 @@ public sealed class PropertiesViewModel(IDialogService dialogs, Action<ImageObje
                 Rows.Add(new BoolRow("Görünür", () => j.Visible, v => Set("Görünür", () => j.Visible, x => j.Visible = x, v)));
                 break;
         }
+    }
+
+    private static readonly Dictionary<PotentialKind, string> PotentialKindNames = new()
+    {
+        [PotentialKind.Other] = "Diğer",
+        [PotentialKind.L1] = "L1 (faz)",
+        [PotentialKind.L2] = "L2 (faz)",
+        [PotentialKind.L3] = "L3 (faz)",
+        [PotentialKind.N] = "N (nötr)",
+        [PotentialKind.PE] = "PE (koruma toprağı)",
+        [PotentialKind.DcPositive] = "DC +",
+        [PotentialKind.DcNegative] = "DC − / 0V",
+        [PotentialKind.Signal] = "Sinyal",
+        [PotentialKind.Communication] = "Haberleşme",
+    };
+
+    /// <summary>Ad değişince tür "Diğer" ise addan tahmin edilir (tek geri alma adımında iki değişiklik olmasın diye yalnız ad).</summary>
+    private void SetPotentialName(PotentialObject pot, string name)
+    {
+        var s = _session!;
+        s.SetProperty(pot, "Potansiyel adı", () => pot.Name, x => pot.Name = x, name);
+        if (pot.PotentialKind == PotentialKind.Other && PotentialObject.GuessKind(name) is var kind && kind != PotentialKind.Other)
+        {
+            s.SetProperty(pot, "Potansiyel türü", () => pot.PotentialKind, x => pot.PotentialKind = x, kind);
+        }
+        Header = $"Potansiyel {pot.Name}";
+    }
+
+    private void AddConnectorTransformRows(SinglePinObject c, Func<string, Func<double>, Action<double>, NumberRow> num)
+    {
+        Rows.Add(new ChoiceRow("Yön (°)", Rotations, () => c.Rotation.ToString(CultureInfo.InvariantCulture),
+            v => _session!.SetProperty(c, "Yön", () => c.Rotation, x => c.Rotation = x, double.Parse(v, CultureInfo.InvariantCulture))));
+        Rows.Add(num("X", () => c.X, v => c.X = v));
+        Rows.Add(num("Y", () => c.Y, v => c.Y = v));
+    }
+
+    private string DescribeLinkTargets(PageLinkObject link)
+    {
+        var targets = _session!.Network.LinkTargets(link);
+        return targets.Count == 0 ? "Yok — diğer sayfaya aynı adla bir bağlantı koyun" : string.Join("  ", targets);
+    }
+
+    private static string DescribePotential(Core.Network.PotentialInfo? p) =>
+        p is null ? "Tanımsız" : string.IsNullOrEmpty(p.Voltage) ? $"{p.Name} ({PotentialKindNames[p.Kind]})" : $"{p.Name} ({PotentialKindNames[p.Kind]}, {p.Voltage})";
+
+    /// <summary>Proje cihaz kaydı (etikete bağlı, bütün parçalar için ortak) ve parçaların konumları.</summary>
+    private void AddDeviceRecordRows(DeviceObject d)
+    {
+        var s = _session!;
+        if (string.IsNullOrWhiteSpace(d.Reference))
+        {
+            return;
+        }
+        Rows.Add(new SectionRow($"Cihaz {d.Reference}"));
+        TextRow Field(string label, Func<Core.Devices.DeviceRecord, string> get, Action<Core.Devices.DeviceRecord, string> set) =>
+            new(label,
+                () => Core.Devices.DeviceRegistry.Find(s.Document, d.Reference) is { } rec ? get(rec) : string.Empty,
+                v =>
+                {
+                    if (Core.Devices.DeviceRegistry.Find(s.Document, d.Reference) is { } rec)
+                    {
+                        s.SetDocumentProperty(label, () => get(rec), x => set(rec, x), v.Trim());
+                    }
+                });
+        Rows.Add(Field("Açıklama", r => r.Description, (r, v) => r.Description = v));
+        Rows.Add(Field("Üretici", r => r.Manufacturer, (r, v) => r.Manufacturer = v));
+        Rows.Add(Field("Model", r => r.Model, (r, v) => r.Model = v));
+        Rows.Add(Field("Sipariş no", r => r.OrderNumber, (r, v) => r.OrderNumber = v));
+        Rows.Add(Field("Yer", r => r.Location, (r, v) => r.Location = v));
+        Rows.Add(new TextRow("Parçalar", () => DescribeParts(d.Reference), null));
+    }
+
+    private string DescribeParts(string reference)
+    {
+        var s = _session!;
+        var parts = Core.Devices.DeviceRegistry.Placements(s.Document, reference)
+            .Select(x =>
+            {
+                var name = s.Catalog.Find(x.Placement.SymbolId)?.Name ?? x.Placement.SymbolId;
+                return $"{s.Network.LocationOf(x.Page, x.Placement.X)} {name}";
+            });
+        return string.Join("  ·  ", parts);
+    }
+
+    // ---------- Kablo ----------
+
+    private void BuildWireRows()
+    {
+        var s = _session!;
+        Header = "Kablo";
+        Core.AutoWire.WireConnection? Wire() => s.SelectedWire;
+        Core.Devices.WireData Data() => Wire() is { } w && s.ActivePage.FindWireData(w.From, w.To) is { } d ? d : new Core.Devices.WireData();
+        void Update(Action<Core.Devices.WireData> change)
+        {
+            if (Wire() is { } w)
+            {
+                var copy = Data().Clone();
+                change(copy);
+                s.SetWireData(w, copy);
+            }
+        }
+        Rows.Add(new TextRow("Kaynak", () => Wire() is { } w ? DescribeEnd(w.From) : "", null));
+        Rows.Add(new TextRow("Hedef", () => Wire() is { } w ? DescribeEnd(w.To) : "", null));
+        Rows.Add(new TextRow("Potansiyel", () => Wire() is { } w ? DescribePotential(s.Network.PotentialOf(w)) : "", null));
+        Rows.Add(new SectionRow("Kablo bilgisi"));
+        Rows.Add(new TextRow("Numara", () => Data().Number, v => Update(d => d.Number = v.Trim())));
+        Rows.Add(new BoolRow("Numara kilitli", () => Data().NumberLocked, v => Update(d => d.NumberLocked = v)));
+        Rows.Add(new TextRow("Damar rengi", () => Data().Color, v => Update(d => d.Color = v.Trim())));
+        Rows.Add(new TextRow("Kesit", () => Data().CrossSection, v => Update(d => d.CrossSection = v.Trim())));
+        Rows.Add(new TextRow("Kablo tipi", () => Data().CableType, v => Update(d => d.CableType = v.Trim())));
+        Rows.Add(new TextRow("Açıklama", () => Data().Description, v => Update(d => d.Description = v.Trim())));
+        Rows.Add(new TextRow("Not", () => "Numara kilitliyse otomatik numaralandırma değiştirmez. Kablo verisi iki uç pine bağlıdır.", null));
+    }
+
+    private string DescribeEnd(PinRef pin)
+    {
+        var obj = _session!.ActivePage.Find(pin.OwnerId);
+        return obj switch
+        {
+            DeviceObject d => $"{(string.IsNullOrEmpty(d.Reference) ? "(etiketsiz)" : d.Reference)} : {d.PinLabel(pin.PinId)}",
+            PotentialObject p => $"Potansiyel {p.Name}",
+            PageLinkObject l => $"Sayfa bağlantısı {l.Name}",
+            JunctionObject => "Bağlantı noktası",
+            _ => pin.PinId,
+        };
     }
 
     private void AddSymbolTransformRows(SymbolObject sym, Func<string, Func<double>, Action<double>, NumberRow> num)

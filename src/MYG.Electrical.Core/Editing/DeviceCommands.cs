@@ -42,3 +42,38 @@ public sealed class PageCompositeCommand(string description, Page page, IReadOnl
         }
     }
 }
+
+/// <summary>Sayfaların kablo verisi listelerini topluca değiştirir (numaralandırma, kablo özelliği düzenleme).</summary>
+public sealed class SetWireDataCommand : IEditCommand, IPageScopedCommand
+{
+    private readonly List<(Page Page, List<WireData> Old, List<WireData> New)> _changes;
+
+    public SetWireDataCommand(string description, IReadOnlyDictionary<Page, List<WireData>> newLists)
+    {
+        Description = description;
+        _changes = newLists.Select(kv => (kv.Key, kv.Key.WireData, kv.Value)).ToList();
+    }
+
+    public string Description { get; }
+
+    /// <summary>Tek sayfalık değişiklikte geri alırken o sayfaya geçilir.</summary>
+    public Page? Page => _changes.Count == 1 ? _changes[0].Page : null;
+
+    public bool IsEmpty => _changes.Count == 0;
+
+    public void Execute()
+    {
+        foreach (var (page, _, n) in _changes)
+        {
+            page.WireData = n;
+        }
+    }
+
+    public void Undo()
+    {
+        foreach (var (page, old, _) in _changes)
+        {
+            page.WireData = old;
+        }
+    }
+}

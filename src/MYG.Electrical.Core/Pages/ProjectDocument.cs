@@ -11,11 +11,12 @@ public sealed class ProjectDocument
     /// <item>3: gömülü kaynaklar (<see cref="Resources"/>) ve resim nesnesi.</item>
     /// <item>4: proje cihazları (<see cref="Devices"/>), proje ayarları, kablo verisi (Page.WireData),
     /// yerleşimde açıklama ve pin adı.</item>
+    /// <item>5: potansiyel (<c>potential</c>) ve sayfa bağlantısı (<c>pageLink</c>) nesneleri.</item>
     /// </list>
     /// Yeni bir alan veya nesne türü eklendiğinde bu değer artırılmalı ve
     /// ProjectSerializer.Migrate içine dönüşüm adımı yazılmalıdır.
     /// </summary>
-    public const int CurrentFormatVersion = 4;
+    public const int CurrentFormatVersion = 5;
     public const string FileExtension = ".myge";
 
     public int FormatVersion { get; set; } = CurrentFormatVersion;

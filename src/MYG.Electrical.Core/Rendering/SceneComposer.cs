@@ -16,6 +16,11 @@ public sealed class SceneComposer(ISymbolCatalog catalog, Func<string, Resources
     /// <summary>Tanım etiketi ile sembol arası boşluk; pin numaralarına yer bırakır.</summary>
     private const double ReferenceGap = 5.0;
 
+    /// <summary>Proje ağı: kablo/potansiyel renkleri ve sayfa bağlantısı çapraz referansları için. Yoksa varsayılan renk.</summary>
+    public Network.ProjectNetwork? Network { get; set; }
+
+    public ColorScheme Colors { get; set; } = ColorScheme.Default;
+
     public void ComposeObject(DrawingObject obj, ISceneSink sink, SceneComposerOptions options)
     {
         switch (obj)
@@ -30,7 +35,13 @@ public sealed class SceneComposer(ISymbolCatalog catalog, Func<string, Resources
                 ComposeImage(img, sink);
                 break;
             case TextObject t:
-                sink.DrawText(t.Text, t.Anchor, t.Height, DrawingStyles.Black);
+                sink.DrawText(t.Text, t.Anchor, t.Height, Colors.Text);
+                break;
+            case PotentialObject pot:
+                ComposePotential(pot, sink, options);
+                break;
+            case PageLinkObject link:
+                ComposePageLink(link, sink, options);
                 break;
             case JunctionObject j:
                 ComposeJunction(j, sink, options);
@@ -68,7 +79,7 @@ public sealed class SceneComposer(ISymbolCatalog catalog, Func<string, Resources
         sink.DrawLine(new(b.Right, b.Top), new(b.Left, b.Bottom), missing);
     }
 
-    private static void ComposeJunction(JunctionObject j, ISceneSink sink, SceneComposerOptions options)
+    private void ComposeJunction(JunctionObject j, ISceneSink sink, SceneComposerOptions options)
     {
         if (options.ShowConnectionPoints)
         {
@@ -88,15 +99,82 @@ public sealed class SceneComposer(ISymbolCatalog catalog, Func<string, Resources
         }
         if (j.ShowsDot)
         {
-            sink.DrawEllipse(j.Anchor, j.Size / 2, j.Size / 2, null, DrawingStyles.Black);
+            sink.DrawEllipse(j.Anchor, j.Size / 2, j.Size / 2, null, Colors.Text);
         }
     }
 
-    public static void ComposeWires(IEnumerable<WireConnection> wires, ISceneSink sink)
+    /// <summary>Kabloları potansiyel rengine göre çizer; kabloya numara girilmişse yanına yazar.</summary>
+    public void ComposeWires(Pages.Page? page, IEnumerable<WireConnection> wires, ISceneSink sink)
     {
         foreach (var w in wires)
         {
-            sink.DrawLine(w.Start, w.End, DrawingStyles.Wire);
+            var color = Colors.ForPotential(Network?.PotentialOf(w)?.Kind);
+            sink.DrawLine(w.Start, w.End, new StrokeStyle(color, DrawingStyles.WireLine));
+            if (page?.FindWireData(w.From, w.To) is { Number.Length: > 0 } data)
+            {
+                var mid = new Point2D((w.Start.X + w.End.X) / 2, (w.Start.Y + w.End.Y) / 2);
+                if (w.IsHorizontal)
+                {
+                    sink.DrawText(data.Number, mid + new Point2D(0, -1.6), ConnectorGeometry.WireNumberHeight, Colors.Text, TextAlign.Center);
+                }
+                else
+                {
+                    sink.DrawText(data.Number, mid + new Point2D(0.8, 0), ConnectorGeometry.WireNumberHeight, Colors.Text);
+                }
+            }
+        }
+    }
+
+    /// <summary>Ağ bilgisi olmadan (tek renk) kablo çizimi.</summary>
+    public static void ComposeWires(IEnumerable<WireConnection> wires, ISceneSink sink) =>
+        new SceneComposer(new Symbols.SymbolCatalog([])).ComposeWires(null, wires, sink);
+
+    private void ComposePotential(PotentialObject p, ISceneSink sink, SceneComposerOptions options)
+    {
+        var color = Colors.ForPotential(p.PotentialKind);
+        var stroke = new StrokeStyle(color, DrawingStyles.SymbolLine);
+        var top = p.LocalToGlobal(new(0, -ConnectorGeometry.PotentialHeight));
+        sink.DrawLine(p.Anchor, top, stroke);
+        sink.DrawLine(p.LocalToGlobal(new(-ConnectorGeometry.PotentialBarHalf, -ConnectorGeometry.PotentialHeight)),
+            p.LocalToGlobal(new(ConnectorGeometry.PotentialBarHalf, -ConnectorGeometry.PotentialHeight)), stroke);
+        // Ad her zaman yatay ve işaretin dış tarafında okunur
+        var outward = p.LocalToGlobal(new(0, -ConnectorGeometry.PotentialHeight - ConnectorGeometry.NameHeight * 0.8));
+        sink.DrawText(p.Name, outward, ConnectorGeometry.NameHeight, color, TextAlign.Center, bold: true);
+        if (options.ShowConnectionPoints)
+        {
+            var m = DrawingStyles.PinMarkerSize;
+            sink.DrawEllipse(p.Anchor, m, m, new StrokeStyle(DrawingStyles.PinMarker, DrawingStyles.ThinLine));
+        }
+    }
+
+    private void ComposePageLink(PageLinkObject link, ISceneSink sink, SceneComposerOptions options)
+    {
+        var color = Colors.ForPotential(Network?.PotentialOf(link.Pin.Ref)?.Kind);
+        var stroke = new StrokeStyle(color, DrawingStyles.SymbolLine);
+        const double len = ConnectorGeometry.LinkArrowLength, half = ConnectorGeometry.LinkArrowHalf;
+        sink.DrawPolygon(
+        [
+            link.LocalToGlobal(new(0, -half)), link.LocalToGlobal(new(len - half, -half)), link.LocalToGlobal(new(len, 0)),
+            link.LocalToGlobal(new(len - half, half)), link.LocalToGlobal(new(0, half)),
+        ], closed: true, stroke);
+        var targets = Network?.LinkTargets(link) ?? [];
+        var text = targets.Count == 0 ? link.Name : $"{link.Name}  {string.Join(" ", targets)}";
+        var textPos = link.LocalToGlobal(new(len + 1.5, 0));
+        var align = link.Direction switch
+        {
+            PinDirection.Right => TextAlign.Right, // dönmüş: ok sola bakar
+            PinDirection.Up or PinDirection.Down => TextAlign.Left,
+            _ => TextAlign.Left,
+        };
+        if (link.Direction is PinDirection.Up or PinDirection.Down)
+        {
+            textPos += new Point2D(1.5, 0);
+        }
+        sink.DrawText(text, textPos, ConnectorGeometry.CrossReferenceHeight, Colors.Text, align);
+        if (options.ShowConnectionPoints)
+        {
+            var m = DrawingStyles.PinMarkerSize;
+            sink.DrawEllipse(link.Anchor, m, m, new StrokeStyle(DrawingStyles.PinMarker, DrawingStyles.ThinLine));
         }
     }
 
@@ -111,7 +189,7 @@ public sealed class SceneComposer(ISymbolCatalog catalog, Func<string, Resources
 
         foreach (var prim in def.Primitives)
         {
-            var stroke = DrawingStyles.Symbol with { Dashed = prim.Dashed, Thickness = DrawingStyles.SymbolLine * s.Scale };
+            var stroke = new StrokeStyle(Colors.Symbol, DrawingStyles.SymbolLine * s.Scale, prim.Dashed);
             switch (prim)
             {
                 case LinePrimitive l:
@@ -119,11 +197,11 @@ public sealed class SceneComposer(ISymbolCatalog catalog, Func<string, Resources
                     break;
                 case RectPrimitive r:
                     var rect = CoordinateTransform.TransformBounds(new Rect2D(r.X, r.Y, r.Width, r.Height), s.Position, s.Rotation, s.Scale);
-                    sink.DrawRectangle(rect, stroke, r.Filled ? DrawingStyles.Black : null);
+                    sink.DrawRectangle(rect, stroke, r.Filled ? Colors.Symbol : null);
                     break;
                 case CirclePrimitive c:
                     var radius = c.Radius * s.Scale;
-                    sink.DrawEllipse(s.LocalToGlobal(new(c.CenterX, c.CenterY)), radius, radius, stroke, c.Filled ? DrawingStyles.Black : null);
+                    sink.DrawEllipse(s.LocalToGlobal(new(c.CenterX, c.CenterY)), radius, radius, stroke, c.Filled ? Colors.Symbol : null);
                     break;
                 case ArcPrimitive a:
                     sink.DrawArc(s.LocalToGlobal(new(a.CenterX, a.CenterY)), a.Radius * s.Scale, a.StartAngle + s.Rotation, a.SweepAngle, stroke);
@@ -133,7 +211,7 @@ public sealed class SceneComposer(ISymbolCatalog catalog, Func<string, Resources
                     sink.DrawPolygon(pts, poly.Closed, stroke, poly.Filled ? stroke.Color : null);
                     break;
                 case TextPrimitive t:
-                    sink.DrawText(t.Text, s.LocalToGlobal(new(t.X, t.Y)), t.Height * s.Scale, DrawingStyles.Black, TextAlign.Center);
+                    sink.DrawText(t.Text, s.LocalToGlobal(new(t.X, t.Y)), t.Height * s.Scale, Colors.Symbol, TextAlign.Center);
                     break;
             }
         }
@@ -145,7 +223,7 @@ public sealed class SceneComposer(ISymbolCatalog catalog, Func<string, Resources
         if (!string.IsNullOrWhiteSpace(d.Reference))
         {
             var pos = new Point2D(bounds.Right + ReferenceGap, bounds.Center.Y);
-            sink.DrawText(d.Reference, pos, DrawingStyles.ReferenceTextHeight, DrawingStyles.ReferenceColor, TextAlign.Left, bold: true);
+            sink.DrawText(d.Reference, pos, DrawingStyles.ReferenceTextHeight, Colors.Text, TextAlign.Left, bold: true);
         }
 
         foreach (var pin in d.GetGlobalPins())

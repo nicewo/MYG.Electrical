@@ -27,6 +27,11 @@ public class LoadSaveReliabilityTests
             X = 13, Y = 14, Width = 40, Height = 20, SourceResourceId = "res-a", RenderResourceId = "res-b",
             TransparencyEnabled = true, TransparentColor = 0xFF102030, Tolerance = 42,
         },
+        ["potential"] = () => new PotentialObject
+        {
+            X = 15, Y = 16, Rotation = 270, Name = "L2", PotentialKind = PotentialKind.L2, Voltage = "400VAC", Description = "Şebeke",
+        },
+        ["pageLink"] = () => new PageLinkObject { X = 17, Y = 18, Rotation = 180, Name = "+24V/3", Description = "Kumanda" },
     };
 
     [Fact]

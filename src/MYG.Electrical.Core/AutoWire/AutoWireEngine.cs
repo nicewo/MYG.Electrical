@@ -31,6 +31,7 @@ public sealed class AutoWireEngine
             {
                 DeviceObject d => d.GetGlobalPins(),
                 JunctionObject j => j.GetGlobalPins(),
+                SinglePinObject s => s.GetGlobalPins(),
                 _ => [],
             };
             foreach (var pin in pins)

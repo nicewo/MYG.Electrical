@@ -17,6 +17,7 @@ public sealed class EditorSession
     private List<DrawingObject> _clipboard = [];
     private Page _activePage;
     private IReadOnlyList<WireConnection> _wires = [];
+    private readonly Dictionary<Page, IReadOnlyList<WireConnection>> _pageWires = [];
 
     public EditorSession(ProjectDocument document, ISymbolCatalog catalog, AutoWireEngine? wireEngine = null)
     {
@@ -41,6 +42,9 @@ public sealed class EditorSession
 
     public IReadOnlyList<WireConnection> Wires => _wires;
 
+    /// <summary>Proje geneli bağlantı ağı (potansiyeller, netler, sayfa bağlantıları). Her değişiklikte güncellenir.</summary>
+    public Network.ProjectNetwork Network { get; private set; } = null!;
+
     public Page ActivePage
     {
         get => _activePage;
@@ -52,6 +56,7 @@ public sealed class EditorSession
             }
             _activePage = value;
             _selection.Clear();
+            _selectedWire = null;
             RecomputeWires();
             ActivePageChanged?.Invoke(this, EventArgs.Empty);
             SelectionChanged?.Invoke(this, EventArgs.Empty);
@@ -124,6 +129,7 @@ public sealed class EditorSession
 
     public void Select(DrawingObject? obj, bool additive = false)
     {
+        _selectedWire = null;
         if (!additive)
         {
             _selection.Clear();
@@ -137,6 +143,7 @@ public sealed class EditorSession
 
     public void SelectMany(IEnumerable<DrawingObject> objects, bool additive = false)
     {
+        _selectedWire = null;
         if (!additive)
         {
             _selection.Clear();
@@ -152,13 +159,36 @@ public sealed class EditorSession
 
     public void ClearSelection()
     {
-        if (_selection.Count == 0)
+        if (_selection.Count == 0 && _selectedWire is null)
         {
             return;
         }
         _selection.Clear();
+        _selectedWire = null;
         SelectionChanged?.Invoke(this, EventArgs.Empty);
     }
+
+    private (PinRef A, PinRef B)? _selectedWire;
+
+    /// <summary>Seçili kablo (nesne seçimiyle birlikte olmaz). Kablolar yeniden hesaplansa da uç pinlerle bulunur.</summary>
+    public WireConnection? SelectedWire => _selectedWire is { } k
+        ? _wires.FirstOrDefault(w => (w.From == k.A && w.To == k.B) || (w.From == k.B && w.To == k.A))
+        : null;
+
+    public void SelectWire(WireConnection? wire)
+    {
+        _selection.Clear();
+        _selectedWire = wire is null ? null : (wire.From, wire.To);
+        SelectionChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    /// <summary>Noktaya en yakın kablo (tolerans içinde).</summary>
+    public WireConnection? HitTestWire(Point2D world, double toleranceMm) =>
+        _wires.Select(w => (Wire: w, Distance: CoordinateTransform.DistanceToSegment(world, w.Start, w.End)))
+            .Where(x => x.Distance <= toleranceMm)
+            .OrderBy(x => x.Distance)
+            .Select(x => x.Wire)
+            .FirstOrDefault();
 
     // ---------- Sorgular ----------
 
@@ -254,6 +284,9 @@ public sealed class EditorSession
         var records = new List<Devices.DeviceRecord>();
         foreach (var d in objects.OfType<DeviceObject>())
         {
+            // Aynı cihaza eklenen yardımcı kontak bir sonraki sıra numarasını alır (13-14 → 23-24).
+            // Nesne henüz sayfada olmadığı için doğrudan atanır; geri alma nesneyi tümden kaldırır.
+            d.PinDesignations = Devices.ContactNumbering.DesignationsFor(Document, d, d.Reference);
             if (!string.IsNullOrWhiteSpace(d.Reference) && Devices.DeviceRegistry.Find(Document, d.Reference) is null
                 && !records.Any(r => Devices.DeviceRegistry.ReferenceComparer.Equals(r.Reference, d.Reference)))
             {
@@ -366,6 +399,35 @@ public sealed class EditorSession
         Execute(new SetPropertyCommand<T>(description, setter, oldValue, newValue, target, _activePage), [target.Id]);
     }
 
+    /// <summary>Otomatik kablo numaralandırma (tek geri alma adımı). Değişen kablo sayısını döndürür.</summary>
+    public int NumberWires(bool renumberAll)
+    {
+        var plan = Core.Network.WireNumbering.Plan(Document, Network, renumberAll);
+        var command = new SetWireDataCommand("Kablo numaralandırma", plan);
+        if (command.IsEmpty)
+        {
+            return 0;
+        }
+        var changed = plan.Sum(kv => kv.Value.Count(n => kv.Key.FindWireData(n.A, n.B) is not { } o || o.Number != n.Number));
+        Execute(command, null);
+        return changed;
+    }
+
+    /// <summary>Etkin sayfadaki bir kablonun bilgilerini değiştirir (geri alınabilir).</summary>
+    public void SetWireData(WireConnection wire, Devices.WireData data)
+    {
+        var list = _activePage.WireData.Select(w => w.Clone()).ToList();
+        list.RemoveAll(w => w.Connects(wire.From, wire.To));
+        var copy = data.Clone();
+        copy.A = wire.From;
+        copy.B = wire.To;
+        if (!copy.IsEmpty || copy.NumberLocked)
+        {
+            list.Add(copy);
+        }
+        Execute(new SetWireDataCommand("Kablo bilgisi", new Dictionary<Page, List<Devices.WireData>> { [_activePage] = list }), null);
+    }
+
     /// <summary>
     /// Yerleşimin etiketini değiştirir ve proje cihaz kaydını tutarlı tutar (tek geri alma adımı):
     /// yeni etiketin kaydı yoksa, eski kayıt başka yerleşimce kullanılmıyorsa yeniden adlandırılır,
@@ -383,6 +445,12 @@ public sealed class EditorSession
         {
             new SetPropertyCommand<string>("Tanım", v => placement.Reference = v, oldReference, newReference, placement, _activePage),
         };
+        var designations = Devices.ContactNumbering.DesignationsFor(Document, placement, newReference);
+        if (!Devices.ContactNumbering.SameDesignations(designations, placement.PinDesignations))
+        {
+            commands.Add(new SetPropertyCommand<Dictionary<string, string>>("Kontak numarası", v => placement.PinDesignations = v,
+                placement.PinDesignations, designations, placement, _activePage));
+        }
         if (newReference.Length > 0 && Devices.DeviceRegistry.Find(Document, newReference) is null)
         {
             var oldRecord = Devices.DeviceRegistry.Find(Document, oldReference);
@@ -424,10 +492,31 @@ public sealed class EditorSession
         SceneChanged?.Invoke(this, SceneChangedEventArgs.All);
     }
 
+    /// <summary>
+    /// Etkin sayfanın kablolarını yeniden hesaplar, diğer sayfaların önbelleğini kullanarak proje ağını kurar.
+    /// Düzenlemeler yalnızca etkin sayfada yapıldığından diğer sayfaların kabloları değişmez.
+    /// </summary>
     public void RecomputeWires()
     {
         _wires = _wireEngine.Compute(_activePage.Objects);
+        _pageWires[_activePage] = _wires;
+        foreach (var stale in _pageWires.Keys.Where(p => !Document.Pages.Contains(p)).ToList())
+        {
+            _pageWires.Remove(stale);
+        }
+        foreach (var page in Document.Pages.Where(p => !_pageWires.ContainsKey(p)))
+        {
+            _pageWires[page] = _wireEngine.Compute(page.Objects);
+        }
+        Network = Core.Network.ProjectNetwork.Build(Document, Catalog, _pageWires);
         WiresChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    /// <summary>Tüm sayfaların kablolarını baştan hesaplar (dosya açılışı, toplu işlemler).</summary>
+    public void RecomputeAllWires()
+    {
+        _pageWires.Clear();
+        RecomputeWires();
     }
 
     private void AfterChange(IReadOnlyCollection<Guid>? affected, bool markDirty = true)
@@ -438,10 +527,11 @@ public sealed class EditorSession
         }
         var wiringAffected = affected is null
             || affected.Any(id => _activePage.Find(id) is not { } o || o.AffectsWiring);
-        SceneChanged?.Invoke(this, affected is null ? SceneChangedEventArgs.All : new SceneChangedEventArgs(affected));
+        // Önce ağ: nesneler (sayfa bağlantısı referansı, potansiyel rengi) güncel ağla çizilsin.
         if (wiringAffected)
         {
             RecomputeWires();
         }
+        SceneChanged?.Invoke(this, affected is null ? SceneChangedEventArgs.All : new SceneChangedEventArgs(affected));
     }
 }

@@ -20,13 +20,20 @@ public enum EditorTool
 
     /// <summary>Hazırlanmış resmi tıklanan noktaya (sol üst köşe) yerleştirir.</summary>
     Image,
+
+    /// <summary>Potansiyel tanımı (L1, +24V...).</summary>
+    Potential,
+
+    /// <summary>Sayfalar arası bağlantı (kesme noktası).</summary>
+    PageLink,
 }
 
 public static class EditorToolExtensions
 {
     /// <summary>Tıklayınca nesne yerleştiren (önizlemesi olan) araçlar.</summary>
     public static bool IsPlacementTool(this EditorTool tool) =>
-        tool is EditorTool.Symbol or EditorTool.Angle or EditorTool.Tee or EditorTool.Cross or EditorTool.Image;
+        tool is EditorTool.Symbol or EditorTool.Angle or EditorTool.Tee or EditorTool.Cross or EditorTool.Image
+            or EditorTool.Potential or EditorTool.PageLink;
 
     public static Core.Model.JunctionShape? ToJunctionShape(this EditorTool tool) => tool switch
     {

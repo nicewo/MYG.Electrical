@@ -26,11 +26,12 @@ public sealed class DrawingCanvas : FrameworkElement
     private static readonly Brush PageBrush = Frozen(new SolidColorBrush(Colors.White));
     private static readonly Brush ShadowBrush = Frozen(new SolidColorBrush(Color.FromArgb(0x60, 0, 0, 0)));
     private static readonly Pen GridPenBase = Frozen(new Pen(Frozen(new SolidColorBrush(Color.FromRgb(0xE3, 0xE5, 0xE8))), 1));
-    private static readonly Brush SelectionBrush = Frozen(new SolidColorBrush(Color.FromRgb(0x2F, 0x80, 0xED)));
+    private static readonly Brush SelectionBrush = Frozen(new SolidColorBrush(Color.FromRgb(0xFF, 0x98, 0x00)));
     private static readonly Brush ActiveToolBrush = Frozen(new SolidColorBrush(Color.FromRgb(0xF2, 0x8C, 0x28)));
-    private static readonly Brush RubberFill = Frozen(new SolidColorBrush(Color.FromArgb(0x30, 0x2F, 0x80, 0xED)));
+    private static readonly Brush RubberFill = Frozen(new SolidColorBrush(Color.FromArgb(0x26, 0xFF, 0x98, 0x00)));
     private static readonly Pen SelectionPen = Frozen(new Pen(SelectionBrush, 1.5));
-    private static readonly Brush SelectionFill = Frozen(new SolidColorBrush(Color.FromArgb(0x22, 0x2F, 0x80, 0xED)));
+    private static readonly Brush SelectionFill = Frozen(new SolidColorBrush(Color.FromArgb(0x1E, 0xFF, 0x98, 0x00)));
+    private static readonly Pen WireSelectionPen = Frozen(new Pen(Frozen(new SolidColorBrush(Color.FromArgb(0x90, 0xFF, 0x98, 0x00))), 6) { StartLineCap = PenLineCap.Round, EndLineCap = PenLineCap.Round });
     private static readonly Pen RubberPen = Frozen(new Pen(SelectionBrush, 1));
     private static readonly Pen PreviewPen = Frozen(new Pen(ActiveToolBrush, 1.2) { DashStyle = DashStyles.Dash });
     private static readonly Pen SnapPen = Frozen(new Pen(ActiveToolBrush, 1));
@@ -136,6 +137,17 @@ public sealed class DrawingCanvas : FrameworkElement
     {
         get => (ImageObject?)GetValue(PendingImageProperty);
         set => SetValue(PendingImageProperty, value);
+    }
+
+    public static readonly DependencyProperty PendingConnectorProperty = DependencyProperty.Register(
+        nameof(PendingConnector), typeof(SinglePinObject), typeof(DrawingCanvas),
+        new PropertyMetadata(null, (d, _) => ((DrawingCanvas)d).RedrawGhost()));
+
+    /// <summary>Potansiyel / sayfa bağlantısı aracı için şablon (ad, tür). Her tıklamada kopyası yerleştirilir.</summary>
+    public SinglePinObject? PendingConnector
+    {
+        get => (SinglePinObject?)GetValue(PendingConnectorProperty);
+        set => SetValue(PendingConnectorProperty, value);
     }
 
     // ---------- Görünüm komutları ----------
@@ -269,7 +281,11 @@ public sealed class DrawingCanvas : FrameworkElement
 
     private void OnSelectionChanged(object? sender, EventArgs e) => RedrawOverlay();
 
-    private void OnWiresChanged(object? sender, EventArgs e) => RedrawWires();
+    private void OnWiresChanged(object? sender, EventArgs e)
+    {
+        RedrawWires();
+        RedrawOverlay(); // seçili kablo yeniden hesaplanan konumuyla vurgulansın
+    }
 
     private void OnViewChanged()
     {
@@ -302,7 +318,11 @@ public sealed class DrawingCanvas : FrameworkElement
     private void RenderObject(DrawingVisual visual, DrawingObject obj)
     {
         using var dc = visual.RenderOpen();
-        _composer?.ComposeObject(obj, new WpfSceneSink(dc), EditorOptions);
+        if (_composer is not null && Session is not null)
+        {
+            _composer.Network = Session.Network;
+            _composer.ComposeObject(obj, new WpfSceneSink(dc), EditorOptions);
+        }
     }
 
     private SceneComposerOptions EditorOptions =>
@@ -358,7 +378,11 @@ public sealed class DrawingCanvas : FrameworkElement
         using var dc = _wireVisual.RenderOpen();
         if (Session is not null)
         {
-            SceneComposer.ComposeWires(Session.Wires, new WpfSceneSink(dc));
+            if (_composer is not null)
+            {
+                _composer.Network = Session.Network;
+                _composer.ComposeWires(Session.ActivePage, Session.Wires, new WpfSceneSink(dc));
+            }
         }
     }
 
@@ -375,6 +399,7 @@ public sealed class DrawingCanvas : FrameworkElement
             _ when ActiveTool.ToJunctionShape() is { } shape =>
                 new JunctionObject { X = p.X, Y = p.Y, Shape = shape, Rotation = EffectivePlacementRotation() },
             EditorTool.Image => PendingImageAt(p),
+            EditorTool.Potential or EditorTool.PageLink => PendingConnectorAt(p),
             _ => PendingSymbol?.CreateDevice(p.X, p.Y, string.Empty),
         };
         if (ghost is DeviceObject d)
@@ -400,6 +425,11 @@ public sealed class DrawingCanvas : FrameworkElement
         {
             var b = ObjectBounds.Get(obj, Session.Catalog);
             dc.DrawRectangle(SelectionFill, SelectionPen, ScreenRect(b, SelectionPaddingPixels));
+        }
+
+        if (Session.SelectedWire is { } wire)
+        {
+            dc.DrawLine(WireSelectionPen, ToScreen(wire.Start), ToScreen(wire.End));
         }
 
         if (_rubberStart is { } rs)
@@ -514,6 +544,10 @@ public sealed class DrawingCanvas : FrameworkElement
                     _dragSnapOrigin = hit.SnapPoint;
                     _dragApplied = Point2D.Zero;
                 }
+                else if (!ctrl && session.HitTestWire(world, View.ScreenLengthToWorld(GeometryConstants.HitTolerancePixels)) is { } wire)
+                {
+                    session.SelectWire(wire); // kablo bilgisi sağ panelde düzenlenir
+                }
                 else
                 {
                     _rubberStart = world;
@@ -555,10 +589,26 @@ public sealed class DrawingCanvas : FrameworkElement
                 ActiveTool = EditorTool.Select; // resim genelde tek tek yerleştirilir
                 break;
 
+            case EditorTool.Potential or EditorTool.PageLink when PendingConnectorAt(snapped) is { } connector:
+                session.AddObject(connector);
+                break;
+
             case EditorTool.Symbol when PendingSymbol is not null:
                 session.PlaceSymbol(PendingSymbol, snapped, _placementRotation);
                 break;
         }
+    }
+
+    private SinglePinObject? PendingConnectorAt(Point2D p)
+    {
+        if (PendingConnector?.CloneWithNewId() is not SinglePinObject c)
+        {
+            return null;
+        }
+        c.X = p.X;
+        c.Y = p.Y;
+        c.Rotation = _placementRotation;
+        return c;
     }
 
     private ImageObject? PendingImageAt(Point2D topLeft)

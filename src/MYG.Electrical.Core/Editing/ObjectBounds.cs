@@ -16,6 +16,7 @@ public static class ObjectBounds
         ImageObject i => i.Bounds,
         TextObject t => TextBounds(t),
         JunctionObject j => JunctionBounds(j),
+        SinglePinObject c => ConnectorBounds(c),
         SymbolObject s => SymbolBounds(s, catalog),
         _ => Rect2D.Empty,
     };
@@ -32,6 +33,20 @@ public static class ObjectBounds
     {
         var r = Math.Max(j.Size / 2, Rendering.DrawingStyles.JunctionStubLength / 2);
         return new Rect2D(j.X - r, j.Y - r, 2 * r, 2 * r);
+    }
+
+    /// <summary>Potansiyel / sayfa bağlantısı: işaret + ad metni (yaklaşık).</summary>
+    public static Rect2D ConnectorBounds(SinglePinObject c)
+    {
+        var textWidth = Math.Max(2, c.Name.Length) * Rendering.ConnectorGeometry.NameHeight * GeometryConstants.AverageCharWidthRatio;
+        var local = c switch
+        {
+            PotentialObject => new Rect2D(-Math.Max(2.5, textWidth / 2), -Rendering.ConnectorGeometry.PotentialHeight - Rendering.ConnectorGeometry.NameHeight - 1,
+                Math.Max(5, textWidth), Rendering.ConnectorGeometry.PotentialHeight + Rendering.ConnectorGeometry.NameHeight + 1),
+            _ => new Rect2D(0, -2.5, Rendering.ConnectorGeometry.LinkArrowLength + 1.5 + textWidth + 8, 5),
+        };
+        // Metin döndürülmez; sınır yaklaşık olarak işaretle birlikte döner.
+        return CoordinateTransform.TransformBounds(local, c.Anchor, c.Rotation);
     }
 
     /// <summary>Metin sınırı tahmini: (X,Y) sol-orta referans noktası.</summary>

@@ -98,6 +98,63 @@ public sealed class MainViewModel : ObservableObject
         WebsiteCommand = new RelayCommand(() => _shell.OpenUrl(BrandInfo.WebsiteUrl));
         ReportIssueCommand = new RelayCommand(() => _shell.OpenUrl(BrandInfo.IssuesUrl));
         OpenSampleCommand = new RelayCommand(() => _ = OpenSampleAsync(), () => File.Exists(SamplePath));
+        PlacePotentialCommand = new RelayCommand(p => PlacePotential(p as string));
+        PlacePageLinkCommand = new RelayCommand(PlacePageLink);
+        NumberWiresCommand = new RelayCommand(p => NumberWires(string.Equals(p as string, "all", StringComparison.Ordinal)));
+    }
+
+    // ---------- Potansiyel, sayfa bağlantısı, kablo numarası ----------
+
+    public RelayCommand PlacePotentialCommand { get; }
+    public RelayCommand PlacePageLinkCommand { get; }
+    public RelayCommand NumberWiresCommand { get; }
+
+    /// <summary>Potansiyel / sayfa bağlantısı aracının şablonu.</summary>
+    public SinglePinObject? PendingConnector
+    {
+        get => _pendingConnector;
+        private set => SetField(ref _pendingConnector, value);
+    }
+
+    private SinglePinObject? _pendingConnector;
+
+    private void PlacePotential(string? preset)
+    {
+        var (name, kind, voltage) = PotentialObject.Presets.FirstOrDefault(p => p.Name == preset);
+        if (name is null)
+        {
+            name = "POT";
+            kind = PotentialKind.Other;
+            voltage = string.Empty;
+        }
+        PendingConnector = new PotentialObject { Name = name, PotentialKind = kind, Voltage = voltage };
+        ActiveTool = EditorTool.Potential;
+        StatusMessage = ToolHint(ActiveTool);
+    }
+
+    /// <summary>
+    /// Sayfa bağlantısı adı: projede tek kalmış (eşi olmayan) bir bağlantı varsa onun adı önerilir, böylece
+    /// ikinci uç diğer sayfaya aynı adla konur; yoksa yeni bir sıra numarası.
+    /// </summary>
+    private void PlacePageLink()
+    {
+        var names = Session.Document.Pages.SelectMany(p => p.Objects).OfType<PageLinkObject>()
+            .Select(l => l.Name.Trim()).Where(n => n.Length > 0).ToList();
+        var single = names.GroupBy(n => n, StringComparer.OrdinalIgnoreCase).FirstOrDefault(g => g.Count() == 1)?.Key;
+        var next = 1;
+        while (names.Contains(next.ToString(CultureInfo.InvariantCulture), StringComparer.OrdinalIgnoreCase))
+        {
+            next++;
+        }
+        PendingConnector = new PageLinkObject { Name = single ?? next.ToString(CultureInfo.InvariantCulture) };
+        ActiveTool = EditorTool.PageLink;
+        StatusMessage = ToolHint(ActiveTool);
+    }
+
+    private void NumberWires(bool all)
+    {
+        var count = Session.NumberWires(renumberAll: all);
+        StatusMessage = count == 0 ? "Kablo numaraları zaten güncel." : $"{count} kabloya numara verildi (geri almak için Ctrl+Z).";
     }
 
     // ---------- Durum ----------
@@ -705,7 +762,9 @@ public sealed class MainViewModel : ObservableObject
         OnPropertyChanged(nameof(WireCountText));
     }
 
-    private static string ToolHint(EditorTool tool) => tool switch
+    private string PendingConnectorName => PendingConnector?.Name ?? string.Empty;
+
+    private string ToolHint(EditorTool tool) => tool switch
     {
         EditorTool.Line => "Çizgi: başlangıç ve bitiş noktasına tıklayın (Esc: iptal)",
         EditorTool.Rectangle => "Dikdörtgen: iki köşeye tıklayın (Esc: iptal)",
@@ -714,6 +773,8 @@ public sealed class MainViewModel : ObservableObject
         EditorTool.Angle => "Dirsek: 90° dönüş noktası · yön otomatik önerilir, R ile değiştirin",
         EditorTool.Tee => "T bağlantı: 3 yollu düğüm · yön otomatik önerilir, R ile değiştirin",
         EditorTool.Image => "Resim: sol üst köşesini yerleştirmek için tıklayın (Esc: iptal)",
+        EditorTool.Potential => $"Potansiyel {PendingConnectorName}: hattın başına tıklayın · R: yön · ad/tür sağ panelden",
+        EditorTool.PageLink => $"Sayfa bağlantısı '{PendingConnectorName}': aynı adlı bağlantılar birleşir · R: yön",
         EditorTool.Cross => "Çapraz düğüm: kesişen yatay ve dikey hattı BİRLEŞTİRİR · yalnızca gerçekten bağlıysa kullanın",
         _ => "Seç: tıkla / sürükle · Ctrl+tık çoklu seçim · R döndür · Del sil",
     };

@@ -21,6 +21,14 @@ public static class PageLayout
         return new Rect2D(f.Left, f.Bottom - TitleBlockHeight, f.Width, TitleBlockHeight);
     }
 
+    /// <summary>X konumunun bulunduğu kolon (çerçevedeki şeritte 0–9 olarak yazılan).</summary>
+    public static int ColumnAt(Page page, double x)
+    {
+        var f = Frame(page);
+        var width = f.Width / ColumnCount;
+        return (int)Math.Clamp(Math.Floor((x - f.Left) / width), 0, ColumnCount - 1);
+    }
+
     /// <summary>Çizim yapılabilir alan (çerçeve içi, antet ve kolon şeridi hariç).</summary>
     public static Rect2D DrawingArea(Page page)
     {

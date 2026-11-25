@@ -4,7 +4,7 @@ UTF-8 JSON, camelCase alan adları, enum değerleri metin. Uzantı: `.myge`.
 
 ```json
 {
-  "formatVersion": 4,
+  "formatVersion": 5,
   "project": {
     "name": "Machine01",
     "company": "MYG TECH",
@@ -43,6 +43,8 @@ UTF-8 JSON, camelCase alan adları, enum değerleri metin. Uzantı: `.myge`.
         { "kind": "line", "id": "…", "x1": 0, "y1": 0, "x2": 10, "y2": 0, "thickness": 0.35 },
         { "kind": "rectangle", "id": "…", "x": 10, "y": 10, "width": 30, "height": 20, "thickness": 0.35 },
         { "kind": "text", "id": "…", "x": 5, "y": 5, "text": "Metin", "height": 3.5, "rotation": 0 },
+        { "kind": "potential", "id": "…", "x": 60, "y": 40, "rotation": 0, "name": "L1", "potentialKind": "l1", "voltage": "400VAC", "description": "" },
+        { "kind": "pageLink", "id": "…", "x": 380, "y": 40, "rotation": 0, "name": "L1-A", "description": "" },
         { "kind": "symbol", "id": "…", "symbolId": "iec.lamp", "x": 0, "y": 0, "rotation": 0, "scale": 1 },
         {
           "kind": "image", "id": "…", "x": 30, "y": 20, "width": 60, "height": 25,
@@ -110,6 +112,7 @@ UTF-8 JSON, camelCase alan adları, enum değerleri metin. Uzantı: `.myge`.
 | 2 | Junction'a `shape` (`angle`/`tee`/`cross`) ve `rotation` eklendi. v1 dosyalardaki junction'lar açılırken `cross` olarak yükseltilir (eski davranış korunur). |
 | 3 | `resources` (gömülü dosyalar) ve `image` nesnesi eklendi. v2 dosyalar değişiklik gerektirmeden açılır. |
 | 4 | `devices` (proje cihazları, etiket başına bir kayıt), `projectSettings` (etiket/kablo numarası şablonu), sayfada `wireData` (kablo numarası, renk, kesit, tip), cihaz yerleşiminde `description` ve `pinDesignations`. v3 dosyalar açılırken her etiket için cihaz kaydı oluşturulur; çizim ve bağlantılar değişmez. |
+| 5 | Nesne türleri `potential` (L1, +24V... potansiyel tanımı: `name`, `potentialKind`, `voltage`, `description`, `rotation`) ve `pageLink` (sayfalar arası bağlantı: `name`, `description`, `rotation`). v4 dosyalar değişiklik gerektirmeden açılır. |
 
 > **Bilinen hata (37afe6e):** Bu commit'teki derleme, sürüm sabiti 2'de kaldığı için resim içeren dosyaları
 > `"formatVersion": 2` olarak yazdı. Bu dosyalar güncel sürümde sorunsuz açılır ve bir sonraki kayıtta 3 olur.

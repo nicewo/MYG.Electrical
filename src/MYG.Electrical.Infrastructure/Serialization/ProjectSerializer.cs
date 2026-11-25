@@ -163,6 +163,7 @@ public static class ProjectSerializer
         // nedeniyle resim içeren dosyaları "formatVersion": 2 olarak yazdı; bu dosyalar da olduğu gibi açılır.
         // v3 → v4: yalnızca ekleme (devices, settings, wireData, description, pinDesignations). Cihaz kayıtları
         // nesneye çevrildikten sonra ProjectValidator içinde etiketlerden üretilir (DeviceRegistry.EnsureRecords).
+        // v4 → v5: yalnızca yeni nesne türleri (potential, pageLink). Dönüşüm gerekmez.
         root[FormatVersionProperty] = ProjectDocument.CurrentFormatVersion;
     }
 

@@ -132,6 +132,20 @@
                 <MenuItem Header="Çapraz düğüm (4 yollu)" Command="{Binding SetToolCommand}" CommandParameter="Cross" />
                 <MenuItem Header="Metin" Command="{Binding SetToolCommand}" CommandParameter="Text" InputGestureText="T" />
                 <Separator />
+                <MenuItem Header="Potansiyel">
+                    <MenuItem Header="L1" Command="{Binding PlacePotentialCommand}" CommandParameter="L1" />
+                    <MenuItem Header="L2" Command="{Binding PlacePotentialCommand}" CommandParameter="L2" />
+                    <MenuItem Header="L3" Command="{Binding PlacePotentialCommand}" CommandParameter="L3" />
+                    <MenuItem Header="N" Command="{Binding PlacePotentialCommand}" CommandParameter="N" />
+                    <MenuItem Header="PE" Command="{Binding PlacePotentialCommand}" CommandParameter="PE" />
+                    <Separator />
+                    <MenuItem Header="+24V" Command="{Binding PlacePotentialCommand}" CommandParameter="+24V" />
+                    <MenuItem Header="0V" Command="{Binding PlacePotentialCommand}" CommandParameter="0V" />
+                    <Separator />
+                    <MenuItem Header="Diğer (adı sonra girin)" Command="{Binding PlacePotentialCommand}" />
+                </MenuItem>
+                <MenuItem Header="Sayfa bağlantısı (kesme noktası)" Command="{Binding PlacePageLinkCommand}" />
+                <Separator />
                 <MenuItem Header="Resim…" Command="{Binding InsertImageCommand}" />
             </MenuItem>
             <MenuItem Header="Çi_zim">
@@ -149,6 +163,10 @@
                 <MenuItem Header="Önceki sayfa" Command="{Binding PreviousPageCommand}" InputGestureText="PgUp" />
                 <Separator />
                 <MenuItem Header="Aktif sayfayı sil" Command="{Binding DeletePageCommand}" />
+            </MenuItem>
+            <MenuItem Header="_Proje">
+                <MenuItem Header="Kabloları numaralandır (yalnızca eksikler)" Command="{Binding NumberWiresCommand}" CommandParameter="missing" />
+                <MenuItem Header="Tüm kabloları yeniden numaralandır" Command="{Binding NumberWiresCommand}" CommandParameter="all" />
             </MenuItem>
             <MenuItem Header="_Araçlar">
                 <MenuItem Header="Log klasörünü aç" Command="{Binding OpenLogFolderCommand}" />
@@ -204,6 +222,16 @@
                     <Path Style="{StaticResource ToolIcon}" Fill="{Binding Stroke, RelativeSource={RelativeSource Self}}"
                           Data="M0,7 H14 M7,0 V14 M5.5,7 A1.5,1.5 0 1 1 8.5,7 A1.5,1.5 0 1 1 5.5,7 Z" />
                 </ToggleButton>
+
+                <Button Style="{StaticResource ToolButton}" ToolTip="Potansiyel +24V (diğerleri: Ekle → Potansiyel)" Command="{Binding PlacePotentialCommand}" CommandParameter="+24V">
+                    <Path Style="{StaticResource ToolIcon}" Data="M7,14 V5 M3,5 H11 M5,2.5 H9 M7,0.5 V4.5" />
+                </Button>
+                <Button Style="{StaticResource ToolButton}" ToolTip="Sayfa bağlantısı — aynı adlı bağlantılar sayfalar arasında birleşir" Command="{Binding PlacePageLinkCommand}">
+                    <Path Style="{StaticResource ToolIcon}" Data="M0,7 H5 M5,4 H10 L13,7 L10,10 H5 Z" />
+                </Button>
+                <Button Style="{StaticResource ToolButton}" ToolTip="Kabloları numaralandır (eksikler)" Command="{Binding NumberWiresCommand}" CommandParameter="missing">
+                    <TextBlock Text="#" FontWeight="Bold" FontSize="14" Width="16" TextAlignment="Center" />
+                </Button>
 
                 <Button Style="{StaticResource ToolButton}" ToolTip="Resim ekle (saydamlık ayarlı)" Command="{Binding InsertImageCommand}">
                     <Path Style="{StaticResource ToolIcon}" Data="M1,2 H13 V12 H1 Z M1,10 L5,6 L8,9 L10,7 L13,10 M9.5,4.5 A1,1 0 1 1 9.5,4.6" />
@@ -351,7 +379,8 @@
                                     Session="{Binding Session}"
                                     ActiveTool="{Binding ActiveTool, Mode=TwoWay}"
                                     PendingSymbol="{Binding SelectedSymbol}"
-                                    PendingImage="{Binding PendingImage}">
+                                    PendingImage="{Binding PendingImage}"
+                                    PendingConnector="{Binding PendingConnector}">
                     <!-- Tek tuş kısayolları yalnızca çizim alanı odaktayken çalışır (metin kutularında yazmayı engellemez) -->
                     <draw:DrawingCanvas.ContextMenu>
                         <ContextMenu>
