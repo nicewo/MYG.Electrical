@@ -36,7 +36,9 @@ public static class ProjectSerializer
         {
             FormatVersion = document.FormatVersion,
             Project = document.Project,
+            Settings = document.Settings,
             Pages = document.Pages,
+            Devices = document.Devices,
             Resources = document.UsedResources(),
         };
         return JsonSerializer.Serialize(snapshot, Options);
@@ -159,6 +161,8 @@ public static class ProjectSerializer
         }
         // v2 → v3: yalnızca ekleme (resources, image). Dönüşüm gerekmez. Not: 37afe6e derlemesi bir hata
         // nedeniyle resim içeren dosyaları "formatVersion": 2 olarak yazdı; bu dosyalar da olduğu gibi açılır.
+        // v3 → v4: yalnızca ekleme (devices, settings, wireData, description, pinDesignations). Cihaz kayıtları
+        // nesneye çevrildikten sonra ProjectValidator içinde etiketlerden üretilir (DeviceRegistry.EnsureRecords).
         root[FormatVersionProperty] = ProjectDocument.CurrentFormatVersion;
     }
 

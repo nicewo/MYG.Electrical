@@ -16,6 +16,37 @@ public static class ProjectValidator
         doc.Project ??= new ProjectInfo();
         doc.Pages ??= [];
         doc.Resources ??= [];
+        doc.Settings ??= new ProjectSettings();
+        doc.Settings.ReferenceFormat = string.IsNullOrWhiteSpace(doc.Settings.ReferenceFormat)
+            ? ProjectSettings.DefaultReferenceFormat : doc.Settings.ReferenceFormat;
+        doc.Settings.WireNumberFormat = string.IsNullOrWhiteSpace(doc.Settings.WireNumberFormat)
+            ? ProjectSettings.DefaultWireNumberFormat : doc.Settings.WireNumberFormat;
+        doc.Devices ??= [];
+        doc.Devices.RemoveAll(d => d is null);
+        foreach (var d in doc.Devices)
+        {
+            d.Reference ??= string.Empty;
+            d.Description ??= string.Empty;
+            d.Category ??= string.Empty;
+            d.Manufacturer ??= string.Empty;
+            d.Model ??= string.Empty;
+            d.OrderNumber ??= string.Empty;
+            d.Location ??= string.Empty;
+            d.Datasheet ??= string.Empty;
+            d.LibraryVersion ??= string.Empty;
+            d.Notes ??= string.Empty;
+            d.Properties ??= [];
+        }
+        var seenDevices = new HashSet<string>(Devices.DeviceRegistry.ReferenceComparer);
+        var duplicates = doc.Devices.Where(d => string.IsNullOrWhiteSpace(d.Reference) || !seenDevices.Add(d.Reference)).ToList();
+        foreach (var dup in duplicates)
+        {
+            doc.Devices.Remove(dup);
+            if (!string.IsNullOrWhiteSpace(dup.Reference))
+            {
+                warnings.Add($"'{dup.Reference}' cihaz kaydı iki kez vardı; ikincisi atlandı.");
+            }
+        }
 
         // Kaynaklar: tekrar eden kimlikler ve boş veriler
         var seenResources = new HashSet<string>(StringComparer.Ordinal);
@@ -38,6 +69,8 @@ public static class ProjectValidator
             page.Name ??= "Sayfa";
             page.Objects ??= [];
             page.TitleBlock ??= [];
+            page.WireData ??= [];
+            page.WireData.RemoveAll(w => w is null);
             if (string.IsNullOrWhiteSpace(page.Id) || !seenPages.Add(page.Id))
             {
                 page.Id = Page.NewId();
@@ -69,6 +102,8 @@ public static class ProjectValidator
                     case DeviceObject d:
                         d.ConnectionPoints ??= [];
                         d.Reference ??= string.Empty;
+                        d.Description ??= string.Empty;
+                        d.PinDesignations ??= [];
                         break;
                     case TextObject t:
                         t.Text ??= string.Empty;
@@ -89,6 +124,9 @@ public static class ProjectValidator
             doc.Pages.Add(Page.Create("Sayfa 1", PageType.Schematic));
             warnings.Add("Projede sayfa yoktu; boş bir şema sayfası eklendi.");
         }
+
+        // v3 ve öncesi dosyalarda cihaz kaydı yoktu: her etiket için kayıt oluşturulur (uyarı gerekmez).
+        Devices.DeviceRegistry.EnsureRecords(doc);
         return warnings;
     }
 

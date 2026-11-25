@@ -20,6 +20,11 @@ public sealed class Page
 
     public List<DrawingObject> Objects { get; set; } = [];
 
+    /// <summary>Bu sayfadaki kablolara girilen bilgiler (numara, renk, kesit...).</summary>
+    public List<Devices.WireData> WireData { get; set; } = [];
+
+    public Devices.WireData? FindWireData(PinRef a, PinRef b) => WireData.FirstOrDefault(w => w.Connects(a, b));
+
     [JsonIgnore]
     public Rect2D Bounds => new(0, 0, Width, Height);
 

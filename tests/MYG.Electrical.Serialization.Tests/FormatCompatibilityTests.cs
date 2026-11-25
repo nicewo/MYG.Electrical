@@ -16,10 +16,10 @@ public class FormatCompatibilityTests
         File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Fixtures", name + ProjectDocument.FileExtension));
 
     [Fact]
-    public void Current_format_version_is_3() => Assert.Equal(3, ProjectDocument.CurrentFormatVersion);
+    public void Current_format_version_is_4() => Assert.Equal(4, ProjectDocument.CurrentFormatVersion);
 
     [Fact]
-    public void Project_with_image_is_written_as_version_3()
+    public void Project_with_image_is_written_as_version_4()
     {
         var doc = ProjectDocument.CreateNew();
         var res = doc.AddResource(TestPng.Create(2, 2, (_, _) => 0xFF000000), "a.png");
@@ -27,7 +27,7 @@ public class FormatCompatibilityTests
 
         var json = ProjectSerializer.Serialize(doc);
 
-        Assert.Contains("\"formatVersion\": 3", json);
+        Assert.Contains("\"formatVersion\": 4", json);
         Assert.Contains("\"kind\": \"image\"", json);
         Assert.Contains("\"resources\"", json);
     }
@@ -40,7 +40,7 @@ public class FormatCompatibilityTests
         var j = Assert.Single(doc.Pages[0].Objects.OfType<JunctionObject>());
         Assert.Equal(JunctionShape.Cross, j.Shape);
         Assert.Equal(2, new AutoWireEngine().Compute(doc.Pages[0].Objects).Count); // -K1 → ┼ → -K2
-        Assert.Equal(3, doc.FormatVersion);
+        Assert.Equal(4, doc.FormatVersion);
     }
 
     [Fact]
@@ -71,14 +71,14 @@ public class FormatCompatibilityTests
     [InlineData("v2-angle-junction")]
     [InlineData("v2-image-mislabeled")]
     [InlineData("v3-image")]
-    public void Old_files_are_upgraded_to_version_3_without_losing_objects(string fixture)
+    public void Old_files_are_upgraded_to_version_4_without_losing_objects(string fixture)
     {
         var original = ProjectSerializer.Deserialize(Fixture(fixture));
 
         var saved = ProjectSerializer.Serialize(original);
         var reopened = ProjectSerializer.Deserialize(saved);
 
-        Assert.Contains("\"formatVersion\": 3", saved);
+        Assert.Contains("\"formatVersion\": 4", saved);
         Assert.Equal(original.Pages.SelectMany(p => p.Objects).Select(o => (o.Id, o.GetType())),
                      reopened.Pages.SelectMany(p => p.Objects).Select(o => (o.Id, o.GetType())));
         Assert.Equal(original.Resources.Select(r => r.Id), reopened.Resources.Select(r => r.Id));
@@ -87,9 +87,22 @@ public class FormatCompatibilityTests
     }
 
     [Fact]
+    public void Version3_devices_get_project_device_records()
+    {
+        var doc = ProjectSerializer.Deserialize(Fixture("v1-four-way-junction"));
+
+        var placed = doc.Pages.SelectMany(p => p.Objects).OfType<DeviceObject>()
+            .Select(d => d.Reference).Where(r => r.Length > 0).Distinct().Order().ToList();
+        Assert.NotEmpty(placed);
+        Assert.Equal(placed, doc.Devices.Select(d => d.Reference).Order().ToList());
+        Assert.Equal(MYG.Electrical.Core.Pages.ProjectSettings.DefaultReferenceFormat, doc.Settings.ReferenceFormat);
+        Assert.All(doc.Pages, p => Assert.Empty(p.WireData));
+    }
+
+    [Fact]
     public void Newer_format_is_refused_instead_of_being_partially_loaded()
     {
-        var json = Fixture("v3-image").Replace("\"formatVersion\": 3", "\"formatVersion\": 4");
+        var json = Fixture("v3-image").Replace("\"formatVersion\": 3", "\"formatVersion\": 5");
         var ex = Assert.Throws<ProjectFormatException>(() => ProjectSerializer.Deserialize(json));
         Assert.Contains("daha yeni", ex.Message);
     }

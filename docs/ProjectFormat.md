@@ -4,7 +4,7 @@ UTF-8 JSON, camelCase alan adları, enum değerleri metin. Uzantı: `.myge`.
 
 ```json
 {
-  "formatVersion": 3,
+  "formatVersion": 4,
   "project": {
     "name": "Machine01",
     "company": "MYG TECH",
@@ -17,6 +17,7 @@ UTF-8 JSON, camelCase alan adları, enum değerleri metin. Uzantı: `.myge`.
     "date": "25.11.2026",
     "logoPath": ""
   },
+  "projectSettings": { "referenceFormat": "-{prefix}{n}", "wireNumberFormat": "{n}" },
   "pages": [
     {
       "id": "page-001",
@@ -34,6 +35,8 @@ UTF-8 JSON, camelCase alan adları, enum değerleri metin. Uzantı: `.myge`.
           "symbolId": "iec.contactor.3p",
           "x": 100, "y": 60, "rotation": 0, "scale": 1,
           "reference": "-K1",
+          "description": "",
+          "pinDesignations": { "13": "23" },
           "connectionPoints": [ { "id": "1", "x": -10, "y": -10, "direction": "up" } ]
         },
         { "kind": "junction", "id": "…", "x": 50, "y": 40, "shape": "tee", "rotation": 270, "size": 1.2, "visible": true },
@@ -47,7 +50,22 @@ UTF-8 JSON, camelCase alan adları, enum değerleri metin. Uzantı: `.myge`.
           "renderResourceId": "res-81b0e6c3d2a4f5e9",
           "transparencyEnabled": true, "transparentColor": 4294967295, "tolerance": 12
         }
+      ],
+      "wireData": [
+        {
+          "a": { "ownerId": "3f1c…", "pinId": "2" }, "b": { "ownerId": "8a0d…", "pinId": "U1" },
+          "number": "101", "color": "BK", "crossSection": "2,5 mm²", "cableType": "H07V-K",
+          "description": "", "numberLocked": false
+        }
       ]
+    }
+  ],
+  "devices": [
+    {
+      "reference": "-K1", "description": "Pompa kontaktörü", "category": "Kontaktör ve Röle/Kontaktörler",
+      "manufacturer": "Schneider", "model": "LC1D09BD", "orderNumber": "LC1D09BD", "location": "+PANO1",
+      "datasheet": "", "libraryVersion": "MYG IEC 60617 1.0.0",
+      "properties": { "Bobin gerilimi": "24VDC" }, "notes": ""
     }
   ],
   "resources": [
@@ -91,6 +109,7 @@ UTF-8 JSON, camelCase alan adları, enum değerleri metin. Uzantı: `.myge`.
 | 1 | İlk format. Junction'lar her zaman 4 yönlü. |
 | 2 | Junction'a `shape` (`angle`/`tee`/`cross`) ve `rotation` eklendi. v1 dosyalardaki junction'lar açılırken `cross` olarak yükseltilir (eski davranış korunur). |
 | 3 | `resources` (gömülü dosyalar) ve `image` nesnesi eklendi. v2 dosyalar değişiklik gerektirmeden açılır. |
+| 4 | `devices` (proje cihazları, etiket başına bir kayıt), `projectSettings` (etiket/kablo numarası şablonu), sayfada `wireData` (kablo numarası, renk, kesit, tip), cihaz yerleşiminde `description` ve `pinDesignations`. v3 dosyalar açılırken her etiket için cihaz kaydı oluşturulur; çizim ve bağlantılar değişmez. |
 
 > **Bilinen hata (37afe6e):** Bu commit'teki derleme, sürüm sabiti 2'de kaldığı için resim içeren dosyaları
 > `"formatVersion": 2` olarak yazdı. Bu dosyalar güncel sürümde sorunsuz açılır ve bir sonraki kayıtta 3 olur.

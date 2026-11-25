@@ -9,16 +9,24 @@ public sealed class ProjectDocument
     /// <item>1: ilk sürüm (junction'lar 4 yollu).</item>
     /// <item>2: junction şekli (dirsek/T/çapraz) ve yönü.</item>
     /// <item>3: gömülü kaynaklar (<see cref="Resources"/>) ve resim nesnesi.</item>
+    /// <item>4: proje cihazları (<see cref="Devices"/>), proje ayarları, kablo verisi (Page.WireData),
+    /// yerleşimde açıklama ve pin adı.</item>
     /// </list>
     /// Yeni bir alan veya nesne türü eklendiğinde bu değer artırılmalı ve
     /// ProjectSerializer.Migrate içine dönüşüm adımı yazılmalıdır.
     /// </summary>
-    public const int CurrentFormatVersion = 3;
+    public const int CurrentFormatVersion = 4;
     public const string FileExtension = ".myge";
 
     public int FormatVersion { get; set; } = CurrentFormatVersion;
     public ProjectInfo Project { get; set; } = new();
+    /// <summary>Numaralandırma şablonları. JSON adı editör ayarlarıyla karışmasın diye "projectSettings".</summary>
+    [System.Text.Json.Serialization.JsonPropertyName("projectSettings")]
+    public ProjectSettings Settings { get; set; } = new();
     public List<Page> Pages { get; set; } = [];
+
+    /// <summary>Proje cihazları (etiket başına bir kayıt). Yerleşimler sayfalardaki DeviceObject'lerdir.</summary>
+    public List<Devices.DeviceRecord> Devices { get; set; } = [];
 
     /// <summary>Projeye gömülü dosyalar (resimler). JSON'da base64.</summary>
     public List<Resources.ProjectResource> Resources { get; set; } = [];

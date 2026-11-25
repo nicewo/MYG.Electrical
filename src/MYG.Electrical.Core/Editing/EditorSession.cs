@@ -237,12 +237,37 @@ public sealed class EditorSession
 
     public DeviceObject PlaceSymbol(SymbolDefinition symbol, Point2D position, double rotation = 0)
     {
-        var reference = ReferenceGenerator.Next(symbol.ReferencePrefix, Document.Pages);
+        var reference = ReferenceGenerator.Next(symbol, Document, ActivePageNumber);
         var device = symbol.CreateDevice(position.X, position.Y, reference);
         device.Rotation = rotation;
-        AddObject(device);
+        AddPlacements([device]);
+        Select(device);
         return device;
     }
+
+    /// <summary>
+    /// Nesneleri ekler; yeni etiketli cihaz yerleşimleri için proje cihaz kaydını da aynı geri alma adımında oluşturur.
+    /// </summary>
+    public void AddPlacements(IReadOnlyList<DrawingObject> objects)
+    {
+        var add = new AddObjectsCommand(_activePage, objects);
+        var records = new List<Devices.DeviceRecord>();
+        foreach (var d in objects.OfType<DeviceObject>())
+        {
+            if (!string.IsNullOrWhiteSpace(d.Reference) && Devices.DeviceRegistry.Find(Document, d.Reference) is null
+                && !records.Any(r => Devices.DeviceRegistry.ReferenceComparer.Equals(r.Reference, d.Reference)))
+            {
+                records.Add(Devices.DeviceRegistry.CreateRecord(d.Reference, Catalog.Find(d.SymbolId)));
+            }
+        }
+        IEditCommand command = records.Count == 0
+            ? add
+            : new PageCompositeCommand(add.Description, _activePage, [add, new AddDeviceRecordsCommand(Document, records)]);
+        Execute(command, objects.Select(o => o.Id).ToList());
+    }
+
+    /// <summary>Etkin sayfanın 1 tabanlı sırası.</summary>
+    public int ActivePageNumber => Math.Max(1, Document.Pages.IndexOf(_activePage) + 1);
 
     public JunctionObject PlaceJunction(JunctionShape shape, Point2D position, double rotation = 0)
     {
@@ -318,7 +343,7 @@ public sealed class EditorSession
             c.Move(Settings.PasteOffset, Settings.PasteOffset);
             if (c is DeviceObject d && Catalog.Find(d.SymbolId) is { } def)
             {
-                d.Reference = ReferenceGenerator.Next(def.ReferencePrefix, Document.Pages);
+                d.Reference = ReferenceGenerator.Next(def, Document, ActivePageNumber);
                 _activePage.Objects.Add(d); // geçici: sonraki tanım numarası doğru artsın
             }
         }
@@ -326,7 +351,7 @@ public sealed class EditorSession
         {
             _activePage.Objects.Remove(d);
         }
-        Execute(new AddObjectsCommand(_activePage, copies), copies.Select(c => c.Id).ToList());
+        AddPlacements(copies);
         SelectMany(copies);
     }
 
@@ -339,6 +364,41 @@ public sealed class EditorSession
             return;
         }
         Execute(new SetPropertyCommand<T>(description, setter, oldValue, newValue, target, _activePage), [target.Id]);
+    }
+
+    /// <summary>
+    /// Yerleşimin etiketini değiştirir ve proje cihaz kaydını tutarlı tutar (tek geri alma adımı):
+    /// yeni etiketin kaydı yoksa, eski kayıt başka yerleşimce kullanılmıyorsa yeniden adlandırılır,
+    /// kullanılıyorsa sembolden yeni kayıt oluşturulur. Var olan bir etikete geçmek cihazı o cihazın parçası yapar.
+    /// </summary>
+    public void RenameReference(DeviceObject placement, string newReference)
+    {
+        newReference = newReference.Trim();
+        var oldReference = placement.Reference;
+        if (string.Equals(oldReference, newReference, StringComparison.Ordinal))
+        {
+            return;
+        }
+        var commands = new List<IEditCommand>
+        {
+            new SetPropertyCommand<string>("Tanım", v => placement.Reference = v, oldReference, newReference, placement, _activePage),
+        };
+        if (newReference.Length > 0 && Devices.DeviceRegistry.Find(Document, newReference) is null)
+        {
+            var oldRecord = Devices.DeviceRegistry.Find(Document, oldReference);
+            var othersUseOld = Devices.DeviceRegistry.Placements(Document, oldReference).Any(x => !ReferenceEquals(x.Placement, placement));
+            if (oldRecord is not null && !othersUseOld)
+            {
+                commands.Add(new SetPropertyCommand<string>("Cihaz etiketi", v => oldRecord.Reference = v, oldRecord.Reference, newReference));
+            }
+            else
+            {
+                var record = oldRecord?.Clone() ?? Devices.DeviceRegistry.CreateRecord(newReference, Catalog.Find(placement.SymbolId));
+                record.Reference = newReference;
+                commands.Add(new AddDeviceRecordsCommand(Document, [record]));
+            }
+        }
+        Execute(new PageCompositeCommand("Tanım", _activePage, commands), [placement.Id]);
     }
 
     /// <summary>Proje/sayfa bilgisi gibi nesne dışı bir değeri geri alınabilir şekilde değiştirir (tam yeniden çizim).</summary>

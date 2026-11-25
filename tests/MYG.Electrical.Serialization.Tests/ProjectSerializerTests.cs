@@ -71,7 +71,9 @@ public class ProjectSerializerTests
         Assert.Contains("\"shape\": \"angle\"", json);
         Assert.Contains("\"kind\": \"device\"", json);
         Assert.Contains("\"type\": \"cover\"", json);
-        Assert.DoesNotContain("wire", json, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("\"kind\": \"wire", json, StringComparison.OrdinalIgnoreCase); // kablolar geometriden üretilir
+        Assert.Contains("\"wireData\": []", json);
+        Assert.Contains("\"devices\"", json);
         Assert.DoesNotContain("\"anchor\"", json); // hesaplanan özellikler saklanmaz
     }
 

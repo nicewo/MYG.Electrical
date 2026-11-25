@@ -102,7 +102,7 @@ public sealed class PropertiesViewModel(IDialogService dialogs, Action<ImageObje
             case DeviceObject d:
                 var def = s.Catalog.Find(d.SymbolId);
                 Header = $"Cihaz {d.Reference}";
-                Rows.Add(new TextRow("Tanım", () => d.Reference, v => Set("Tanım", () => d.Reference, x => d.Reference = x, v.Trim())));
+                Rows.Add(new TextRow("Tanım", () => d.Reference, v => s.RenameReference(d, v)));
                 Rows.Add(new TextRow("Sembol", () => def?.Name ?? d.SymbolId, null));
                 AddSymbolTransformRows(d, Num);
                 Rows.Add(new SectionRow("Bağlantı noktaları"));

@@ -157,7 +157,7 @@ public sealed class SceneComposer(ISymbolCatalog catalog, Func<string, Resources
             }
             if (options.ShowPinLabels && !string.IsNullOrEmpty(pin.PinId))
             {
-                sink.DrawText(pin.PinId, PinLabelPosition(pin), DrawingStyles.PinTextHeight, DrawingStyles.DarkGray);
+                sink.DrawText(d.PinLabel(pin.PinId), PinLabelPosition(pin), DrawingStyles.PinTextHeight, DrawingStyles.DarkGray);
             }
         }
     }
