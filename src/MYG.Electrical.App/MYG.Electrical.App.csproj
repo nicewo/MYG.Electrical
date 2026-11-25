@@ -8,12 +8,17 @@
     <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
     <!-- Velopack kurulum/güncelleme kancaları uygulama başlamadan çalışmalı -->
     <StartupObject>MYG.Electrical.App.Program</StartupObject>
+    <ApplicationIcon>Assets\myg-electrical.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\MYG.Electrical.Core\MYG.Electrical.Core.csproj" />
     <ProjectReference Include="..\MYG.Electrical.Symbols\MYG.Electrical.Symbols.csproj" />
     <ProjectReference Include="..\MYG.Electrical.Drawing\MYG.Electrical.Drawing.csproj" />
     <ProjectReference Include="..\MYG.Electrical.Infrastructure\MYG.Electrical.Infrastructure.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\myg-electrical.ico" />
+    <Resource Include="Assets\myg-electrical.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Serilog" />

@@ -65,7 +65,7 @@ jobs:
           git log -1 --pretty=format:"%B" | Out-File -Encoding utf8 release-notes.md
           vpk pack --packId MYG.Electrical --packVersion $env:VERSION --packDir publish `
             --mainExe MYG.Electrical.exe --packTitle "MYG Electrical" --packAuthors "MYG TECH" `
-            --releaseNotes release-notes.md
+            --releaseNotes release-notes.md --icon src/MYG.Electrical.App/Assets/myg-electrical.ico
 
       - name: Publish GitHub Release
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'

@@ -6,6 +6,7 @@
         xmlns:draw="clr-namespace:MYG.Electrical.Drawing;assembly=MYG.Electrical.Drawing"
         xmlns:sym="clr-namespace:MYG.Electrical.Core.Symbols;assembly=MYG.Electrical.Core"
         Title="{Binding Title}"
+        Icon="/Assets/myg-electrical.ico"
         Width="1600" Height="950" MinWidth="1000" MinHeight="600"
         WindowStartupLocation="CenterScreen"
         Background="{StaticResource AnthraciteBrush}"

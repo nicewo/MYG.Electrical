@@ -1,3 +1,5 @@
+<p align="center"><img src="src/MYG.Electrical.App/Assets/myg-electrical.png" width="160" alt="MYG Electrical"></p>
+
 # MYG Electrical
 
 Makine imalatı için sade, hızlı bir **IEC elektrik şeması çizim programı** (Windows, WPF, .NET 10).

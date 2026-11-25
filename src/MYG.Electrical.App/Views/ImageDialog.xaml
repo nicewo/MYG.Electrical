@@ -1,7 +1,8 @@
 <Window x:Class="MYG.Electrical.App.Views.ImageDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Resim" Width="980" Height="640" MinWidth="720" MinHeight="460"
+        Title="Resim"
+        Icon="/Assets/myg-electrical.ico" Width="980" Height="640" MinWidth="720" MinHeight="460"
         WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
         Background="{StaticResource AnthraciteBrush}" Foreground="{StaticResource TextBrush}">
     <Window.Resources>
