@@ -3,8 +3,9 @@ using MYG.Electrical.Core.Pages;
 
 namespace MYG.Electrical.Core.Editing;
 
-public sealed class AddObjectsCommand(Page page, IReadOnlyList<DrawingObject> objects) : IEditCommand
+public sealed class AddObjectsCommand(Page page, IReadOnlyList<DrawingObject> objects) : IEditCommand, IPageScopedCommand
 {
+    public Page? Page => page;
     public string Description => objects.Count == 1 ? "Nesne ekle" : $"{objects.Count} nesne ekle";
     public IReadOnlyList<DrawingObject> Objects => objects;
 
@@ -19,8 +20,9 @@ public sealed class AddObjectsCommand(Page page, IReadOnlyList<DrawingObject> ob
     }
 }
 
-public sealed class RemoveObjectsCommand : IEditCommand
+public sealed class RemoveObjectsCommand : IEditCommand, IPageScopedCommand
 {
+    public Page? Page => _page;
     private readonly Page _page;
     private readonly List<(int Index, DrawingObject Obj)> _removed;
 
@@ -51,8 +53,9 @@ public sealed class RemoveObjectsCommand : IEditCommand
     }
 }
 
-public sealed class MoveObjectsCommand(IReadOnlyList<DrawingObject> objects, double dx, double dy) : IEditCommand
+public sealed class MoveObjectsCommand(IReadOnlyList<DrawingObject> objects, double dx, double dy, Page? page = null) : IEditCommand, IPageScopedCommand
 {
+    public Page? Page => page;
     public string Description => "Taşı";
     public IReadOnlyList<DrawingObject> Objects => objects;
 
@@ -74,8 +77,9 @@ public sealed class MoveObjectsCommand(IReadOnlyList<DrawingObject> objects, dou
 }
 
 /// <summary>Seçili nesneleri kendi referans noktaları etrafında döndürür.</summary>
-public sealed class RotateObjectsCommand(IReadOnlyList<DrawingObject> objects, double angle) : IEditCommand
+public sealed class RotateObjectsCommand(IReadOnlyList<DrawingObject> objects, double angle, Page? page = null) : IEditCommand, IPageScopedCommand
 {
+    public Page? Page => page;
     public string Description => "Döndür";
     public IReadOnlyList<DrawingObject> Objects => objects;
 
@@ -92,8 +96,10 @@ public sealed class RotateObjectsCommand(IReadOnlyList<DrawingObject> objects, d
 }
 
 /// <summary>Tek bir özellik değişikliği.</summary>
-public sealed class SetPropertyCommand<T>(string description, Action<T> setter, T oldValue, T newValue, DrawingObject? target = null) : IEditCommand
+public sealed class SetPropertyCommand<T>(string description, Action<T> setter, T oldValue, T newValue, DrawingObject? target = null, Page? page = null)
+    : IEditCommand, IPageScopedCommand
 {
+    public Page? Page => page;
     public string Description => description;
     public DrawingObject? Target => target;
     public void Execute() => setter(newValue);

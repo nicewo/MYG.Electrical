@@ -220,13 +220,13 @@ public sealed class PropertiesViewModel(IDialogService dialogs, Action<ImageObje
         var s = _session!;
         Rows.Add(new SectionRow("Sayfa"));
         Rows.Add(new TextRow("Sayfa adı", () => page.Name,
-            v => s.SetDocumentProperty("Sayfa adı", () => page.Name, x => page.Name = x, v.Trim())));
+            v => s.SetDocumentProperty("Sayfa adı", () => page.Name, x => page.Name = x, v.Trim(), page)));
         Rows.Add(new ChoiceRow("Tür", PageTypeNames.Values.ToList(), () => PageTypeNames[page.Type],
-            v => s.SetDocumentProperty("Sayfa türü", () => page.Type, x => page.Type = x, PageTypeNames.First(k => k.Value == v).Key)));
+            v => s.SetDocumentProperty("Sayfa türü", () => page.Type, x => page.Type = x, PageTypeNames.First(k => k.Value == v).Key, page)));
         Rows.Add(new ChoiceRow("Format", Formats, () => page.Format.ToString(),
-            v => s.SetDocumentProperty("Sayfa formatı", () => page.Format, x => page.SetFormat(x, page.Orientation), Enum.Parse<PageFormat>(v))));
+            v => s.SetDocumentProperty("Sayfa formatı", () => page.Format, x => page.SetFormat(x, page.Orientation), Enum.Parse<PageFormat>(v), page)));
         Rows.Add(new ChoiceRow("Yönelim", OrientationNames.Values.ToList(), () => OrientationNames[page.Orientation],
-            v => s.SetDocumentProperty("Sayfa yönelimi", () => page.Orientation, x => page.SetFormat(page.Format, x), OrientationNames.First(k => k.Value == v).Key)));
+            v => s.SetDocumentProperty("Sayfa yönelimi", () => page.Orientation, x => page.SetFormat(page.Format, x), OrientationNames.First(k => k.Value == v).Key, page)));
         Rows.Add(new TextRow("Boyut (mm)", () => string.Create(CultureInfo.CurrentCulture, $"{page.Width:0} × {page.Height:0}"), null));
     }
 

@@ -68,19 +68,18 @@ public sealed class EditorSession
 
     // ---------- Sayfa yönetimi ----------
 
+    /// <summary>Yeni sayfa ekler (geri alınabilir) ve ona geçer. Kapak sayfası başa eklenir.</summary>
     public Page AddPage(PageType type, string? name = null)
     {
         var page = Page.Create(name ?? (type == PageType.Cover ? "Kapak" : $"Sayfa {Document.Pages.Count + 1}"), type,
             _activePage.Format, _activePage.Orientation);
         var index = type == PageType.Cover ? 0 : Document.Pages.IndexOf(_activePage) + 1;
-        Document.Pages.Insert(Math.Clamp(index, 0, Document.Pages.Count), page);
-        IsDirty = true;
-        PagesChanged?.Invoke(this, EventArgs.Empty);
+        ExecutePageCommand(new AddPageCommand(Document, page, index));
         ActivePage = page;
         return page;
     }
 
-    /// <summary>Sayfayı siler. Projede en az bir sayfa kalır.</summary>
+    /// <summary>Sayfayı siler (geri alınabilir). Projede en az bir sayfa kalır.</summary>
     public bool RemovePage(Page page)
     {
         if (Document.Pages.Count <= 1 || !Document.Pages.Contains(page))
@@ -88,21 +87,15 @@ public sealed class EditorSession
             return false;
         }
         var index = Document.Pages.IndexOf(page);
-        Document.Pages.Remove(page);
-        History.Clear(); // silinen sayfaya ait geri alma adımları geçersiz kalır
-        IsDirty = true;
-        PagesChanged?.Invoke(this, EventArgs.Empty);
+        ExecutePageCommand(new RemovePageCommand(Document, page));
         if (ReferenceEquals(_activePage, page))
         {
             ActivePage = Document.Pages[Math.Min(index, Document.Pages.Count - 1)];
         }
-        else
-        {
-            SceneChanged?.Invoke(this, SceneChangedEventArgs.All); // sayfa numaraları değişti
-        }
         return true;
     }
 
+    /// <summary>Sayfanın sırasını değiştirir (geri alınabilir).</summary>
     public void MovePage(Page page, int delta)
     {
         var index = Document.Pages.IndexOf(page);
@@ -111,11 +104,15 @@ public sealed class EditorSession
         {
             return;
         }
-        Document.Pages.RemoveAt(index);
-        Document.Pages.Insert(target, page);
+        ExecutePageCommand(new MovePageCommand(Document, page, index, target));
+    }
+
+    private void ExecutePageCommand(IEditCommand command)
+    {
+        History.Execute(command);
         IsDirty = true;
         PagesChanged?.Invoke(this, EventArgs.Empty);
-        SceneChanged?.Invoke(this, SceneChangedEventArgs.All);
+        SceneChanged?.Invoke(this, SceneChangedEventArgs.All); // sayfa numaraları antette değişir
     }
 
     // ---------- Seçim ----------
@@ -193,17 +190,37 @@ public sealed class EditorSession
         AfterChange(affected);
     }
 
-    public void Undo()
-    {
-        History.Undo();
-        _selection.RemoveWhere(id => _activePage.Find(id) is null);
-        AfterChange(null);
-        SelectionChanged?.Invoke(this, EventArgs.Empty);
-    }
+    public void Undo() => ApplyHistoryStep(History.PeekUndo, History.Undo);
 
-    public void Redo()
+    public void Redo() => ApplyHistoryStep(History.PeekRedo, History.Redo);
+
+    /// <summary>
+    /// Geri/ileri alma adımı: değişiklik başka bir sayfadaysa o sayfaya geçilir (kullanıcı neyin değiştiğini görür);
+    /// aktif sayfa silindiyse en yakın sayfaya geçilir. Ardından seçim, sahne ve kablolar yenilenir.
+    /// </summary>
+    private void ApplyHistoryStep(IEditCommand? command, Action step)
     {
-        History.Redo();
+        if (command is null)
+        {
+            return;
+        }
+        var activeIndex = Document.Pages.IndexOf(_activePage);
+        step();
+
+        if (command is IPageListCommand)
+        {
+            PagesChanged?.Invoke(this, EventArgs.Empty);
+        }
+        var target = (command as IPageScopedCommand)?.Page;
+        if (target is not null && Document.Pages.Contains(target))
+        {
+            ActivePage = target;
+        }
+        else if (!Document.Pages.Contains(_activePage))
+        {
+            ActivePage = Document.Pages[Math.Clamp(activeIndex, 0, Document.Pages.Count - 1)];
+        }
+
         _selection.RemoveWhere(id => _activePage.Find(id) is null);
         AfterChange(null);
         SelectionChanged?.Invoke(this, EventArgs.Empty);
@@ -251,7 +268,7 @@ public sealed class EditorSession
         var targets = SelectedObjects;
         if (targets.Count > 0)
         {
-            Execute(new RotateObjectsCommand(targets, angle), targets.Select(t => t.Id).ToList());
+            Execute(new RotateObjectsCommand(targets, angle, _activePage), targets.Select(t => t.Id).ToList());
         }
     }
 
@@ -260,7 +277,7 @@ public sealed class EditorSession
         var targets = SelectedObjects;
         if (targets.Count > 0 && (dx != 0 || dy != 0))
         {
-            Execute(new MoveObjectsCommand(targets, dx, dy), targets.Select(t => t.Id).ToList());
+            Execute(new MoveObjectsCommand(targets, dx, dy, _activePage), targets.Select(t => t.Id).ToList());
         }
     }
 
@@ -281,7 +298,7 @@ public sealed class EditorSession
         {
             return;
         }
-        History.Push(new MoveObjectsCommand(objects, totalDx, totalDy));
+        History.Push(new MoveObjectsCommand(objects, totalDx, totalDy, _activePage));
         IsDirty = true;
     }
 
@@ -321,18 +338,23 @@ public sealed class EditorSession
         {
             return;
         }
-        Execute(new SetPropertyCommand<T>(description, setter, oldValue, newValue, target), [target.Id]);
+        Execute(new SetPropertyCommand<T>(description, setter, oldValue, newValue, target, _activePage), [target.Id]);
     }
 
     /// <summary>Proje/sayfa bilgisi gibi nesne dışı bir değeri geri alınabilir şekilde değiştirir (tam yeniden çizim).</summary>
-    public void SetDocumentProperty<T>(string description, Func<T> getter, Action<T> setter, T newValue)
+    /// <param name="page">Değişiklik bir sayfaya aitse (ad, format...), geri alınırken o sayfaya geçilir.</param>
+    public void SetDocumentProperty<T>(string description, Func<T> getter, Action<T> setter, T newValue, Page? page = null)
     {
         var oldValue = getter();
         if (EqualityComparer<T>.Default.Equals(oldValue, newValue))
         {
             return;
         }
-        Execute(new SetPropertyCommand<T>(description, setter, oldValue, newValue), null);
+        Execute(new SetPropertyCommand<T>(description, setter, oldValue, newValue, page: page), null);
+        if (page is not null)
+        {
+            PagesChanged?.Invoke(this, EventArgs.Empty); // sayfa listesindeki ad/format güncellensin
+        }
     }
 
     /// <summary>Sayfa çerçevesi/antet gibi sayfa genelini etkileyen değişikliklerden sonra çağrılır.</summary>

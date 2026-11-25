@@ -7,3 +7,14 @@ public interface IEditCommand
     void Execute();
     void Undo();
 }
+
+/// <summary>Belirli bir sayfadaki nesneleri değiştiren komut: geri alınırken o sayfaya geçilir.</summary>
+public interface IPageScopedCommand
+{
+    Pages.Page? Page { get; }
+}
+
+/// <summary>Sayfa listesini (ekleme/silme/sıra) değiştiren komut.</summary>
+public interface IPageListCommand
+{
+}

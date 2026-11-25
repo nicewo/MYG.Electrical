@@ -14,6 +14,12 @@ public sealed class UndoRedoManager
     public bool CanUndo => _undo.Count > 0;
     public bool CanRedo => _redo.Count > 0;
     public string? UndoDescription => _undo.Last?.Value.Description;
+
+    /// <summary>Sıradaki geri alınacak komut (çalıştırmadan).</summary>
+    public IEditCommand? PeekUndo => _undo.Last?.Value;
+
+    /// <summary>Sıradaki ileri alınacak komut (çalıştırmadan).</summary>
+    public IEditCommand? PeekRedo => _redo.Count > 0 ? _redo.Peek() : null;
     public string? RedoDescription => _redo.Count > 0 ? _redo.Peek().Description : null;
 
     /// <summary>Yığın değiştiğinde tetiklenir (UI komut durumları için).</summary>
