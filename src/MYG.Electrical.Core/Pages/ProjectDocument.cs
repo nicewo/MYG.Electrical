@@ -4,9 +4,16 @@ namespace MYG.Electrical.Core.Pages;
 public sealed class ProjectDocument
 {
     /// <summary>
-    /// Format sürümü. 1: ilk sürüm (junction'lar 4 yollu). 2: junction şekli (dirsek/T/çapraz) ve yönü eklendi.
+    /// Yazılan format sürümü.
+    /// <list type="bullet">
+    /// <item>1: ilk sürüm (junction'lar 4 yollu).</item>
+    /// <item>2: junction şekli (dirsek/T/çapraz) ve yönü.</item>
+    /// <item>3: gömülü kaynaklar (<see cref="Resources"/>) ve resim nesnesi.</item>
+    /// </list>
+    /// Yeni bir alan veya nesne türü eklendiğinde bu değer artırılmalı ve
+    /// ProjectSerializer.Migrate içine dönüşüm adımı yazılmalıdır.
     /// </summary>
-    public const int CurrentFormatVersion = 2;
+    public const int CurrentFormatVersion = 3;
     public const string FileExtension = ".myge";
 
     public int FormatVersion { get; set; } = CurrentFormatVersion;

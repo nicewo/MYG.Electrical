@@ -19,6 +19,9 @@ public static class ProjectSerializer
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         PropertyNameCaseInsensitive = true,
         IgnoreReadOnlyProperties = true,
+        // Tanınmayan alan varsa sessizce atılmaz, dosya açılmaz: aksi halde eski bir sürüm
+        // yeni alanları içeren dosyayı açıp kaydettiğinde veri kaybolurdu.
+        UnmappedMemberHandling = JsonUnmappedMemberHandling.Disallow,
         DefaultIgnoreCondition = JsonIgnoreCondition.Never,
         Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase, allowIntegerValues: true) },
     };
@@ -76,7 +79,7 @@ public static class ProjectSerializer
         }
         catch (JsonException ex)
         {
-            throw new ProjectFormatException($"Proje dosyası okunamadı: {ex.Message}", ex);
+            throw new ProjectFormatException($"Proje dosyası okunamadı ({ex.Path}): {ex.Message}", ex);
         }
     }
 
@@ -85,13 +88,15 @@ public static class ProjectSerializer
     {
         if (fromVersion < 2)
         {
-            // v1'de junction'lar her zaman 4 yönlüydü: anlam korunsun diye "cross" olarak işaretlenir.
+            // v1 → v2: junction'lar her zaman 4 yönlüydü; anlam korunsun diye "cross" olarak işaretlenir.
             foreach (var junction in EnumerateObjects(root).Where(o => (string?)o["kind"] == "junction"))
             {
                 junction["shape"] ??= "cross";
                 junction["rotation"] ??= 0;
             }
         }
+        // v2 → v3: yalnızca ekleme (resources, image). Dönüşüm gerekmez. Not: 37afe6e derlemesi bir hata
+        // nedeniyle resim içeren dosyaları "formatVersion": 2 olarak yazdı; bu dosyalar da olduğu gibi açılır.
         root[FormatVersionProperty] = ProjectDocument.CurrentFormatVersion;
     }
 

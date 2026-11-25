@@ -73,6 +73,9 @@ UTF-8 JSON, camelCase alan adları, enum değerleri metin. Uzantı: `.myge`.
 - Kayıtta yalnızca nesnelerin kullandığı kaynaklar yazılır; silinmiş resimlerin verisi dosyada kalmaz.
 - `titleBlock` sayfaya özel antet değerleridir; boş alanlar proje değerini kullanır.
 - Hesaplanan (salt okunur) özellikler yazılmaz; okurken alan adları büyük/küçük harf duyarsızdır.
+- **Tanınmayan alan içeren dosya açılmaz.** Eski bir program sürümü yeni alanları sessizce atıp dosyayı
+  geri kaydederse veri kaybolurdu; bunun yerine hangi alanın tanınmadığını söyleyen bir hata verilir.
+- Programın desteklediğinden **yeni** bir `formatVersion` taşıyan dosya da açılmaz ("programı güncelleyin").
 - Kayıt önce geçici dosyaya yazılır, sonra asıl dosyanın yerine taşınır (yarım kayıt eski dosyayı bozmaz).
 
 ## Sürüm geçmişi
@@ -82,6 +85,10 @@ UTF-8 JSON, camelCase alan adları, enum değerleri metin. Uzantı: `.myge`.
 | 1 | İlk format. Junction'lar her zaman 4 yönlü. |
 | 2 | Junction'a `shape` (`angle`/`tee`/`cross`) ve `rotation` eklendi. v1 dosyalardaki junction'lar açılırken `cross` olarak yükseltilir (eski davranış korunur). |
 | 3 | `resources` (gömülü dosyalar) ve `image` nesnesi eklendi. v2 dosyalar değişiklik gerektirmeden açılır. |
+
+> **Bilinen hata (37afe6e):** Bu commit'teki derleme, sürüm sabiti 2'de kaldığı için resim içeren dosyaları
+> `"formatVersion": 2` olarak yazdı. Bu dosyalar güncel sürümde sorunsuz açılır ve bir sonraki kayıtta 3 olur.
+> Regresyon testleri (`FormatCompatibilityTests`) sürüm numarasını sabite değil sabit değere (3) göre kontrol eder.
 
 ## Sürüm yükseltme
 

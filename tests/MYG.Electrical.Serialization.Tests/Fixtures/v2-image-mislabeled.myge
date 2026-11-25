@@ -1,0 +1,42 @@
+{
+  "formatVersion": 2,
+  "project": {
+    "name": "Fixture",
+    "company": "MYG TECH",
+    "revision": "A"
+  },
+  "pages": [
+    {
+      "id": "page-001",
+      "name": "Şema",
+      "type": "schematic",
+      "format": "a3",
+      "orientation": "landscape",
+      "width": 420,
+      "height": 297,
+      "titleBlock": {},
+      "objects": [
+        {
+          "kind": "image",
+          "id": "44444444-4444-4444-4444-444444444444",
+          "x": 10,
+          "y": 10,
+          "width": 40,
+          "height": 40,
+          "sourceResourceId": "res-2e635ccf17e672f4",
+          "renderResourceId": "res-2e635ccf17e672f4",
+          "transparencyEnabled": true,
+          "transparentColor": 4294967295,
+          "tolerance": 12
+        }
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "id": "res-2e635ccf17e672f4",
+      "fileName": "logo.png",
+      "data": "iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAFElEQVR4nGP4jwZk/OagYIaRoQAA3vTAISs5jR4AAAAASUVORK5CYII="
+    }
+  ]
+}
