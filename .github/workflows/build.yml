@@ -1,8 +1,12 @@
 name: build
 
-# main'e her push: derle → test et → Windows paketini üret → GitHub Release olarak yayınla.
+# Her push ve pull request: derle → test et.
+# main'e push'ta, son release'ten bu yana UYGULAMAYI etkileyen bir dosya değiştiyse
+# (src/, samples/, Directory.*.props, global.json, MYG.Electrical.slnx) Windows paketi üretilip
+# GitHub Release olarak yayınlanır. Yalnızca README / docs / görsel / test / CI değişikliklerinde
+# release çıkmaz; kurulu programlar gereksiz güncelleme indirmez.
+# Elle yayın: Actions → build → Run workflow (değişiklik kontrolü atlanır).
 # Kurulu uygulamalar açılışta bu Release'leri denetleyip kendini günceller (Velopack).
-# Pull request'lerde yalnızca derleme ve test çalışır.
 
 on:
   push:
@@ -28,6 +32,8 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # son release etiketiyle karşılaştırmak için etiketler ve geçmiş gerekli
 
       - uses: actions/setup-dotnet@v4
         with:
@@ -42,24 +48,49 @@ jobs:
       - name: Test
         run: dotnet test --solution MYG.Electrical.slnx -c Release --no-build
 
-      - name: Publish (win-x64, self-contained)
+      - name: Release gerekli mi? (uygulama dosyaları değişti mi)
+        id: changes
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "release=true" >> "$GITHUB_OUTPUT"
+            echo "Elle tetiklendi: release yayınlanacak." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          last=$(git describe --tags --abbrev=0 --match 'v*' HEAD 2>/dev/null || true)
+          if [ -z "$last" ]; then
+            echo "release=true" >> "$GITHUB_OUTPUT"
+            echo "Önceki release yok: ilk release yayınlanacak." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          app=$(git diff --name-only "$last" HEAD | grep -E '^(src/|samples/|Directory\.(Build|Packages)\.props$|global\.json$|MYG\.Electrical\.slnx$)' || true)
+          if [ -n "$app" ]; then
+            echo "release=true" >> "$GITHUB_OUTPUT"
+            { echo "**$last** sonrası uygulama dosyaları değişti → release yayınlanacak:"; echo '```'; echo "$app"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "release=false" >> "$GITHUB_OUTPUT"
+            echo "**$last** sonrası yalnızca belge/test/CI değişti → release atlandı." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Publish (win-x64, self-contained)
+        if: steps.changes.outputs.release == 'true'
         run: >
           dotnet publish src/MYG.Electrical.App/MYG.Electrical.App.csproj
           -c Release -r win-x64 --self-contained true
           -p:Version=${{ env.VERSION }} -o publish
 
       - name: Install vpk
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        if: steps.changes.outputs.release == 'true'
         run: dotnet tool install -g vpk --version ${{ env.VPK_VERSION }}
 
       - name: Download previous release (delta update için)
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        if: steps.changes.outputs.release == 'true'
         continue-on-error: true # ilk sürümde önceki release yok
         run: vpk download github --repoUrl https://github.com/${{ github.repository }} --token ${{ secrets.GITHUB_TOKEN }}
 
       - name: Pack
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        if: steps.changes.outputs.release == 'true'
         shell: pwsh
         run: |
           git log -1 --pretty=format:"%B" | Out-File -Encoding utf8 release-notes.md
@@ -68,8 +99,9 @@ jobs:
             --releaseNotes release-notes.md --icon src/MYG.Electrical.App/Assets/myg-electrical.ico
 
       - name: Publish GitHub Release
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        if: steps.changes.outputs.release == 'true'
         run: >
           vpk upload github --repoUrl https://github.com/${{ github.repository }}
           --publish --releaseName "MYG Electrical v${{ env.VERSION }}" --tag v${{ env.VERSION }}
+          --targetCommitish ${{ github.sha }}
           --token ${{ secrets.GITHUB_TOKEN }}

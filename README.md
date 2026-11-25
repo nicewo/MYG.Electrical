@@ -149,7 +149,9 @@ docs/                            Mimari, proje formatı, otomatik kablolama, kı
 
 - C# / .NET 10 / WPF, MVVM; Core katmanı WPF'e bağımlı değildir
 - Ekran ve PDF aynı sahne kompozisyonunu kullanır (`ISceneSink`), bu yüzden çıktı ekranla aynıdır
-- Her `main` push'unda GitHub Actions: derleme → 180+ test → paketleme → Release (Velopack)
+- Her push'ta GitHub Actions derler ve 180+ testi çalıştırır; `main`'de uygulama dosyaları (src/, samples/,
+  derleme ayarları) değiştiyse paketleyip Release yayınlar (Velopack). Yalnızca belge/görsel değişikliğinde
+  release çıkmaz; gerekirse Actions → build → *Run workflow* ile elle yayınlanır.
 
 Kaynaktan derleme (Windows, [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)):
 
