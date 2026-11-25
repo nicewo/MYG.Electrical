@@ -7,6 +7,9 @@ public interface IDialogService
     string? SavePdfFile(string suggestedName);
     string? OpenImageFile();
 
+    /// <summary>Resim ekle/ayarla penceresi. Tamam → true.</summary>
+    bool ShowImageDialog(ViewModels.ImageDialogViewModel vm);
+
     /// <summary>Kaydedilmemiş değişiklikler için Evet/Hayır/İptal. İptal → null.</summary>
     bool? ConfirmSaveChanges(string projectName);
 

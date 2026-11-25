@@ -27,6 +27,12 @@ public interface ISceneSink
 
     void DrawText(string text, Point2D position, double height, uint color, TextAlign align = TextAlign.Left, bool bold = false);
 
-    /// <summary>Dosyadan resim çizer; dosya yoksa sessizce atlar.</summary>
+    /// <summary>Dosyadan resim çizer (en-boy oranı korunur); dosya yoksa sessizce atlar.</summary>
     void DrawImage(string path, Rect2D rect);
+
+    /// <summary>
+    /// Bellekteki resmi dikdörtgene gerilerek çizer. <paramref name="cacheKey"/> aynı veri için sabit olmalıdır
+    /// (kaynak kimliği); hedef çözülmüş resmi bu anahtarla önbelleğe alabilir.
+    /// </summary>
+    void DrawImageData(string cacheKey, byte[] data, Rect2D rect);
 }

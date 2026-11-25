@@ -171,4 +171,32 @@ public class ProjectSerializerTests
         Assert.Equal(4, j.ActiveDirections.Count);
         Assert.Equal(ProjectDocument.CurrentFormatVersion, doc.FormatVersion);
     }
+
+    [Fact]
+    public void Images_are_embedded_and_unused_resources_are_not_written()
+    {
+        var doc = ProjectDocument.CreateNew();
+        var png = TestPng.Create(4, 4, (x, y) => 0xFF00FF00);
+        var src = doc.AddResource(png, "logo.png");
+        doc.AddResource([7, 7, 7], "silinmis.png");
+        doc.Pages[1].Objects.Add(new ImageObject
+        {
+            X = 10, Y = 20, Width = 40, Height = 40, SourceResourceId = src.Id, RenderResourceId = src.Id,
+            TransparencyEnabled = true, TransparentColor = 0xFFFFFFFF, Tolerance = 35,
+        });
+
+        var json = ProjectSerializer.Serialize(doc);
+        var loaded = ProjectSerializer.Deserialize(json);
+
+        var res = Assert.Single(loaded.Resources);
+        Assert.Equal(png, res.Data);
+        Assert.Equal("logo.png", res.FileName);
+        var img = Assert.IsType<ImageObject>(Assert.Single(loaded.Pages[1].Objects));
+        Assert.True(img.TransparencyEnabled);
+        Assert.Equal(35, img.Tolerance);
+        Assert.Equal(0xFFFFFFFFu, img.TransparentColor);
+        Assert.Contains("\"kind\": \"image\"", json);
+        Assert.DoesNotContain("\"settings\"", json);
+        Assert.Equal(2, doc.Resources.Count); // kayıt bellekteki listeyi değiştirmez
+    }
 }

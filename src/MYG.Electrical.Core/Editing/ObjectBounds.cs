@@ -13,6 +13,7 @@ public static class ObjectBounds
     {
         LineObject l => Rect2D.FromPoints(l.Start, l.End),
         RectangleObject r => r.Bounds,
+        ImageObject i => i.Bounds,
         TextObject t => TextBounds(t),
         JunctionObject j => JunctionBounds(j),
         SymbolObject s => SymbolBounds(s, catalog),

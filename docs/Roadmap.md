@@ -15,6 +15,7 @@
 
 - [x] Dirsek, yönlü T ve çapraz bağlantı noktaları; yerleştirirken otomatik yön önerisi (format v2)
 - [x] Sembol ve junction'ı yerleştirmeden önce R ile döndürme
+- [x] Resim ekleme: projeye gömülü kaynak, renk seçici ile saydamlık + hassasiyet, PDF'te alfa kanalı (format v3)
 
 ## V0.2 adayları
 

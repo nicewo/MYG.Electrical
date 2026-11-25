@@ -13,6 +13,36 @@ public sealed class ProjectDocument
     public ProjectInfo Project { get; set; } = new();
     public List<Page> Pages { get; set; } = [];
 
+    /// <summary>Projeye gömülü dosyalar (resimler). JSON'da base64.</summary>
+    public List<Resources.ProjectResource> Resources { get; set; } = [];
+
+    public Resources.ProjectResource? FindResource(string id) => Resources.FirstOrDefault(r => r.Id == id);
+
+    /// <summary>Veriyi projeye kopyalar; aynı içerik zaten varsa mevcut kaynağı döndürür.</summary>
+    public Resources.ProjectResource AddResource(byte[] data, string fileName)
+    {
+        var id = MYG.Electrical.Core.Resources.ProjectResource.CreateId(data);
+        if (FindResource(id) is { } existing)
+        {
+            return existing;
+        }
+        var resource = new Resources.ProjectResource { Id = id, FileName = fileName, Data = data };
+        Resources.Add(resource);
+        return resource;
+    }
+
+    /// <summary>
+    /// Sayfalardaki nesnelerin kullandığı kaynaklar. Kayıtta yalnızca bunlar yazılır; bellekteki liste
+    /// değiştirilmez (geri alınan bir silme işlemi resmini kaybetmesin diye).
+    /// </summary>
+    public List<Resources.ProjectResource> UsedResources()
+    {
+        var used = Pages.SelectMany(p => p.Objects).OfType<Model.ImageObject>()
+            .SelectMany(i => new[] { i.SourceResourceId, i.RenderResourceId })
+            .ToHashSet(StringComparer.Ordinal);
+        return Resources.Where(r => used.Contains(r.Id)).ToList();
+    }
+
     /// <summary>Kapak + bir şema sayfası içeren yeni proje.</summary>
     public static ProjectDocument CreateNew(string name = "Yeni Proje")
     {

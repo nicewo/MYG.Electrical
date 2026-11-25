@@ -1,0 +1,104 @@
+<Window x:Class="MYG.Electrical.App.Views.ImageDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Resim" Width="980" Height="640" MinWidth="720" MinHeight="460"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
+        Background="{StaticResource AnthraciteBrush}" Foreground="{StaticResource TextBrush}">
+    <Window.Resources>
+        <!-- Saydam alanları göstermek için dama deseni -->
+        <DrawingBrush x:Key="Checkerboard" TileMode="Tile" Viewport="0,0,16,16" ViewportUnits="Absolute">
+            <DrawingBrush.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="#FFFFFFFF" Geometry="M0,0 H2 V2 H0 Z" />
+                    <GeometryDrawing Brush="#FFD0D3D8" Geometry="M0,0 H1 V1 H0 Z M1,1 H2 V2 H1 Z" />
+                </DrawingGroup>
+            </DrawingBrush.Drawing>
+        </DrawingBrush>
+    </Window.Resources>
+
+    <Grid Margin="12">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="300" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Önizleme -->
+        <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Background="{StaticResource Checkerboard}" Margin="0,0,12,0">
+            <Image x:Name="PreviewImage" Source="{Binding Preview}" Stretch="Uniform" Margin="8"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   RenderOptions.BitmapScalingMode="HighQuality"
+                   MouseLeftButtonDown="OnPreviewMouseDown">
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding TransparencyEnabled}" Value="True">
+                                <Setter Property="Cursor" Value="Pen" />
+                                <Setter Property="ToolTip" Value="Saydam yapılacak renge tıklayın" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+        </Border>
+
+        <!-- Ayarlar -->
+        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <TextBlock Text="KAYNAK" Style="{StaticResource PanelHeader}" Margin="0,0,0,4" />
+                <TextBlock Text="{Binding FileName}" TextTrimming="CharacterEllipsis" FontWeight="SemiBold" />
+                <TextBlock Text="{Binding PixelSizeText}" Foreground="{StaticResource MutedTextBrush}" />
+                <TextBlock Text="Resim projeye kopyalanır; orijinal dosya taşınsa da proje bozulmaz." TextWrapping="Wrap"
+                           Foreground="{StaticResource MutedTextBrush}" FontSize="11" Margin="0,4,0,0" />
+
+                <TextBlock Text="BOYUT (mm)" Style="{StaticResource PanelHeader}" Margin="0,16,0,4" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Genişlik" VerticalAlignment="Center" Foreground="{StaticResource MutedTextBrush}" />
+                    <TextBox Grid.Column="1" Margin="0,2" Text="{Binding WidthMm, StringFormat=0.##, UpdateSourceTrigger=LostFocus}" />
+                    <TextBlock Grid.Row="1" Text="Yükseklik" VerticalAlignment="Center" Foreground="{StaticResource MutedTextBrush}" />
+                    <TextBox Grid.Row="1" Grid.Column="1" Margin="0,2" Text="{Binding HeightMm, StringFormat=0.##, UpdateSourceTrigger=LostFocus}" />
+                    <CheckBox Grid.Row="2" Grid.Column="1" Content="En-boy oranını koru" IsChecked="{Binding KeepAspect}" Margin="0,4" />
+                </Grid>
+
+                <TextBlock Text="SAYDAMLIK" Style="{StaticResource PanelHeader}" Margin="0,16,0,4" />
+                <CheckBox Content="Saydamlık (renk seçerek)" IsChecked="{Binding TransparencyEnabled}" />
+                <StackPanel IsEnabled="{Binding TransparencyEnabled}" Margin="0,8,0,0">
+                    <TextBlock Text="Önizlemede saydam olacak renge tıklayın." TextWrapping="Wrap" Foreground="{StaticResource MutedTextBrush}" />
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <Border Width="36" Height="22" CornerRadius="3" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                                Background="{Binding ColorBrush}" />
+                        <TextBlock Text="{Binding ColorText}" VerticalAlignment="Center" Margin="10,0,0,0" FontFamily="Consolas" />
+                    </StackPanel>
+
+                    <DockPanel Margin="0,12,0,0">
+                        <TextBox DockPanel.Dock="Right" Width="52" Margin="8,0,0,0" HorizontalContentAlignment="Right"
+                                 Text="{Binding Tolerance, StringFormat=0, UpdateSourceTrigger=LostFocus}" />
+                        <TextBlock Text="Hassasiyet (0–100)" VerticalAlignment="Center" Foreground="{StaticResource MutedTextBrush}" />
+                    </DockPanel>
+                    <Slider Minimum="0" Maximum="100" SmallChange="1" LargeChange="5" IsSnapToTickEnabled="True" TickFrequency="1"
+                            Value="{Binding Tolerance}" Margin="0,6,0,0" />
+                    <TextBlock Text="0: yalnızca aynı renk · büyüdükçe yakın renkler de silinir" TextWrapping="Wrap"
+                               Foreground="{StaticResource MutedTextBrush}" FontSize="11" />
+                    <TextBlock Text="{Binding TransparentInfo}" Margin="0,6,0,0" />
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+            <Button Content="Tamam" IsDefault="True" MinWidth="90" Margin="0,0,8,0" Click="OnOkClick" />
+            <Button Content="İptal" IsCancel="True" MinWidth="90" />
+        </StackPanel>
+    </Grid>
+</Window>

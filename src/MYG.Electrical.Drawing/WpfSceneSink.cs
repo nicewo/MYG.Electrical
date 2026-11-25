@@ -19,6 +19,9 @@ public sealed class WpfSceneSink(DrawingContext dc) : ISceneSink
     private static readonly Dictionary<StrokeStyle, Pen> Pens = [];
     private static readonly Dictionary<uint, Brush> Brushes = [];
     private static readonly Dictionary<string, BitmapSource?> Images = new(StringComparer.OrdinalIgnoreCase);
+
+    /// <summary>Gömülü kaynaklar: anahtar içerikten türetildiği için önbellek hiç bayatlamaz.</summary>
+    private static readonly Dictionary<string, BitmapSource?> DataImages = new(StringComparer.Ordinal);
     private const double PixelsPerDip = 1.0;
 
     public void DrawLine(Point2D a, Point2D b, StrokeStyle stroke) =>
@@ -77,6 +80,26 @@ public sealed class WpfSceneSink(DrawingContext dc) : ISceneSink
         var w = img.Width * ratio;
         var h = img.Height * ratio;
         dc.DrawImage(img, new Rect(rect.X + (rect.Width - w) / 2, rect.Y + (rect.Height - h) / 2, w, h));
+    }
+
+    public void DrawImageData(string cacheKey, byte[] data, Rect2D rect)
+    {
+        if (!DataImages.TryGetValue(cacheKey, out var img))
+        {
+            try
+            {
+                img = WpfImageCodec.LoadBitmap(data);
+            }
+            catch (Exception ex) when (ex is System.IO.IOException or NotSupportedException or InvalidOperationException or ArgumentException)
+            {
+                img = null;
+            }
+            DataImages[cacheKey] = img;
+        }
+        if (img is not null && rect.Width > 0 && rect.Height > 0)
+        {
+            dc.DrawImage(img, WpfConvert.ToRect(rect));
+        }
     }
 
     /// <summary>Logo dosyası değiştiğinde önbelleği temizlemek için.</summary>

@@ -9,6 +9,7 @@ namespace MYG.Electrical.Infrastructure.Pdf;
 internal sealed class PdfSceneSink(XGraphics gfx, ILogger logger) : ISceneSink
 {
     private readonly Dictionary<(double Size, bool Bold), XFont> _fonts = [];
+    private readonly Dictionary<string, XImage> _images = [];
 
     public void DrawLine(Point2D a, Point2D b, StrokeStyle stroke) =>
         gfx.DrawLine(Pen(stroke), a.X, a.Y, b.X, b.Y);
@@ -72,6 +73,28 @@ internal sealed class PdfSceneSink(XGraphics gfx, ILogger logger) : ISceneSink
         catch (Exception ex) when (ex is IOException or InvalidOperationException or NotSupportedException or ArgumentException)
         {
             logger.Warning(ex, "Logo PDF'e eklenemedi: {Path}", path);
+        }
+    }
+
+    public void DrawImageData(string cacheKey, byte[] data, Rect2D rect)
+    {
+        if (rect.Width <= 0 || rect.Height <= 0)
+        {
+            return;
+        }
+        try
+        {
+            if (!_images.TryGetValue(cacheKey, out var image))
+            {
+                // PDFsharp akışı belge kaydedilene kadar okuyabilir: akış açık bırakılır, belge ile birlikte atılır.
+                image = XImage.FromStream(new MemoryStream(data, writable: false));
+                _images[cacheKey] = image;
+            }
+            gfx.DrawImage(image, rect.X, rect.Y, rect.Width, rect.Height);
+        }
+        catch (Exception ex) when (ex is IOException or InvalidOperationException or NotSupportedException or ArgumentException)
+        {
+            logger.Warning(ex, "Resim PDF'e eklenemedi: {Resource}", cacheKey);
         }
     }
 

@@ -8,6 +8,7 @@ using MYG.Electrical.App.Mvvm;
 using MYG.Electrical.App.Services;
 using MYG.Electrical.Core.Editing;
 using MYG.Electrical.Core.Geometry;
+using MYG.Electrical.Core.Model;
 using MYG.Electrical.Core.Pages;
 using MYG.Electrical.Core.Symbols;
 using MYG.Electrical.Drawing;
@@ -31,6 +32,7 @@ public sealed class MainViewModel : ObservableObject
     private PageItemViewModel? _selectedPage;
     private SymbolDefinition? _selectedSymbol;
     private EditorTool _activeTool = EditorTool.Select;
+    private ImageObject? _pendingImage;
     private string _symbolFilter = string.Empty;
     private string _cursorText = "X 0  Y 0";
     private string _zoomText = "100 %";
@@ -43,7 +45,7 @@ public sealed class MainViewModel : ObservableObject
         _pdf = pdf;
         _log = log;
         _catalog = catalog;
-        Properties = new PropertiesViewModel(dialogs);
+        Properties = new PropertiesViewModel(dialogs, EditImage);
 
         SymbolsView = CollectionViewSource.GetDefaultView(catalog.All);
         SymbolsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(SymbolDefinition.Category)));
@@ -71,6 +73,7 @@ public sealed class MainViewModel : ObservableObject
         ZoomOutCommand = new RelayCommand(() => Canvas?.ZoomOut());
         ZoomFitCommand = new RelayCommand(() => Canvas?.ZoomToFit());
         SetToolCommand = new RelayCommand(p => ActiveTool = p is EditorTool t ? t : Enum.Parse<EditorTool>(p?.ToString() ?? nameof(EditorTool.Select)));
+        InsertImageCommand = new RelayCommand(InsertImage);
         AddSchematicPageCommand = new RelayCommand(() => Session.AddPage(PageType.Schematic));
         AddCoverPageCommand = new RelayCommand(() => Session.AddPage(PageType.Cover));
         DeletePageCommand = new RelayCommand(DeleteActivePage, () => Session.Document.Pages.Count > 1);
@@ -143,6 +146,13 @@ public sealed class MainViewModel : ObservableObject
                 ActiveTool = EditorTool.Symbol;
             }
         }
+    }
+
+    /// <summary>Resim aracıyla yerleştirilmeyi bekleyen resim.</summary>
+    public ImageObject? PendingImage
+    {
+        get => _pendingImage;
+        private set => SetField(ref _pendingImage, value);
     }
 
     public EditorTool ActiveTool
@@ -262,6 +272,7 @@ public sealed class MainViewModel : ObservableObject
     public RelayCommand ZoomOutCommand { get; }
     public RelayCommand ZoomFitCommand { get; }
     public RelayCommand SetToolCommand { get; }
+    public RelayCommand InsertImageCommand { get; }
     public RelayCommand AddSchematicPageCommand { get; }
     public RelayCommand AddCoverPageCommand { get; }
     public RelayCommand DeletePageCommand { get; }
@@ -391,6 +402,76 @@ public sealed class MainViewModel : ObservableObject
         }
     }
 
+    // ---------- Resim ----------
+
+    /// <summary>Ekle → Resim: dosya seç, boyut/saydamlık ayarla, projeye kopyala, tıklayarak yerleştir.</summary>
+    private void InsertImage()
+    {
+        if (_dialogs.OpenImageFile() is not { } path)
+        {
+            return;
+        }
+        byte[] data;
+        ImageDialogViewModel dialog;
+        try
+        {
+            data = File.ReadAllBytes(path);
+            dialog = new ImageDialogViewModel(data, Path.GetFileName(path));
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or NotSupportedException or ArgumentException or InvalidOperationException)
+        {
+            _log.Warning(ex, "Resim açılamadı: {Path}", path);
+            _dialogs.ShowError($"Resim açılamadı:\n{ex.Message}");
+            return;
+        }
+        if (!_dialogs.ShowImageDialog(dialog))
+        {
+            return;
+        }
+
+        var doc = Session.Document;
+        var source = doc.AddResource(data, dialog.FileName);
+        var render = dialog.TransparencyEnabled
+            ? doc.AddResource(dialog.BuildRenderData(), Path.GetFileNameWithoutExtension(dialog.FileName) + "-saydam.png")
+            : source;
+        PendingImage = new ImageObject
+        {
+            Width = dialog.WidthMm,
+            Height = dialog.HeightMm,
+            SourceResourceId = source.Id,
+            RenderResourceId = render.Id,
+            TransparencyEnabled = dialog.TransparencyEnabled,
+            TransparentColor = dialog.TransparentColor,
+            Tolerance = dialog.Tolerance,
+        };
+        ActiveTool = EditorTool.Image;
+        StatusMessage = "Resim: sol üst köşesini yerleştirmek için tıklayın (Esc: iptal)";
+    }
+
+    /// <summary>Seçili resmin boyut ve saydamlık ayarlarını değiştirir (tek geri alma adımı).</summary>
+    private void EditImage(ImageObject image)
+    {
+        var doc = Session.Document;
+        if (doc.FindResource(image.SourceResourceId) is not { } source)
+        {
+            _dialogs.ShowError("Resmin kaynak verisi projede bulunamadı.");
+            return;
+        }
+        var dialog = new ImageDialogViewModel(source.Data, source.FileName, image);
+        if (!_dialogs.ShowImageDialog(dialog))
+        {
+            return;
+        }
+        var render = dialog.TransparencyEnabled
+            ? doc.AddResource(dialog.BuildRenderData(), Path.GetFileNameWithoutExtension(source.FileName) + "-saydam.png")
+            : source;
+        var settings = new ImageSettings(render.Id, dialog.TransparencyEnabled, dialog.TransparentColor, dialog.Tolerance);
+        Session.SetProperty(image, "Resim ayarları",
+            () => (image.Settings, image.Width, image.Height),
+            v => (image.Settings, image.Width, image.Height) = v,
+            (settings, dialog.WidthMm, dialog.HeightMm));
+    }
+
     private void DeleteActivePage()
     {
         var page = Session.ActivePage;
@@ -499,6 +580,7 @@ public sealed class MainViewModel : ObservableObject
         EditorTool.Symbol => "Sembol: tıklayarak yerleştirin · R: döndür · sağ tık / Esc: bitir",
         EditorTool.Angle => "Dirsek: 90° dönüş noktası · yön otomatik önerilir, R ile değiştirin",
         EditorTool.Tee => "T bağlantı: 3 yollu düğüm · yön otomatik önerilir, R ile değiştirin",
+        EditorTool.Image => "Resim: sol üst köşesini yerleştirmek için tıklayın (Esc: iptal)",
         EditorTool.Cross => "Çapraz düğüm: kesişen yatay ve dikey hattı BİRLEŞTİRİR · yalnızca gerçekten bağlıysa kullanın",
         _ => "Seç: tıkla / sürükle · Ctrl+tık çoklu seçim · R döndür · Del sil",
     };

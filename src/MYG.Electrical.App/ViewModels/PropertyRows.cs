@@ -126,3 +126,11 @@ public sealed class FileRow(string label, Func<string> getter, Action<string> se
 
     public override void Refresh() => OnPropertyChanged(nameof(Value));
 }
+
+/// <summary>Panelde komut düğmesi (ör. "Resim ayarları…").</summary>
+public sealed class ButtonRow(string label, Action action) : PropertyRow(label)
+{
+    public RelayCommand Command { get; } = new(action);
+
+    public override void Refresh() { }
+}

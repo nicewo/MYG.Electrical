@@ -17,13 +17,16 @@ public enum EditorTool
 
     /// <summary>Çapraz düğüm (4 yön) — yalnızca bilerek seçildiğinde.</summary>
     Cross,
+
+    /// <summary>Hazırlanmış resmi tıklanan noktaya (sol üst köşe) yerleştirir.</summary>
+    Image,
 }
 
 public static class EditorToolExtensions
 {
     /// <summary>Tıklayınca nesne yerleştiren (önizlemesi olan) araçlar.</summary>
     public static bool IsPlacementTool(this EditorTool tool) =>
-        tool is EditorTool.Symbol or EditorTool.Angle or EditorTool.Tee or EditorTool.Cross;
+        tool is EditorTool.Symbol or EditorTool.Angle or EditorTool.Tee or EditorTool.Cross or EditorTool.Image;
 
     public static Core.Model.JunctionShape? ToJunctionShape(this EditorTool tool) => tool switch
     {

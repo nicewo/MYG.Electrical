@@ -9,7 +9,7 @@ using MYG.Electrical.Core.Pages;
 namespace MYG.Electrical.App.ViewModels;
 
 /// <summary>Sağ panel: seçili nesne, yoksa sayfa ve proje (kapak/antet) özellikleri.</summary>
-public sealed class PropertiesViewModel(IDialogService dialogs) : ObservableObject
+public sealed class PropertiesViewModel(IDialogService dialogs, Action<ImageObject> editImage) : ObservableObject
 {
     private static readonly IReadOnlyList<string> Rotations = ["0", "90", "180", "270"];
     private static readonly IReadOnlyList<string> Formats = Enum.GetNames<PageFormat>();
@@ -144,6 +144,20 @@ public sealed class PropertiesViewModel(IDialogService dialogs) : ObservableObje
                 Rows.Add(Num("X", () => t.X, v => t.X = v));
                 Rows.Add(Num("Y", () => t.Y, v => t.Y = v));
                 Rows.Add(Num("Yükseklik", () => t.Height, v => t.Height = Math.Max(0.5, v)));
+                break;
+
+            case ImageObject img:
+                Header = "Resim";
+                var source = s.Document.FindResource(img.SourceResourceId);
+                Rows.Add(new TextRow("Kaynak", () => source?.FileName ?? "(bulunamadı)", null));
+                Rows.Add(Num("X", () => img.X, v => img.X = v));
+                Rows.Add(Num("Y", () => img.Y, v => img.Y = v));
+                Rows.Add(Num("Genişlik", () => img.Width, v => img.Width = Math.Max(1, v)));
+                Rows.Add(Num("Yükseklik", () => img.Height, v => img.Height = Math.Max(1, v)));
+                Rows.Add(new TextRow("Saydamlık", () => img.TransparencyEnabled
+                    ? string.Create(CultureInfo.CurrentCulture, $"#{img.TransparentColor & 0xFFFFFF:X6} · hassasiyet {img.Tolerance:0}")
+                    : "Kapalı", null));
+                Rows.Add(new ButtonRow("Resim ayarları…", () => editImage(img)));
                 break;
 
             case JunctionObject j:

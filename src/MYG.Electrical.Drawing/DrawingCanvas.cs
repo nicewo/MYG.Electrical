@@ -124,6 +124,17 @@ public sealed class DrawingCanvas : FrameworkElement
         set => SetValue(PendingSymbolProperty, value);
     }
 
+    public static readonly DependencyProperty PendingImageProperty = DependencyProperty.Register(
+        nameof(PendingImage), typeof(ImageObject), typeof(DrawingCanvas),
+        new PropertyMetadata(null, (d, _) => ((DrawingCanvas)d).RedrawGhost()));
+
+    /// <summary>Resim aracı için hazırlanmış (kaynağı projeye eklenmiş) resim şablonu.</summary>
+    public ImageObject? PendingImage
+    {
+        get => (ImageObject?)GetValue(PendingImageProperty);
+        set => SetValue(PendingImageProperty, value);
+    }
+
     // ---------- Görünüm komutları ----------
 
     public void ZoomIn() => View.ZoomAt(ViewportCenter, ViewTransform.DefaultZoomStep);
@@ -198,7 +209,7 @@ public sealed class DrawingCanvas : FrameworkElement
             oldSession.WiresChanged -= OnWiresChanged;
             oldSession.ActivePageChanged -= OnActivePageChanged;
         }
-        _composer = newSession is null ? null : new SceneComposer(newSession.Catalog);
+        _composer = newSession is null ? null : new SceneComposer(newSession.Catalog, newSession.Document.FindResource);
         if (newSession is not null)
         {
             newSession.SceneChanged += OnSceneChanged;
@@ -355,9 +366,13 @@ public sealed class DrawingCanvas : FrameworkElement
             return;
         }
         var p = Session.Snap(_cursorWorld);
-        DrawingObject? ghost = ActiveTool.ToJunctionShape() is { } shape
-            ? new JunctionObject { X = p.X, Y = p.Y, Shape = shape, Rotation = EffectivePlacementRotation() }
-            : PendingSymbol?.CreateDevice(p.X, p.Y, string.Empty);
+        DrawingObject? ghost = ActiveTool switch
+        {
+            _ when ActiveTool.ToJunctionShape() is { } shape =>
+                new JunctionObject { X = p.X, Y = p.Y, Shape = shape, Rotation = EffectivePlacementRotation() },
+            EditorTool.Image => PendingImageAt(p),
+            _ => PendingSymbol?.CreateDevice(p.X, p.Y, string.Empty),
+        };
         if (ghost is DeviceObject d)
         {
             d.Rotation = _placementRotation;
@@ -515,10 +530,26 @@ public sealed class DrawingCanvas : FrameworkElement
                 session.PlaceJunction(ActiveTool.ToJunctionShape()!.Value, snapped, EffectivePlacementRotation());
                 break;
 
+            case EditorTool.Image when PendingImageAt(snapped) is { } image:
+                session.AddObject(image);
+                ActiveTool = EditorTool.Select; // resim genelde tek tek yerleştirilir
+                break;
+
             case EditorTool.Symbol when PendingSymbol is not null:
                 session.PlaceSymbol(PendingSymbol, snapped, _placementRotation);
                 break;
         }
+    }
+
+    private ImageObject? PendingImageAt(Point2D topLeft)
+    {
+        if (PendingImage?.CloneWithNewId() is not ImageObject image)
+        {
+            return null;
+        }
+        image.X = topLeft.X;
+        image.Y = topLeft.Y;
+        return image;
     }
 
     private static RectangleObject CreateRectangle(Point2D a, Point2D b)

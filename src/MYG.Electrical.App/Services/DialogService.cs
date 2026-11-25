@@ -29,9 +29,16 @@ public sealed class DialogService : IDialogService
 
     public string? OpenImageFile()
     {
-        var dlg = new OpenFileDialog { Filter = "Resim (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg", Title = "Logo Seç" };
+        var dlg = new OpenFileDialog
+        {
+            Filter = "Resim (*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tif;*.tiff)|*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tif;*.tiff",
+            Title = "Resim Seç",
+        };
         return dlg.ShowDialog(Owner) == true ? dlg.FileName : null;
     }
+
+    public bool ShowImageDialog(ViewModels.ImageDialogViewModel vm) =>
+        new Views.ImageDialog(vm) { Owner = Owner }.ShowDialog() == true;
 
     public bool? ConfirmSaveChanges(string projectName)
     {

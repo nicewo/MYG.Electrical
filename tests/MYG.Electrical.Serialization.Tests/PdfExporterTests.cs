@@ -71,4 +71,34 @@ public class PdfExporterTests
         var doc = ProjectDocument.CreateNew();
         Assert.Throws<InvalidOperationException>(() => Exporter.Export(doc, new MemoryStream(), new PdfExportOptions { PageIndices = [] }));
     }
+
+    [Fact]
+    public void Transparent_png_is_embedded_with_alpha_mask()
+    {
+        var doc = ProjectDocument.CreateNew();
+        // Sol yarı saydam, sağ yarı kırmızı
+        var png = TestPng.Create(20, 10, (x, _) => x < 10 ? 0x00000000u : 0xFFFF0000u);
+        var res = doc.AddResource(png, "saydam.png");
+        doc.Pages[1].Objects.Add(new Core.Model.ImageObject
+        {
+            X = 50, Y = 50, Width = 60, Height = 30, SourceResourceId = res.Id, RenderResourceId = res.Id,
+        });
+
+        using var ms = new MemoryStream();
+        Exporter.Export(doc, ms, new PdfExportOptions { PageIndices = [1] });
+        var text = Encoding.Latin1.GetString(ms.ToArray());
+
+        Assert.Contains("/Subtype/Image", text);
+        Assert.Contains("/SMask", text); // alfa kanalı korunmuş
+    }
+
+    [Fact]
+    public void Missing_image_resource_draws_placeholder_without_error()
+    {
+        var doc = ProjectDocument.CreateNew();
+        doc.Pages[1].Objects.Add(new Core.Model.ImageObject { X = 10, Y = 10, Width = 20, Height = 20, RenderResourceId = "res-yok" });
+
+        using var pdf = ExportAndRead(doc);
+        Assert.Equal(2, pdf.PageCount);
+    }
 }

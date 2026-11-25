@@ -29,6 +29,9 @@ App (WPF, MVVM) ──► Drawing (WPF renderer) ──► Core
   Böylece PDF ekran görüntüsü değildir ama ekranla birebir aynıdır.
 - **Nesne bazlı yeniden çizim.** Her nesnenin kendi `DrawingVisual`'ı vardır. `EditorSession.SceneChanged`
   değişen nesne kimliklerini bildirir; yalnızca onlar yeniden çizilir. Kablolar ayrı bir görselde tutulur.
+- **Resimler projeye gömülür.** `ProjectDocument.Resources` içerik-adresli (SHA-256) kaynakları tutar. Saydamlık
+  `Core.Imaging.ColorKey` ile platformdan bağımsız uygulanır; çözme/kodlama `IImageCodec` arkasındadır
+  (`WpfImageCodec`). PDF işlenmiş PNG'yi alfa maskesiyle gömer.
 - **Kablolar kalıcı nesne değildir.** `AutoWireEngine` cihaz/junction konumlarından her değişiklikte yeniden
   üretir (bkz. [AutoWiring.md](AutoWiring.md)).
 - **Komut tabanlı geri alma.** Her düzenleme `IEditCommand`'dır. Sürükleme sırasında `PreviewMove` canlı

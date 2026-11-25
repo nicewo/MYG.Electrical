@@ -27,7 +27,15 @@ public static class ProjectSerializer
     {
         ArgumentNullException.ThrowIfNull(document);
         document.FormatVersion = ProjectDocument.CurrentFormatVersion;
-        return JsonSerializer.Serialize(document, Options);
+        // Kullanılmayan (silinmiş resimlere ait) kaynaklar dosyaya yazılmaz.
+        var snapshot = new ProjectDocument
+        {
+            FormatVersion = document.FormatVersion,
+            Project = document.Project,
+            Pages = document.Pages,
+            Resources = document.UsedResources(),
+        };
+        return JsonSerializer.Serialize(snapshot, Options);
     }
 
     public static ProjectDocument Deserialize(string json)

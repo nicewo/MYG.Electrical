@@ -15,7 +15,6 @@ namespace MYG.Electrical.Infrastructure.Pdf;
 /// </summary>
 public sealed class PdfExporter(ISymbolCatalog catalog, ILogger logger)
 {
-    private readonly SceneComposer _composer = new(catalog);
     private readonly AutoWireEngine _wireEngine = new();
 
     public void Export(ProjectDocument document, string path, PdfExportOptions? options = null)
@@ -37,6 +36,7 @@ public sealed class PdfExporter(ISymbolCatalog catalog, ILogger logger)
             throw new InvalidOperationException("Dışa aktarılacak sayfa yok.");
         }
 
+        var composer = new SceneComposer(catalog, document.FindResource);
         using var pdf = new PdfDocument();
         pdf.Info.Title = document.Project.Name;
         pdf.Info.Author = document.Project.PreparedBy;
@@ -63,7 +63,7 @@ public sealed class PdfExporter(ISymbolCatalog catalog, ILogger logger)
             var sink = new PdfSceneSink(gfx, logger);
             PageFrameComposer.Compose(document.Project, page, index + 1, document.Pages.Count, sink);
             SceneComposer.ComposeWires(_wireEngine.Compute(page.Objects), sink);
-            _composer.ComposeObjects(page.Objects, sink, SceneComposerOptions.Print);
+            composer.ComposeObjects(page.Objects, sink, SceneComposerOptions.Print);
         }
 
         pdf.Save(output);

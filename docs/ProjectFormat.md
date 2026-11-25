@@ -4,7 +4,7 @@ UTF-8 JSON, camelCase alan adları, enum değerleri metin. Uzantı: `.myge`.
 
 ```json
 {
-  "formatVersion": 2,
+  "formatVersion": 3,
   "project": {
     "name": "Machine01",
     "company": "MYG TECH",
@@ -40,9 +40,19 @@ UTF-8 JSON, camelCase alan adları, enum değerleri metin. Uzantı: `.myge`.
         { "kind": "line", "id": "…", "x1": 0, "y1": 0, "x2": 10, "y2": 0, "thickness": 0.35 },
         { "kind": "rectangle", "id": "…", "x": 10, "y": 10, "width": 30, "height": 20, "thickness": 0.35 },
         { "kind": "text", "id": "…", "x": 5, "y": 5, "text": "Metin", "height": 3.5, "rotation": 0 },
-        { "kind": "symbol", "id": "…", "symbolId": "iec.lamp", "x": 0, "y": 0, "rotation": 0, "scale": 1 }
+        { "kind": "symbol", "id": "…", "symbolId": "iec.lamp", "x": 0, "y": 0, "rotation": 0, "scale": 1 },
+        {
+          "kind": "image", "id": "…", "x": 30, "y": 20, "width": 60, "height": 25,
+          "sourceResourceId": "res-3fa1c0d2e4b59a71",
+          "renderResourceId": "res-81b0e6c3d2a4f5e9",
+          "transparencyEnabled": true, "transparentColor": 4294967295, "tolerance": 12
+        }
       ]
     }
+  ],
+  "resources": [
+    { "id": "res-3fa1c0d2e4b59a71", "fileName": "logo.jpg", "data": "/9j/4AAQSkZJRgABAQ…" },
+    { "id": "res-81b0e6c3d2a4f5e9", "fileName": "logo-saydam.png", "data": "iVBORw0KGgoAAAANSU…" }
   ]
 }
 ```
@@ -56,6 +66,11 @@ UTF-8 JSON, camelCase alan adları, enum değerleri metin. Uzantı: `.myge`.
 - Cihazın `connectionPoints` değerleri **sembolün lokal koordinatlarındadır**; global konum ve yön her seferinde
   `x`, `y`, `rotation`, `scale` ile hesaplanır.
 - **Kablolar dosyada saklanmaz.** Açılışta cihaz ve junction konumlarından yeniden üretilir.
+- `objects[].kind = "image"`: resim. **Resim verisi dosyaya gömülür** (`resources[].data`, base64); kaynak dosya
+  silinse veya taşınsa da proje bozulmaz. Kaynak kimliği içerikten (SHA-256) türetilir, aynı resim bir kez saklanır.
+- Saydamlık tahribatsızdır: `sourceResourceId` orijinal, `renderResourceId` saydamlığı uygulanmış PNG'dir
+  (saydamlık kapalıysa ikisi aynıdır). `transparentColor` ARGB tamsayı, `tolerance` 0–100.
+- Kayıtta yalnızca nesnelerin kullandığı kaynaklar yazılır; silinmiş resimlerin verisi dosyada kalmaz.
 - `titleBlock` sayfaya özel antet değerleridir; boş alanlar proje değerini kullanır.
 - Hesaplanan (salt okunur) özellikler yazılmaz; okurken alan adları büyük/küçük harf duyarsızdır.
 - Kayıt önce geçici dosyaya yazılır, sonra asıl dosyanın yerine taşınır (yarım kayıt eski dosyayı bozmaz).
@@ -66,6 +81,7 @@ UTF-8 JSON, camelCase alan adları, enum değerleri metin. Uzantı: `.myge`.
 |---|---|
 | 1 | İlk format. Junction'lar her zaman 4 yönlü. |
 | 2 | Junction'a `shape` (`angle`/`tee`/`cross`) ve `rotation` eklendi. v1 dosyalardaki junction'lar açılırken `cross` olarak yükseltilir (eski davranış korunur). |
+| 3 | `resources` (gömülü dosyalar) ve `image` nesnesi eklendi. v2 dosyalar değişiklik gerektirmeden açılır. |
 
 ## Sürüm yükseltme
 

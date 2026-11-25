@@ -18,6 +18,7 @@ otomatik kablolama**dır: hizalı ve birbirine bakan pinler kendiliğinden bağl
 - Otomatik cihaz tanımı: `-K1`, `-K2`, `-F1`…
 - **AutoWireEngine**: karşılıklı en yakın pin kuralı, tolerans 0,5 mm
 - EPLAN tarzı bağlantı noktaları: **dirsek** (90° dönüş), yönlü **T** ve bilerek seçilen **çapraz** düğüm; kesişen hatlar yanlışlıkla birleşmez
+- Resim ekleme: resim projeye gömülür; renk seçiciyle saydamlık ve 0–100 hassasiyet (yakın renkleri de siler), PDF'te de saydam
 - Kapak sayfası ve düzenlenebilir antet (firma, logo, proje no, müşteri, hazırlayan, kontrol, tarih, revizyon)
 - `.myge` JSON proje dosyası (`formatVersion` zorunlu)
 - Vektörel PDF (tek sayfa / tüm proje, istenirse farklı kağıt boyutuna ölçekli)

@@ -9,7 +9,7 @@ namespace MYG.Electrical.Core.Rendering;
 /// Çizim nesnelerini hedeften bağımsız temel şekillere dönüştürür.
 /// Ekran (WPF) ve PDF çıktısı aynı kompozisyonu kullanır; böylece çıktı ekranla birebir aynıdır.
 /// </summary>
-public sealed class SceneComposer(ISymbolCatalog catalog)
+public sealed class SceneComposer(ISymbolCatalog catalog, Func<string, Resources.ProjectResource?>? resources = null)
 {
     private const double PinLabelOffset = 1.0;
     private const double PinLabelAlong = 2.2;
@@ -25,6 +25,9 @@ public sealed class SceneComposer(ISymbolCatalog catalog)
                 break;
             case RectangleObject r:
                 sink.DrawRectangle(r.Bounds, new StrokeStyle(DrawingStyles.Black, r.Thickness));
+                break;
+            case ImageObject img:
+                ComposeImage(img, sink);
                 break;
             case TextObject t:
                 sink.DrawText(t.Text, t.Anchor, t.Height, DrawingStyles.Black);
@@ -48,6 +51,22 @@ public sealed class SceneComposer(ISymbolCatalog catalog)
         {
             ComposeObject(o, sink, options);
         }
+    }
+
+    private void ComposeImage(ImageObject img, ISceneSink sink)
+    {
+        var id = string.IsNullOrEmpty(img.RenderResourceId) ? img.SourceResourceId : img.RenderResourceId;
+        if (resources?.Invoke(id) is { } res)
+        {
+            sink.DrawImageData(res.Id, res.Data, img.Bounds);
+            return;
+        }
+        // Kaynak bulunamadı: çarpılı yer tutucu
+        var missing = new StrokeStyle(DrawingStyles.PinMarker, DrawingStyles.ThinLine, Dashed: true);
+        var b = img.Bounds;
+        sink.DrawRectangle(b, missing);
+        sink.DrawLine(new(b.Left, b.Top), new(b.Right, b.Bottom), missing);
+        sink.DrawLine(new(b.Right, b.Top), new(b.Left, b.Bottom), missing);
     }
 
     private static void ComposeJunction(JunctionObject j, ISceneSink sink, SceneComposerOptions options)
