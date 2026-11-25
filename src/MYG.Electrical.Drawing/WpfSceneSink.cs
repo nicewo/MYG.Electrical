@@ -13,8 +13,10 @@ namespace MYG.Electrical.Drawing;
 /// </summary>
 public sealed class WpfSceneSink(DrawingContext dc) : ISceneSink
 {
-    private static readonly Typeface Regular = new(new FontFamily("Segoe UI, Arial"), FontStyles.Normal, FontWeights.Normal, FontStretches.Normal);
-    private static readonly Typeface Bold = new(new FontFamily("Segoe UI, Arial"), FontStyles.Normal, FontWeights.SemiBold, FontStretches.Normal);
+    // PDF ile aynı yazı tipi (PdfFontResolver önce Arial'i kullanır): metin genişlikleri ekranda ve çıktıda aynı olur.
+    private static readonly FontFamily DrawingFont = new("Arial, Liberation Sans, Segoe UI");
+    private static readonly Typeface Regular = new(DrawingFont, FontStyles.Normal, FontWeights.Normal, FontStretches.Normal);
+    private static readonly Typeface Bold = new(DrawingFont, FontStyles.Normal, FontWeights.Bold, FontStretches.Normal);
     private static readonly DashStyle Dash = CreateDash();
     private static readonly Dictionary<StrokeStyle, Pen> Pens = [];
     private static readonly Dictionary<uint, Brush> Brushes = [];
