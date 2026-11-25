@@ -16,7 +16,8 @@ otomatik kablolama**dır: hizalı ve birbirine bakan pinler kendiliğinden bağl
 - Komut tabanlı Geri al / İleri al
 - IEC sembol kütüphanesi: kontaktör, röle, sigorta, otomatik sigorta, motor, buton, acil stop, limit switch, sensör, klemens, lamba, bobin, NO/NC kontak
 - Otomatik cihaz tanımı: `-K1`, `-K2`, `-F1`…
-- **AutoWireEngine**: karşılıklı en yakın pin kuralı, junction ile T/çoklu bağlantı, tolerans 0,5 mm
+- **AutoWireEngine**: karşılıklı en yakın pin kuralı, tolerans 0,5 mm
+- EPLAN tarzı bağlantı noktaları: **dirsek** (90° dönüş), yönlü **T** ve bilerek seçilen **çapraz** düğüm; kesişen hatlar yanlışlıkla birleşmez
 - Kapak sayfası ve düzenlenebilir antet (firma, logo, proje no, müşteri, hazırlayan, kontrol, tarih, revizyon)
 - `.myge` JSON proje dosyası (`formatVersion` zorunlu)
 - Vektörel PDF (tek sayfa / tüm proje, istenirse farklı kağıt boyutuna ölçekli)
@@ -39,8 +40,9 @@ dotnet run --project src/MYG.Electrical.App
 
 | Tuş | İşlem |
 |---|---|
-| S / L / T / J | Seç / Çizgi / Metin / Junction aracı |
-| R | Seçimi 90° döndür |
+| S / L / T | Seç / Çizgi / Metin aracı |
+| D / J | Dirsek / T bağlantı aracı |
+| R | Seçimi veya yerleştirme önizlemesini 90° döndür |
 | Del | Sil |
 | Ctrl+Z / Ctrl+Y | Geri al / İleri al |
 | Ctrl+C / X / V | Kopyala / Kes / Yapıştır |

@@ -1,5 +1,5 @@
 {
-  "formatVersion": 1,
+  "formatVersion": 2,
   "project": {
     "name": "Demo Makine",
     "company": "MYG TECH",
@@ -14,7 +14,7 @@
   },
   "pages": [
     {
-      "id": "page-5c6d53a4",
+      "id": "page-a6c82567",
       "name": "Kapak",
       "type": "cover",
       "format": "a3",
@@ -25,7 +25,7 @@
       "objects": []
     },
     {
-      "id": "page-6dea5c8e",
+      "id": "page-90cf0abd",
       "name": "Güç Devresi",
       "type": "schematic",
       "format": "a3",
@@ -80,7 +80,7 @@
           "y": 60,
           "rotation": 0,
           "scale": 1,
-          "id": "013333ec-2706-41a4-ac82-8ab00ba84f88"
+          "id": "6f44277b-eea4-49dc-b7e4-b50933d5396c"
         },
         {
           "kind": "device",
@@ -128,7 +128,7 @@
           "y": 110,
           "rotation": 0,
           "scale": 1,
-          "id": "3228229b-68a0-4bd6-b886-92c0a9c361ce"
+          "id": "e951ec25-50d3-4f78-a96a-6d0136c58c09"
         },
         {
           "kind": "device",
@@ -158,7 +158,7 @@
           "y": 170,
           "rotation": 0,
           "scale": 1,
-          "id": "0242b4ad-1eef-4952-a5a1-7de73b2c128f"
+          "id": "dc509fca-c14a-4b5d-b237-c07a4f633a78"
         },
         {
           "kind": "device",
@@ -182,7 +182,7 @@
           "y": 50,
           "rotation": 0,
           "scale": 1,
-          "id": "89ed8048-319f-4597-91de-27e6ce62a77d"
+          "id": "dfcc18f9-76d5-4665-b702-c61851e2db70"
         },
         {
           "kind": "device",
@@ -206,7 +206,7 @@
           "y": 80,
           "rotation": 0,
           "scale": 1,
-          "id": "21d16b07-71a6-4564-a8e8-529b48c34cf5"
+          "id": "83c43284-c1e9-416f-9fbe-e066c50d6568"
         },
         {
           "kind": "device",
@@ -230,15 +230,17 @@
           "y": 110,
           "rotation": 0,
           "scale": 1,
-          "id": "e41cb002-d390-4b26-8590-bd0e09b42dfb"
+          "id": "c29ef2c7-ac5f-4008-aad3-ad6ffbb71289"
         },
         {
           "kind": "junction",
           "x": 250,
           "y": 130,
+          "shape": "tee",
+          "rotation": 270,
           "size": 1.2,
           "visible": true,
-          "id": "31a2d64c-3f87-4c8f-92ba-9dcaf9b94b23"
+          "id": "51ccae7e-ed15-45c1-b4d3-9fa4d728b724"
         },
         {
           "kind": "device",
@@ -262,7 +264,7 @@
           "y": 150,
           "rotation": 0,
           "scale": 1,
-          "id": "a8b37d89-f211-448f-b9af-c5ff640202c8"
+          "id": "547c8b97-5ae2-4d04-985a-bfa3c7321262"
         },
         {
           "kind": "device",
@@ -286,15 +288,17 @@
           "y": 150,
           "rotation": 0,
           "scale": 1,
-          "id": "28669b37-1557-4ae4-bd6b-885f8b363388"
+          "id": "f6769b73-a88c-4538-8c3e-9048d260ad1a"
         },
         {
           "kind": "junction",
           "x": 290,
           "y": 130,
+          "shape": "angle",
+          "rotation": 90,
           "size": 1.2,
           "visible": true,
-          "id": "63b18725-4a74-496b-8113-74006323d04d"
+          "id": "5628e782-73c3-4423-a627-fb32cfc244a1"
         },
         {
           "kind": "device",
@@ -324,7 +328,7 @@
           "y": 110,
           "rotation": 0,
           "scale": 1,
-          "id": "df996eb1-4442-409b-a9a7-2ffdd7dc6702"
+          "id": "b177dabc-3f24-4655-8434-15f2074a03cc"
         },
         {
           "kind": "device",
@@ -348,7 +352,7 @@
           "y": 150,
           "rotation": 0,
           "scale": 1,
-          "id": "843dd4f5-f2ba-455f-9482-f348fc35c636"
+          "id": "4f55e3bf-d183-468a-a0bc-d43fbe96c257"
         },
         {
           "kind": "text",
@@ -357,7 +361,7 @@
           "text": "Güç devresi",
           "height": 4,
           "rotation": 0,
-          "id": "7bf6bb93-85db-4a23-b9da-2a2224f948d5"
+          "id": "9cb9879e-11c5-49d6-a995-00bd7bf71fc9"
         },
         {
           "kind": "text",
@@ -366,7 +370,7 @@
           "text": "Kumanda devresi 24VDC",
           "height": 4,
           "rotation": 0,
-          "id": "fa82c365-e4ed-472b-a7e5-afa3450fb62b"
+          "id": "0abb71cf-6c27-4df0-934c-1ba68bf4ed37"
         },
         {
           "kind": "rectangle",
@@ -375,7 +379,7 @@
           "width": 150,
           "height": 150,
           "thickness": 0.35,
-          "id": "4ff28c9a-e8ee-4113-a49f-0e6902de1d6a"
+          "id": "9ec96033-18b5-47a1-be15-158ec72bbb73"
         }
       ]
     }

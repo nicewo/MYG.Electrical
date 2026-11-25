@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using MYG.Electrical.Core.AutoWire;
 using MYG.Electrical.Core.Editing;
 using MYG.Electrical.Core.Geometry;
 using MYG.Electrical.Core.Model;
@@ -56,6 +57,10 @@ public sealed class DrawingCanvas : FrameworkElement
     private bool _rubberAdditive;
     private Point2D? _shapeStart;
     private Point2D _cursorWorld;
+
+    // Yerleştirme önizlemesi: kullanıcı R ile döndürene kadar junction yönü otomatik önerilir.
+    private double _placementRotation;
+    private bool _manualRotation;
 
     public DrawingCanvas()
     {
@@ -133,6 +138,24 @@ public sealed class DrawingCanvas : FrameworkElement
         }
         _needsFit = false;
         View.FitTo(Session.ActivePage.Bounds, ActualWidth, ActualHeight);
+    }
+
+    /// <summary>Yerleştirilecek sembol/junction önizlemesini 90° döndürür (R tuşu).</summary>
+    public void RotatePlacement()
+    {
+        _placementRotation = CoordinateTransform.NormalizeRotation(EffectivePlacementRotation() + GeometryConstants.RightAngle);
+        _manualRotation = true;
+        RedrawGhost();
+    }
+
+    /// <summary>Junction araçlarında, elle döndürülmediyse çevredeki pinlere göre önerilen yön.</summary>
+    private double EffectivePlacementRotation()
+    {
+        if (_manualRotation || Session is null || ActiveTool.ToJunctionShape() is not { } shape)
+        {
+            return _placementRotation;
+        }
+        return JunctionPlacement.SuggestRotation(Session.ActivePage.Objects, Session.Snap(_cursorWorld), shape, _placementRotation);
     }
 
     /// <summary>Tüm görselleri modelden yeniden üretir.</summary>
@@ -244,6 +267,8 @@ public sealed class DrawingCanvas : FrameworkElement
     private void OnToolChanged()
     {
         _shapeStart = null;
+        _placementRotation = 0;
+        _manualRotation = false;
         Cursor = ActiveTool == EditorTool.Select ? Cursors.Arrow : Cursors.Cross;
         RedrawGhost();
         RedrawOverlay();
@@ -325,13 +350,22 @@ public sealed class DrawingCanvas : FrameworkElement
     private void RedrawGhost()
     {
         using var dc = _ghostVisual.RenderOpen();
-        if (Session is null || _composer is null || ActiveTool != EditorTool.Symbol || PendingSymbol is null || !IsMouseOver)
+        if (Session is null || _composer is null || !IsMouseOver || !ActiveTool.IsPlacementTool())
         {
             return;
         }
         var p = Session.Snap(_cursorWorld);
-        var ghost = PendingSymbol.CreateDevice(p.X, p.Y, string.Empty);
-        _composer.ComposeObject(ghost, new WpfSceneSink(dc), SceneComposerOptions.Editor);
+        DrawingObject? ghost = ActiveTool.ToJunctionShape() is { } shape
+            ? new JunctionObject { X = p.X, Y = p.Y, Shape = shape, Rotation = EffectivePlacementRotation() }
+            : PendingSymbol?.CreateDevice(p.X, p.Y, string.Empty);
+        if (ghost is DeviceObject d)
+        {
+            d.Rotation = _placementRotation;
+        }
+        if (ghost is not null)
+        {
+            _composer.ComposeObject(ghost, new WpfSceneSink(dc), SceneComposerOptions.Editor);
+        }
     }
 
     /// <summary>Seçim çerçeveleri, seçim dikdörtgeni ve araç önizlemeleri (ekran koordinatlarında).</summary>
@@ -354,7 +388,7 @@ public sealed class DrawingCanvas : FrameworkElement
             dc.DrawRectangle(RubberFill, RubberPen, ScreenRect(Rect2D.FromPoints(rs, _cursorWorld), 0));
         }
 
-        if (ActiveTool is (EditorTool.Line or EditorTool.Rectangle or EditorTool.Text or EditorTool.Junction or EditorTool.Symbol) && IsMouseOver)
+        if ((ActiveTool is EditorTool.Line or EditorTool.Rectangle or EditorTool.Text || ActiveTool.IsPlacementTool()) && IsMouseOver)
         {
             var snapped = Session.Snap(_cursorWorld);
             var s = ToScreen(snapped);
@@ -477,12 +511,12 @@ public sealed class DrawingCanvas : FrameworkElement
                 ActiveTool = EditorTool.Select; // metin özellik panelinden düzenlenir
                 break;
 
-            case EditorTool.Junction:
-                session.AddObject(new JunctionObject { X = snapped.X, Y = snapped.Y });
+            case EditorTool.Angle or EditorTool.Tee or EditorTool.Cross:
+                session.PlaceJunction(ActiveTool.ToJunctionShape()!.Value, snapped, EffectivePlacementRotation());
                 break;
 
             case EditorTool.Symbol when PendingSymbol is not null:
-                session.PlaceSymbol(PendingSymbol, snapped);
+                session.PlaceSymbol(PendingSymbol, snapped, _placementRotation);
                 break;
         }
     }
@@ -523,7 +557,7 @@ public sealed class DrawingCanvas : FrameworkElement
             return;
         }
 
-        if (ActiveTool == EditorTool.Symbol)
+        if (ActiveTool.IsPlacementTool())
         {
             RedrawGhost();
         }

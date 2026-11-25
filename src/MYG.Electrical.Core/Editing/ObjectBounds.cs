@@ -14,7 +14,7 @@ public static class ObjectBounds
         LineObject l => Rect2D.FromPoints(l.Start, l.End),
         RectangleObject r => r.Bounds,
         TextObject t => TextBounds(t),
-        JunctionObject j => new Rect2D(j.X - j.Size / 2, j.Y - j.Size / 2, j.Size, j.Size),
+        JunctionObject j => JunctionBounds(j),
         SymbolObject s => SymbolBounds(s, catalog),
         _ => Rect2D.Empty,
     };
@@ -24,6 +24,13 @@ public static class ObjectBounds
         var local = catalog.Find(s.SymbolId)?.LocalBounds
             ?? new Rect2D(-SymbolFallbackHalfSize, -SymbolFallbackHalfSize, 2 * SymbolFallbackHalfSize, 2 * SymbolFallbackHalfSize);
         return CoordinateTransform.TransformBounds(local, s.Position, s.Rotation, s.Scale);
+    }
+
+    /// <summary>Junction: noktanın kendisi + aktif yönlerdeki kısa gösterge çizgileri.</summary>
+    public static Rect2D JunctionBounds(JunctionObject j)
+    {
+        var r = Math.Max(j.Size / 2, Rendering.DrawingStyles.JunctionStubLength / 2);
+        return new Rect2D(j.X - r, j.Y - r, 2 * r, 2 * r);
     }
 
     /// <summary>Metin sınırı tahmini: (X,Y) sol-orta referans noktası.</summary>
@@ -39,7 +46,7 @@ public static class ObjectBounds
     {
         LineObject l => CoordinateTransform.DistanceToSegment(p, l.Start, l.End) <= tolerance + l.Thickness / 2,
         RectangleObject r => HitRectangleOutline(r.Bounds, p, tolerance),
-        JunctionObject j => p.DistanceTo(j.Anchor) <= tolerance + j.Size,
+        JunctionObject j => JunctionBounds(j).Inflate(tolerance).Contains(p),
         _ => Get(obj, catalog).Inflate(tolerance).Contains(p),
     };
 

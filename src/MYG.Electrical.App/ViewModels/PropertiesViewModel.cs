@@ -147,7 +147,12 @@ public sealed class PropertiesViewModel(IDialogService dialogs) : ObservableObje
                 break;
 
             case JunctionObject j:
-                Header = "Bağlantı noktası (junction)";
+                Header = ShapeNames[j.Shape];
+                Rows.Add(new ChoiceRow("Şekil", ShapeNames.Values.ToList(), () => ShapeNames[j.Shape],
+                    v => Set("Şekil", () => j.Shape, x => j.Shape = x, ShapeNames.First(k => k.Value == v).Key)));
+                Rows.Add(new ChoiceRow("Yön (°)", Rotations, () => j.Rotation.ToString(CultureInfo.InvariantCulture),
+                    v => Set("Yön", () => j.Rotation, x => j.Rotation = x, double.Parse(v, CultureInfo.InvariantCulture))));
+                Rows.Add(new TextRow("Bağlantılar", () => DescribeDirections(j), null));
                 Rows.Add(Num("X", () => j.X, v => j.X = v));
                 Rows.Add(Num("Y", () => j.Y, v => j.Y = v));
                 Rows.Add(Num("Boyut", () => j.Size, v => j.Size = Math.Max(0.2, v)));
@@ -165,6 +170,21 @@ public sealed class PropertiesViewModel(IDialogService dialogs) : ObservableObje
             v => _session!.SetProperty(sym, "Dönüş", () => sym.Rotation, x => sym.Rotation = x, double.Parse(v, CultureInfo.InvariantCulture))));
         Rows.Add(num("Ölçek", () => sym.Scale, v => sym.Scale = Math.Clamp(v, 0.1, 10)));
     }
+
+    private static readonly Dictionary<JunctionShape, string> ShapeNames = new()
+    {
+        [JunctionShape.Angle] = "Dirsek",
+        [JunctionShape.Tee] = "T bağlantı",
+        [JunctionShape.Cross] = "Çapraz düğüm",
+    };
+
+    private static string DescribeDirections(JunctionObject j) => string.Join(" ", j.ActiveDirections.Select(d => d switch
+    {
+        PinDirection.Up => "↑",
+        PinDirection.Down => "↓",
+        PinDirection.Left => "←",
+        _ => "→",
+    }));
 
     private static string DescribePin(DeviceObject d, ConnectionPoint p)
     {

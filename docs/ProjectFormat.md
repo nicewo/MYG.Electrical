@@ -4,7 +4,7 @@ UTF-8 JSON, camelCase alan adları, enum değerleri metin. Uzantı: `.myge`.
 
 ```json
 {
-  "formatVersion": 1,
+  "formatVersion": 2,
   "project": {
     "name": "Machine01",
     "company": "MYG TECH",
@@ -36,7 +36,7 @@ UTF-8 JSON, camelCase alan adları, enum değerleri metin. Uzantı: `.myge`.
           "reference": "-K1",
           "connectionPoints": [ { "id": "1", "x": -10, "y": -10, "direction": "up" } ]
         },
-        { "kind": "junction", "id": "…", "x": 50, "y": 40, "size": 1.2, "visible": true },
+        { "kind": "junction", "id": "…", "x": 50, "y": 40, "shape": "tee", "rotation": 270, "size": 1.2, "visible": true },
         { "kind": "line", "id": "…", "x1": 0, "y1": 0, "x2": 10, "y2": 0, "thickness": 0.35 },
         { "kind": "rectangle", "id": "…", "x": 10, "y": 10, "width": 30, "height": 20, "thickness": 0.35 },
         { "kind": "text", "id": "…", "x": 5, "y": 5, "text": "Metin", "height": 3.5, "rotation": 0 },
@@ -59,6 +59,13 @@ UTF-8 JSON, camelCase alan adları, enum değerleri metin. Uzantı: `.myge`.
 - `titleBlock` sayfaya özel antet değerleridir; boş alanlar proje değerini kullanır.
 - Hesaplanan (salt okunur) özellikler yazılmaz; okurken alan adları büyük/küçük harf duyarsızdır.
 - Kayıt önce geçici dosyaya yazılır, sonra asıl dosyanın yerine taşınır (yarım kayıt eski dosyayı bozmaz).
+
+## Sürüm geçmişi
+
+| Sürüm | Değişiklik |
+|---|---|
+| 1 | İlk format. Junction'lar her zaman 4 yönlü. |
+| 2 | Junction'a `shape` (`angle`/`tee`/`cross`) ve `rotation` eklendi. v1 dosyalardaki junction'lar açılırken `cross` olarak yükseltilir (eski davranış korunur). |
 
 ## Sürüm yükseltme
 

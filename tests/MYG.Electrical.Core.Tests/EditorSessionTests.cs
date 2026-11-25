@@ -212,4 +212,25 @@ public class EditorSessionTests
         s.Undo();
         Assert.Equal("MYG TECH", s.Document.Project.Company);
     }
+
+    [Fact]
+    public void Placed_angle_can_be_rotated_and_rewires()
+    {
+        var s = NewSession();
+        var coil = BuiltInSymbolLibrary.Instance.Find(SymbolIds.Coil)!;
+        var lower = s.PlaceSymbol(coil, new Point2D(50, 100));
+        var turned = s.PlaceSymbol(coil, new Point2D(100, 100), rotation: 90);
+        var corner = s.PlaceJunction(JunctionShape.Angle, new Point2D(50, 50), rotation: 0); // ┌ Sağ + Aşağı
+        Assert.Equal(PinDirection.Right, turned.GetGlobalPins().First(p => p.PinId == "A1").Direction);
+
+        // ┌ : yalnızca aşağıdaki bobinin A1 pini (yukarı bakan) bağlanır
+        Assert.Single(s.Wires);
+        Assert.True(s.Wires.Single().Involves(lower.Id));
+
+        s.Select(corner);
+        s.RotateSelection();
+        Assert.Equal(90, corner.Rotation);
+        s.Undo();
+        Assert.Equal(0, corner.Rotation);
+    }
 }

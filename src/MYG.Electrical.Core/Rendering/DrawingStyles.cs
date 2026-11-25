@@ -20,6 +20,9 @@ public static class DrawingStyles
     public const double PinTextHeight = 2.0;
     public const double PinMarkerSize = 0.6;
 
+    /// <summary>Editörde junction yönlerini gösteren kısa çizgilerin uzunluğu (mm).</summary>
+    public const double JunctionStubLength = 2.5;
+
     public static readonly StrokeStyle Symbol = new(Black, SymbolLine);
     public static readonly StrokeStyle Wire = new(WireColor, WireLine);
     public static readonly StrokeStyle Frame = new(Black, FrameLine);

@@ -57,7 +57,7 @@ public static class ProjectSerializer
             throw new ProjectFormatException($"Geçersiz format sürümü: {version}.");
         }
 
-        // Sürüm 1 güncel formattır; ileride eski sürümler için dönüşüm adımları burada uygulanır.
+        Migrate(obj, version);
 
         try
         {
@@ -71,4 +71,24 @@ public static class ProjectSerializer
             throw new ProjectFormatException($"Proje dosyası okunamadı: {ex.Message}", ex);
         }
     }
+
+    /// <summary>Eski format sürümlerini, nesneye çevirmeden önce JSON ağacı üzerinde güncel sürüme yükseltir.</summary>
+    private static void Migrate(JsonObject root, int fromVersion)
+    {
+        if (fromVersion < 2)
+        {
+            // v1'de junction'lar her zaman 4 yönlüydü: anlam korunsun diye "cross" olarak işaretlenir.
+            foreach (var junction in EnumerateObjects(root).Where(o => (string?)o["kind"] == "junction"))
+            {
+                junction["shape"] ??= "cross";
+                junction["rotation"] ??= 0;
+            }
+        }
+        root[FormatVersionProperty] = ProjectDocument.CurrentFormatVersion;
+    }
+
+    private static IEnumerable<JsonObject> EnumerateObjects(JsonObject root) =>
+        (root["pages"] as JsonArray ?? [])
+            .OfType<JsonObject>()
+            .SelectMany(page => (page["objects"] as JsonArray ?? []).OfType<JsonObject>());
 }

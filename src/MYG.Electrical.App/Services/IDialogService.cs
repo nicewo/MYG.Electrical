@@ -21,4 +21,7 @@ public interface ICanvasController
     void ZoomOut();
     void ZoomToFit();
     void RefreshAll();
+
+    /// <summary>Yerleştirme önizlemesini 90° döndürür.</summary>
+    void RotatePlacement();
 }

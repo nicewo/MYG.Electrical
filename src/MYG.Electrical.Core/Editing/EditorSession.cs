@@ -218,12 +218,20 @@ public sealed class EditorSession
         }
     }
 
-    public DeviceObject PlaceSymbol(SymbolDefinition symbol, Point2D position)
+    public DeviceObject PlaceSymbol(SymbolDefinition symbol, Point2D position, double rotation = 0)
     {
         var reference = ReferenceGenerator.Next(symbol.ReferencePrefix, Document.Pages);
         var device = symbol.CreateDevice(position.X, position.Y, reference);
+        device.Rotation = rotation;
         AddObject(device);
         return device;
+    }
+
+    public JunctionObject PlaceJunction(JunctionShape shape, Point2D position, double rotation = 0)
+    {
+        var junction = new JunctionObject { X = position.X, Y = position.Y, Shape = shape, Rotation = rotation };
+        AddObject(junction);
+        return junction;
     }
 
     public void DeleteSelection()

@@ -11,6 +11,11 @@
 - [x] `.myge` JSON kaydet/aç, çok sayfa yönetimi
 - [x] Kapak sayfası, düzenlenebilir antet, vektörel çok sayfalı PDF
 
+## V0.2 (devam ediyor)
+
+- [x] Dirsek, yönlü T ve çapraz bağlantı noktaları; yerleştirirken otomatik yön önerisi (format v2)
+- [x] Sembol ve junction'ı yerleştirmeden önce R ile döndürme
+
 ## V0.2 adayları
 
 - [ ] Kablo yönlendirme: L/Z (90°) bağlantılar, potansiyel/kablo numaraları

@@ -3,7 +3,10 @@ namespace MYG.Electrical.Core.Pages;
 /// <summary>.myge dosyasının kök nesnesi.</summary>
 public sealed class ProjectDocument
 {
-    public const int CurrentFormatVersion = 1;
+    /// <summary>
+    /// Format sürümü. 1: ilk sürüm (junction'lar 4 yollu). 2: junction şekli (dirsek/T/çapraz) ve yönü eklendi.
+    /// </summary>
+    public const int CurrentFormatVersion = 2;
     public const string FileExtension = ".myge";
 
     public int FormatVersion { get; set; } = CurrentFormatVersion;

@@ -30,10 +30,7 @@ public sealed class SceneComposer(ISymbolCatalog catalog)
                 sink.DrawText(t.Text, t.Anchor, t.Height, DrawingStyles.Black);
                 break;
             case JunctionObject j:
-                if (j.Visible)
-                {
-                    sink.DrawEllipse(j.Anchor, j.Size / 2, j.Size / 2, null, DrawingStyles.Black);
-                }
+                ComposeJunction(j, sink, options);
                 break;
             case DeviceObject d:
                 ComposeSymbol(d, sink);
@@ -50,6 +47,30 @@ public sealed class SceneComposer(ISymbolCatalog catalog)
         foreach (var o in objects)
         {
             ComposeObject(o, sink, options);
+        }
+    }
+
+    private static void ComposeJunction(JunctionObject j, ISceneSink sink, SceneComposerOptions options)
+    {
+        if (options.ShowConnectionPoints)
+        {
+            // Yalnızca editörde: hangi yönlere bağlantı yapılabildiğini gösteren kısa çizgiler
+            var stub = new StrokeStyle(DrawingStyles.PinMarker, DrawingStyles.ThinLine);
+            foreach (var d in j.ActiveDirections)
+            {
+                var end = d switch
+                {
+                    PinDirection.Left => new Point2D(-DrawingStyles.JunctionStubLength, 0),
+                    PinDirection.Right => new Point2D(DrawingStyles.JunctionStubLength, 0),
+                    PinDirection.Up => new Point2D(0, -DrawingStyles.JunctionStubLength),
+                    _ => new Point2D(0, DrawingStyles.JunctionStubLength),
+                };
+                sink.DrawLine(j.Anchor, j.Anchor + end, stub);
+            }
+        }
+        if (j.ShowsDot)
+        {
+            sink.DrawEllipse(j.Anchor, j.Size / 2, j.Size / 2, null, DrawingStyles.Black);
         }
     }
 

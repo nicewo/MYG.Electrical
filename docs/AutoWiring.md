@@ -25,16 +25,35 @@ K1 ─R      L─ K2 (sağ pini yok)      L─ K3
 - K2.L için en yakın uygun pin K1.R → **karşılıklı** → bağlanır.
 - K3.L için en yakın uygun (sağa bakan) pin K1.R'dir, ama K1.R'nin en yakını K2.L olduğu için eşleşme karşılıklı değildir → **K3.L boşta kalır**. K1–K3 arasında asla çizgi çizilmez.
 
-## Junction
+## Bağlantı noktaları: dirsek, T, çapraz
 
-`JunctionObject` aynı noktada dört yöne (`Left`, `Right`, `Up`, `Down`) bakan sanal pinlere sahiptir. Böylece
-T ve dörtlü bağlantılar ayrı bir kural gerektirmeden aynı algoritmayla çözülür:
+`JunctionObject` yalnızca **şekline ve yönüne göre aktif olan yönlerde** sanal pin üretir. Böylece aynı
+noktada kesişen ama elektriksel olarak ayrı olan hatlar yanlışlıkla birleşmez.
+
+| Şekil | Yön 0° | 90° | 180° | 270° | Nokta |
+|---|---|---|---|---|---|
+| **Dirsek** (`angle`) | ┌ Sağ+Aşağı | ┐ Aşağı+Sol | ┘ Sol+Yukarı | └ Yukarı+Sağ | Çizilmez |
+| **T** (`tee`) | ┬ Sol+Sağ+Aşağı | ┤ Yukarı+Aşağı+Sol | ┴ Sol+Sağ+Yukarı | ├ Yukarı+Aşağı+Sağ | Çizilir |
+| **Çapraz** (`cross`) | ┼ dört yön | – | – | – | Çizilir |
 
 ```
-L1 ─────●───── L2
-        │
-        M
+   A ──┐          L ───┬─── R         ─── kesişme ───
+       │               │                 noktası yoksa
+       B               D                 hatlar ayrı kalır
+ (dirsek 90°)     (T 0°, yukarısı açık)
 ```
+
+- **Dirsek** kablonun 90° dönmesini sağlar; EPLAN'daki gibi nokta çizilmez.
+- **T**'nin kapalı tarafındaki pinler bağlanmaz; o yönden gelen hat T'yi "görmez".
+- **Çapraz** kesişen yatay ve dikey hattı birleştirir. Otomatik önerilmez, yalnızca bilerek seçilir.
+- Junction yoksa kesişen yatay ve dikey kablolar birbirinden bağımsızdır.
+
+### Yerleştirme
+
+Dirsek (**D**) veya T (**J**) aracı seçiliyken önizleme, imleç noktasında hangi yönlerde karşıya bakan pin
+olduğuna göre **en uygun yönü otomatik önerir** (`JunctionPlacement.SuggestRotation`). **R** ile elle
+döndürülür; elle döndürüldükten sonra otomatik öneri o araç için kapanır. Yerleştirilmiş junction seçilip
+**R** ile döndürülebilir, şekli ve yönü sağ panelden değiştirilebilir.
 
 ## Yönlendirme
 
@@ -58,4 +77,4 @@ Karmaşıklık: sıralama `O(n log n)` + küme içi `O(k²)`. 400 cihazlık (800
 ## Testler
 
 `tests/MYG.Electrical.Core.Tests/AutoWireEngineTests.cs` şartnamedeki 10 zorunlu senaryoyu ve ek olarak
-T/dörtlü junction, bara zinciri, aynı cihaz pinleri, kontaktör–motor 3 faz ve performans testlerini içerir.
+dirsek, T'nin kapalı tarafı, kesişen hatlar, çapraz düğüm, varyant tablosu, yön önerisi, bara zinciri, aynı cihaz pinleri, kontaktör–motor 3 faz ve performans testlerini içerir.

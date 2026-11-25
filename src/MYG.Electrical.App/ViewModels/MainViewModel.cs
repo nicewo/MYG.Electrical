@@ -66,7 +66,7 @@ public sealed class MainViewModel : ObservableObject
         CutCommand = new RelayCommand(() => { Session.CopySelection(); Session.DeleteSelection(); }, HasSelection);
         PasteCommand = new RelayCommand(() => Session.Paste(), () => Session.CanPaste);
         SelectAllCommand = new RelayCommand(() => Session.SelectAll());
-        RotateCommand = new RelayCommand(() => Session.RotateSelection(), HasSelection);
+        RotateCommand = new RelayCommand(Rotate, () => ActiveTool.IsPlacementTool() || HasSelection());
         ZoomInCommand = new RelayCommand(() => Canvas?.ZoomIn());
         ZoomOutCommand = new RelayCommand(() => Canvas?.ZoomOut());
         ZoomFitCommand = new RelayCommand(() => Canvas?.ZoomToFit());
@@ -422,6 +422,19 @@ public sealed class MainViewModel : ObservableObject
         Process.Start(new ProcessStartInfo(LogSetup.LogDirectory) { UseShellExecute = true });
     }
 
+    /// <summary>R: yerleştirme aracındaysa önizlemeyi, değilse seçimi döndürür.</summary>
+    private void Rotate()
+    {
+        if (ActiveTool.IsPlacementTool())
+        {
+            Canvas?.RotatePlacement();
+        }
+        else
+        {
+            Session.RotateSelection();
+        }
+    }
+
     private bool HasSelection() => Session.SelectedObjects.Count > 0;
 
     // ---------- Oturum bağlama ----------
@@ -483,8 +496,10 @@ public sealed class MainViewModel : ObservableObject
         EditorTool.Line => "Çizgi: başlangıç ve bitiş noktasına tıklayın (Esc: iptal)",
         EditorTool.Rectangle => "Dikdörtgen: iki köşeye tıklayın (Esc: iptal)",
         EditorTool.Text => "Metin: yerleştirmek için tıklayın, içeriği sağ panelden düzenleyin",
-        EditorTool.Symbol => "Sembol: yerleştirmek için tıklayın (sağ tık / Esc: bitir)",
-        EditorTool.Junction => "Bağlantı noktası: hizalı pinler arasına yerleştirin",
+        EditorTool.Symbol => "Sembol: tıklayarak yerleştirin · R: döndür · sağ tık / Esc: bitir",
+        EditorTool.Angle => "Dirsek: 90° dönüş noktası · yön otomatik önerilir, R ile değiştirin",
+        EditorTool.Tee => "T bağlantı: 3 yollu düğüm · yön otomatik önerilir, R ile değiştirin",
+        EditorTool.Cross => "Çapraz düğüm: kesişen yatay ve dikey hattı BİRLEŞTİRİR · yalnızca gerçekten bağlıysa kullanın",
         _ => "Seç: tıkla / sürükle · Ctrl+tık çoklu seçim · R döndür · Del sil",
     };
 }

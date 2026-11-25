@@ -8,5 +8,28 @@ public enum EditorTool
     Rectangle,
     Text,
     Symbol,
-    Junction,
+
+    /// <summary>Dirsek (90° dönüş) bağlantı noktası.</summary>
+    Angle,
+
+    /// <summary>T bağlantı noktası (3 yön).</summary>
+    Tee,
+
+    /// <summary>Çapraz düğüm (4 yön) — yalnızca bilerek seçildiğinde.</summary>
+    Cross,
+}
+
+public static class EditorToolExtensions
+{
+    /// <summary>Tıklayınca nesne yerleştiren (önizlemesi olan) araçlar.</summary>
+    public static bool IsPlacementTool(this EditorTool tool) =>
+        tool is EditorTool.Symbol or EditorTool.Angle or EditorTool.Tee or EditorTool.Cross;
+
+    public static Core.Model.JunctionShape? ToJunctionShape(this EditorTool tool) => tool switch
+    {
+        EditorTool.Angle => Core.Model.JunctionShape.Angle,
+        EditorTool.Tee => Core.Model.JunctionShape.Tee,
+        EditorTool.Cross => Core.Model.JunctionShape.Cross,
+        _ => null,
+    };
 }

@@ -109,7 +109,7 @@
                 <MenuItem Header="Sil" Command="{Binding DeleteCommand}" InputGestureText="Del" />
                 <Separator />
                 <MenuItem Header="Tümünü seç" Command="{Binding SelectAllCommand}" InputGestureText="Ctrl+A" />
-                <MenuItem Header="Döndür (90°)" Command="{Binding RotateCommand}" InputGestureText="R" />
+                <MenuItem Header="Döndür 90° (seçim / yerleştirme önizlemesi)" Command="{Binding RotateCommand}" InputGestureText="R" />
             </MenuItem>
             <MenuItem Header="_Görünüm">
                 <MenuItem Header="Yakınlaştır" Command="{Binding ZoomInCommand}" InputGestureText="Ctrl++" />
@@ -122,7 +122,9 @@
             </MenuItem>
             <MenuItem Header="_Ekle">
                 <MenuItem Header="Sembol (kütüphaneden seçin)" Command="{Binding SetToolCommand}" CommandParameter="Symbol" />
-                <MenuItem Header="Bağlantı noktası (junction)" Command="{Binding SetToolCommand}" CommandParameter="Junction" InputGestureText="J" />
+                <MenuItem Header="Dirsek (90° dönüş)" Command="{Binding SetToolCommand}" CommandParameter="Angle" InputGestureText="D" />
+                <MenuItem Header="T bağlantı" Command="{Binding SetToolCommand}" CommandParameter="Tee" InputGestureText="J" />
+                <MenuItem Header="Çapraz düğüm (4 yollu)" Command="{Binding SetToolCommand}" CommandParameter="Cross" />
                 <MenuItem Header="Metin" Command="{Binding SetToolCommand}" CommandParameter="Text" InputGestureText="T" />
             </MenuItem>
             <MenuItem Header="Çi_zim">
@@ -172,10 +174,19 @@
                               IsChecked="{Binding ActiveTool, Converter={StaticResource EnumEquals}, ConverterParameter=Symbol}">
                     <Path Style="{StaticResource ToolIcon}" Data="M7,0 V4 M3,4 H11 V10 H3 Z M7,10 V14" />
                 </ToggleButton>
-                <ToggleButton Style="{StaticResource ToolToggle}" ToolTip="Bağlantı noktası ekle (J)"
-                              IsChecked="{Binding ActiveTool, Converter={StaticResource EnumEquals}, ConverterParameter=Junction}">
+                <ToggleButton Style="{StaticResource ToolToggle}" ToolTip="Dirsek — 90° dönüş noktası (D) · R: yön"
+                              IsChecked="{Binding ActiveTool, Converter={StaticResource EnumEquals}, ConverterParameter=Angle}">
+                    <Path Style="{StaticResource ToolIcon}" Data="M7,14 V7 H14" />
+                </ToggleButton>
+                <ToggleButton Style="{StaticResource ToolToggle}" ToolTip="T bağlantı — 3 yollu düğüm (J) · R: yön"
+                              IsChecked="{Binding ActiveTool, Converter={StaticResource EnumEquals}, ConverterParameter=Tee}">
                     <Path Style="{StaticResource ToolIcon}" Fill="{Binding Stroke, RelativeSource={RelativeSource Self}}"
-                          Data="M0,7 H14 M7,7 V14 M5,7 A2,2 0 1 1 9,7 A2,2 0 1 1 5,7 Z" />
+                          Data="M0,5 H14 M7,5 V14 M5.5,5 A1.5,1.5 0 1 1 8.5,5 A1.5,1.5 0 1 1 5.5,5 Z" />
+                </ToggleButton>
+                <ToggleButton Style="{StaticResource ToolToggle}" ToolTip="Çapraz düğüm — 4 yollu, kesişen hatları birleştirir"
+                              IsChecked="{Binding ActiveTool, Converter={StaticResource EnumEquals}, ConverterParameter=Cross}">
+                    <Path Style="{StaticResource ToolIcon}" Fill="{Binding Stroke, RelativeSource={RelativeSource Self}}"
+                          Data="M0,7 H14 M7,0 V14 M5.5,7 A1.5,1.5 0 1 1 8.5,7 A1.5,1.5 0 1 1 5.5,7 Z" />
                 </ToggleButton>
 
                 <Rectangle Width="1" Margin="6,4" Fill="{StaticResource BorderBrush}" />
@@ -329,7 +340,8 @@
                         <KeyBinding Key="S" Command="{Binding SetToolCommand}" CommandParameter="Select" />
                         <KeyBinding Key="L" Command="{Binding SetToolCommand}" CommandParameter="Line" />
                         <KeyBinding Key="T" Command="{Binding SetToolCommand}" CommandParameter="Text" />
-                        <KeyBinding Key="J" Command="{Binding SetToolCommand}" CommandParameter="Junction" />
+                        <KeyBinding Key="J" Command="{Binding SetToolCommand}" CommandParameter="Tee" />
+                        <KeyBinding Key="D" Command="{Binding SetToolCommand}" CommandParameter="Angle" />
                     </draw:DrawingCanvas.InputBindings>
                 </draw:DrawingCanvas>
             </Border>

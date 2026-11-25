@@ -213,7 +213,7 @@ public class AutoWireEngineTests
     public void Removing_junction_removes_its_wires()
     {
         var a = WithPin("A", 0, 0, PinDirection.Right);
-        var j = new JunctionObject { X = 20, Y = 0 };
+        var j = new JunctionObject { X = 20, Y = 0, Shape = JunctionShape.Angle, Rotation = 90 }; // ┐ (Sol + Aşağı)
         var below = WithPin("B", 20, 30, PinDirection.Up);
         var objects = new List<DrawingObject> { a, j, below };
         Assert.Equal(2, _engine.Compute(objects).Count);
@@ -267,9 +267,9 @@ public class AutoWireEngineTests
     }
 
     [Fact]
-    public void Junction_supports_four_way_connection()
+    public void Cross_junction_supports_four_way_connection()
     {
-        var j = new JunctionObject { X = 50, Y = 50 };
+        var j = new JunctionObject { X = 50, Y = 50, Shape = JunctionShape.Cross };
         DrawingObject[] objects =
         [
             j,
@@ -342,5 +342,146 @@ public class AutoWireEngineTests
 
         Assert.Equal(40 * 9, wires.Count);
         Assert.True(sw.ElapsedMilliseconds < 200, $"{sw.ElapsedMilliseconds} ms");
+    }
+
+    // ---------- Dirsek / T / çapraz ----------
+
+    [Fact]
+    public void Angle_turns_wire_90_degrees()
+    {
+        //  A ──┐
+        //      │
+        //      B
+        var a = WithPin("A", 0, 0, PinDirection.Right);
+        var corner = new JunctionObject { X = 20, Y = 0, Shape = JunctionShape.Angle, Rotation = 90 };
+        var b = WithPin("B", 20, 30, PinDirection.Up);
+
+        var wires = _engine.Compute([a, corner, b]);
+
+        Assert.Equal(2, wires.Count);
+        Assert.True(Connected(wires, a, corner));
+        Assert.True(Connected(wires, corner, b));
+        Assert.Contains(wires, w => w.IsHorizontal);
+        Assert.Contains(wires, w => !w.IsHorizontal);
+    }
+
+    [Fact]
+    public void Angle_ignores_its_inactive_directions()
+    {
+        // Dirsek ┐ (Sol + Aşağı): sağındaki ve üstündeki pinler bağlanmamalı.
+        var a = WithPin("A", 0, 0, PinDirection.Right);
+        var corner = new JunctionObject { X = 20, Y = 0, Shape = JunctionShape.Angle, Rotation = 90 };
+        var b = WithPin("B", 20, 30, PinDirection.Up);
+        var right = WithPin("R", 40, 0, PinDirection.Left);
+        var above = WithPin("U", 20, -30, PinDirection.Down);
+
+        var wires = _engine.Compute([a, corner, b, right, above]);
+
+        Assert.Equal(2, wires.Count);
+        Assert.DoesNotContain(wires, w => w.Involves(right.Id));
+        Assert.DoesNotContain(wires, w => w.Involves(above.Id));
+    }
+
+    [Fact]
+    public void Tee_does_not_join_the_crossing_vertical_line_on_its_open_side()
+    {
+        //        U (üstteki hat T'ye bağlanmamalı)
+        //  L ────┬──── R
+        //        D
+        var left = WithPin("L", 0, 0, PinDirection.Right);
+        var right = WithPin("R", 40, 0, PinDirection.Left);
+        var tee = new JunctionObject { X = 20, Y = 0, Shape = JunctionShape.Tee }; // ┬
+        var down = WithPin("D", 20, 30, PinDirection.Up);
+        var up = WithPin("U", 20, -30, PinDirection.Down);
+
+        var wires = _engine.Compute([left, right, tee, down, up]);
+
+        Assert.Equal(3, wires.Count);
+        Assert.True(Connected(wires, tee, down));
+        Assert.DoesNotContain(wires, w => w.Involves(up.Id));
+    }
+
+    [Fact]
+    public void Crossing_lines_without_junction_stay_separate()
+    {
+        var a = WithPin("A", 0, 0, PinDirection.Right);
+        var b = WithPin("B", 40, 0, PinDirection.Left);
+        var c = WithPin("C", 20, -20, PinDirection.Down);
+        var e = WithPin("E", 20, 20, PinDirection.Up);
+
+        var wires = _engine.Compute([a, b, c, e]);
+
+        Assert.Equal(2, wires.Count);
+        Assert.True(Connected(wires, a, b));
+        Assert.True(Connected(wires, c, e));
+    }
+
+    [Fact]
+    public void Cross_junction_joins_crossing_lines_only_when_chosen_explicitly()
+    {
+        var a = WithPin("A", 0, 0, PinDirection.Right);
+        var b = WithPin("B", 40, 0, PinDirection.Left);
+        var c = WithPin("C", 20, -20, PinDirection.Down);
+        var e = WithPin("E", 20, 20, PinDirection.Up);
+        var cross = new JunctionObject { X = 20, Y = 0, Shape = JunctionShape.Cross };
+
+        var wires = _engine.Compute([a, b, c, e, cross]);
+
+        Assert.Equal(4, wires.Count);
+        Assert.All(wires, w => Assert.True(w.Involves(cross.Id)));
+    }
+
+    [Theory]
+    [InlineData(JunctionShape.Angle, 0, "Right,Down")]
+    [InlineData(JunctionShape.Angle, 90, "Down,Left")]
+    [InlineData(JunctionShape.Angle, 180, "Left,Up")]
+    [InlineData(JunctionShape.Angle, 270, "Up,Right")]
+    [InlineData(JunctionShape.Tee, 0, "Left,Right,Down")]
+    [InlineData(JunctionShape.Tee, 90, "Up,Down,Left")]
+    [InlineData(JunctionShape.Tee, 180, "Right,Left,Up")]
+    [InlineData(JunctionShape.Tee, 270, "Down,Up,Right")]
+    [InlineData(JunctionShape.Cross, 0, "Left,Right,Up,Down")]
+    public void Junction_variants_have_expected_directions(JunctionShape shape, double rotation, string expected)
+    {
+        var j = new JunctionObject { Shape = shape, Rotation = rotation };
+        var expectedSet = expected.Split(',').Select(Enum.Parse<PinDirection>).ToHashSet();
+
+        Assert.True(expectedSet.SetEquals(j.ActiveDirections));
+        Assert.Equal((shape, CoordinateTransformRotation(rotation)), JunctionObject.FromDirections(expectedSet));
+    }
+
+    private static double CoordinateTransformRotation(double r) => Geometry.CoordinateTransform.NormalizeRotation(r);
+
+    [Fact]
+    public void Rotating_junction_cycles_its_variant()
+    {
+        var j = new JunctionObject { Shape = JunctionShape.Angle };
+        ((IRotatable)j).Rotation += 90;
+        ((IRotatable)j).Rotation += 90;
+        ((IRotatable)j).Rotation += 90;
+        ((IRotatable)j).Rotation += 90;
+        Assert.Equal(0, j.Rotation);
+    }
+
+    [Fact]
+    public void Placement_suggests_angle_orientation_from_neighbouring_pins()
+    {
+        var a = WithPin("A", 0, 0, PinDirection.Right);   // solda, sağa bakıyor
+        var b = WithPin("B", 20, 30, PinDirection.Up);    // altta, yukarı bakıyor
+
+        var rot = JunctionPlacement.SuggestRotation([a, b], new Geometry.Point2D(20, 0), JunctionShape.Angle, 0);
+
+        Assert.Equal(90, rot); // ┐
+    }
+
+    [Fact]
+    public void Placement_suggests_tee_orientation_and_keeps_current_when_nothing_around()
+    {
+        var left = WithPin("L", 0, 50, PinDirection.Right);
+        var right = WithPin("R", 40, 50, PinDirection.Left);
+        var up = WithPin("U", 20, 20, PinDirection.Down);
+
+        Assert.Equal(180, JunctionPlacement.SuggestRotation([left, right, up], new Geometry.Point2D(20, 50), JunctionShape.Tee, 0)); // ┴
+        Assert.Equal(270, JunctionPlacement.SuggestRotation([], new Geometry.Point2D(0, 0), JunctionShape.Tee, 270));
     }
 }

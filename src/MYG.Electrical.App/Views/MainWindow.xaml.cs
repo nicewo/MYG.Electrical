@@ -28,6 +28,7 @@ public partial class MainWindow : Window, ICanvasController
     public void ZoomOut() => Canvas.ZoomOut();
     public void ZoomToFit() => Canvas.ZoomToFit();
     public void RefreshAll() => Canvas.RefreshAll();
+    public void RotatePlacement() => Canvas.RotatePlacement();
 
     protected override void OnClosing(CancelEventArgs e)
     {
