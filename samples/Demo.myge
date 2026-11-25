@@ -1,5 +1,5 @@
 {
-  "formatVersion": 2,
+  "formatVersion": 3,
   "project": {
     "name": "Demo Makine",
     "company": "MYG TECH",
@@ -383,5 +383,6 @@
         }
       ]
     }
-  ]
+  ],
+  "resources": []
 }
