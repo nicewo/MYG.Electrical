@@ -36,6 +36,12 @@ public sealed class DeviceRecord
 
     public string Notes { get; set; } = string.Empty;
 
+    /// <summary>Oluşturulduğu cihaz kütüphanesi kaydının kimliği (yoksa boş).</summary>
+    public string TemplateId { get; set; } = string.Empty;
+
+    /// <summary>Cihazın kontak kapasitesi (şablondan). Boşsa kapasite bilinmiyor; kullanılan kontaklar yine listelenir.</summary>
+    public List<ContactSlot> Contacts { get; set; } = [];
+
     /// <summary>Üretici/model gibi ticari bilgilerin hiçbiri girilmemiş mi (DRC "eksik bilgi").</summary>
     public bool HasCommercialData => Manufacturer.Length > 0 || Model.Length > 0 || OrderNumber.Length > 0;
 
@@ -52,5 +58,7 @@ public sealed class DeviceRecord
         LibraryVersion = LibraryVersion,
         Properties = new Dictionary<string, string>(Properties),
         Notes = Notes,
+        TemplateId = TemplateId,
+        Contacts = Contacts.Select(c => c.Clone()).ToList(),
     };
 }

@@ -83,3 +83,35 @@ public static class ConnectorGeometry
     public const double CrossReferenceHeight = 2.5;
     public const double WireNumberHeight = 2.2;
 }
+
+/// <summary>Renk şemasının düzenlenebilir alanları (ayar penceresi ve ayar dosyası için).</summary>
+public static class ColorSchemeProperties
+{
+    public sealed record Entry(string Name, string Label, Func<ColorScheme, uint> Get, Func<ColorScheme, uint, ColorScheme> Set);
+
+    public static IReadOnlyList<Entry> All { get; } =
+    [
+        new("L1", "L1 fazı", s => s.L1, (s, c) => s with { L1 = c }),
+        new("L2", "L2 fazı", s => s.L2, (s, c) => s with { L2 = c }),
+        new("L3", "L3 fazı", s => s.L3, (s, c) => s with { L3 = c }),
+        new("N", "Nötr (N)", s => s.N, (s, c) => s with { N = c }),
+        new("PE", "Koruma toprağı (PE)", s => s.PE, (s, c) => s with { PE = c }),
+        new("DcPositive", "DC + (+24V)", s => s.DcPositive, (s, c) => s with { DcPositive = c }),
+        new("DcNegative", "DC − (0V)", s => s.DcNegative, (s, c) => s with { DcNegative = c }),
+        new("Signal", "Sinyal", s => s.Signal, (s, c) => s with { Signal = c }),
+        new("Communication", "Haberleşme", s => s.Communication, (s, c) => s with { Communication = c }),
+        new("Wire", "Potansiyelsiz kablo", s => s.Wire, (s, c) => s with { Wire = c }),
+        new("Symbol", "Semboller", s => s.Symbol, (s, c) => s with { Symbol = c }),
+        new("Frame", "Çerçeve ve antet", s => s.Frame, (s, c) => s with { Frame = c }),
+        new("Text", "Metin", s => s.Text, (s, c) => s with { Text = c }),
+        new("Selection", "Seçim", s => s.Selection, (s, c) => s with { Selection = c }),
+        new("Error", "Hata (DRC)", s => s.Error, (s, c) => s with { Error = c }),
+    ];
+
+    public static bool TrySet(ColorScheme scheme, string name, uint color, out ColorScheme updated)
+    {
+        var e = All.FirstOrDefault(x => string.Equals(x.Name, name, StringComparison.OrdinalIgnoreCase));
+        updated = e is null ? scheme : e.Set(scheme, color);
+        return e is not null;
+    }
+}

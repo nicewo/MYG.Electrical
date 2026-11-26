@@ -48,10 +48,17 @@ public partial class App : Application
         {
             _log.Warning("Sembol kütüphanesi: {Warning}", warning);
         }
+        var settings = new AppSettingsService(_log);
+        var devices = BuiltInDeviceLibrary.Create(catalog, Path.Combine(AppSettingsService.AppDataFolder, "Devices"));
+        _log.Information("Cihaz kütüphanesi: {Count} cihaz", devices.All.Count);
+        foreach (var warning in devices.Warnings)
+        {
+            _log.Warning("Cihaz kütüphanesi: {Warning}", warning);
+        }
         var dialogs = new DialogService();
         var updates = new UpdateService(_log);
         var shell = new ShellService(_log, dialogs);
-        var vm = new MainViewModel(dialogs, new ProjectFileService(_log), new PdfExporter(catalog, _log), _log, catalog, updates, shell);
+        var vm = new MainViewModel(dialogs, new ProjectFileService(_log), new PdfExporter(catalog, _log), _log, catalog, updates, shell, devices, settings);
         var window = new MainWindow(vm);
         MainWindow = window;
         window.Show();

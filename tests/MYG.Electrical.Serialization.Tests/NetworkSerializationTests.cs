@@ -21,7 +21,11 @@ public class NetworkSerializationTests
         var link = new PageLinkObject { X = 100, Y = 100, Rotation = 90, Name = "24V-A", Description = "Sayfa 3'e" };
         page.Objects.AddRange([pot, fuse, link]);
         page.WireData.Add(new WireData { A = pot.Pin.Ref, B = new PinRef(fuse.Id, "1"), Number = "+24V", Color = "RD", CrossSection = "1 mm²", NumberLocked = true });
-        doc.Devices.Add(new DeviceRecord { Reference = "-F1", Manufacturer = "ABB", Model = "S201-C2", Properties = { ["Akım"] = "2A" } });
+        doc.Devices.Add(new DeviceRecord
+        {
+            Reference = "-F1", Manufacturer = "ABB", Model = "S201-C2", Properties = { ["Akım"] = "2A" },
+            TemplateId = "dev.mcb.c2.1p", Contacts = [new ContactSlot { Kind = ContactKind.Power, Pins = ["1", "2"] }],
+        });
         doc.Settings.ReferenceFormat = "={page}-{prefix}{n}";
         return doc;
     }
@@ -48,6 +52,9 @@ public class NetworkSerializationTests
         Assert.Equal("Kumanda sigortası", fuse.Description);
         var rec = Assert.Single(back.Devices);
         Assert.Equal(("ABB", "S201-C2", "2A"), (rec.Manufacturer, rec.Model, rec.Properties["Akım"]));
+        Assert.Equal("dev.mcb.c2.1p", rec.TemplateId);
+        Assert.Equal(["1", "2"], Assert.Single(rec.Contacts).Pins);
+        Assert.Contains("\"kind\": \"power\"", json);
         Assert.Equal("={page}-{prefix}{n}", back.Settings.ReferenceFormat);
         Assert.Equal(json, ProjectSerializer.Serialize(back));
     }

@@ -4,7 +4,7 @@ UTF-8 JSON, camelCase alan adları, enum değerleri metin. Uzantı: `.myge`.
 
 ```json
 {
-  "formatVersion": 5,
+  "formatVersion": 6,
   "project": {
     "name": "Machine01",
     "company": "MYG TECH",
@@ -67,7 +67,9 @@ UTF-8 JSON, camelCase alan adları, enum değerleri metin. Uzantı: `.myge`.
       "reference": "-K1", "description": "Pompa kontaktörü", "category": "Kontaktör ve Röle/Kontaktörler",
       "manufacturer": "Schneider", "model": "LC1D09BD", "orderNumber": "LC1D09BD", "location": "+PANO1",
       "datasheet": "", "libraryVersion": "MYG IEC 60617 1.0.0",
-      "properties": { "Bobin gerilimi": "24VDC" }, "notes": ""
+      "properties": { "Bobin gerilimi": "24VDC" }, "notes": "",
+      "templateId": "dev.contactor.9a.24vdc",
+      "contacts": [ { "kind": "power", "pins": ["1", "2"] }, { "kind": "no", "pins": ["13", "14"] } ]
     }
   ],
   "resources": [
@@ -113,6 +115,7 @@ UTF-8 JSON, camelCase alan adları, enum değerleri metin. Uzantı: `.myge`.
 | 3 | `resources` (gömülü dosyalar) ve `image` nesnesi eklendi. v2 dosyalar değişiklik gerektirmeden açılır. |
 | 4 | `devices` (proje cihazları, etiket başına bir kayıt), `projectSettings` (etiket/kablo numarası şablonu), sayfada `wireData` (kablo numarası, renk, kesit, tip), cihaz yerleşiminde `description` ve `pinDesignations`. v3 dosyalar açılırken her etiket için cihaz kaydı oluşturulur; çizim ve bağlantılar değişmez. |
 | 5 | Nesne türleri `potential` (L1, +24V... potansiyel tanımı: `name`, `potentialKind`, `voltage`, `description`, `rotation`) ve `pageLink` (sayfalar arası bağlantı: `name`, `description`, `rotation`). v4 dosyalar değişiklik gerektirmeden açılır. |
+| 6 | Proje cihazında `templateId` (cihaz kütüphanesi kaydı) ve `contacts` (kontak kapasitesi: `kind` no/nc/changeover/power, `pins`). v5 dosyalar değişiklik gerektirmeden açılır. |
 
 > **Bilinen hata (37afe6e):** Bu commit'teki derleme, sürüm sabiti 2'de kaldığı için resim içeren dosyaları
 > `"formatVersion": 2` olarak yazdı. Bu dosyalar güncel sürümde sorunsuz açılır ve bir sonraki kayıtta 3 olur.

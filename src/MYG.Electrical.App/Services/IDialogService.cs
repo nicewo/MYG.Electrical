@@ -11,6 +11,9 @@ public interface IDialogService
     bool ShowImageDialog(ViewModels.ImageDialogViewModel vm);
 
     void ShowAbout(ViewModels.AboutViewModel vm);
+
+    /// <summary>Cihaz özellikleri penceresi. Tamam → true (değişiklikler uygulanmıştır).</summary>
+    bool ShowDeviceProperties(ViewModels.DevicePropertiesViewModel vm, Core.Symbols.ISymbolCatalog catalog, Action<string> open);
     void ShowShortcuts();
 
     /// <summary>Kaydedilmemiş değişiklikler için Evet/Hayır/İptal. İptal → null.</summary>

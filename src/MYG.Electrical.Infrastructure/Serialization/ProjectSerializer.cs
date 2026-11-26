@@ -164,6 +164,7 @@ public static class ProjectSerializer
         // v3 → v4: yalnızca ekleme (devices, settings, wireData, description, pinDesignations). Cihaz kayıtları
         // nesneye çevrildikten sonra ProjectValidator içinde etiketlerden üretilir (DeviceRegistry.EnsureRecords).
         // v4 → v5: yalnızca yeni nesne türleri (potential, pageLink). Dönüşüm gerekmez.
+        // v5 → v6: cihaz kaydına templateId ve contacts eklendi (boş varsayılan). Dönüşüm gerekmez.
         root[FormatVersionProperty] = ProjectDocument.CurrentFormatVersion;
     }
 

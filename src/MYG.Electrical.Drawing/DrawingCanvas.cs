@@ -95,6 +95,9 @@ public sealed class DrawingCanvas : FrameworkElement
     /// <summary>Zoom veya pan değiştiğinde.</summary>
     public event EventHandler? ViewChanged;
 
+    /// <summary>Seç aracıyla bir nesneye çift tıklandı.</summary>
+    public event EventHandler<DrawingObject>? ObjectDoubleClicked;
+
     // ---------- Bağımlılık özellikleri ----------
 
     public static readonly DependencyProperty SessionProperty = DependencyProperty.Register(
@@ -149,6 +152,19 @@ public sealed class DrawingCanvas : FrameworkElement
         get => (SinglePinObject?)GetValue(PendingConnectorProperty);
         set => SetValue(PendingConnectorProperty, value);
     }
+
+    public static readonly DependencyProperty PendingDeviceProperty = DependencyProperty.Register(
+        nameof(PendingDevice), typeof(Core.Devices.DeviceTemplate), typeof(DrawingCanvas), new PropertyMetadata(null));
+
+    /// <summary>Sembol aracı bir cihaz kütüphanesi kaydıyla başlatıldıysa: yerleştirilen cihaz bu bilgilerle oluşur.</summary>
+    public Core.Devices.DeviceTemplate? PendingDevice
+    {
+        get => (Core.Devices.DeviceTemplate?)GetValue(PendingDeviceProperty);
+        set => SetValue(PendingDeviceProperty, value);
+    }
+
+    /// <summary>Ekran noktasının (bu denetime göre) dünya koordinatı; sürükle-bırak için.</summary>
+    public Point2D ScreenToWorld(Point screen) => View.ScreenToWorld(WpfConvert.ToPoint2D(screen));
 
     // ---------- Görünüm komutları ----------
 
@@ -513,6 +529,16 @@ public sealed class DrawingCanvas : FrameworkElement
                     _suppressContextMenu = true;
                 }
                 break;
+            case MouseButton.Left when e.ClickCount == 2 && ActiveTool == EditorTool.Select
+                && Session.HitTest(world, View.ScreenLengthToWorld(GeometryConstants.HitTolerancePixels)) is { } target:
+                // Çift tık: sürükleme başlatılmaz, nesnenin ayrıntı penceresi açılır (cihaz özellikleri)
+                _dragObjects = null;
+                if (IsMouseCaptured)
+                {
+                    ReleaseMouseCapture();
+                }
+                ObjectDoubleClicked?.Invoke(this, target);
+                break;
             case MouseButton.Left:
                 OnLeftDown(world, Keyboard.Modifiers.HasFlag(ModifierKeys.Control));
                 break;
@@ -591,6 +617,10 @@ public sealed class DrawingCanvas : FrameworkElement
 
             case EditorTool.Potential or EditorTool.PageLink when PendingConnectorAt(snapped) is { } connector:
                 session.AddObject(connector);
+                break;
+
+            case EditorTool.Symbol when PendingDevice is { } template && PendingSymbol?.Id == template.Symbol:
+                session.PlaceDevice(template, snapped, _placementRotation);
                 break;
 
             case EditorTool.Symbol when PendingSymbol is not null:

@@ -39,6 +39,9 @@ public sealed class DialogService : IDialogService
 
     public void ShowAbout(ViewModels.AboutViewModel vm) => new Views.AboutWindow(vm) { Owner = Owner }.ShowDialog();
 
+    public bool ShowDeviceProperties(ViewModels.DevicePropertiesViewModel vm, Core.Symbols.ISymbolCatalog catalog, Action<string> open) =>
+        new Views.DevicePropertiesWindow(vm, catalog, open) { Owner = Owner }.ShowDialog() == true;
+
     public void ShowShortcuts() => new Views.ShortcutsWindow { Owner = Owner }.ShowDialog();
 
     public bool ShowImageDialog(ViewModels.ImageDialogViewModel vm) =>

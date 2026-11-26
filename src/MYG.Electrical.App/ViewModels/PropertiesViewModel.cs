@@ -9,7 +9,8 @@ using MYG.Electrical.Core.Pages;
 namespace MYG.Electrical.App.ViewModels;
 
 /// <summary>Sağ panel: seçili nesne, yoksa sayfa ve proje (kapak/antet) özellikleri.</summary>
-public sealed class PropertiesViewModel(IDialogService dialogs, Action<ImageObject> editImage, Action fileImagesChanged) : ObservableObject
+public sealed class PropertiesViewModel(IDialogService dialogs, Action<ImageObject> editImage, Action fileImagesChanged,
+    Action<DeviceObject> openDevice) : ObservableObject
 {
     private static readonly IReadOnlyList<string> Rotations = ["0", "90", "180", "270"];
     private static readonly IReadOnlyList<string> Formats = Enum.GetNames<PageFormat>();
@@ -105,6 +106,7 @@ public sealed class PropertiesViewModel(IDialogService dialogs, Action<ImageObje
             case DeviceObject d:
                 var def = s.Catalog.Find(d.SymbolId);
                 Header = $"Cihaz {d.Reference}";
+                Rows.Add(new ButtonRow("Cihaz özellikleri… (çift tık)", () => openDevice(d)));
                 Rows.Add(new TextRow("Tanım", () => d.Reference, v => s.RenameReference(d, v)));
                 Rows.Add(new TextRow("Sembol", () => def?.Name ?? d.SymbolId, null));
                 Rows.Add(new TextRow("İşlev metni", () => d.Description, v => Set("İşlev metni", () => d.Description, x => d.Description = x, v.Trim())));
@@ -405,5 +407,15 @@ public sealed class PropertiesViewModel(IDialogService dialogs, Action<ImageObje
                 fileImagesChanged();
             },
             dialogs.OpenImageFile));
+
+        var settings = s.Document.Settings;
+        Rows.Add(new SectionRow("Numaralandırma (IEC 81346)"));
+        Rows.Add(new TextRow("Etiket şablonu", () => settings.ReferenceFormat,
+            v => s.SetDocumentProperty("Etiket şablonu", () => settings.ReferenceFormat, x => settings.ReferenceFormat = x,
+                string.IsNullOrWhiteSpace(v) ? ProjectSettings.DefaultReferenceFormat : v.Trim())));
+        Rows.Add(new TextRow("Kablo no şablonu", () => settings.WireNumberFormat,
+            v => s.SetDocumentProperty("Kablo numarası şablonu", () => settings.WireNumberFormat, x => settings.WireNumberFormat = x,
+                string.IsNullOrWhiteSpace(v) ? ProjectSettings.DefaultWireNumberFormat : v.Trim())));
+        Rows.Add(new TextRow("Yer tutucular", () => "{prefix} sınıf harfi (K, F, Q...), {n} sıra, {page} sayfa, {column} kolon (kablo)", null));
     }
 }

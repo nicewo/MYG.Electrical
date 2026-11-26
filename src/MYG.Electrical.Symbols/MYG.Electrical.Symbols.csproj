@@ -8,5 +8,7 @@
   <ItemGroup>
     <!-- tools/symbolgen/generate.py ile üretilir; kaynak adı: MYG.Electrical.Symbols.Library.<dosya>.json -->
     <EmbeddedResource Include="Library\*.json" LogicalName="MYG.Electrical.Symbols.Library.%(Filename)%(Extension)" />
+    <!-- tools/symbolgen/devices.py ile üretilir -->
+    <EmbeddedResource Include="Devices\*.json" LogicalName="MYG.Electrical.Symbols.Devices.%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>

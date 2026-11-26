@@ -36,6 +36,13 @@ public static class ProjectValidator
             d.LibraryVersion ??= string.Empty;
             d.Notes ??= string.Empty;
             d.Properties ??= [];
+            d.TemplateId ??= string.Empty;
+            d.Contacts ??= [];
+            d.Contacts.RemoveAll(c => c is null);
+            foreach (var c in d.Contacts)
+            {
+                c.Pins ??= [];
+            }
         }
         var seenDevices = new HashSet<string>(Devices.DeviceRegistry.ReferenceComparer);
         var duplicates = doc.Devices.Where(d => string.IsNullOrWhiteSpace(d.Reference) || !seenDevices.Add(d.Reference)).ToList();

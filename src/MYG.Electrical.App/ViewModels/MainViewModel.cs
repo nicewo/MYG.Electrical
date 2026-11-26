@@ -36,14 +36,16 @@ public sealed class MainViewModel : ObservableObject
     private SymbolDefinition? _selectedSymbol;
     private EditorTool _activeTool = EditorTool.Select;
     private ImageObject? _pendingImage;
-    private string _symbolFilter = string.Empty;
     private string _cursorText = "X 0  Y 0";
     private string _zoomText = "100 %";
     private string _statusMessage = "Hazır";
 
     public MainViewModel(IDialogService dialogs, ProjectFileService files, PdfExporter pdf, ILogger log, ISymbolCatalog catalog,
-        UpdateService updates, IShellService shell)
+        UpdateService updates, IShellService shell, Core.Devices.DeviceLibrary devices, AppSettingsService settings)
     {
+        Settings = settings;
+        Devices = devices;
+        Library = new LibraryViewModel(catalog, devices, settings, PlaceLibraryItem);
         _shell = shell;
         _updates = updates;
         _dialogs = dialogs;
@@ -51,12 +53,8 @@ public sealed class MainViewModel : ObservableObject
         _pdf = pdf;
         _log = log;
         _catalog = catalog;
-        Properties = new PropertiesViewModel(dialogs, EditImage, () => Canvas?.InvalidateFileImages());
+        Properties = new PropertiesViewModel(dialogs, EditImage, () => Canvas?.InvalidateFileImages(), d => OpenDeviceProperties(d));
 
-        SymbolsView = CollectionViewSource.GetDefaultView(catalog.All);
-        SymbolsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(SymbolDefinition.Category)));
-        SymbolsView.Filter = o => o is SymbolDefinition s
-            && (string.IsNullOrWhiteSpace(_symbolFilter) || s.Name.Contains(_symbolFilter, StringComparison.CurrentCultureIgnoreCase));
 
         _session = CreateSession(ProjectDocument.CreateNew());
         AttachSession(_session);
@@ -101,6 +99,69 @@ public sealed class MainViewModel : ObservableObject
         PlacePotentialCommand = new RelayCommand(p => PlacePotential(p as string));
         PlacePageLinkCommand = new RelayCommand(PlacePageLink);
         NumberWiresCommand = new RelayCommand(p => NumberWires(string.Equals(p as string, "all", StringComparison.Ordinal)));
+        RenumberDevicesCommand = new RelayCommand(RenumberDevices);
+    }
+
+    // ---------- Kütüphane ----------
+
+    public AppSettingsService Settings { get; }
+    public Core.Devices.DeviceLibrary Devices { get; }
+    public LibraryViewModel Library { get; }
+
+    /// <summary>Cihaz kütüphanesinden yerleştirilecek şablon (sembol aracı bununla birlikte çalışır).</summary>
+    public Core.Devices.DeviceTemplate? PendingDevice
+    {
+        get => _pendingDevice;
+        private set => SetField(ref _pendingDevice, value);
+    }
+
+    private Core.Devices.DeviceTemplate? _pendingDevice;
+
+    /// <summary>Kütüphaneden çift tık / Yerleştir: sembol aracını o sembol veya cihazla başlatır.</summary>
+    private void PlaceLibraryItem(LibraryItemViewModel item)
+    {
+        if (item.Symbol is null)
+        {
+            return;
+        }
+        PendingDevice = item.Template;
+        if (ReferenceEquals(_selectedSymbol, item.Symbol))
+        {
+            ActiveTool = EditorTool.Symbol;
+        }
+        else
+        {
+            SelectedSymbol = item.Symbol;
+        }
+        StatusMessage = item.IsDevice
+            ? $"Cihaz: {item.Name} · tıklayarak yerleştirin · R: döndür · Esc: bitir"
+            : ToolHint(EditorTool.Symbol);
+    }
+
+    /// <summary>Cihaz özellikleri penceresi (çift tık veya sağ panelden).</summary>
+    public void OpenDeviceProperties(DeviceObject device)
+    {
+        var vm = new DevicePropertiesViewModel(Session, device);
+        if (_dialogs.ShowDeviceProperties(vm, _catalog, path => _shell.OpenUrl(path)))
+        {
+            StatusMessage = $"{device.Reference} güncellendi.";
+        }
+    }
+
+    /// <summary>Kütüphaneden sürükle-bırak: bırakılan noktaya (grid'e oturtulmuş) yerleştirir.</summary>
+    public void DropLibraryItem(LibraryItemViewModel item, Point2D world)
+    {
+        var p = Session.Snap(world);
+        if (item.Template is { } t)
+        {
+            Session.PlaceDevice(t, p);
+        }
+        else if (item.Symbol is { } s)
+        {
+            Session.PlaceSymbol(s, p);
+        }
+        Settings.AddRecent(item.Id);
+        StatusMessage = $"{item.Name} yerleştirildi.";
     }
 
     // ---------- Potansiyel, sayfa bağlantısı, kablo numarası ----------
@@ -108,6 +169,18 @@ public sealed class MainViewModel : ObservableObject
     public RelayCommand PlacePotentialCommand { get; }
     public RelayCommand PlacePageLinkCommand { get; }
     public RelayCommand NumberWiresCommand { get; }
+    public RelayCommand RenumberDevicesCommand { get; }
+
+    private void RenumberDevices()
+    {
+        if (!_dialogs.Confirm("Bütün cihaz etiketleri proje şablonuna göre (sayfa, kolon, yukarıdan aşağı) yeniden verilecek.\n" +
+                              "Çok parçalı cihazların parçaları birlikte değişir. Geri almak için Ctrl+Z. Devam edilsin mi?"))
+        {
+            return;
+        }
+        var count = Session.RenumberDevices();
+        StatusMessage = count == 0 ? "Etiketler zaten sıralı." : $"{count} cihazın etiketi değişti.";
+    }
 
     /// <summary>Potansiyel / sayfa bağlantısı aracının şablonu.</summary>
     public SinglePinObject? PendingConnector
@@ -162,7 +235,6 @@ public sealed class MainViewModel : ObservableObject
     public PropertiesViewModel Properties { get; }
     public ObservableCollection<PageItemViewModel> Pages { get; } = [];
     public ObservableCollection<ProjectNodeViewModel> ProjectTree { get; } = [];
-    public ICollectionView SymbolsView { get; }
 
     /// <summary>View tarafından atanır.</summary>
     public ICanvasController? Canvas { get; set; }
@@ -233,24 +305,16 @@ public sealed class MainViewModel : ObservableObject
             if (SetField(ref _activeTool, value))
             {
                 StatusMessage = ToolHint(value);
+                if (value != EditorTool.Symbol)
+                {
+                    PendingDevice = null;
+                }
                 if (value != EditorTool.Symbol && _selectedSymbol is not null)
                 {
                     // Aynı sembol kütüphaneden tekrar seçilebilsin
                     _selectedSymbol = null;
                     OnPropertyChanged(nameof(SelectedSymbol));
                 }
-            }
-        }
-    }
-
-    public string SymbolFilter
-    {
-        get => _symbolFilter;
-        set
-        {
-            if (SetField(ref _symbolFilter, value))
-            {
-                SymbolsView.Refresh();
             }
         }
     }

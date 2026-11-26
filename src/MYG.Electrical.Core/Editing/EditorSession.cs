@@ -276,12 +276,134 @@ public sealed class EditorSession
     }
 
     /// <summary>
+    /// Cihaz özellikleri penceresinin "Tamam"ı: proje cihaz kaydı, yerleşimin işlev metni ve pin adları tek geri alma
+    /// adımında güncellenir. Kayıt yoksa oluşturulur.
+    /// </summary>
+    public void UpdateDevice(DeviceObject placement, Devices.DeviceRecord record, string description, Dictionary<string, string> designations)
+    {
+        var page = Document.Pages.FirstOrDefault(p => p.Objects.Contains(placement)) ?? _activePage;
+        var commands = new List<IEditCommand>();
+        var current = Devices.DeviceRegistry.Find(Document, record.Reference);
+        if (current is null)
+        {
+            commands.Add(new AddDeviceRecordsCommand(Document, [record]));
+        }
+        else if (!ReferenceEquals(current, record))
+        {
+            commands.Add(new ReplaceDeviceRecordCommand(Document, current, record));
+        }
+        if (!string.Equals(placement.Description, description, StringComparison.Ordinal))
+        {
+            commands.Add(new SetPropertyCommand<string>("İşlev metni", v => placement.Description = v, placement.Description, description, placement, page));
+        }
+        var cleaned = designations.Where(kv => !string.IsNullOrWhiteSpace(kv.Value) && kv.Value != kv.Key)
+            .ToDictionary(kv => kv.Key, kv => kv.Value.Trim());
+        if (!Devices.ContactNumbering.SameDesignations(cleaned, placement.PinDesignations))
+        {
+            commands.Add(new SetPropertyCommand<Dictionary<string, string>>("Pin adları", v => placement.PinDesignations = v,
+                placement.PinDesignations, cleaned, placement, page));
+        }
+        if (commands.Count > 0)
+        {
+            Execute(new PageCompositeCommand("Cihaz özellikleri", page, commands), [placement.Id]);
+        }
+    }
+
+    /// <summary>Cihaz kütüphanesinden yerleştirme: ana sembol + şablon bilgileriyle dolu proje cihazı (tek adım).</summary>
+    public DeviceObject? PlaceDevice(Devices.DeviceTemplate template, Point2D position, double rotation = 0)
+    {
+        if (Catalog.Find(template.Symbol) is not { } symbol)
+        {
+            return null;
+        }
+        var reference = ReferenceGenerator.Next(symbol, Document, ActivePageNumber);
+        var device = symbol.CreateDevice(position.X, position.Y, reference);
+        device.Rotation = rotation;
+        var records = string.IsNullOrEmpty(reference) ? [] : new[] { template.CreateRecord(reference, symbol) };
+        AddPlacements([device], records);
+        Select(device);
+        return device;
+    }
+
+    /// <summary>
+    /// Bütün cihazları IEC 81346 şablonuna göre yeniden numaralandırır: her sınıf harfi için ilk yerleşimin
+    /// sayfa, kolon, yukarıdan aşağı sırasıyla 1'den başlar. Çok parçalı cihazın bütün parçaları birlikte değişir.
+    /// Etiketi elle şablon dışı verilmiş cihazlar da sıraya girer. Değişen cihaz sayısını döndürür (tek geri alma adımı).
+    /// </summary>
+    public int RenumberDevices()
+    {
+        var placements = Document.Pages.SelectMany((p, pi) => p.Objects.OfType<DeviceObject>()
+                .Where(d => !string.IsNullOrWhiteSpace(d.Reference))
+                .Select(d => (Page: p, PageIndex: pi, Device: d, Column: Rendering.PageLayout.ColumnAt(p, d.X))))
+            .ToList();
+        var order = placements
+            .GroupBy(x => x.Device.Reference, Devices.DeviceRegistry.ReferenceComparer)
+            .Select(g => (Reference: g.Key, First: g.OrderBy(x => x.PageIndex).ThenBy(x => x.Column).ThenBy(x => x.Device.Y).ThenBy(x => x.Device.X).First(),
+                Prefix: g.Select(x => Catalog.Find(x.Device.SymbolId)).FirstOrDefault(sd => sd is { Role: SymbolRole.Main or SymbolRole.Standalone })?.ReferencePrefix
+                        ?? Catalog.Find(g.First().Device.SymbolId)?.ReferencePrefix ?? string.Empty))
+            .Where(x => x.Prefix.Length > 0)
+            .ToList();
+
+        var mapping = new Dictionary<string, string>(Devices.DeviceRegistry.ReferenceComparer);
+        foreach (var group in order.GroupBy(x => x.Prefix, StringComparer.OrdinalIgnoreCase))
+        {
+            var n = 0;
+            foreach (var item in group.OrderBy(x => x.First.PageIndex).ThenBy(x => x.First.Column).ThenBy(x => x.First.Device.Y).ThenBy(x => x.First.Device.X))
+            {
+                n++;
+                var format = Document.Settings.ReferenceFormat;
+                var newRef = (string.IsNullOrWhiteSpace(format) ? ProjectSettings.DefaultReferenceFormat : format)
+                    .Replace("{prefix}", group.Key, StringComparison.Ordinal)
+                    .Replace("{page}", (item.First.PageIndex + 1).ToString(System.Globalization.CultureInfo.InvariantCulture), StringComparison.Ordinal)
+                    .Replace("{n}", n.ToString(System.Globalization.CultureInfo.InvariantCulture), StringComparison.Ordinal);
+                if (!string.Equals(newRef, item.Reference, StringComparison.Ordinal))
+                {
+                    mapping[item.Reference] = newRef;
+                }
+            }
+        }
+        if (mapping.Count == 0)
+        {
+            return 0;
+        }
+
+        var commands = new List<IEditCommand>();
+        foreach (var (page, _, device, _) in placements)
+        {
+            if (mapping.TryGetValue(device.Reference, out var nr))
+            {
+                commands.Add(new SetPropertyCommand<string>("Etiket", v => device.Reference = v, device.Reference, nr, device, page));
+            }
+        }
+        // Kayıtlar: yerleşimi olanlar yeni etikete taşınır; yerleşimsiz bir kayıt yeni etiketle çakışırsa ayrı bir ad alır.
+        var newNames = new HashSet<string>(mapping.Values, Devices.DeviceRegistry.ReferenceComparer);
+        foreach (var rec in Document.Devices)
+        {
+            if (mapping.TryGetValue(rec.Reference, out var nr))
+            {
+                commands.Add(new SetPropertyCommand<string>("Cihaz etiketi", v => rec.Reference = v, rec.Reference, nr));
+            }
+            else if (newNames.Contains(rec.Reference))
+            {
+                var spare = rec.Reference + "?";
+                while (Document.Devices.Any(d => Devices.DeviceRegistry.ReferenceComparer.Equals(d.Reference, spare)) || newNames.Contains(spare))
+                {
+                    spare += "?";
+                }
+                commands.Add(new SetPropertyCommand<string>("Cihaz etiketi", v => rec.Reference = v, rec.Reference, spare));
+            }
+        }
+        Execute(new CompositeCommand("Cihazları yeniden numaralandır", commands), null);
+        return mapping.Count;
+    }
+
+    /// <summary>
     /// Nesneleri ekler; yeni etiketli cihaz yerleşimleri için proje cihaz kaydını da aynı geri alma adımında oluşturur.
     /// </summary>
-    public void AddPlacements(IReadOnlyList<DrawingObject> objects)
+    public void AddPlacements(IReadOnlyList<DrawingObject> objects, IReadOnlyList<Devices.DeviceRecord>? newRecords = null)
     {
         var add = new AddObjectsCommand(_activePage, objects);
-        var records = new List<Devices.DeviceRecord>();
+        var records = new List<Devices.DeviceRecord>(newRecords ?? []);
         foreach (var d in objects.OfType<DeviceObject>())
         {
             // Aynı cihaza eklenen yardımcı kontak bir sonraki sıra numarasını alır (13-14 → 23-24).

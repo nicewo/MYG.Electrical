@@ -12,11 +12,12 @@ public sealed class ProjectDocument
     /// <item>4: proje cihazları (<see cref="Devices"/>), proje ayarları, kablo verisi (Page.WireData),
     /// yerleşimde açıklama ve pin adı.</item>
     /// <item>5: potansiyel (<c>potential</c>) ve sayfa bağlantısı (<c>pageLink</c>) nesneleri.</item>
+    /// <item>6: proje cihazında cihaz kütüphanesi kimliği (<c>templateId</c>) ve kontak kapasitesi (<c>contacts</c>).</item>
     /// </list>
     /// Yeni bir alan veya nesne türü eklendiğinde bu değer artırılmalı ve
     /// ProjectSerializer.Migrate içine dönüşüm adımı yazılmalıdır.
     /// </summary>
-    public const int CurrentFormatVersion = 5;
+    public const int CurrentFormatVersion = 6;
     public const string FileExtension = ".myge";
 
     public int FormatVersion { get; set; } = CurrentFormatVersion;

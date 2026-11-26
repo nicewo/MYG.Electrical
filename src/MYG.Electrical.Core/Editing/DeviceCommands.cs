@@ -77,3 +77,26 @@ public sealed class SetWireDataCommand : IEditCommand, IPageScopedCommand
         }
     }
 }
+
+/// <summary>Proje cihaz kaydının içeriğini topluca değiştirir (cihaz özellikleri penceresi).</summary>
+public sealed class ReplaceDeviceRecordCommand(ProjectDocument document, DeviceRecord current, DeviceRecord replacement) : IEditCommand
+{
+    public string Description => "Cihaz özellikleri";
+
+    public void Execute() => Swap(current, replacement);
+
+    public void Undo() => Swap(replacement, current);
+
+    private void Swap(DeviceRecord from, DeviceRecord to)
+    {
+        var i = document.Devices.IndexOf(from);
+        if (i >= 0)
+        {
+            document.Devices[i] = to;
+        }
+        else
+        {
+            document.Devices.Add(to);
+        }
+    }
+}

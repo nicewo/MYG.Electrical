@@ -1,0 +1,1196 @@
+{
+  "formatVersion": 1,
+  "library": "MYG Cihaz Kütüphanesi",
+  "version": "1.0.0",
+  "devices": [
+    {
+      "id": "dev.contactor.9a.24vdc",
+      "name": "Kontaktör 9 A, 3P, 24 VDC bobin, 1NO+1NC",
+      "category": "Kontaktör ve Röle/Kontaktörler",
+      "symbol": "iec.coil",
+      "keywords": [
+        "kontaktör",
+        "9A",
+        "4kW"
+      ],
+      "parts": [
+        "iec.contactor.3p",
+        "iec.contact.no",
+        "iec.contact.nc"
+      ],
+      "contacts": [
+        {
+          "kind": "power",
+          "pins": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "kind": "power",
+          "pins": [
+            "3",
+            "4"
+          ]
+        },
+        {
+          "kind": "power",
+          "pins": [
+            "5",
+            "6"
+          ]
+        },
+        {
+          "kind": "no",
+          "pins": [
+            "13",
+            "14"
+          ]
+        },
+        {
+          "kind": "nc",
+          "pins": [
+            "21",
+            "22"
+          ]
+        }
+      ],
+      "properties": {
+        "Bobin gerilimi": "24VDC",
+        "AC-3 akım": "9A",
+        "AC-3 güç (400V)": "4kW"
+      }
+    },
+    {
+      "id": "dev.contactor.18a.24vdc",
+      "name": "Kontaktör 18 A, 3P, 24 VDC bobin, 1NO+1NC",
+      "category": "Kontaktör ve Röle/Kontaktörler",
+      "symbol": "iec.coil",
+      "keywords": [
+        "kontaktör",
+        "18A",
+        "7.5kW"
+      ],
+      "parts": [
+        "iec.contactor.3p",
+        "iec.contact.no",
+        "iec.contact.nc"
+      ],
+      "contacts": [
+        {
+          "kind": "power",
+          "pins": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "kind": "power",
+          "pins": [
+            "3",
+            "4"
+          ]
+        },
+        {
+          "kind": "power",
+          "pins": [
+            "5",
+            "6"
+          ]
+        },
+        {
+          "kind": "no",
+          "pins": [
+            "13",
+            "14"
+          ]
+        },
+        {
+          "kind": "nc",
+          "pins": [
+            "21",
+            "22"
+          ]
+        }
+      ],
+      "properties": {
+        "Bobin gerilimi": "24VDC",
+        "AC-3 akım": "18A",
+        "AC-3 güç (400V)": "7.5kW"
+      }
+    },
+    {
+      "id": "dev.contactor.50a.24vdc",
+      "name": "Kontaktör 50 A, 3P, 24 VDC bobin, 1NO+1NC",
+      "category": "Kontaktör ve Röle/Kontaktörler",
+      "symbol": "iec.coil",
+      "keywords": [
+        "kontaktör",
+        "50A",
+        "22kW"
+      ],
+      "parts": [
+        "iec.contactor.3p",
+        "iec.contact.no",
+        "iec.contact.nc"
+      ],
+      "contacts": [
+        {
+          "kind": "power",
+          "pins": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "kind": "power",
+          "pins": [
+            "3",
+            "4"
+          ]
+        },
+        {
+          "kind": "power",
+          "pins": [
+            "5",
+            "6"
+          ]
+        },
+        {
+          "kind": "no",
+          "pins": [
+            "13",
+            "14"
+          ]
+        },
+        {
+          "kind": "nc",
+          "pins": [
+            "21",
+            "22"
+          ]
+        }
+      ],
+      "properties": {
+        "Bobin gerilimi": "24VDC",
+        "AC-3 akım": "50A",
+        "AC-3 güç (400V)": "22kW"
+      }
+    },
+    {
+      "id": "dev.contactor.9a.230vac",
+      "name": "Kontaktör 9 A, 3P, 230 VAC bobin, 1NO+1NC",
+      "category": "Kontaktör ve Röle/Kontaktörler",
+      "symbol": "iec.coil",
+      "keywords": [
+        "kontaktör",
+        "230V"
+      ],
+      "parts": [
+        "iec.contactor.3p",
+        "iec.contact.no",
+        "iec.contact.nc"
+      ],
+      "contacts": [
+        {
+          "kind": "power",
+          "pins": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "kind": "power",
+          "pins": [
+            "3",
+            "4"
+          ]
+        },
+        {
+          "kind": "power",
+          "pins": [
+            "5",
+            "6"
+          ]
+        },
+        {
+          "kind": "no",
+          "pins": [
+            "13",
+            "14"
+          ]
+        },
+        {
+          "kind": "nc",
+          "pins": [
+            "21",
+            "22"
+          ]
+        }
+      ],
+      "properties": {
+        "Bobin gerilimi": "230VAC",
+        "AC-3 akım": "9A",
+        "AC-3 güç (400V)": "4kW"
+      }
+    },
+    {
+      "id": "dev.auxcontactor.4no",
+      "name": "Yardımcı kontaktör 24 VDC, 4NO",
+      "category": "Kontaktör ve Röle/Kontaktörler",
+      "symbol": "iec.coil",
+      "keywords": [
+        "yardımcı kontaktör"
+      ],
+      "parts": [
+        "iec.contact.no"
+      ],
+      "contacts": [
+        {
+          "kind": "no",
+          "pins": [
+            "13",
+            "14"
+          ]
+        },
+        {
+          "kind": "no",
+          "pins": [
+            "23",
+            "24"
+          ]
+        },
+        {
+          "kind": "no",
+          "pins": [
+            "33",
+            "34"
+          ]
+        },
+        {
+          "kind": "no",
+          "pins": [
+            "43",
+            "44"
+          ]
+        }
+      ],
+      "properties": {
+        "Bobin gerilimi": "24VDC"
+      }
+    },
+    {
+      "id": "dev.relay.2co.24vdc",
+      "name": "Ara röle 24 VDC, 2CO (soketli)",
+      "category": "Kontaktör ve Röle/Röleler",
+      "symbol": "iec.coil",
+      "keywords": [
+        "röle",
+        "interface",
+        "2CO"
+      ],
+      "parts": [
+        "iec.contact.co"
+      ],
+      "contacts": [
+        {
+          "kind": "changeover",
+          "pins": [
+            "11",
+            "12",
+            "14"
+          ]
+        },
+        {
+          "kind": "changeover",
+          "pins": [
+            "21",
+            "22",
+            "24"
+          ]
+        }
+      ],
+      "properties": {
+        "Bobin gerilimi": "24VDC",
+        "Kontak akımı": "8A"
+      }
+    },
+    {
+      "id": "dev.relay.1co.24vdc",
+      "name": "Ara röle 24 VDC, 1CO (ince tip)",
+      "category": "Kontaktör ve Röle/Röleler",
+      "symbol": "iec.coil",
+      "keywords": [
+        "röle",
+        "ince röle",
+        "1CO"
+      ],
+      "parts": [
+        "iec.contact.co"
+      ],
+      "contacts": [
+        {
+          "kind": "changeover",
+          "pins": [
+            "11",
+            "12",
+            "14"
+          ]
+        }
+      ],
+      "properties": {
+        "Bobin gerilimi": "24VDC",
+        "Kontak akımı": "6A"
+      }
+    },
+    {
+      "id": "dev.timer.ondelay",
+      "name": "Zaman rölesi, çekmede gecikmeli, 24 VDC, 1CO",
+      "category": "Kontaktör ve Röle/Zaman röleleri",
+      "symbol": "iec.coil.ondelay",
+      "keywords": [
+        "zaman rölesi",
+        "timer",
+        "TON"
+      ],
+      "parts": [
+        "iec.contact.no.ondelay",
+        "iec.contact.nc.ondelay"
+      ],
+      "contacts": [
+        {
+          "kind": "changeover",
+          "pins": [
+            "15",
+            "16",
+            "18"
+          ]
+        }
+      ],
+      "properties": {
+        "Bobin gerilimi": "24VDC",
+        "Süre aralığı": "0.1s-10dk"
+      }
+    },
+    {
+      "id": "dev.relay.phase",
+      "name": "Faz sırası ve faz kontrol rölesi, 400 VAC",
+      "category": "Kontaktör ve Röle/İzleme röleleri",
+      "symbol": "iec.relay.phase",
+      "keywords": [
+        "faz sırası",
+        "faz koruma"
+      ],
+      "properties": {
+        "Gerilim": "3x400VAC"
+      }
+    },
+    {
+      "id": "dev.relay.safety",
+      "name": "Güvenlik rölesi 24 VDC, 2NO, acil stop",
+      "category": "Kontaktör ve Röle/Güvenlik",
+      "symbol": "iec.relay.safety",
+      "keywords": [
+        "güvenlik rölesi",
+        "acil stop"
+      ],
+      "properties": {
+        "Besleme": "24VDC",
+        "Kategori / PL": ""
+      }
+    },
+    {
+      "id": "dev.ssr.25a",
+      "name": "Katı hal rölesi 25 A, 3-32 VDC kontrol",
+      "category": "Kontaktör ve Röle/Röleler",
+      "symbol": "iec.relay.ssr",
+      "keywords": [
+        "SSR",
+        "rezistans"
+      ],
+      "properties": {
+        "Yük akımı": "25A",
+        "Kontrol gerilimi": "3-32VDC"
+      }
+    },
+    {
+      "id": "dev.mcb.c6.1p",
+      "name": "Otomatik sigorta C6, 1P",
+      "category": "Koruma/Otomatik sigortalar",
+      "symbol": "iec.mcb.1p",
+      "keywords": [
+        "MCB",
+        "C6"
+      ],
+      "properties": {
+        "Anma akımı": "6A",
+        "Karakteristik": "C",
+        "Kesme kapasitesi": "6kA"
+      }
+    },
+    {
+      "id": "dev.mcb.c10.1p",
+      "name": "Otomatik sigorta C10, 1P",
+      "category": "Koruma/Otomatik sigortalar",
+      "symbol": "iec.mcb.1p",
+      "keywords": [
+        "MCB",
+        "C10"
+      ],
+      "properties": {
+        "Anma akımı": "10A",
+        "Karakteristik": "C",
+        "Kesme kapasitesi": "6kA"
+      }
+    },
+    {
+      "id": "dev.mcb.c16.1p",
+      "name": "Otomatik sigorta C16, 1P",
+      "category": "Koruma/Otomatik sigortalar",
+      "symbol": "iec.mcb.1p",
+      "keywords": [
+        "MCB",
+        "C16"
+      ],
+      "properties": {
+        "Anma akımı": "16A",
+        "Karakteristik": "C",
+        "Kesme kapasitesi": "6kA"
+      }
+    },
+    {
+      "id": "dev.mcb.b16.1p",
+      "name": "Otomatik sigorta B16, 1P",
+      "category": "Koruma/Otomatik sigortalar",
+      "symbol": "iec.mcb.1p",
+      "keywords": [
+        "MCB",
+        "B16"
+      ],
+      "properties": {
+        "Anma akımı": "16A",
+        "Karakteristik": "B",
+        "Kesme kapasitesi": "6kA"
+      }
+    },
+    {
+      "id": "dev.mcb.c2.1p",
+      "name": "Otomatik sigorta C2, 1P",
+      "category": "Koruma/Otomatik sigortalar",
+      "symbol": "iec.mcb.1p",
+      "keywords": [
+        "MCB",
+        "C2"
+      ],
+      "properties": {
+        "Anma akımı": "2A",
+        "Karakteristik": "C",
+        "Kesme kapasitesi": "6kA"
+      }
+    },
+    {
+      "id": "dev.mcb.c16.3p",
+      "name": "Otomatik sigorta C16, 3P",
+      "category": "Koruma/Otomatik sigortalar",
+      "symbol": "iec.mcb",
+      "keywords": [
+        "MCB",
+        "C16"
+      ],
+      "properties": {
+        "Anma akımı": "16A",
+        "Karakteristik": "C",
+        "Kesme kapasitesi": "6kA"
+      }
+    },
+    {
+      "id": "dev.mcb.c32.3p",
+      "name": "Otomatik sigorta C32, 3P",
+      "category": "Koruma/Otomatik sigortalar",
+      "symbol": "iec.mcb",
+      "keywords": [
+        "MCB",
+        "C32"
+      ],
+      "properties": {
+        "Anma akımı": "32A",
+        "Karakteristik": "C",
+        "Kesme kapasitesi": "6kA"
+      }
+    },
+    {
+      "id": "dev.mcb.c63.3p",
+      "name": "Otomatik sigorta C63, 3P",
+      "category": "Koruma/Otomatik sigortalar",
+      "symbol": "iec.mcb",
+      "keywords": [
+        "MCB",
+        "C63"
+      ],
+      "properties": {
+        "Anma akımı": "63A",
+        "Karakteristik": "C",
+        "Kesme kapasitesi": "6kA"
+      }
+    },
+    {
+      "id": "dev.mcb.c25.4p",
+      "name": "Otomatik sigorta C25, 4P",
+      "category": "Koruma/Otomatik sigortalar",
+      "symbol": "iec.mcb.4p",
+      "keywords": [
+        "MCB",
+        "C25"
+      ],
+      "properties": {
+        "Anma akımı": "25A",
+        "Karakteristik": "C",
+        "Kesme kapasitesi": "6kA"
+      }
+    },
+    {
+      "id": "dev.mpcb.9-14",
+      "name": "Motor koruma şalteri 9-14 A",
+      "category": "Koruma/Motor koruma",
+      "symbol": "iec.mpcb.3p",
+      "keywords": [
+        "motor koruma",
+        "MPCB",
+        "5.5kW"
+      ],
+      "properties": {
+        "Ayar aralığı": "9-14A"
+      }
+    },
+    {
+      "id": "dev.mpcb.4-6.3",
+      "name": "Motor koruma şalteri 4-6.3 A",
+      "category": "Koruma/Motor koruma",
+      "symbol": "iec.mpcb.3p",
+      "keywords": [
+        "motor koruma",
+        "MPCB",
+        "2.2kW"
+      ],
+      "properties": {
+        "Ayar aralığı": "4-6.3A"
+      }
+    },
+    {
+      "id": "dev.mpcb.37-50",
+      "name": "Motor koruma şalteri 37-50 A",
+      "category": "Koruma/Motor koruma",
+      "symbol": "iec.mpcb.3p",
+      "keywords": [
+        "motor koruma",
+        "MPCB",
+        "22kW"
+      ],
+      "properties": {
+        "Ayar aralığı": "37-50A"
+      }
+    },
+    {
+      "id": "dev.overload.9-13",
+      "name": "Termik röle 9-13 A, 1NO+1NC",
+      "category": "Koruma/Motor koruma",
+      "symbol": "iec.overload.3p",
+      "keywords": [
+        "termik"
+      ],
+      "parts": [
+        "iec.overload.contact.nc",
+        "iec.overload.contact.no"
+      ],
+      "contacts": [
+        {
+          "kind": "nc",
+          "pins": [
+            "95",
+            "96"
+          ]
+        },
+        {
+          "kind": "no",
+          "pins": [
+            "97",
+            "98"
+          ]
+        }
+      ],
+      "properties": {
+        "Ayar aralığı": "9-13A"
+      }
+    },
+    {
+      "id": "dev.rcd.4p.40a.300ma",
+      "name": "Kaçak akım rölesi 4P 40 A 300 mA",
+      "category": "Koruma/Kaçak akım",
+      "symbol": "iec.rcd.4p",
+      "keywords": [
+        "RCD",
+        "kaçak akım"
+      ],
+      "properties": {
+        "Anma akımı": "40A",
+        "Kaçak akım": "300mA"
+      }
+    },
+    {
+      "id": "dev.rcd.2p.25a.30ma",
+      "name": "Kaçak akım rölesi 2P 25 A 30 mA",
+      "category": "Koruma/Kaçak akım",
+      "symbol": "iec.rcd.2p",
+      "keywords": [
+        "RCD",
+        "kaçak akım",
+        "priz"
+      ],
+      "properties": {
+        "Anma akımı": "25A",
+        "Kaçak akım": "30mA"
+      }
+    },
+    {
+      "id": "dev.spd.1p",
+      "name": "Parafudr Tip 2, 275 V",
+      "category": "Koruma/Aşırı gerilim",
+      "symbol": "iec.surge.arrester",
+      "keywords": [
+        "parafudr",
+        "SPD"
+      ],
+      "properties": {
+        "Uc": "275V",
+        "Tip": "2"
+      }
+    },
+    {
+      "id": "dev.mainswitch.63a",
+      "name": "Yük ayırıcı / ana şalter 3P 63 A",
+      "category": "Koruma/Ayırıcılar",
+      "symbol": "iec.disconnector.3p",
+      "keywords": [
+        "ana şalter",
+        "pako"
+      ],
+      "properties": {
+        "Anma akımı": "63A"
+      }
+    },
+    {
+      "id": "dev.vfd.22kw",
+      "name": "Frekans inverteri 22 kW, 3x400 V",
+      "category": "Motor ve Sürücü/Sürücüler",
+      "symbol": "iec.vfd.3ph",
+      "keywords": [
+        "VFD",
+        "inverter",
+        "22kW",
+        "sürücü"
+      ],
+      "parts": [
+        "iec.vfd.control",
+        "iec.vfd.comm"
+      ],
+      "contacts": [
+        {
+          "kind": "changeover",
+          "pins": [
+            "RC",
+            "RB",
+            "RA"
+          ]
+        }
+      ],
+      "properties": {
+        "Güç": "22kW",
+        "Giriş gerilimi": "3x380-480VAC",
+        "Çıkış akımı": "45A"
+      }
+    },
+    {
+      "id": "dev.vfd.2.2kw.1ph",
+      "name": "Frekans inverteri 2.2 kW, 1x230 V giriş",
+      "category": "Motor ve Sürücü/Sürücüler",
+      "symbol": "iec.vfd.1ph",
+      "keywords": [
+        "VFD",
+        "inverter",
+        "2kW",
+        "monofaze"
+      ],
+      "parts": [
+        "iec.vfd.control",
+        "iec.vfd.comm"
+      ],
+      "contacts": [
+        {
+          "kind": "changeover",
+          "pins": [
+            "RC",
+            "RB",
+            "RA"
+          ]
+        }
+      ],
+      "properties": {
+        "Güç": "2.2kW",
+        "Giriş gerilimi": "1x220-240VAC",
+        "Çıkış akımı": "10A"
+      }
+    },
+    {
+      "id": "dev.motor.22kw",
+      "name": "Asenkron motor 22 kW, 400 V, 1500 d/d",
+      "category": "Motor ve Sürücü/Motorlar",
+      "symbol": "iec.motor.3ph.pe",
+      "keywords": [
+        "motor",
+        "22kW"
+      ],
+      "properties": {
+        "Güç": "22kW",
+        "Gerilim": "400V Δ",
+        "Akım": "41A",
+        "Devir": "1470 d/d"
+      }
+    },
+    {
+      "id": "dev.motor.2.2kw",
+      "name": "Asenkron motor 2.2 kW, 230/400 V, 1500 d/d",
+      "category": "Motor ve Sürücü/Motorlar",
+      "symbol": "iec.motor.3ph.pe",
+      "keywords": [
+        "motor",
+        "2.2kW"
+      ],
+      "properties": {
+        "Güç": "2.2kW",
+        "Gerilim": "230V Δ / 400V Y",
+        "Akım": "4.9A",
+        "Devir": "1430 d/d"
+      }
+    },
+    {
+      "id": "dev.softstarter.22kw",
+      "name": "Yumuşak yolverici 22 kW",
+      "category": "Motor ve Sürücü/Sürücüler",
+      "symbol": "iec.softstarter",
+      "keywords": [
+        "soft starter"
+      ],
+      "properties": {
+        "Güç": "22kW"
+      }
+    },
+    {
+      "id": "dev.plc.cpu",
+      "name": "PLC CPU, 24 VDC, Ethernet + RS485",
+      "category": "PLC ve Otomasyon/PLC",
+      "symbol": "iec.plc.cpu",
+      "keywords": [
+        "PLC",
+        "CPU"
+      ],
+      "parts": [
+        "iec.plc.di8",
+        "iec.plc.do8",
+        "iec.plc.input",
+        "iec.plc.output"
+      ],
+      "properties": {
+        "Besleme": "24VDC"
+      }
+    },
+    {
+      "id": "dev.plc.di8",
+      "name": "Dijital giriş modülü 8 DI, 24 VDC",
+      "category": "PLC ve Otomasyon/G-Ç modülleri",
+      "symbol": "iec.plc.di8",
+      "keywords": [
+        "DI",
+        "giriş modülü"
+      ],
+      "parts": [
+        "iec.plc.input"
+      ],
+      "properties": {
+        "Giriş tipi": "24VDC sink/source"
+      }
+    },
+    {
+      "id": "dev.plc.do8",
+      "name": "Dijital çıkış modülü 8 DO, transistör 0.5 A",
+      "category": "PLC ve Otomasyon/G-Ç modülleri",
+      "symbol": "iec.plc.do8",
+      "keywords": [
+        "DO",
+        "çıkış modülü"
+      ],
+      "parts": [
+        "iec.plc.output"
+      ],
+      "properties": {
+        "Çıkış tipi": "Transistör 24VDC 0.5A"
+      }
+    },
+    {
+      "id": "dev.plc.ai4",
+      "name": "Analog giriş modülü 4 AI, 4-20 mA / 0-10 V",
+      "category": "PLC ve Otomasyon/G-Ç modülleri",
+      "symbol": "iec.plc.ai4",
+      "keywords": [
+        "AI",
+        "analog"
+      ],
+      "properties": {
+        "Giriş": "4-20mA / 0-10V"
+      }
+    },
+    {
+      "id": "dev.hmi.delta.7",
+      "name": "Dokunmatik operatör paneli 7\" (Delta DOP serisi)",
+      "category": "PLC ve Otomasyon/HMI",
+      "symbol": "iec.hmi",
+      "manufacturer": "Delta",
+      "keywords": [
+        "HMI",
+        "Delta",
+        "DOP",
+        "operatör paneli"
+      ],
+      "properties": {
+        "Ekran": "7\"",
+        "Besleme": "24VDC",
+        "Haberleşme": "Ethernet, RS485"
+      }
+    },
+    {
+      "id": "dev.switch.5p",
+      "name": "Endüstriyel Ethernet switch, 5 port",
+      "category": "PLC ve Otomasyon/Haberleşme",
+      "symbol": "iec.eth.switch",
+      "keywords": [
+        "switch",
+        "ethernet"
+      ],
+      "properties": {
+        "Besleme": "24VDC"
+      }
+    },
+    {
+      "id": "dev.prox.m18.pnp",
+      "name": "Endüktif sensör M18, PNP NO, 8 mm",
+      "category": "Sensör ve Saha/Yaklaşım sensörleri",
+      "symbol": "iec.sensor.pnp",
+      "keywords": [
+        "endüktif",
+        "M18"
+      ],
+      "properties": {
+        "Algılama mesafesi": "8mm",
+        "Çıkış": "PNP NO",
+        "Besleme": "10-30VDC"
+      }
+    },
+    {
+      "id": "dev.prox.m12.pnp",
+      "name": "Endüktif sensör M12, PNP NO, 4 mm",
+      "category": "Sensör ve Saha/Yaklaşım sensörleri",
+      "symbol": "iec.sensor.pnp",
+      "keywords": [
+        "endüktif",
+        "M12"
+      ],
+      "properties": {
+        "Algılama mesafesi": "4mm",
+        "Çıkış": "PNP NO",
+        "Besleme": "10-30VDC"
+      }
+    },
+    {
+      "id": "dev.pressure.switch",
+      "name": "Basınç şalteri (presostat), 1NO",
+      "category": "Sensör ve Saha/Basınç",
+      "symbol": "iec.pressureswitch.no",
+      "keywords": [
+        "presostat",
+        "basınç"
+      ],
+      "properties": {
+        "Ayar aralığı": ""
+      }
+    },
+    {
+      "id": "dev.pressure.transmitter",
+      "name": "Basınç transmitteri 0-10 bar, 4-20 mA",
+      "category": "Sensör ve Saha/Transmitterler",
+      "symbol": "iec.transmitter",
+      "keywords": [
+        "transmitter",
+        "basınç"
+      ],
+      "properties": {
+        "Ölçüm aralığı": "0-10bar",
+        "Çıkış": "4-20mA"
+      }
+    },
+    {
+      "id": "dev.door.reed",
+      "name": "Manyetik kapı sensörü, 1NO",
+      "category": "Sensör ve Saha/Kapı ve emniyet",
+      "symbol": "iec.door.sensor",
+      "keywords": [
+        "kapı",
+        "reed"
+      ]
+    },
+    {
+      "id": "dev.door.safety",
+      "name": "Emniyet kapı switchi, zorlamalı açma 1NC",
+      "category": "Sensör ve Saha/Kapı ve emniyet",
+      "symbol": "iec.safety.switch",
+      "keywords": [
+        "emniyet",
+        "kapı switchi"
+      ]
+    },
+    {
+      "id": "dev.pt100.3w",
+      "name": "PT100 sıcaklık sensörü, 3 telli",
+      "category": "Sensör ve Saha/Sıcaklık",
+      "symbol": "iec.pt100.3w",
+      "keywords": [
+        "PT100"
+      ],
+      "properties": {
+        "Ölçüm aralığı": "-50..+400°C"
+      }
+    },
+    {
+      "id": "dev.button.start",
+      "name": "Start butonu, yeşil, 1NO",
+      "category": "Kumanda ve Sinyal/Butonlar",
+      "symbol": "iec.pushbutton.no",
+      "keywords": [
+        "start"
+      ],
+      "properties": {
+        "Renk": "Yeşil"
+      }
+    },
+    {
+      "id": "dev.button.stop",
+      "name": "Stop butonu, kırmızı, 1NC",
+      "category": "Kumanda ve Sinyal/Butonlar",
+      "symbol": "iec.pushbutton.nc",
+      "keywords": [
+        "stop"
+      ],
+      "properties": {
+        "Renk": "Kırmızı"
+      }
+    },
+    {
+      "id": "dev.button.estop",
+      "name": "Acil stop butonu, mantar, 1NC",
+      "category": "Kumanda ve Sinyal/Butonlar",
+      "symbol": "iec.estop",
+      "keywords": [
+        "acil stop"
+      ],
+      "properties": {
+        "Renk": "Kırmızı/Sarı"
+      }
+    },
+    {
+      "id": "dev.selector.2pos",
+      "name": "Seçici şalter 2 konum, 1NO",
+      "category": "Kumanda ve Sinyal/Seçici şalterler",
+      "symbol": "iec.selector.2pos",
+      "keywords": [
+        "seçici",
+        "0-1"
+      ]
+    },
+    {
+      "id": "dev.lamp.green.24v",
+      "name": "Sinyal lambası LED 24 V, yeşil",
+      "category": "Kumanda ve Sinyal/Sinyal lambaları",
+      "symbol": "iec.lamp",
+      "keywords": [
+        "lamba",
+        "çalışıyor"
+      ],
+      "properties": {
+        "Renk": "Yeşil",
+        "Gerilim": "24V"
+      }
+    },
+    {
+      "id": "dev.lamp.red.24v",
+      "name": "Sinyal lambası LED 24 V, kırmızı",
+      "category": "Kumanda ve Sinyal/Sinyal lambaları",
+      "symbol": "iec.lamp",
+      "keywords": [
+        "lamba",
+        "arıza"
+      ],
+      "properties": {
+        "Renk": "Kırmızı",
+        "Gerilim": "24V"
+      }
+    },
+    {
+      "id": "dev.terminal.2.5",
+      "name": "Sıra klemens 2.5 mm²",
+      "category": "Klemens ve Konnektör/Klemensler",
+      "symbol": "iec.terminal",
+      "keywords": [
+        "klemens"
+      ],
+      "properties": {
+        "Kesit": "2.5mm²"
+      }
+    },
+    {
+      "id": "dev.terminal.pe.2.5",
+      "name": "PE klemens 2.5 mm²",
+      "category": "Klemens ve Konnektör/Klemensler",
+      "symbol": "iec.terminal.pe",
+      "keywords": [
+        "PE klemens"
+      ],
+      "properties": {
+        "Kesit": "2.5mm²"
+      }
+    },
+    {
+      "id": "dev.terminal.fused",
+      "name": "Sigortalı klemens 5x20",
+      "category": "Klemens ve Konnektör/Klemensler",
+      "symbol": "iec.terminal.fused",
+      "keywords": [
+        "sigortalı"
+      ],
+      "properties": {
+        "Sigorta": "5x20"
+      }
+    },
+    {
+      "id": "dev.analyzer.modbus",
+      "name": "Enerji analizörü, 3 faz, Modbus RTU",
+      "category": "Ölçüm/Analizörler",
+      "symbol": "iec.poweranalyzer",
+      "keywords": [
+        "analizör",
+        "Modbus"
+      ],
+      "properties": {
+        "Besleme": "85-265VAC",
+        "Akım girişi": "x/5A",
+        "Haberleşme": "RS485 Modbus RTU"
+      }
+    },
+    {
+      "id": "dev.ct.50",
+      "name": "Akım trafosu 50/5 A",
+      "category": "Ölçüm/Akım trafoları",
+      "symbol": "iec.ct",
+      "keywords": [
+        "CT",
+        "akım trafosu"
+      ],
+      "properties": {
+        "Oran": "50/5A",
+        "Sınıf": "0.5"
+      }
+    },
+    {
+      "id": "dev.ct.100",
+      "name": "Akım trafosu 100/5 A",
+      "category": "Ölçüm/Akım trafoları",
+      "symbol": "iec.ct",
+      "keywords": [
+        "CT",
+        "akım trafosu"
+      ],
+      "properties": {
+        "Oran": "100/5A",
+        "Sınıf": "0.5"
+      }
+    },
+    {
+      "id": "dev.ct.250",
+      "name": "Akım trafosu 250/5 A",
+      "category": "Ölçüm/Akım trafoları",
+      "symbol": "iec.ct",
+      "keywords": [
+        "CT",
+        "akım trafosu"
+      ],
+      "properties": {
+        "Oran": "250/5A",
+        "Sınıf": "0.5"
+      }
+    },
+    {
+      "id": "dev.psu.24v.5a",
+      "name": "Güç kaynağı 24 VDC 5 A",
+      "category": "Enerji/Güç kaynakları",
+      "symbol": "iec.psu.24vdc",
+      "keywords": [
+        "SMPS",
+        "24V"
+      ],
+      "properties": {
+        "Çıkış": "24VDC",
+        "Akım": "5A",
+        "Giriş": "100-240VAC"
+      }
+    },
+    {
+      "id": "dev.psu.24v.10a",
+      "name": "Güç kaynağı 24 VDC 10 A",
+      "category": "Enerji/Güç kaynakları",
+      "symbol": "iec.psu.24vdc",
+      "keywords": [
+        "SMPS",
+        "24V"
+      ],
+      "properties": {
+        "Çıkış": "24VDC",
+        "Akım": "10A",
+        "Giriş": "100-240VAC"
+      }
+    },
+    {
+      "id": "dev.dist.24v",
+      "name": "24 VDC sigortalı dağıtım bloğu, 4 çıkış",
+      "category": "Enerji/Dağıtım",
+      "symbol": "iec.dist.24vdc",
+      "keywords": [
+        "dağıtım",
+        "24VDC"
+      ],
+      "properties": {
+        "Çıkış sayısı": "4"
+      }
+    },
+    {
+      "id": "dev.trafo.400.24",
+      "name": "Kumanda trafosu 400/24 VAC 100 VA",
+      "category": "Enerji/Trafolar",
+      "symbol": "iec.transformer.control",
+      "keywords": [
+        "kumanda trafosu"
+      ],
+      "properties": {
+        "Güç": "100VA",
+        "Primer": "400V",
+        "Sekonder": "24V"
+      }
+    }
+  ]
+}

@@ -224,6 +224,7 @@ public sealed class SceneComposer(ISymbolCatalog catalog, Func<string, Resources
         {
             var pos = new Point2D(bounds.Right + ReferenceGap, bounds.Center.Y);
             sink.DrawText(d.Reference, pos, DrawingStyles.ReferenceTextHeight, Colors.Text, TextAlign.Left, bold: true);
+            ComposeCrossReferences(d, bounds, pos, sink);
         }
 
         foreach (var pin in d.GetGlobalPins())
@@ -236,6 +237,38 @@ public sealed class SceneComposer(ISymbolCatalog catalog, Func<string, Resources
             if (options.ShowPinLabels && !string.IsNullOrEmpty(pin.PinId))
             {
                 sink.DrawText(d.PinLabel(pin.PinId), PinLabelPosition(pin), DrawingStyles.PinTextHeight, DrawingStyles.DarkGray);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Çapraz referans: ana fonksiyonun (bobin, PLC CPU...) etiketi altında parçalarının listesi (kontak aynası),
+    /// kontak/parçanın etiketinin altında ana fonksiyonun sayfa.kolon konumu.
+    /// </summary>
+    private void ComposeCrossReferences(DeviceObject d, Rect2D bounds, Point2D referencePos, ISceneSink sink)
+    {
+        if (Network is null || catalog.Find(d.SymbolId) is not { } def)
+        {
+            return;
+        }
+        const double h = ConnectorGeometry.CrossReferenceHeight;
+        if (def.Role == SymbolRole.Main)
+        {
+            var lines = Core.Network.CrossReferences.ContactMirror(Network, catalog, d);
+            // Etiketin altında, kablonun geçtiği eksenin yanında (yazı hattın üstüne binmesin)
+            var y = referencePos.Y + DrawingStyles.ReferenceTextHeight + 0.5;
+            foreach (var line in lines)
+            {
+                sink.DrawText(line, new Point2D(referencePos.X, y), h, Colors.Text);
+                y += h * 1.3;
+            }
+        }
+        else if (def.Role == SymbolRole.Contact)
+        {
+            var main = Core.Network.CrossReferences.MainLocation(Network, catalog, d);
+            if (main.Length > 0)
+            {
+                sink.DrawText(main, referencePos + new Point2D(0, DrawingStyles.ReferenceTextHeight + 0.5), h, Colors.Text);
             }
         }
     }

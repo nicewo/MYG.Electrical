@@ -165,6 +165,8 @@
                 <MenuItem Header="Aktif sayfayı sil" Command="{Binding DeletePageCommand}" />
             </MenuItem>
             <MenuItem Header="_Proje">
+                <MenuItem Header="Cihazları yeniden numaralandır (IEC 81346)" Command="{Binding RenumberDevicesCommand}" />
+                <Separator />
                 <MenuItem Header="Kabloları numaralandır (yalnızca eksikler)" Command="{Binding NumberWiresCommand}" CommandParameter="missing" />
                 <MenuItem Header="Tüm kabloları yeniden numaralandır" Command="{Binding NumberWiresCommand}" CommandParameter="all" />
             </MenuItem>
@@ -353,22 +355,70 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
 
-                <StackPanel Grid.Row="4">
-                    <TextBlock Text="SEMBOL KÜTÜPHANESİ (IEC)" Style="{StaticResource PanelHeader}" />
-                    <TextBox Text="{Binding SymbolFilter, UpdateSourceTrigger=PropertyChanged}" Margin="8,0,8,4" ToolTip="Sembol ara" />
+                <!-- Kütüphane: semboller ve cihazlar ayrı -->
+                <StackPanel Grid.Row="4" DataContext="{Binding Library}">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Margin="0,4,6,0">
+                            <RadioButton Content="Semboller" IsChecked="{Binding IsSymbolMode}" Margin="0,0,8,0" ToolTip="IEC 60617 sembol kütüphanesi" />
+                            <RadioButton Content="Cihazlar" IsChecked="{Binding IsDeviceMode}" ToolTip="Ürün bilgili cihaz kütüphanesi (sembolden ayrı)" />
+                        </StackPanel>
+                        <TextBlock Text="KÜTÜPHANE" Style="{StaticResource PanelHeader}" />
+                    </DockPanel>
+                    <TextBox Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Margin="8,0,8,4"
+                             ToolTip="Ara: ad, kimlik, kategori, anahtar kelime, üretici, model (birden çok kelime)" />
+                    <ComboBox ItemsSource="{Binding Manufacturers}" SelectedItem="{Binding Manufacturer}" Margin="8,0,8,4"
+                              Visibility="{Binding IsDeviceMode, Converter={StaticResource BoolToVis}}" ToolTip="Üretici süzgeci" />
                 </StackPanel>
-                <ListBox Grid.Row="5" ItemsSource="{Binding SymbolsView}" SelectedItem="{Binding SelectedSymbol}"
-                         DisplayMemberPath="Name" BorderThickness="0" Background="Transparent">
-                    <ListBox.GroupStyle>
-                        <GroupStyle>
-                            <GroupStyle.HeaderTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Name}" Foreground="{StaticResource SelectionBrush}" FontWeight="SemiBold" Margin="6,8,0,2" />
-                                </DataTemplate>
-                            </GroupStyle.HeaderTemplate>
-                        </GroupStyle>
-                    </ListBox.GroupStyle>
-                </ListBox>
+                <Grid Grid.Row="5" DataContext="{Binding Library}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TreeView ItemsSource="{Binding Roots}" BorderThickness="0" Background="Transparent"
+                              SelectedItemChanged="OnLibrarySelectedItemChanged"
+                              PreviewMouseLeftButtonDown="OnLibraryMouseDown" PreviewMouseMove="OnLibraryMouseMove">
+                        <TreeView.Resources>
+                            <HierarchicalDataTemplate DataType="{x:Type vm:LibraryNodeViewModel}" ItemsSource="{Binding Children}">
+                                <TextBlock Text="{Binding Header}" FontWeight="SemiBold" Foreground="{StaticResource SelectionBrush}" />
+                            </HierarchicalDataTemplate>
+                            <DataTemplate DataType="{x:Type vm:LibraryItemViewModel}">
+                                <StackPanel Orientation="Horizontal" ToolTip="{Binding Details}" Background="Transparent">
+                                    <Border Width="22" Height="22" Background="White" CornerRadius="2" Margin="0,1,6,1">
+                                        <Image Source="{Binding Preview}" Stretch="Uniform" Margin="1" />
+                                    </Border>
+                                    <TextBlock Text="★" Foreground="#FFFFB300" Margin="0,0,3,0" VerticalAlignment="Center"
+                                               Visibility="{Binding IsFavorite, Converter={StaticResource BoolToVis}}" />
+                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </TreeView.Resources>
+                        <TreeView.ItemContainerStyle>
+                            <Style TargetType="TreeViewItem" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+                                <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay, FallbackValue=False}" />
+                            </Style>
+                        </TreeView.ItemContainerStyle>
+                    </TreeView>
+                    <!-- Önizleme ve ayrıntı -->
+                    <Border Grid.Row="1" BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,0" Padding="8,6"
+                            Visibility="{Binding HasSelection, Converter={StaticResource BoolToVis}}">
+                        <DockPanel DataContext="{Binding Selected}">
+                            <Border DockPanel.Dock="Left" Width="84" Height="84" Background="White" CornerRadius="3" Margin="0,0,8,0">
+                                <Image Source="{Binding Preview}" Stretch="Uniform" Margin="4" />
+                            </Border>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}" FontWeight="SemiBold" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding Category}" Foreground="{StaticResource MutedTextBrush}" FontSize="11" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding Details}" Foreground="{StaticResource MutedTextBrush}" FontSize="11" TextWrapping="Wrap" Margin="0,2,0,4" />
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Yerleştir" Padding="8,1" Margin="0,0,6,0"
+                                            Command="{Binding DataContext.Library.PlaceCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" />
+                                    <Button Content="★ Favori" Padding="8,1" ToolTip="Favorilere ekle / çıkar"
+                                            Command="{Binding DataContext.Library.ToggleFavoriteCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+                </Grid>
             </Grid>
 
             <GridSplitter Grid.Column="1" Style="{StaticResource PanelSplitter}" />
@@ -380,7 +430,8 @@
                                     ActiveTool="{Binding ActiveTool, Mode=TwoWay}"
                                     PendingSymbol="{Binding SelectedSymbol}"
                                     PendingImage="{Binding PendingImage}"
-                                    PendingConnector="{Binding PendingConnector}">
+                                    PendingConnector="{Binding PendingConnector}"
+                                    PendingDevice="{Binding PendingDevice}">
                     <!-- Tek tuş kısayolları yalnızca çizim alanı odaktayken çalışır (metin kutularında yazmayı engellemez) -->
                     <draw:DrawingCanvas.ContextMenu>
                         <ContextMenu>
