@@ -57,3 +57,13 @@ yalnızca çizim alanı etkinken çalışır; özellik panelinde yazı yazarken 
 | Seçili nesneyi sürükle | Taşı (referans noktası grid'e oturur) |
 | Sağ tık (Seç aracında) | Bağlam menüsü: kes, kopyala, yapıştır, sil, döndür |
 | Sağ tık (diğer araçlarda) | İptal, seçim aracına dön |
+| Cihaza çift tık | Cihaz özellikleri penceresi |
+| Kabloya tık | Kablo bilgisi (numara, damar rengi, kesit, tip) sağ panelde |
+| Kütüphaneden sürükle-bırak | Sembol veya cihazı bırakılan noktaya yerleştir |
+| Kütüphanede çift tık | Sembol/cihaz aracını başlat |
+
+## Proje
+
+| Kısayol | İşlem |
+|---|---|
+| F7 | Tasarım kuralları denetimi (DRC) |

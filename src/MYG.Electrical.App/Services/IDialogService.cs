@@ -7,6 +7,12 @@ public interface IDialogService
     string? SavePdfFile(string suggestedName);
     string? OpenImageFile();
 
+    /// <summary>Genel kaydetme diyaloğu (raporlar).</summary>
+    string? SaveFile(string suggestedName, string filter, string title);
+
+    /// <summary>Renk ayarları penceresi. Kaydet → true.</summary>
+    bool ShowColorSettings(ViewModels.ColorSettingsViewModel vm);
+
     /// <summary>Resim ekle/ayarla penceresi. Tamam → true.</summary>
     bool ShowImageDialog(ViewModels.ImageDialogViewModel vm);
 

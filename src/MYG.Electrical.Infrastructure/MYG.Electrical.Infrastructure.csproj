@@ -7,6 +7,7 @@
     <ProjectReference Include="..\MYG.Electrical.Symbols\MYG.Electrical.Symbols.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="DocumentFormat.OpenXml" />
     <PackageReference Include="PDFsharp" />
     <PackageReference Include="Serilog" />
     <PackageReference Include="Serilog.Sinks.File" />

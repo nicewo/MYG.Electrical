@@ -74,6 +74,7 @@
 
     <Window.InputBindings>
         <KeyBinding Key="F1" Command="{Binding UserGuideCommand}" />
+        <KeyBinding Key="F7" Command="{Binding RunDrcCommand}" />
         <KeyBinding Key="N" Modifiers="Control" Command="{Binding NewCommand}" />
         <KeyBinding Key="O" Modifiers="Control" Command="{Binding OpenCommand}" />
         <KeyBinding Key="S" Modifiers="Control" Command="{Binding SaveCommand}" />
@@ -101,6 +102,7 @@
                 <Separator />
                 <MenuItem Header="Tüm projeyi _PDF'e aktar…" Command="{Binding ExportPdfCommand}" InputGestureText="Ctrl+P" />
                 <MenuItem Header="Aktif sayfayı PDF'e aktar…" Command="{Binding ExportPagePdfCommand}" />
+                <MenuItem Header="PDF'i siyah-beyaz aktar" IsCheckable="True" IsChecked="{Binding PdfMonochrome}" />
                 <Separator />
                 <MenuItem Header="Çı_kış" Click="OnExitClick" InputGestureText="Alt+F4" />
             </MenuItem>
@@ -124,6 +126,7 @@
                 <MenuItem Header="Grid" IsCheckable="True" IsChecked="{Binding GridVisible}" />
                 <MenuItem Header="Snap (grid'e yapış)" IsCheckable="True" IsChecked="{Binding SnapEnabled}" />
                 <MenuItem Header="Bağlantı noktası işaretleri" IsCheckable="True" IsChecked="{Binding ShowConnectionPoints}" />
+                <MenuItem Header="Alt panel (DRC, mesajlar)" IsCheckable="True" IsChecked="{Binding BottomPanel.IsOpen}" />
             </MenuItem>
             <MenuItem Header="_Ekle">
                 <MenuItem Header="Sembol (kütüphaneden seçin)" Command="{Binding SetToolCommand}" CommandParameter="Symbol" />
@@ -165,12 +168,25 @@
                 <MenuItem Header="Aktif sayfayı sil" Command="{Binding DeletePageCommand}" />
             </MenuItem>
             <MenuItem Header="_Proje">
+                <MenuItem Header="Tasarım kuralları denetimi (DRC)" Command="{Binding RunDrcCommand}" InputGestureText="F7" />
+                <Separator />
                 <MenuItem Header="Cihazları yeniden numaralandır (IEC 81346)" Command="{Binding RenumberDevicesCommand}" />
                 <Separator />
                 <MenuItem Header="Kabloları numaralandır (yalnızca eksikler)" Command="{Binding NumberWiresCommand}" CommandParameter="missing" />
                 <MenuItem Header="Tüm kabloları yeniden numaralandır" Command="{Binding NumberWiresCommand}" CommandParameter="all" />
             </MenuItem>
+            <MenuItem Header="_Raporlar">
+                <MenuItem Header="Tüm raporlar (Excel .xlsx)…" Command="{Binding ExportReportsCommand}" />
+                <Separator />
+                <MenuItem Header="Cihaz listesi (CSV)…" Command="{Binding ExportReportCsvCommand}" CommandParameter="DeviceList" />
+                <MenuItem Header="Malzeme listesi / BOM (CSV)…" Command="{Binding ExportReportCsvCommand}" CommandParameter="BillOfMaterials" />
+                <MenuItem Header="Klemens planı (CSV)…" Command="{Binding ExportReportCsvCommand}" CommandParameter="TerminalPlan" />
+                <MenuItem Header="Kablo listesi (CSV)…" Command="{Binding ExportReportCsvCommand}" CommandParameter="CableList" />
+                <MenuItem Header="PLC G/Ç listesi (CSV)…" Command="{Binding ExportReportCsvCommand}" CommandParameter="PlcIoList" />
+            </MenuItem>
             <MenuItem Header="_Araçlar">
+                <MenuItem Header="Renk ayarları…" Command="{Binding OpenColorSettingsCommand}" />
+                <Separator />
                 <MenuItem Header="Log klasörünü aç" Command="{Binding OpenLogFolderCommand}" />
             </MenuItem>
             <MenuItem Header="_Yardım">
@@ -296,7 +312,13 @@
             </DockPanel>
         </Border>
 
-        <!-- ===== Ana alan ===== -->
+        <!-- ===== Ana alan + alt panel ===== -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" MinHeight="200" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="270" MinWidth="180" />
@@ -431,7 +453,9 @@
                                     PendingSymbol="{Binding SelectedSymbol}"
                                     PendingImage="{Binding PendingImage}"
                                     PendingConnector="{Binding PendingConnector}"
-                                    PendingDevice="{Binding PendingDevice}">
+                                    PendingDevice="{Binding PendingDevice}"
+                                    Colors="{Binding ColorScheme}"
+                                    HighlightedObjects="{Binding BottomPanel.Highlighted}">
                     <!-- Tek tuş kısayolları yalnızca çizim alanı odaktayken çalışır (metin kutularında yazmayı engellemez) -->
                     <draw:DrawingCanvas.ContextMenu>
                         <ContextMenu>
@@ -479,6 +503,87 @@
                     <ItemsControl ItemsSource="{Binding Properties.Rows}" Margin="10,0,10,10" KeyboardNavigation.TabNavigation="Cycle" />
                 </ScrollViewer>
             </DockPanel>
+        </Grid>
+
+        <Border Grid.Row="1" Height="1" Background="{StaticResource BorderBrush}"
+                Visibility="{Binding BottomPanel.IsOpen, Converter={StaticResource BoolToVis}}" />
+
+        <!-- Alt panel: DRC, mesajlar, çapraz referanslar, proje bilgisi -->
+        <TabControl Grid.Row="2" Height="210" DataContext="{Binding BottomPanel}" SelectedIndex="{Binding SelectedTab}"
+                    Visibility="{Binding IsOpen, Converter={StaticResource BoolToVis}}" Background="{StaticResource PanelBrush}">
+            <TabItem Header="DRC">
+                <DockPanel>
+                    <DockPanel DockPanel.Dock="Top" Margin="6,4">
+                        <Button Content="DRC çalıştır (F7)" Command="{Binding RunDrcCommand}" Padding="10,2" Margin="0,0,6,0" />
+                        <Button Content="Temizle" Command="{Binding ClearDrcCommand}" Padding="10,2" Margin="0,0,12,0" />
+                        <TextBlock Text="{Binding DrcSummary}" FontWeight="SemiBold" VerticalAlignment="Center" />
+                    </DockPanel>
+                    <TextBlock DockPanel.Dock="Bottom" Text="{Binding Disclaimer}" TextWrapping="Wrap" FontSize="11"
+                               Foreground="#FFFFB74D" Margin="6,2,6,4" />
+                    <DataGrid ItemsSource="{Binding Findings}" SelectedItem="{Binding SelectedFinding}" AutoGenerateColumns="False" IsReadOnly="True"
+                              HeadersVisibility="Column" GridLinesVisibility="Horizontal" MouseDoubleClick="OnFindingDoubleClick"
+                              ToolTip="Çift tık: ilgili sayfaya git ve nesneleri seç">
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SeverityText}" Value="Hata">
+                                        <Setter Property="Foreground" Value="#FFD32F2F" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding SeverityText}" Value="Uyarı">
+                                        <Setter Property="Foreground" Value="#FFE68A00" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Önem" Binding="{Binding SeverityText}" Width="60" />
+                            <DataGridTextColumn Header="Kod" Binding="{Binding Code}" Width="100" />
+                            <DataGridTextColumn Header="Konum" Binding="{Binding Location}" Width="70" />
+                            <DataGridTextColumn Header="Açıklama" Binding="{Binding Message}" Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Mesajlar">
+                <DockPanel>
+                    <Button DockPanel.Dock="Top" HorizontalAlignment="Left" Content="Temizle" Command="{Binding ClearMessagesCommand}" Padding="10,2" Margin="6,4" />
+                    <ListView ItemsSource="{Binding Messages}" BorderThickness="0">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Time}" Foreground="{StaticResource MutedTextBrush}" Width="64" />
+                                    <TextBlock Text="{Binding Text}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Çapraz referanslar">
+                <DockPanel>
+                    <Button DockPanel.Dock="Top" HorizontalAlignment="Left" Content="Yenile" Command="{Binding RefreshCommand}" Padding="10,2" Margin="6,4" />
+                    <DataGrid ItemsSource="{Binding CrossReferences}" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" GridLinesVisibility="Horizontal">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Etiket" Binding="{Binding Reference}" Width="80" />
+                            <DataGridTextColumn Header="Açıklama" Binding="{Binding Description}" Width="200" />
+                            <DataGridTextColumn Header="Parçalar" Binding="{Binding Parts}" Width="*" />
+                            <DataGridTextColumn Header="Konumlar" Binding="{Binding Locations}" Width="160" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Proje bilgisi">
+                <DockPanel>
+                    <Button DockPanel.Dock="Top" HorizontalAlignment="Left" Content="Yenile" Command="{Binding RefreshCommand}" Padding="10,2" Margin="6,4" />
+                    <DataGrid ItemsSource="{Binding ProjectInfo}" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="None" GridLinesVisibility="Horizontal">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Key}" Width="180" />
+                            <DataGridTextColumn Binding="{Binding Value}" Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
         </Grid>
     </DockPanel>
 </Window>

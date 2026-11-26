@@ -521,6 +521,11 @@ public sealed class EditorSession
         Execute(new SetPropertyCommand<T>(description, setter, oldValue, newValue, target, _activePage), [target.Id]);
     }
 
+    /// <summary>Kullanıcının hiçbir bilgi girmediği (sembolden otomatik oluşan) cihaz kaydı mı.</summary>
+    private static bool IsUntouched(Devices.DeviceRecord r) =>
+        !r.HasCommercialData && r.Description.Length == 0 && r.Location.Length == 0 && r.Notes.Length == 0
+        && r.Datasheet.Length == 0 && r.TemplateId.Length == 0;
+
     /// <summary>Otomatik kablo numaralandırma (tek geri alma adımı). Değişen kablo sayısını döndürür.</summary>
     public int NumberWires(bool renumberAll)
     {
@@ -572,6 +577,14 @@ public sealed class EditorSession
         {
             commands.Add(new SetPropertyCommand<Dictionary<string, string>>("Kontak numarası", v => placement.PinDesignations = v,
                 placement.PinDesignations, designations, placement, _activePage));
+        }
+        var oldRecordForCleanup = Devices.DeviceRegistry.Find(Document, oldReference);
+        var oldUsedElsewhere = Devices.DeviceRegistry.Placements(Document, oldReference).Any(x => !ReferenceEquals(x.Placement, placement));
+        if (newReference.Length > 0 && Devices.DeviceRegistry.Find(Document, newReference) is not null
+            && oldRecordForCleanup is not null && !oldUsedElsewhere && IsUntouched(oldRecordForCleanup))
+        {
+            // Parça başka bir cihaza katıldı: kendi başına oluşturulmuş, bilgi girilmemiş kaydı artık gereksiz.
+            commands.Add(new RemoveDeviceRecordsCommand(Document, [oldRecordForCleanup]));
         }
         if (newReference.Length > 0 && Devices.DeviceRegistry.Find(Document, newReference) is null)
         {

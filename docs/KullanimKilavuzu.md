@@ -44,17 +44,56 @@ Bu kılavuz programın **şu anki sürümünde çalışan** özelliklerini anlat
 - **Döndürme:** R (90° adımlar). Sağ tık menüsünde de vardır.
 - **Kopyala / yapıştır:** Yapıştırılan cihazlar yeni tanım numarası alır (-K1 → -K2).
 
-## 5. Semboller
+## 5. Semboller ve cihazlar
 
-Sol paneldeki **Sembol kütüphanesi**nden bir sembol seçin, çizim alanında tıklayarak yerleştirin
-(yerleştirmeden önce R ile döndürebilirsiniz). Sağ tık veya Esc ile bitirin.
+Sol alttaki **Kütüphane** iki sekmelidir:
 
-Mevcut IEC sembolleri: kontaktör (3 kutup), otomatik sigorta (3 kutup), sigorta, motor (3 faz), bobin,
-röle (bobin + NO), açık kontak (NO), kapalı kontak (NC), buton (NO), acil stop (NC), limit switch (NO),
-endüktif sensör (PNP), sinyal lambası, klemens.
+- **Semboller:** 113 IEC 60617 sembolü (genel grafik). Kategori ağacından veya aramadan bulun.
+- **Cihazlar:** ürün bilgili şablonlar (ör. "Kontaktör 9 A, 24 VDC bobin, 1NO+1NC", "Frekans inverteri 22 kW").
+  Yerleştirince proje cihazı bu bilgilerle (elektriksel veri, kontak kapasitesi) oluşur. Üretici süzgeci vardır.
 
-Her cihaz otomatik tanım alır (`-K1`, `-Q1`, `-M1`…); sağ panelden değiştirilebilir. Pin numaraları
-(1-2, A1-A2, 13-14, U1-V1-W1…) çizimde ve PDF'te görünür.
+Yerleştirme: öğeye **çift tıklayın** ve çizimde tıklayın (R ile döndürün, sağ tık/Esc ile bitirin) ya da öğeyi
+çizim alanına **sürükleyip bırakın**. Alttaki önizlemede **★ Favori** ile favorilere ekleyin; son kullanılanlar
+otomatik listelenir. Arama birden çok kelimeyi birlikte arar ("kontaktör 24").
+
+Her cihaz IEC 81346 etiketi alır (`-K1`, `-F1`, `-M1`…). Şablon proje özelliklerinde **Etiket şablonu**
+alanındadır (`-{prefix}{n}`, sayfa numaralı: `={page}-{prefix}{n}`). **Proje → Cihazları yeniden
+numaralandır** bütün etiketleri sayfa ve kolon sırasıyla yeniden verir.
+
+**Çok parçalı cihaz:** bir kontağın etiketini bobininkiyle aynı yapın (sağ panel → Tanım). Kontak o cihazın
+parçası olur, sıradaki numarayı alır (13-14, 23-24...). Bobinin altında kontak aynası, kontağın altında
+bobinin `/sayfa.kolon` konumu yazılır.
+
+**Cihaz özellikleri:** cihaza çift tıklayın. Sekmeler: Genel (etiket, açıklama, yer, işlev metni), Elektriksel
+veri, Bağlantılar/Pinler (görünen pin adı düzenlenebilir), Üretici, Kontaklar (kullanılan/boş), Çapraz
+referanslar, Dokümantasyon (datasheet, notlar). Tamam tek adımda geri alınabilir.
+
+**Kendi sembol ve cihazlarınız:** `%AppData%\MYG.Electrical\Symbols\` ve `...\Devices\` klasörlerine JSON
+dosyası koyun ve programı yeniden açın (biçim: `docs/SymbolLibrary.md`).
+
+## 5a. Potansiyeller, sayfa bağlantıları, kablo numaraları
+
+- **Ekle → Potansiyel** (L1, L2, L3, N, PE, +24V, 0V, diğer): hattın başına koyun. Ad ve tür bağlı kablolara geçer;
+  kablolar türün rengiyle çizilir. Sigorta/klemens ve kontaklardan geçer, bobin ve yüklerde durur.
+- **Ekle → Sayfa bağlantısı:** hattı başka sayfaya taşır. Diğer sayfaya **aynı adla** ikinci bir bağlantı koyun;
+  yanlarında karşı ucun `/sayfa.kolon` referansı yazar.
+- **Kablo bilgisi:** Seç aracıyla kabloya tıklayın; sağ panelde numara, damar rengi, kesit, kablo tipi, açıklama.
+  "Numara kilitli" işaretliyse otomatik numaralandırma dokunmaz.
+- **Proje → Kabloları numaralandır:** her iletkene (net) bir numara; potansiyele doğrudan bağlı hatlar
+  potansiyelin adını alır. Şablon: proje özelliklerinde **Kablo no şablonu** (`{n}`, `{page}{column}`...).
+- **Araçlar → Renk ayarları:** potansiyel, sembol, çerçeve, metin, seçim ve hata renkleri. Renk yalnızca görsel
+  yardımdır. **Dosya → PDF'i siyah-beyaz aktar** baskı için.
+
+## 5b. DRC ve raporlar
+
+- **Proje → DRC (F7):** sonuçlar alt paneldeki DRC sekmesinde; hatalar kırmızı, uyarılar turuncu. Satıra çift
+  tıklayınca ilgili sayfa açılır ve nesneler seçilir; hatalı/uyarılı nesneler çizimde kırmızı çerçevelenir.
+  **DRC elektriksel güvenlik veya mevzuat uygunluğu sertifikası değildir**; kesit, koruma seçimi ve
+  standartlara uygunluk ayrıca doğrulanmalıdır.
+- **Raporlar → Tüm raporlar (Excel):** cihaz listesi, malzeme listesi, klemens planı, kablo listesi ve PLC G/Ç
+  listesi tek .xlsx dosyasında (her biri ayrı sayfa). Tek tek CSV de alınabilir.
+- Alt paneldeki **Mesajlar**, **Çapraz referanslar** ve **Proje bilgisi** sekmeleri; panel **Görünüm → Alt
+  panel** ile gizlenir.
 
 ## 6. Otomatik kablolama
 

@@ -136,7 +136,6 @@
         "input"
       ],
       "referencePrefix": "A",
-      "role": "contact",
       "primitives": [
         {
           "kind": "rect",
@@ -296,7 +295,6 @@
         "output"
       ],
       "referencePrefix": "A",
-      "role": "contact",
       "primitives": [
         {
           "kind": "rect",
@@ -470,7 +468,6 @@
         "0-10V"
       ],
       "referencePrefix": "A",
-      "role": "contact",
       "primitives": [
         {
           "kind": "rect",
@@ -573,7 +570,6 @@
         "0-10V"
       ],
       "referencePrefix": "A",
-      "role": "contact",
       "primitives": [
         {
           "kind": "rect",

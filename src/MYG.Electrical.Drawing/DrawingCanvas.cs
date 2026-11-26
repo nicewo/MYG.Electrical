@@ -23,7 +23,7 @@ public sealed class DrawingCanvas : FrameworkElement
     private const double GhostOpacity = 0.45;
     private const double MinRubberBandPixels = 3.0;
 
-    private static readonly Brush PageBrush = Frozen(new SolidColorBrush(Colors.White));
+    private static readonly Brush PageBrush = Frozen(new SolidColorBrush(System.Windows.Media.Colors.White));
     private static readonly Brush ShadowBrush = Frozen(new SolidColorBrush(Color.FromArgb(0x60, 0, 0, 0)));
     private static readonly Pen GridPenBase = Frozen(new Pen(Frozen(new SolidColorBrush(Color.FromRgb(0xE3, 0xE5, 0xE8))), 1));
     private static readonly Brush SelectionBrush = Frozen(new SolidColorBrush(Color.FromRgb(0xFF, 0x98, 0x00)));
@@ -32,6 +32,8 @@ public sealed class DrawingCanvas : FrameworkElement
     private static readonly Pen SelectionPen = Frozen(new Pen(SelectionBrush, 1.5));
     private static readonly Brush SelectionFill = Frozen(new SolidColorBrush(Color.FromArgb(0x1E, 0xFF, 0x98, 0x00)));
     private static readonly Pen WireSelectionPen = Frozen(new Pen(Frozen(new SolidColorBrush(Color.FromArgb(0x90, 0xFF, 0x98, 0x00))), 6) { StartLineCap = PenLineCap.Round, EndLineCap = PenLineCap.Round });
+    private static readonly Pen ErrorPen = Frozen(new Pen(Frozen(new SolidColorBrush(Color.FromRgb(0xD3, 0x2F, 0x2F))), 2) { DashStyle = DashStyles.Dash });
+    private static readonly Brush ErrorFill = Frozen(new SolidColorBrush(Color.FromArgb(0x26, 0xD3, 0x2F, 0x2F)));
     private static readonly Pen RubberPen = Frozen(new Pen(SelectionBrush, 1));
     private static readonly Pen PreviewPen = Frozen(new Pen(ActiveToolBrush, 1.2) { DashStyle = DashStyles.Dash });
     private static readonly Pen SnapPen = Frozen(new Pen(ActiveToolBrush, 1));
@@ -151,6 +153,28 @@ public sealed class DrawingCanvas : FrameworkElement
     {
         get => (SinglePinObject?)GetValue(PendingConnectorProperty);
         set => SetValue(PendingConnectorProperty, value);
+    }
+
+    public static readonly DependencyProperty ColorsProperty = DependencyProperty.Register(
+        nameof(Colors), typeof(ColorScheme), typeof(DrawingCanvas),
+        new PropertyMetadata(ColorScheme.Default, (d, _) => ((DrawingCanvas)d).RefreshAll()));
+
+    /// <summary>Şema renkleri (kullanıcı ayarı).</summary>
+    public ColorScheme Colors
+    {
+        get => (ColorScheme)GetValue(ColorsProperty);
+        set => SetValue(ColorsProperty, value);
+    }
+
+    /// <summary>DRC bulgularında vurgulanacak nesneler (kırmızı çerçeve).</summary>
+    public static readonly DependencyProperty HighlightedObjectsProperty = DependencyProperty.Register(
+        nameof(HighlightedObjects), typeof(IReadOnlyCollection<Guid>), typeof(DrawingCanvas),
+        new PropertyMetadata(null, (d, _) => ((DrawingCanvas)d).RedrawOverlay()));
+
+    public IReadOnlyCollection<Guid>? HighlightedObjects
+    {
+        get => (IReadOnlyCollection<Guid>?)GetValue(HighlightedObjectsProperty);
+        set => SetValue(HighlightedObjectsProperty, value);
     }
 
     public static readonly DependencyProperty PendingDeviceProperty = DependencyProperty.Register(
@@ -337,6 +361,7 @@ public sealed class DrawingCanvas : FrameworkElement
         if (_composer is not null && Session is not null)
         {
             _composer.Network = Session.Network;
+            _composer.Colors = Colors;
             _composer.ComposeObject(obj, new WpfSceneSink(dc), EditorOptions);
         }
     }
@@ -386,7 +411,7 @@ public sealed class DrawingCanvas : FrameworkElement
         }
         var doc = Session.Document;
         var page = Session.ActivePage;
-        PageFrameComposer.Compose(doc.Project, page, doc.Pages.IndexOf(page) + 1, doc.Pages.Count, new WpfSceneSink(dc));
+        PageFrameComposer.Compose(doc.Project, page, doc.Pages.IndexOf(page) + 1, doc.Pages.Count, new WpfSceneSink(dc), Colors);
     }
 
     private void RedrawWires()
@@ -397,6 +422,8 @@ public sealed class DrawingCanvas : FrameworkElement
             if (_composer is not null)
             {
                 _composer.Network = Session.Network;
+                _composer.Colors = Colors;
+            _composer.Colors = Colors;
                 _composer.ComposeWires(Session.ActivePage, Session.Wires, new WpfSceneSink(dc));
             }
         }
@@ -435,6 +462,14 @@ public sealed class DrawingCanvas : FrameworkElement
         if (Session is null)
         {
             return;
+        }
+
+        if (HighlightedObjects is { Count: > 0 } highlighted)
+        {
+            foreach (var obj in Session.ActivePage.Objects.Where(o => highlighted.Contains(o.Id)))
+            {
+                dc.DrawRectangle(ErrorFill, ErrorPen, ScreenRect(ObjectBounds.Get(obj, Session.Catalog), SelectionPaddingPixels + 2));
+            }
         }
 
         foreach (var obj in Session.SelectedObjects)

@@ -62,7 +62,7 @@ Aşağıdaki görüntüler programın kendi ürettiği PDF çıktısıdır (`sam
 |---|---|
 | <img src="docs/images/pdf-sema.png" alt="Şema sayfası PDF çıktısı" width="520"> | <img src="docs/images/pdf-kapak.png" alt="Kapak sayfası PDF çıktısı" width="520"> |
 
-## Temel özellikler (v0.2)
+## Temel özellikler (v0.3)
 
 ### Çizim
 - Gerçek ölçü birimi **milimetre**; A4, A3, A2, A1 — yatay ve dikey
@@ -71,14 +71,32 @@ Aşağıdaki görüntüler programın kendi ürettiği PDF çıktısıdır (`sam
 - Kes / kopyala / yapıştır, ok tuşlarıyla hassas kaydırma, sağ tık menüsü
 - Sayfa işlemleri dahil **tam geri al / ileri al**
 
-### Sembol kütüphanesi
-IEC 60617 esinli yerleşik semboller: kontaktör (3 kutup), otomatik sigorta (3 kutup), sigorta, motor (3 faz),
-bobin, röle, açık (NO) ve kapalı (NC) kontak, buton, acil stop, limit switch, endüktif sensör (PNP),
-sinyal lambası, klemens. Pinler 5 mm grid üzerindedir; kontaktör, sigorta ve motor faz aralıkları uyumludur.
-Cihazlar otomatik tanım alır (`-K1`, `-Q1`, `-M1`…).
+### Sembol ve cihaz kütüphanesi
+- **113 IEC 60617 sembolü**, 10 kategori: koruma (sigorta, MCB 1P–4P, motor koruma şalteri, termik, kaçak akım,
+  parafudr, ayırıcı), kontaktör ve röle (bobinler, zaman röleleri, NO/NC/CO ve zamanlı kontaklar, faz sırası ve
+  güvenlik rölesi, SSR), motor ve sürücü (motorlar, frekans inverteri güç + kumanda + haberleşme, yumuşak yolverici,
+  fren, pompa, fan), PLC ve otomasyon (CPU, DI/DO/AI/AO modülleri, tek kanal G/Ç, HMI, switch, RS485), sensör ve saha
+  (endüktif/kapasitif/optik sensörler, limit switch, basınç/seviye/akış şalteri, termostat, PT100, termokupl,
+  transmitter, enkoder, kapı ve emniyet switchi), kumanda (butonlar, seçici, lamba, buzzer, korna), klemens ve
+  konnektör, ölçüm (analizör, akım trafosu, sayaç), enerji (güç kaynağı, 24 VDC dağıtım, trafo, priz) ve diğerleri.
+- Semboller **JSON**: kendi sembolünüzü `%AppData%\MYG.Electrical\Symbols\*.json` dosyasına ekleyin, kod değişmez
+  ([biçim](docs/SymbolLibrary.md)). Pinlerin işlevi (güç, bobin, NO/NC, giriş/çıkış, besleme, PE...) ve iç
+  bağlantıları tanımlıdır.
+- **Cihaz kütüphanesi** sembolden ayrıdır: 63 genel şablon (kontaktörler, sigortalar, 22 kW / 2.2 kW sürücüler,
+  PLC, Delta HMI, analizör, akım trafoları, güç kaynakları, sensörler, butonlar...). Kendi ürünlerinizi
+  `%AppData%\MYG.Electrical\Devices\*.json` ile ekleyin.
+- Kütüphane panelinde kategori ağacı, çok kelimeli arama, üretici süzgeci, favoriler, son kullanılanlar,
+  önizleme; çift tık veya **sürükle-bırak** ile yerleştirme.
 
-> Kütüphane bu sürümde sabittir; kullanıcı tanımlı sembol ve sembol editörü henüz yoktur
-> (bkz. [Yol haritası](docs/Roadmap.md)).
+### Cihazlar (EPLAN mantığı)
+- **Çok parçalı cihaz:** aynı etiketi taşıyan bobin, ana kontaklar ve yardımcı kontaklar farklı sayfalarda
+  olabilir. Eklenen yardımcı kontak sıradaki numarayı alır (13-14 → 23-24 → 33-34).
+- **Çapraz referans:** bobin etiketinin altında kontak aynası (`NO 13-14 /5.3`), kontağın altında bobinin
+  `/sayfa.kolon` konumu.
+- **Cihaz özellikleri** (çift tık): genel, elektriksel veri, pinler, üretici, kontaklar (kullanılan / boş /
+  kapasite dışı), çapraz referanslar, dokümantasyon.
+- **IEC 81346 etiketleri** proje şablonuyla (`-{prefix}{n}`, `={page}-{prefix}{n}`...) ve toplu yeniden
+  numaralandırma.
 
 ### Otomatik kablolama
 - Aynı hatta bulunan ve **birbirine bakan** pinler kendiliğinden düz kabloyla bağlanır
@@ -89,6 +107,27 @@ Cihazlar otomatik tanım alır (`-K1`, `-Q1`, `-M1`…).
 - Yerleştirirken dirsek/T yönü çevredeki pinlere göre otomatik önerilir
 
 Ayrıntı: [docs/AutoWiring.md](docs/AutoWiring.md)
+
+### Potansiyeller, renkli kablolar ve kablo numaraları
+- **Potansiyel** nesnesi (L1, L2, L3, N, PE, +24V, 0V, sinyal, haberleşme): adı, türü ve gerilimi kabloya geçer;
+  sigorta ve klemenslerden, kontak ve kesicilerden (anahtarlı) ilerler, bobin ve yüklerde durur.
+- Kablolar potansiyel rengiyle çizilir (L1 kırmızı, L2 kahverengi, L3 siyah, N mavi, PE yeşil, +24V kırmızı,
+  0V koyu mavi, sinyal camgöbeği, haberleşme mor). Renkler **Araçlar → Renk ayarları**ndan değişir; renk tek
+  başına anlam taşımaz, ad her zaman yazılır. PDF isteğe göre siyah-beyaz.
+- **Sayfa bağlantısı** (kesme noktası): aynı adlı bağlantılar sayfalar arasında birleşir, karşı ucun
+  `/sayfa.kolon` referansı yazılır.
+- **Kablo bilgisi:** kabloya tıklayıp numara, damar rengi, kesit, kablo tipi, açıklama girin.
+- **Otomatik kablo numaralandırma:** iletken (net) başına tek numara, potansiyele bağlı hatlarda potansiyel adı,
+  kilitli numaralar korunur.
+
+### Denetim ve raporlar
+- **DRC (F7):** bağlantısız pin, boşta kalan bağlantı kolu, çift etiket, tanımsız sembol/pin, tekrar eden
+  kontak/klemens numarası, eksik cihaz bilgisi, potansiyel çakışması ve **kısa devre**, kontak kapasitesi,
+  eşi olmayan sayfa bağlantısı. Bulgular alt panelde listelenir ve çizimde kırmızı işaretlenir.
+  **DRC elektriksel güvenlik veya mevzuat uygunluğu sertifikası değildir.**
+- **Raporlar:** cihaz listesi, malzeme listesi (BOM), klemens planı, kablo listesi, PLC G/Ç listesi —
+  tek Excel dosyası (.xlsx) veya ayrı CSV.
+- Alt panel: DRC, mesajlar, çapraz referanslar, proje bilgisi.
 
 ### Proje ve sayfa yönetimi
 - Kapak ve şema sayfaları, sayfa ekleme/silme/sıralama
@@ -130,9 +169,12 @@ Program açılışta internet varsa güncellemeyi kendisi denetler. Elle: **Yard
 
 ## Örnek proje
 
-Programda **Yardım → Örnek projeyi aç**, ya da depodaki [`samples/Demo.myge`](samples/Demo.myge):
-direkt yol verme güç devresi (Q1 → K1 → M1) ve 24 VDC kumanda devresi (F1, acil stop, start butonu,
-T ve dirsekle dallanan bobin/lamba hattı, PNP sensör).
+Programda **Yardım → Örnek projeyi aç**, ya da depodaki
+[`samples/PompaIstasyonu.myge`](samples/PompaIstasyonu.myge): 7 sayfalık pompa istasyonu — 22 kW ve 2.2 kW
+sürücüler, kontaktörle yol verilen motor (motor koruma, termik), faz sırası rölesi, akım trafoları ve enerji
+analizörü, 24 VDC güç kaynağı ve dağıtım, start/stop/acil stop kumandası, PLC CPU + DI/DO modülleri, kapı ve
+basınç şalteri, endüktif sensör, Delta HMI; potansiyeller, sayfa bağlantıları ve numaralı kablolarla.
+Daha basit eski örnek: [`samples/Demo.myge`](samples/Demo.myge) (format 3, açılırken yükseltilir).
 
 ## Geliştirme mimarisi
 
@@ -164,13 +206,13 @@ dotnet run --project src/MYG.Electrical.App
 ```
 
 Ayrıntılı belgeler: [Mimari](docs/Architecture.md) · [Proje formatı](docs/ProjectFormat.md) ·
-[Otomatik kablolama](docs/AutoWiring.md) · [Son inceleme raporu](docs/Review-2026-11-25.md)
+[Otomatik kablolama](docs/AutoWiring.md) · [Cihaz ve potansiyel mimarisi](docs/DeviceArchitecture.md) ·
+[Sembol kütüphanesi biçimi](docs/SymbolLibrary.md) · [Son inceleme raporu](docs/Review-2026-11-25.md)
 
 ## Yol haritası
 
-Planlanan başlıca konular (henüz **yok**): kullanıcı tanımlı semboller ve sembol editörü, kapsamlı sembol
-envanteri, potansiyel ve kablo numaralandırma, kontak–bobin çapraz referansları, klemens planı, kablo ve
-bağlantı listeleri, sayfalar arası referanslar, L/Z kablo yönlendirme, yazdırma.
+Planlanan başlıca konular (henüz **yok**): grafik sembol editörü, L/Z (dik açılı) otomatik kablo yönlendirme,
+klemens şeridi ve kablo (çok damarlı) nesneleri, PLC adres atama sihirbazı, kayan paneller, doğrudan yazdırma.
 Güncel liste: [docs/Roadmap.md](docs/Roadmap.md).
 
 ## Geliştirici

@@ -116,6 +116,12 @@ public partial class MainWindow : Window, ICanvasController
         }
     }
 
+    private void OnFindingDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        _vm.BottomPanel.GoToFindingCommand.Execute(null);
+        Canvas.Focus();
+    }
+
     /// <summary>Özellik panelinde Enter değeri hemen uygular.</summary>
     private void OnPreviewKeyDown(object sender, KeyEventArgs e)
     {

@@ -31,5 +31,9 @@ public static class ShortcutCatalog
         ("Fare", "Ctrl + tık", "Seçime ekle / çıkar"),
         ("Fare", "Boş alanda sürükle", "Alan seçimi"),
         ("Fare", "Sağ tık", "Seç aracında bağlam menüsü, diğer araçlarda iptal"),
+        ("Fare", "Cihaza çift tık", "Cihaz özellikleri penceresi"),
+        ("Fare", "Kabloya tık", "Kablo bilgisi (numara, renk, kesit) sağ panelde"),
+        ("Fare", "Kütüphaneden sürükle", "Sembol veya cihazı bırakılan noktaya yerleştir"),
+        ("Proje", "F7", "Tasarım kuralları denetimi (DRC)"),
     ];
 }

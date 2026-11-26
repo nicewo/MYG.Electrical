@@ -16,8 +16,12 @@ public static class PageFrameComposer
     private const double CoverRowHeight = 9.0;
     private const double CoverLogoSize = 40.0;
 
-    public static void Compose(ProjectInfo info, Page page, int pageNumber, int pageCount, ISceneSink sink)
+    public static void Compose(ProjectInfo info, Page page, int pageNumber, int pageCount, ISceneSink sink, ColorScheme? colors = null)
     {
+        if (colors is not null && !ReferenceEquals(colors, ColorScheme.Monochrome))
+        {
+            sink = new FrameColorSink(sink, colors);
+        }
         var frame = PageLayout.Frame(page);
         sink.DrawRectangle(frame, DrawingStyles.Frame);
 

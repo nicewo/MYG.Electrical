@@ -46,7 +46,7 @@ public sealed class PdfExporter(ISymbolCatalog catalog, ILogger logger)
         var warnings = new List<string>();
 
         var network = Core.Network.ProjectNetwork.Build(document, catalog, _wireEngine);
-        var composer = new SceneComposer(catalog, document.FindResource) { Network = network };
+        var composer = new SceneComposer(catalog, document.FindResource) { Network = network, Colors = options.Colors };
         using var pdf = new PdfDocument();
         pdf.Info.Title = document.Project.Name;
         pdf.Info.Author = document.Project.PreparedBy;
@@ -76,7 +76,7 @@ public sealed class PdfExporter(ISymbolCatalog catalog, ILogger logger)
             gfx.ScaleTransform(scale);
 
             var sink = new PdfSceneSink(gfx, logger);
-            PageFrameComposer.Compose(document.Project, page, index + 1, document.Pages.Count, sink);
+            PageFrameComposer.Compose(document.Project, page, index + 1, document.Pages.Count, sink, options.Colors);
             composer.ComposeWires(page, network.Wires[page], sink);
             composer.ComposeObjects(page.Objects, sink, SceneComposerOptions.Print);
         }

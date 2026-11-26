@@ -3,7 +3,7 @@
 Bu belge v0.3 geliştirmesinin (IEC cihaz kütüphanesi, çok parçalı cihazlar, renkli kablolar, DRC) mimari
 kararlarını anlatır. Mevcut mimari korunur; yeni sistem üzerine eklenir.
 
-## 1. Mevcut durum (v0.2)
+## 1. Başlangıç durumu (v0.2)
 
 | Konu | v0.2'de durum | Eksik |
 |---|---|---|
@@ -98,5 +98,29 @@ veya mevzuat uygunluğu sertifikası değildir.**
 
 ## 3. Format
 
-Sürüm 4: `devices`, sayfalarda `wireData`, nesne türleri `potential` ve `pageLink`, pinlerde `function`.
-v3 → v4 dönüşümü mevcut `DeviceObject` etiketlerinden `DeviceRecord` üretir; çizim ve bağlantılar aynen kalır.
+- v4: `devices` (DeviceRecord), `projectSettings`, sayfalarda `wireData`, yerleşimde `description` ve
+  `pinDesignations`. v3 → v4: mevcut etiketlerden cihaz kayıtları üretilir; çizim ve bağlantılar aynen kalır.
+- v5: nesne türleri `potential` ve `pageLink`.
+- v6: cihaz kaydında `templateId` ve `contacts` (kontak kapasitesi).
+
+Pin işlevi proje dosyasında değil sembolde tutulur (yerleşim pinleri sembolden kopyalanır; işlev JSON'a
+varsayılan değilse yazılır).
+
+## 4. Uygulama durumu (v0.3)
+
+| Konu | Kod |
+|---|---|
+| JSON sembol kütüphanesi, kullanıcı klasörü | `Core/Symbols/SymbolLibraryLoader`, `SymbolCatalog`, `Symbols/BuiltInSymbolLibrary`, `tools/symbolgen/generate.py` |
+| Cihaz kütüphanesi | `Core/Devices/DeviceTemplate`, `DeviceLibraryLoader`, `Symbols/BuiltInDeviceLibrary`, `tools/symbolgen/devices.py` |
+| Proje cihazı, çok parçalı cihaz, kontak numarası | `Core/Devices/DeviceRecord`, `DeviceRegistry`, `ContactNumbering`, `ContactUsage` |
+| Potansiyel, sayfa bağlantısı | `Core/Model/ConnectorObjects` |
+| Net / potansiyel analizi | `Core/Network/ProjectNetwork` (union-find; kalıcı ve anahtarlı iç bağlantılar) |
+| Kablo numaralandırma, kablo verisi | `Core/Network/WireNumbering`, `Core/Devices/WireData` |
+| Çapraz referans | `Core/Network/CrossReferences`, `SceneComposer.ComposeCrossReferences` |
+| DRC | `Core/Drc/DrcEngine` |
+| Raporlar | `Core/Reports/ProjectReports`, `Infrastructure/Reports/XlsxReportWriter`, `CsvReportWriter` |
+| Renkler | `Core/Rendering/ColorScheme`, `App/Services/AppSettingsService` |
+| Arayüz | `App/ViewModels/LibraryViewModel`, `DevicePropertiesViewModel`, `BottomPanelViewModel`, `ColorSettingsViewModel` |
+
+Kabul senaryoları: `tests/MYG.Electrical.Serialization.Tests/AcceptanceTests.cs` (örnek makine projesi
+`ReferenceMachine` üzerinde 15 senaryo).

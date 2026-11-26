@@ -46,6 +46,8 @@ public sealed class MainViewModel : ObservableObject
         Settings = settings;
         Devices = devices;
         Library = new LibraryViewModel(catalog, devices, settings, PlaceLibraryItem);
+        BottomPanel = new BottomPanelViewModel(() => Session);
+        _colorScheme = settings.GetColorScheme();
         _shell = shell;
         _updates = updates;
         _dialogs = dialogs;
@@ -100,6 +102,10 @@ public sealed class MainViewModel : ObservableObject
         PlacePageLinkCommand = new RelayCommand(PlacePageLink);
         NumberWiresCommand = new RelayCommand(p => NumberWires(string.Equals(p as string, "all", StringComparison.Ordinal)));
         RenumberDevicesCommand = new RelayCommand(RenumberDevices);
+        ExportReportsCommand = new RelayCommand(ExportReportsXlsx);
+        ExportReportCsvCommand = new RelayCommand(p => ExportReportCsv(p is Core.Reports.ReportKind k ? k : Enum.Parse<Core.Reports.ReportKind>(p?.ToString() ?? "DeviceList")));
+        OpenColorSettingsCommand = new RelayCommand(OpenColorSettings);
+        RunDrcCommand = new RelayCommand(() => BottomPanel.RunDrc());
     }
 
     // ---------- Kütüphane ----------
@@ -170,6 +176,87 @@ public sealed class MainViewModel : ObservableObject
     public RelayCommand PlacePageLinkCommand { get; }
     public RelayCommand NumberWiresCommand { get; }
     public RelayCommand RenumberDevicesCommand { get; }
+    public RelayCommand ExportReportsCommand { get; }
+    public RelayCommand ExportReportCsvCommand { get; }
+    public RelayCommand OpenColorSettingsCommand { get; }
+    public RelayCommand RunDrcCommand { get; }
+
+    public BottomPanelViewModel BottomPanel { get; }
+
+    // ---------- Renkler ----------
+
+    private Core.Rendering.ColorScheme _colorScheme;
+    private bool _pdfMonochrome;
+
+    /// <summary>Şema renkleri (ayarlardan; çizim alanı ve PDF).</summary>
+    public Core.Rendering.ColorScheme ColorScheme
+    {
+        get => _colorScheme;
+        private set => SetField(ref _colorScheme, value);
+    }
+
+    /// <summary>PDF'i siyah-beyaz aktar (renkli şema yerine).</summary>
+    public bool PdfMonochrome
+    {
+        get => _pdfMonochrome;
+        set => SetField(ref _pdfMonochrome, value);
+    }
+
+    private void OpenColorSettings()
+    {
+        var vm = new ColorSettingsViewModel(ColorScheme);
+        if (_dialogs.ShowColorSettings(vm))
+        {
+            ColorScheme = vm.Result;
+            Settings.SetColorScheme(ColorScheme);
+            StatusMessage = "Renk ayarları kaydedildi.";
+        }
+    }
+
+    // ---------- Raporlar ----------
+
+    private Core.Reports.ReportTable CreateReport(Core.Reports.ReportKind kind) =>
+        Core.Reports.ProjectReports.Create(kind, Session.Document, Session.Network, Session.Catalog);
+
+    private void ExportReportsXlsx()
+    {
+        var path = _dialogs.SaveFile($"{Session.Document.Project.Name} raporlar", "Excel çalışma kitabı (*.xlsx)|*.xlsx", "Raporları Excel'e aktar");
+        if (path is null)
+        {
+            return;
+        }
+        try
+        {
+            var tables = Enum.GetValues<Core.Reports.ReportKind>().Select(CreateReport).ToList();
+            Infrastructure.Reports.XlsxReportWriter.Write(tables, path);
+            StatusMessage = $"Raporlar oluşturuldu: {Path.GetFileName(path)} ({string.Join(", ", tables.Select(t => $"{t.Title} {t.Rows.Count}"))})";
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            _log.Error(ex, "Rapor yazılamadı: {Path}", path);
+            _dialogs.ShowError($"Rapor yazılamadı:\n{ex.Message}\n\nDosya Excel'de açıksa kapatıp tekrar deneyin.");
+        }
+    }
+
+    private void ExportReportCsv(Core.Reports.ReportKind kind)
+    {
+        var path = _dialogs.SaveFile($"{Session.Document.Project.Name} {Core.Reports.ProjectReports.FileName(kind)}", "CSV (*.csv)|*.csv", "Raporu CSV olarak kaydet");
+        if (path is null)
+        {
+            return;
+        }
+        try
+        {
+            var table = CreateReport(kind);
+            Infrastructure.Reports.CsvReportWriter.Write(table, path);
+            StatusMessage = $"{table.Title}: {table.Rows.Count} satır → {Path.GetFileName(path)}";
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            _log.Error(ex, "Rapor yazılamadı: {Path}", path);
+            _dialogs.ShowError($"Rapor yazılamadı:\n{ex.Message}");
+        }
+    }
 
     private void RenumberDevices()
     {
@@ -383,7 +470,13 @@ public sealed class MainViewModel : ObservableObject
     public string StatusMessage
     {
         get => _statusMessage;
-        private set => SetField(ref _statusMessage, value);
+        private set
+        {
+            if (SetField(ref _statusMessage, value) && !value.StartsWith("Seç:", StringComparison.Ordinal))
+            {
+                BottomPanel?.AddMessage(value);
+            }
+        }
     }
 
     // ---------- Komutlar ----------
@@ -428,7 +521,8 @@ public sealed class MainViewModel : ObservableObject
     public RelayCommand OpenSampleCommand { get; }
 
     /// <summary>Kurulumla gelen örnek proje.</summary>
-    private static string SamplePath => Path.Combine(AppContext.BaseDirectory, "Samples", "Demo.myge");
+    /// <summary>Örnek proje: sürücüler, PLC, potansiyeller, sayfa bağlantıları ve numaralı kablolarla pompa istasyonu.</summary>
+    private static string SamplePath => Path.Combine(AppContext.BaseDirectory, "Samples", "PompaIstasyonu.myge");
 
     // ---------- Canvas geri bildirimleri ----------
 
@@ -542,6 +636,7 @@ public sealed class MainViewModel : ObservableObject
         {
             var options = new PdfExportOptions
             {
+                Colors = PdfMonochrome ? Core.Rendering.ColorScheme.Monochrome : ColorScheme,
                 PageIndices = activePageOnly ? [doc.Pages.IndexOf(Session.ActivePage)] : null,
             };
             var warnings = _pdf.Export(doc, path, options);
@@ -789,6 +884,7 @@ public sealed class MainViewModel : ObservableObject
     private void AttachSession(EditorSession session)
     {
         Properties.Attach(session);
+        BottomPanel?.OnSessionChanged();
         RebuildPages();
         OnPropertyChanged(nameof(GridText));
         OnPropertyChanged(nameof(WireCountText));

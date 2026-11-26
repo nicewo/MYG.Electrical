@@ -19,12 +19,24 @@
 - [x] GitHub Releases + otomatik güncelleme (Velopack)
 - [x] Resim ekleme: projeye gömülü kaynak, renk seçici ile saydamlık + hassasiyet, PDF'te alfa kanalı (format v3)
 
-## V0.2 adayları
+## V0.3 — IEC cihaz kütüphanesi, potansiyeller, DRC (tamamlandı)
 
-- [ ] Kablo yönlendirme: L/Z (90°) bağlantılar, potansiyel/kablo numaraları
-- [ ] Çapraz referanslar (bobin ↔ kontak, sayfa/kolon referansı)
-- [ ] Kullanıcı sembol kütüphanesi (SVG/JSON içe aktarma, sembol editörü)
-- [ ] Klemens planı ve malzeme listesi (BOM) raporları
+- [x] JSON sembol kütüphanesi (113 IEC 60617 sembolü), kullanıcı sembol klasörü (format v4–v6)
+- [x] Cihaz kütüphanesi (sembolden ayrı), proje cihazı kaydı, çok parçalı cihazlar, kontak numaralandırma
+- [x] Kütüphane paneli: ağaç, arama, üretici süzgeci, favoriler, son kullanılanlar, önizleme, sürükle-bırak
+- [x] Cihaz özellikleri penceresi (7 sekme), IEC 81346 etiket şablonu ve yeniden numaralandırma
+- [x] Potansiyel ve sayfa bağlantısı nesneleri, proje geneli net analizi, renkli kablolar, renk ayarları
+- [x] Kablo bilgisi ve otomatik kablo numaralandırma
+- [x] Çapraz referanslar (kontak aynası, /sayfa.kolon)
+- [x] DRC (kısa devre dahil), alt panel (DRC, mesajlar, çapraz referanslar, proje bilgisi)
+- [x] Raporlar: cihaz listesi, BOM, klemens planı, kablo listesi, PLC G/Ç (xlsx, CSV)
+
+## Sonraki adaylar
+
+- [ ] L/Z (90°) otomatik kablo yönlendirme (dirsekleri kendisi koyan kablo aracı)
+- [ ] Grafik sembol editörü (JSON üretir)
+- [ ] Klemens şeridi, çok damarlı kablo nesnesi ve kablo planı
+- [ ] Kayan/ayrılabilir paneller
 - [ ] Sayfa şablonları, özelleştirilebilir antet düzeni
 - [ ] Ayna (flip) ve serbest açılı döndürme
 - [ ] Doğrudan yazdırma, PDF içinde sayfa yer imleri

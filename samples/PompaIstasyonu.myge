@@ -1,0 +1,4436 @@
+{
+  "formatVersion": 6,
+  "project": {
+    "name": "Hat 1 Pompa İstasyonu",
+    "company": "MYG TECH",
+    "revision": "A",
+    "machineName": "PST-01",
+    "projectNumber": "",
+    "customer": "",
+    "preparedBy": "",
+    "checkedBy": "",
+    "date": "26.11.2026",
+    "logoPath": ""
+  },
+  "projectSettings": {
+    "referenceFormat": "-{prefix}{n}",
+    "wireNumberFormat": "{n}"
+  },
+  "pages": [
+    {
+      "id": "page-7ab1a5b9",
+      "name": "Kapak",
+      "type": "cover",
+      "format": "a3",
+      "orientation": "landscape",
+      "width": 420,
+      "height": 297,
+      "titleBlock": {},
+      "objects": [],
+      "wireData": []
+    },
+    {
+      "id": "page-d7e57c7a",
+      "name": "Güç 1 — sürücüler",
+      "type": "schematic",
+      "format": "a3",
+      "orientation": "landscape",
+      "width": 420,
+      "height": 297,
+      "titleBlock": {},
+      "objects": [
+        {
+          "kind": "potential",
+          "potentialKind": "l1",
+          "voltage": "400VAC",
+          "description": "",
+          "x": 60,
+          "y": 30,
+          "rotation": 0,
+          "name": "L1",
+          "id": "2273c1d6-4b7c-4fd5-822a-84c7eee92e97"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "l2",
+          "voltage": "400VAC",
+          "description": "",
+          "x": 70,
+          "y": 30,
+          "rotation": 0,
+          "name": "L2",
+          "id": "5618b653-aed8-46d6-b600-2ff9ebc7ba3d"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "l3",
+          "voltage": "400VAC",
+          "description": "",
+          "x": 80,
+          "y": 30,
+          "rotation": 0,
+          "name": "L3",
+          "id": "e22521da-6d03-4f4c-8fb0-741d69bb2da1"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "pe",
+          "voltage": "",
+          "description": "",
+          "x": 90,
+          "y": 30,
+          "rotation": 0,
+          "name": "PE",
+          "id": "1737faf8-8e31-434c-87af-05f35a8f109f"
+        },
+        {
+          "kind": "device",
+          "reference": "-F1",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "1",
+              "x": -10,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "2",
+              "x": -10,
+              "y": 10,
+              "direction": "down",
+              "function": "power"
+            },
+            {
+              "id": "3",
+              "x": 0,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "4",
+              "x": 0,
+              "y": 10,
+              "direction": "down",
+              "function": "power"
+            },
+            {
+              "id": "5",
+              "x": 10,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "6",
+              "x": 10,
+              "y": 10,
+              "direction": "down",
+              "function": "power"
+            }
+          ],
+          "symbolId": "iec.mcb",
+          "x": 70,
+          "y": 60,
+          "rotation": 0,
+          "scale": 1,
+          "id": "4d2aac29-ba9b-44db-8893-25203d00703d"
+        },
+        {
+          "kind": "device",
+          "reference": "-T1",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "L1",
+              "x": -15,
+              "y": -20,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "L2",
+              "x": -5,
+              "y": -20,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "L3",
+              "x": 5,
+              "y": -20,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "PE",
+              "x": 15,
+              "y": -20,
+              "direction": "up",
+              "function": "protectiveEarth"
+            },
+            {
+              "id": "U",
+              "x": -15,
+              "y": 20,
+              "direction": "down",
+              "function": "power"
+            },
+            {
+              "id": "V",
+              "x": -5,
+              "y": 20,
+              "direction": "down",
+              "function": "power"
+            },
+            {
+              "id": "W",
+              "x": 5,
+              "y": 20,
+              "direction": "down",
+              "function": "power"
+            },
+            {
+              "id": "PE2",
+              "x": 15,
+              "y": 20,
+              "direction": "down",
+              "function": "protectiveEarth"
+            }
+          ],
+          "symbolId": "iec.vfd.3ph",
+          "x": 75,
+          "y": 100,
+          "rotation": 0,
+          "scale": 1,
+          "id": "8d386472-be23-438e-95d2-755ef69693fb"
+        },
+        {
+          "kind": "device",
+          "reference": "-M1",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "U1",
+              "x": -10,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "V1",
+              "x": 0,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "W1",
+              "x": 10,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "PE",
+              "x": 20,
+              "y": -10,
+              "direction": "up",
+              "function": "protectiveEarth"
+            }
+          ],
+          "symbolId": "iec.motor.3ph.pe",
+          "x": 70,
+          "y": 140,
+          "rotation": 0,
+          "scale": 1,
+          "id": "e128f86c-5da9-4dbf-b1bb-76cd87a1c58e"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "l1",
+          "voltage": "230VAC",
+          "description": "",
+          "x": 140,
+          "y": 30,
+          "rotation": 0,
+          "name": "L1",
+          "id": "ea585a92-1784-4dba-975d-97aa75f9054e"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "n",
+          "voltage": "230VAC",
+          "description": "",
+          "x": 150,
+          "y": 30,
+          "rotation": 0,
+          "name": "N",
+          "id": "81d1f3f0-884e-4a9d-bb57-c883e6042d41"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "pe",
+          "voltage": "",
+          "description": "",
+          "x": 160,
+          "y": 30,
+          "rotation": 0,
+          "name": "PE",
+          "id": "893729e6-d775-479a-bb0c-00e9813da64f"
+        },
+        {
+          "kind": "device",
+          "reference": "-F2",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "1",
+              "x": -5,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "2",
+              "x": -5,
+              "y": 10,
+              "direction": "down",
+              "function": "power"
+            },
+            {
+              "id": "N",
+              "x": 5,
+              "y": -10,
+              "direction": "up",
+              "function": "neutral"
+            },
+            {
+              "id": "N'",
+              "x": 5,
+              "y": 10,
+              "direction": "down",
+              "function": "neutral"
+            }
+          ],
+          "symbolId": "iec.rcd.2p",
+          "x": 145,
+          "y": 60,
+          "rotation": 0,
+          "scale": 1,
+          "id": "7b296f19-65e7-4226-8784-d67b8b6acbc6"
+        },
+        {
+          "kind": "device",
+          "reference": "-T2",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "L",
+              "x": -10,
+              "y": -20,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "N",
+              "x": 0,
+              "y": -20,
+              "direction": "up",
+              "function": "neutral"
+            },
+            {
+              "id": "PE",
+              "x": 10,
+              "y": -20,
+              "direction": "up",
+              "function": "protectiveEarth"
+            },
+            {
+              "id": "U",
+              "x": -15,
+              "y": 20,
+              "direction": "down",
+              "function": "power"
+            },
+            {
+              "id": "V",
+              "x": -5,
+              "y": 20,
+              "direction": "down",
+              "function": "power"
+            },
+            {
+              "id": "W",
+              "x": 5,
+              "y": 20,
+              "direction": "down",
+              "function": "power"
+            },
+            {
+              "id": "PE2",
+              "x": 15,
+              "y": 20,
+              "direction": "down",
+              "function": "protectiveEarth"
+            }
+          ],
+          "symbolId": "iec.vfd.1ph",
+          "x": 150,
+          "y": 100,
+          "rotation": 0,
+          "scale": 1,
+          "id": "b617fcc9-1a17-4d4c-adbb-ab22921f990b"
+        },
+        {
+          "kind": "device",
+          "reference": "-M2",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "U1",
+              "x": -10,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "V1",
+              "x": 0,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "W1",
+              "x": 10,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "PE",
+              "x": 20,
+              "y": -10,
+              "direction": "up",
+              "function": "protectiveEarth"
+            }
+          ],
+          "symbolId": "iec.motor.3ph.pe",
+          "x": 145,
+          "y": 140,
+          "rotation": 0,
+          "scale": 1,
+          "id": "478b5bf6-dfed-4254-9d44-c7a8e57af5f7"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "l1",
+          "voltage": "400VAC",
+          "description": "",
+          "x": 190,
+          "y": 60,
+          "rotation": 0,
+          "name": "L1",
+          "id": "75bb55a2-98f4-4b42-9fd9-9edca560553a"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "l2",
+          "voltage": "400VAC",
+          "description": "",
+          "x": 200,
+          "y": 60,
+          "rotation": 0,
+          "name": "L2",
+          "id": "3c6259a7-b11d-462b-b9ee-d3fc78af909c"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "l3",
+          "voltage": "400VAC",
+          "description": "",
+          "x": 210,
+          "y": 60,
+          "rotation": 0,
+          "name": "L3",
+          "id": "fb1f7236-4937-4e3a-8b21-ec8dccdb1781"
+        },
+        {
+          "kind": "device",
+          "reference": "-K1",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "L1",
+              "x": -10,
+              "y": -15,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "L2",
+              "x": 0,
+              "y": -15,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "L3",
+              "x": 10,
+              "y": -15,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "11",
+              "x": -10,
+              "y": 15,
+              "direction": "down",
+              "function": "contactCommon"
+            },
+            {
+              "id": "12",
+              "x": 0,
+              "y": 15,
+              "direction": "down",
+              "function": "contactNc"
+            },
+            {
+              "id": "14",
+              "x": 10,
+              "y": 15,
+              "direction": "down",
+              "function": "contactNo"
+            }
+          ],
+          "symbolId": "iec.relay.phase",
+          "x": 200,
+          "y": 90,
+          "rotation": 0,
+          "scale": 1,
+          "id": "ff2cfec2-a72e-4407-84fd-63ec4f0595b5"
+        },
+        {
+          "kind": "pageLink",
+          "description": "",
+          "x": 210,
+          "y": 125,
+          "rotation": 90,
+          "name": "FAZ-OK",
+          "id": "f850b962-e07c-49f9-b307-7d0d450e4edf"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "l1",
+          "voltage": "400VAC",
+          "description": "",
+          "x": 330,
+          "y": 30,
+          "rotation": 0,
+          "name": "L1",
+          "id": "8d8107d2-f405-43d3-9dd0-bd43614808e1"
+        },
+        {
+          "kind": "device",
+          "reference": "-T3",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "P1",
+              "x": 0,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "P2",
+              "x": 0,
+              "y": 10,
+              "direction": "down",
+              "function": "power"
+            },
+            {
+              "id": "S1",
+              "x": -10,
+              "y": 5,
+              "direction": "down",
+              "function": "output"
+            },
+            {
+              "id": "S2",
+              "x": 10,
+              "y": 5,
+              "direction": "down",
+              "function": "output"
+            }
+          ],
+          "symbolId": "iec.ct",
+          "x": 330,
+          "y": 55,
+          "rotation": 0,
+          "scale": 1,
+          "id": "fbfd6fac-0374-4634-97b5-6dfa399043c7"
+        },
+        {
+          "kind": "device",
+          "reference": "-X1",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "1",
+              "x": 0,
+              "y": -5,
+              "direction": "up",
+              "function": "terminal"
+            },
+            {
+              "id": "2",
+              "x": 0,
+              "y": 5,
+              "direction": "down",
+              "function": "terminal"
+            }
+          ],
+          "symbolId": "iec.terminal",
+          "x": 330,
+          "y": 75,
+          "rotation": 0,
+          "scale": 1,
+          "id": "2eef6540-e62d-4b6c-8713-e9bb59db8211"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "l2",
+          "voltage": "400VAC",
+          "description": "",
+          "x": 360,
+          "y": 30,
+          "rotation": 0,
+          "name": "L2",
+          "id": "2354f566-9ef1-443f-90db-74d53177b7f8"
+        },
+        {
+          "kind": "device",
+          "reference": "-T4",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "P1",
+              "x": 0,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "P2",
+              "x": 0,
+              "y": 10,
+              "direction": "down",
+              "function": "power"
+            },
+            {
+              "id": "S1",
+              "x": -10,
+              "y": 5,
+              "direction": "down",
+              "function": "output"
+            },
+            {
+              "id": "S2",
+              "x": 10,
+              "y": 5,
+              "direction": "down",
+              "function": "output"
+            }
+          ],
+          "symbolId": "iec.ct",
+          "x": 360,
+          "y": 55,
+          "rotation": 0,
+          "scale": 1,
+          "id": "1956a99f-1940-4dae-bfc0-2de5aa8f5404"
+        },
+        {
+          "kind": "device",
+          "reference": "-X2",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "1",
+              "x": 0,
+              "y": -5,
+              "direction": "up",
+              "function": "terminal"
+            },
+            {
+              "id": "2",
+              "x": 0,
+              "y": 5,
+              "direction": "down",
+              "function": "terminal"
+            }
+          ],
+          "symbolId": "iec.terminal",
+          "x": 360,
+          "y": 75,
+          "rotation": 0,
+          "scale": 1,
+          "id": "f902ad0e-bea7-4f96-9dee-c7ad57777234"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "l3",
+          "voltage": "400VAC",
+          "description": "",
+          "x": 390,
+          "y": 30,
+          "rotation": 0,
+          "name": "L3",
+          "id": "27aa450b-0943-497f-a143-5c2c89f78187"
+        },
+        {
+          "kind": "device",
+          "reference": "-T5",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "P1",
+              "x": 0,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "P2",
+              "x": 0,
+              "y": 10,
+              "direction": "down",
+              "function": "power"
+            },
+            {
+              "id": "S1",
+              "x": -10,
+              "y": 5,
+              "direction": "down",
+              "function": "output"
+            },
+            {
+              "id": "S2",
+              "x": 10,
+              "y": 5,
+              "direction": "down",
+              "function": "output"
+            }
+          ],
+          "symbolId": "iec.ct",
+          "x": 390,
+          "y": 55,
+          "rotation": 0,
+          "scale": 1,
+          "id": "97d7fbd8-86cf-4409-b01a-fe7b41dd8e1a"
+        },
+        {
+          "kind": "device",
+          "reference": "-X3",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "1",
+              "x": 0,
+              "y": -5,
+              "direction": "up",
+              "function": "terminal"
+            },
+            {
+              "id": "2",
+              "x": 0,
+              "y": 5,
+              "direction": "down",
+              "function": "terminal"
+            }
+          ],
+          "symbolId": "iec.terminal",
+          "x": 390,
+          "y": 75,
+          "rotation": 0,
+          "scale": 1,
+          "id": "625f285f-ac57-4089-8a02-4bb83200e918"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "l1",
+          "voltage": "400VAC",
+          "description": "",
+          "x": 260,
+          "y": 155,
+          "rotation": 0,
+          "name": "L1",
+          "id": "ef50faef-7450-4b54-baaa-2f6f5df492d0"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "l2",
+          "voltage": "400VAC",
+          "description": "",
+          "x": 270,
+          "y": 155,
+          "rotation": 0,
+          "name": "L2",
+          "id": "afd28d64-9f37-4f47-8f4b-a3dfc785f001"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "l3",
+          "voltage": "400VAC",
+          "description": "",
+          "x": 280,
+          "y": 155,
+          "rotation": 0,
+          "name": "L3",
+          "id": "45a47010-7698-4711-a87b-b860f2176ccd"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "n",
+          "voltage": "230VAC",
+          "description": "",
+          "x": 290,
+          "y": 155,
+          "rotation": 0,
+          "name": "N",
+          "id": "1cf45a3a-5f86-4a00-bcd0-ca071ad58f9b"
+        },
+        {
+          "kind": "device",
+          "reference": "-P1",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "V1",
+              "x": -25,
+              "y": -20,
+              "direction": "up",
+              "function": "input"
+            },
+            {
+              "id": "V2",
+              "x": -15,
+              "y": -20,
+              "direction": "up",
+              "function": "input"
+            },
+            {
+              "id": "V3",
+              "x": -5,
+              "y": -20,
+              "direction": "up",
+              "function": "input"
+            },
+            {
+              "id": "VN",
+              "x": 5,
+              "y": -20,
+              "direction": "up",
+              "function": "neutral"
+            },
+            {
+              "id": "A1",
+              "x": 15,
+              "y": -20,
+              "direction": "up",
+              "function": "supplyPositive"
+            },
+            {
+              "id": "A2",
+              "x": 25,
+              "y": -20,
+              "direction": "up",
+              "function": "supplyNegative"
+            },
+            {
+              "id": "I1+",
+              "x": -35,
+              "y": 20,
+              "direction": "down",
+              "function": "input"
+            },
+            {
+              "id": "I1-",
+              "x": -25,
+              "y": 20,
+              "direction": "down",
+              "function": "input"
+            },
+            {
+              "id": "I2+",
+              "x": -15,
+              "y": 20,
+              "direction": "down",
+              "function": "input"
+            },
+            {
+              "id": "I2-",
+              "x": -5,
+              "y": 20,
+              "direction": "down",
+              "function": "input"
+            },
+            {
+              "id": "I3+",
+              "x": 5,
+              "y": 20,
+              "direction": "down",
+              "function": "input"
+            },
+            {
+              "id": "I3-",
+              "x": 15,
+              "y": 20,
+              "direction": "down",
+              "function": "input"
+            },
+            {
+              "id": "A",
+              "x": 25,
+              "y": 20,
+              "direction": "down",
+              "function": "communication"
+            },
+            {
+              "id": "B",
+              "x": 35,
+              "y": 20,
+              "direction": "down",
+              "function": "communication"
+            }
+          ],
+          "symbolId": "iec.poweranalyzer",
+          "x": 285,
+          "y": 200,
+          "rotation": 0,
+          "scale": 1,
+          "id": "22342e05-5c8d-454f-87d9-5fc8ee2118e5"
+        }
+      ],
+      "wireData": [
+        {
+          "a": {
+            "ownerId": "2273c1d6-4b7c-4fd5-822a-84c7eee92e97",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "4d2aac29-ba9b-44db-8893-25203d00703d",
+            "pinId": "1"
+          },
+          "number": "L1",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "5618b653-aed8-46d6-b600-2ff9ebc7ba3d",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "4d2aac29-ba9b-44db-8893-25203d00703d",
+            "pinId": "3"
+          },
+          "number": "L2",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "e22521da-6d03-4f4c-8fb0-741d69bb2da1",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "4d2aac29-ba9b-44db-8893-25203d00703d",
+            "pinId": "5"
+          },
+          "number": "L3",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "1737faf8-8e31-434c-87af-05f35a8f109f",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "8d386472-be23-438e-95d2-755ef69693fb",
+            "pinId": "PE"
+          },
+          "number": "PE",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "4d2aac29-ba9b-44db-8893-25203d00703d",
+            "pinId": "2"
+          },
+          "b": {
+            "ownerId": "8d386472-be23-438e-95d2-755ef69693fb",
+            "pinId": "L1"
+          },
+          "number": "1",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "4d2aac29-ba9b-44db-8893-25203d00703d",
+            "pinId": "4"
+          },
+          "b": {
+            "ownerId": "8d386472-be23-438e-95d2-755ef69693fb",
+            "pinId": "L2"
+          },
+          "number": "2",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "4d2aac29-ba9b-44db-8893-25203d00703d",
+            "pinId": "6"
+          },
+          "b": {
+            "ownerId": "8d386472-be23-438e-95d2-755ef69693fb",
+            "pinId": "L3"
+          },
+          "number": "3",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "8d386472-be23-438e-95d2-755ef69693fb",
+            "pinId": "U"
+          },
+          "b": {
+            "ownerId": "e128f86c-5da9-4dbf-b1bb-76cd87a1c58e",
+            "pinId": "U1"
+          },
+          "number": "4",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "8d386472-be23-438e-95d2-755ef69693fb",
+            "pinId": "V"
+          },
+          "b": {
+            "ownerId": "e128f86c-5da9-4dbf-b1bb-76cd87a1c58e",
+            "pinId": "V1"
+          },
+          "number": "5",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "8d386472-be23-438e-95d2-755ef69693fb",
+            "pinId": "W"
+          },
+          "b": {
+            "ownerId": "e128f86c-5da9-4dbf-b1bb-76cd87a1c58e",
+            "pinId": "W1"
+          },
+          "number": "6",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "8d386472-be23-438e-95d2-755ef69693fb",
+            "pinId": "PE2"
+          },
+          "b": {
+            "ownerId": "e128f86c-5da9-4dbf-b1bb-76cd87a1c58e",
+            "pinId": "PE"
+          },
+          "number": "7",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "b617fcc9-1a17-4d4c-adbb-ab22921f990b",
+            "pinId": "U"
+          },
+          "b": {
+            "ownerId": "478b5bf6-dfed-4254-9d44-c7a8e57af5f7",
+            "pinId": "U1"
+          },
+          "number": "8",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "ea585a92-1784-4dba-975d-97aa75f9054e",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "7b296f19-65e7-4226-8784-d67b8b6acbc6",
+            "pinId": "1"
+          },
+          "number": "L1",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "81d1f3f0-884e-4a9d-bb57-c883e6042d41",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "7b296f19-65e7-4226-8784-d67b8b6acbc6",
+            "pinId": "N"
+          },
+          "number": "N",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "893729e6-d775-479a-bb0c-00e9813da64f",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "b617fcc9-1a17-4d4c-adbb-ab22921f990b",
+            "pinId": "PE"
+          },
+          "number": "PE",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "7b296f19-65e7-4226-8784-d67b8b6acbc6",
+            "pinId": "2"
+          },
+          "b": {
+            "ownerId": "b617fcc9-1a17-4d4c-adbb-ab22921f990b",
+            "pinId": "L"
+          },
+          "number": "9",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "7b296f19-65e7-4226-8784-d67b8b6acbc6",
+            "pinId": "N'"
+          },
+          "b": {
+            "ownerId": "b617fcc9-1a17-4d4c-adbb-ab22921f990b",
+            "pinId": "N"
+          },
+          "number": "10",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "b617fcc9-1a17-4d4c-adbb-ab22921f990b",
+            "pinId": "V"
+          },
+          "b": {
+            "ownerId": "478b5bf6-dfed-4254-9d44-c7a8e57af5f7",
+            "pinId": "V1"
+          },
+          "number": "11",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "b617fcc9-1a17-4d4c-adbb-ab22921f990b",
+            "pinId": "W"
+          },
+          "b": {
+            "ownerId": "478b5bf6-dfed-4254-9d44-c7a8e57af5f7",
+            "pinId": "W1"
+          },
+          "number": "12",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "b617fcc9-1a17-4d4c-adbb-ab22921f990b",
+            "pinId": "PE2"
+          },
+          "b": {
+            "ownerId": "478b5bf6-dfed-4254-9d44-c7a8e57af5f7",
+            "pinId": "PE"
+          },
+          "number": "13",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "75bb55a2-98f4-4b42-9fd9-9edca560553a",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "ff2cfec2-a72e-4407-84fd-63ec4f0595b5",
+            "pinId": "L1"
+          },
+          "number": "L1",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "3c6259a7-b11d-462b-b9ee-d3fc78af909c",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "ff2cfec2-a72e-4407-84fd-63ec4f0595b5",
+            "pinId": "L2"
+          },
+          "number": "L2",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "fb1f7236-4937-4e3a-8b21-ec8dccdb1781",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "ff2cfec2-a72e-4407-84fd-63ec4f0595b5",
+            "pinId": "L3"
+          },
+          "number": "L3",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "ff2cfec2-a72e-4407-84fd-63ec4f0595b5",
+            "pinId": "14"
+          },
+          "b": {
+            "ownerId": "f850b962-e07c-49f9-b307-7d0d450e4edf",
+            "pinId": "1"
+          },
+          "number": "14",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "ef50faef-7450-4b54-baaa-2f6f5df492d0",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "22342e05-5c8d-454f-87d9-5fc8ee2118e5",
+            "pinId": "V1"
+          },
+          "number": "L1",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "afd28d64-9f37-4f47-8f4b-a3dfc785f001",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "22342e05-5c8d-454f-87d9-5fc8ee2118e5",
+            "pinId": "V2"
+          },
+          "number": "L2",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "45a47010-7698-4711-a87b-b860f2176ccd",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "22342e05-5c8d-454f-87d9-5fc8ee2118e5",
+            "pinId": "V3"
+          },
+          "number": "L3",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "1cf45a3a-5f86-4a00-bcd0-ca071ad58f9b",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "22342e05-5c8d-454f-87d9-5fc8ee2118e5",
+            "pinId": "VN"
+          },
+          "number": "N",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "8d8107d2-f405-43d3-9dd0-bd43614808e1",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "fbfd6fac-0374-4634-97b5-6dfa399043c7",
+            "pinId": "P1"
+          },
+          "number": "L1",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "fbfd6fac-0374-4634-97b5-6dfa399043c7",
+            "pinId": "P2"
+          },
+          "b": {
+            "ownerId": "2eef6540-e62d-4b6c-8713-e9bb59db8211",
+            "pinId": "1"
+          },
+          "number": "L1",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "2354f566-9ef1-443f-90db-74d53177b7f8",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "1956a99f-1940-4dae-bfc0-2de5aa8f5404",
+            "pinId": "P1"
+          },
+          "number": "L2",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "1956a99f-1940-4dae-bfc0-2de5aa8f5404",
+            "pinId": "P2"
+          },
+          "b": {
+            "ownerId": "f902ad0e-bea7-4f96-9dee-c7ad57777234",
+            "pinId": "1"
+          },
+          "number": "L2",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "27aa450b-0943-497f-a143-5c2c89f78187",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "97d7fbd8-86cf-4409-b01a-fe7b41dd8e1a",
+            "pinId": "P1"
+          },
+          "number": "L3",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "97d7fbd8-86cf-4409-b01a-fe7b41dd8e1a",
+            "pinId": "P2"
+          },
+          "b": {
+            "ownerId": "625f285f-ac57-4089-8a02-4bb83200e918",
+            "pinId": "1"
+          },
+          "number": "L3",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        }
+      ]
+    },
+    {
+      "id": "page-90cc05b6",
+      "name": "Güç 2 — DOL motor",
+      "type": "schematic",
+      "format": "a3",
+      "orientation": "landscape",
+      "width": 420,
+      "height": 297,
+      "titleBlock": {},
+      "objects": [
+        {
+          "kind": "potential",
+          "potentialKind": "l1",
+          "voltage": "400VAC",
+          "description": "",
+          "x": 60,
+          "y": 30,
+          "rotation": 0,
+          "name": "L1",
+          "id": "d661855f-a709-4b61-8654-c771fd462f0f"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "l2",
+          "voltage": "400VAC",
+          "description": "",
+          "x": 70,
+          "y": 30,
+          "rotation": 0,
+          "name": "L2",
+          "id": "4ad8a84e-f096-42b1-a5ff-662efc5ad1ce"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "l3",
+          "voltage": "400VAC",
+          "description": "",
+          "x": 80,
+          "y": 30,
+          "rotation": 0,
+          "name": "L3",
+          "id": "ee3d1fc8-9117-478d-818d-48f46071e097"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "pe",
+          "voltage": "",
+          "description": "",
+          "x": 90,
+          "y": 30,
+          "rotation": 0,
+          "name": "PE",
+          "id": "a35b8b29-952f-4234-adaa-e3facd20d994"
+        },
+        {
+          "kind": "device",
+          "reference": "-Q1",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "1",
+              "x": -10,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "2",
+              "x": -10,
+              "y": 10,
+              "direction": "down",
+              "function": "power"
+            },
+            {
+              "id": "3",
+              "x": 0,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "4",
+              "x": 0,
+              "y": 10,
+              "direction": "down",
+              "function": "power"
+            },
+            {
+              "id": "5",
+              "x": 10,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "6",
+              "x": 10,
+              "y": 10,
+              "direction": "down",
+              "function": "power"
+            }
+          ],
+          "symbolId": "iec.mpcb.3p",
+          "x": 70,
+          "y": 60,
+          "rotation": 0,
+          "scale": 1,
+          "id": "872c2a96-1496-4286-a42f-1163cc44117a"
+        },
+        {
+          "kind": "device",
+          "reference": "-K3",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "1",
+              "x": -10,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "2",
+              "x": -10,
+              "y": 10,
+              "direction": "down",
+              "function": "power"
+            },
+            {
+              "id": "3",
+              "x": 0,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "4",
+              "x": 0,
+              "y": 10,
+              "direction": "down",
+              "function": "power"
+            },
+            {
+              "id": "5",
+              "x": 10,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "6",
+              "x": 10,
+              "y": 10,
+              "direction": "down",
+              "function": "power"
+            }
+          ],
+          "symbolId": "iec.contactor.3p",
+          "x": 70,
+          "y": 100,
+          "rotation": 0,
+          "scale": 1,
+          "id": "67488f7c-7d5c-403a-97b0-321b6ac1bd95"
+        },
+        {
+          "kind": "device",
+          "reference": "-F3",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "1",
+              "x": -10,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "2",
+              "x": -10,
+              "y": 10,
+              "direction": "down",
+              "function": "power"
+            },
+            {
+              "id": "3",
+              "x": 0,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "4",
+              "x": 0,
+              "y": 10,
+              "direction": "down",
+              "function": "power"
+            },
+            {
+              "id": "5",
+              "x": 10,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "6",
+              "x": 10,
+              "y": 10,
+              "direction": "down",
+              "function": "power"
+            }
+          ],
+          "symbolId": "iec.overload.3p",
+          "x": 70,
+          "y": 140,
+          "rotation": 0,
+          "scale": 1,
+          "id": "c0f32d20-a463-40dc-a89f-a0f20086c101"
+        },
+        {
+          "kind": "device",
+          "reference": "-M3",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "U1",
+              "x": -10,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "V1",
+              "x": 0,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "W1",
+              "x": 10,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "PE",
+              "x": 20,
+              "y": -10,
+              "direction": "up",
+              "function": "protectiveEarth"
+            }
+          ],
+          "symbolId": "iec.motor.3ph.pe",
+          "x": 70,
+          "y": 180,
+          "rotation": 0,
+          "scale": 1,
+          "id": "b9213fae-c39e-44ea-913f-2a9d7c7d384e"
+        }
+      ],
+      "wireData": [
+        {
+          "a": {
+            "ownerId": "d661855f-a709-4b61-8654-c771fd462f0f",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "872c2a96-1496-4286-a42f-1163cc44117a",
+            "pinId": "1"
+          },
+          "number": "L1",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "4ad8a84e-f096-42b1-a5ff-662efc5ad1ce",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "872c2a96-1496-4286-a42f-1163cc44117a",
+            "pinId": "3"
+          },
+          "number": "L2",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "ee3d1fc8-9117-478d-818d-48f46071e097",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "872c2a96-1496-4286-a42f-1163cc44117a",
+            "pinId": "5"
+          },
+          "number": "L3",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "a35b8b29-952f-4234-adaa-e3facd20d994",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "b9213fae-c39e-44ea-913f-2a9d7c7d384e",
+            "pinId": "PE"
+          },
+          "number": "PE",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "872c2a96-1496-4286-a42f-1163cc44117a",
+            "pinId": "2"
+          },
+          "b": {
+            "ownerId": "67488f7c-7d5c-403a-97b0-321b6ac1bd95",
+            "pinId": "1"
+          },
+          "number": "15",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "872c2a96-1496-4286-a42f-1163cc44117a",
+            "pinId": "4"
+          },
+          "b": {
+            "ownerId": "67488f7c-7d5c-403a-97b0-321b6ac1bd95",
+            "pinId": "3"
+          },
+          "number": "16",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "872c2a96-1496-4286-a42f-1163cc44117a",
+            "pinId": "6"
+          },
+          "b": {
+            "ownerId": "67488f7c-7d5c-403a-97b0-321b6ac1bd95",
+            "pinId": "5"
+          },
+          "number": "17",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "67488f7c-7d5c-403a-97b0-321b6ac1bd95",
+            "pinId": "2"
+          },
+          "b": {
+            "ownerId": "c0f32d20-a463-40dc-a89f-a0f20086c101",
+            "pinId": "1"
+          },
+          "number": "18",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "c0f32d20-a463-40dc-a89f-a0f20086c101",
+            "pinId": "2"
+          },
+          "b": {
+            "ownerId": "b9213fae-c39e-44ea-913f-2a9d7c7d384e",
+            "pinId": "U1"
+          },
+          "number": "18",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "67488f7c-7d5c-403a-97b0-321b6ac1bd95",
+            "pinId": "4"
+          },
+          "b": {
+            "ownerId": "c0f32d20-a463-40dc-a89f-a0f20086c101",
+            "pinId": "3"
+          },
+          "number": "19",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "c0f32d20-a463-40dc-a89f-a0f20086c101",
+            "pinId": "4"
+          },
+          "b": {
+            "ownerId": "b9213fae-c39e-44ea-913f-2a9d7c7d384e",
+            "pinId": "V1"
+          },
+          "number": "19",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "67488f7c-7d5c-403a-97b0-321b6ac1bd95",
+            "pinId": "6"
+          },
+          "b": {
+            "ownerId": "c0f32d20-a463-40dc-a89f-a0f20086c101",
+            "pinId": "5"
+          },
+          "number": "20",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "c0f32d20-a463-40dc-a89f-a0f20086c101",
+            "pinId": "6"
+          },
+          "b": {
+            "ownerId": "b9213fae-c39e-44ea-913f-2a9d7c7d384e",
+            "pinId": "W1"
+          },
+          "number": "20",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        }
+      ]
+    },
+    {
+      "id": "page-b9a0c495",
+      "name": "24 VDC besleme",
+      "type": "schematic",
+      "format": "a3",
+      "orientation": "landscape",
+      "width": 420,
+      "height": 297,
+      "titleBlock": {},
+      "objects": [
+        {
+          "kind": "potential",
+          "potentialKind": "l1",
+          "voltage": "230VAC",
+          "description": "",
+          "x": 160,
+          "y": 115,
+          "rotation": 0,
+          "name": "L1",
+          "id": "0c1e92d8-2fc9-460b-a526-11d0192c995a"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "n",
+          "voltage": "230VAC",
+          "description": "",
+          "x": 170,
+          "y": 115,
+          "rotation": 0,
+          "name": "N",
+          "id": "cdd49792-943f-4bab-bf9f-6e5268aaf58e"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "pe",
+          "voltage": "",
+          "description": "",
+          "x": 180,
+          "y": 115,
+          "rotation": 0,
+          "name": "PE",
+          "id": "fd8f781b-b372-47d9-9e2d-653af3aeb0af"
+        },
+        {
+          "kind": "device",
+          "reference": "-T6",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "L",
+              "x": -10,
+              "y": -15,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "N",
+              "x": 0,
+              "y": -15,
+              "direction": "up",
+              "function": "neutral"
+            },
+            {
+              "id": "PE",
+              "x": 10,
+              "y": -15,
+              "direction": "up",
+              "function": "protectiveEarth"
+            },
+            {
+              "id": "+1",
+              "x": -15,
+              "y": 15,
+              "direction": "down",
+              "function": "supplyPositive"
+            },
+            {
+              "id": "+2",
+              "x": -5,
+              "y": 15,
+              "direction": "down",
+              "function": "supplyPositive"
+            },
+            {
+              "id": "-1",
+              "x": 5,
+              "y": 15,
+              "direction": "down",
+              "function": "supplyNegative"
+            },
+            {
+              "id": "-2",
+              "x": 15,
+              "y": 15,
+              "direction": "down",
+              "function": "supplyNegative"
+            }
+          ],
+          "symbolId": "iec.psu.24vdc",
+          "x": 170,
+          "y": 150,
+          "rotation": 0,
+          "scale": 1,
+          "id": "584c1ce0-b5e2-4e97-82a9-5b2e60f28f2b"
+        },
+        {
+          "kind": "device",
+          "reference": "-F4",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "+IN",
+              "x": 0,
+              "y": -10,
+              "direction": "up",
+              "function": "supplyPositive"
+            },
+            {
+              "id": "+1",
+              "x": -15,
+              "y": 10,
+              "direction": "down",
+              "function": "supplyPositive"
+            },
+            {
+              "id": "+2",
+              "x": -5,
+              "y": 10,
+              "direction": "down",
+              "function": "supplyPositive"
+            },
+            {
+              "id": "+3",
+              "x": 5,
+              "y": 10,
+              "direction": "down",
+              "function": "supplyPositive"
+            },
+            {
+              "id": "+4",
+              "x": 15,
+              "y": 10,
+              "direction": "down",
+              "function": "supplyPositive"
+            }
+          ],
+          "symbolId": "iec.dist.24vdc",
+          "x": 155,
+          "y": 190,
+          "rotation": 0,
+          "scale": 1,
+          "id": "b156ff87-8918-42bf-9ee9-c361e9d04240"
+        },
+        {
+          "kind": "pageLink",
+          "description": "",
+          "x": 140,
+          "y": 215,
+          "rotation": 90,
+          "name": "+24V",
+          "id": "ff94767c-71dc-4b3b-ac23-8c1ef3375ba7"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "dcPositive",
+          "voltage": "24VDC",
+          "description": "",
+          "x": 170,
+          "y": 215,
+          "rotation": 180,
+          "name": "+24V",
+          "id": "cc7e24f4-4bd3-4398-bea3-22f80ad9aab3"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "dcNegative",
+          "voltage": "24VDC",
+          "description": "",
+          "x": 175,
+          "y": 180,
+          "rotation": 180,
+          "name": "0V",
+          "id": "c74deace-cf70-49c8-9ac6-8a39dd99953e"
+        },
+        {
+          "kind": "pageLink",
+          "description": "",
+          "x": 185,
+          "y": 180,
+          "rotation": 90,
+          "name": "0V",
+          "id": "752732cb-eb6d-4d94-88e0-52b4e84c718c"
+        }
+      ],
+      "wireData": [
+        {
+          "a": {
+            "ownerId": "0c1e92d8-2fc9-460b-a526-11d0192c995a",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "584c1ce0-b5e2-4e97-82a9-5b2e60f28f2b",
+            "pinId": "L"
+          },
+          "number": "L1",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "cdd49792-943f-4bab-bf9f-6e5268aaf58e",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "584c1ce0-b5e2-4e97-82a9-5b2e60f28f2b",
+            "pinId": "N"
+          },
+          "number": "N",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "584c1ce0-b5e2-4e97-82a9-5b2e60f28f2b",
+            "pinId": "+1"
+          },
+          "b": {
+            "ownerId": "b156ff87-8918-42bf-9ee9-c361e9d04240",
+            "pinId": "+IN"
+          },
+          "number": "21",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "584c1ce0-b5e2-4e97-82a9-5b2e60f28f2b",
+            "pinId": "-1"
+          },
+          "b": {
+            "ownerId": "c74deace-cf70-49c8-9ac6-8a39dd99953e",
+            "pinId": "1"
+          },
+          "number": "0V",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "584c1ce0-b5e2-4e97-82a9-5b2e60f28f2b",
+            "pinId": "-2"
+          },
+          "b": {
+            "ownerId": "752732cb-eb6d-4d94-88e0-52b4e84c718c",
+            "pinId": "1"
+          },
+          "number": "0V",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "b156ff87-8918-42bf-9ee9-c361e9d04240",
+            "pinId": "+1"
+          },
+          "b": {
+            "ownerId": "ff94767c-71dc-4b3b-ac23-8c1ef3375ba7",
+            "pinId": "1"
+          },
+          "number": "22",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "b156ff87-8918-42bf-9ee9-c361e9d04240",
+            "pinId": "+4"
+          },
+          "b": {
+            "ownerId": "cc7e24f4-4bd3-4398-bea3-22f80ad9aab3",
+            "pinId": "1"
+          },
+          "number": "+24V",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "fd8f781b-b372-47d9-9e2d-653af3aeb0af",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "584c1ce0-b5e2-4e97-82a9-5b2e60f28f2b",
+            "pinId": "PE"
+          },
+          "number": "PE",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        }
+      ]
+    },
+    {
+      "id": "page-68380a58",
+      "name": "Kumanda",
+      "type": "schematic",
+      "format": "a3",
+      "orientation": "landscape",
+      "width": 420,
+      "height": 297,
+      "titleBlock": {},
+      "objects": [
+        {
+          "kind": "pageLink",
+          "description": "",
+          "x": 60,
+          "y": 30,
+          "rotation": 270,
+          "name": "+24V",
+          "id": "c94b2183-8384-4095-b56d-e4c3b567aa6c"
+        },
+        {
+          "kind": "device",
+          "reference": "-F5",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "1",
+              "x": 0,
+              "y": -10,
+              "direction": "up",
+              "function": "power"
+            },
+            {
+              "id": "2",
+              "x": 0,
+              "y": 10,
+              "direction": "down",
+              "function": "power"
+            }
+          ],
+          "symbolId": "iec.mcb.1p",
+          "x": 60,
+          "y": 50,
+          "rotation": 0,
+          "scale": 1,
+          "id": "2b5d5e7c-ae20-4f1d-95a2-03855a29a715"
+        },
+        {
+          "kind": "device",
+          "reference": "-S1",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "11",
+              "x": 0,
+              "y": -10,
+              "direction": "up",
+              "function": "contactNc"
+            },
+            {
+              "id": "12",
+              "x": 0,
+              "y": 10,
+              "direction": "down",
+              "function": "contactNc"
+            }
+          ],
+          "symbolId": "iec.estop",
+          "x": 60,
+          "y": 80,
+          "rotation": 0,
+          "scale": 1,
+          "id": "85aeeb54-bfa0-4c6c-a41a-6a4f649166a2"
+        },
+        {
+          "kind": "device",
+          "reference": "-S2",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "11",
+              "x": 0,
+              "y": -10,
+              "direction": "up",
+              "function": "contactNc"
+            },
+            {
+              "id": "12",
+              "x": 0,
+              "y": 10,
+              "direction": "down",
+              "function": "contactNc"
+            }
+          ],
+          "symbolId": "iec.pushbutton.nc",
+          "x": 60,
+          "y": 110,
+          "rotation": 0,
+          "scale": 1,
+          "id": "5d885437-08c7-4778-bfa4-5b43e956716b"
+        },
+        {
+          "kind": "device",
+          "reference": "-F3",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "95",
+              "x": 0,
+              "y": -10,
+              "direction": "up",
+              "function": "contactNc"
+            },
+            {
+              "id": "96",
+              "x": 0,
+              "y": 10,
+              "direction": "down",
+              "function": "contactNc"
+            }
+          ],
+          "symbolId": "iec.overload.contact.nc",
+          "x": 60,
+          "y": 140,
+          "rotation": 0,
+          "scale": 1,
+          "id": "92d5f1a1-a67b-4912-9ab6-69749caaec9d"
+        },
+        {
+          "kind": "device",
+          "reference": "-S3",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "13",
+              "x": 0,
+              "y": -10,
+              "direction": "up",
+              "function": "contactNo"
+            },
+            {
+              "id": "14",
+              "x": 0,
+              "y": 10,
+              "direction": "down",
+              "function": "contactNo"
+            }
+          ],
+          "symbolId": "iec.pushbutton.no",
+          "x": 60,
+          "y": 170,
+          "rotation": 0,
+          "scale": 1,
+          "id": "601c47be-8404-4b03-a953-ab5e36e13fd2"
+        },
+        {
+          "kind": "device",
+          "reference": "-K3",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "A1",
+              "x": 0,
+              "y": -10,
+              "direction": "up",
+              "function": "coil"
+            },
+            {
+              "id": "A2",
+              "x": 0,
+              "y": 10,
+              "direction": "down",
+              "function": "coil"
+            }
+          ],
+          "symbolId": "iec.coil",
+          "x": 60,
+          "y": 200,
+          "rotation": 0,
+          "scale": 1,
+          "id": "66899c22-5fb1-48c0-914c-581e94d08128"
+        },
+        {
+          "kind": "pageLink",
+          "description": "",
+          "x": 60,
+          "y": 225,
+          "rotation": 90,
+          "name": "0V",
+          "id": "9fb2843a-671c-472a-9eb1-355fb04a9b22"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "dcPositive",
+          "voltage": "24VDC",
+          "description": "",
+          "x": 140,
+          "y": 30,
+          "rotation": 0,
+          "name": "+24V",
+          "id": "dcd37ddf-6679-4ba0-861d-6ddc6093211d"
+        },
+        {
+          "kind": "device",
+          "reference": "-K3",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "13",
+              "x": 0,
+              "y": -10,
+              "direction": "up",
+              "function": "contactNo"
+            },
+            {
+              "id": "14",
+              "x": 0,
+              "y": 10,
+              "direction": "down",
+              "function": "contactNo"
+            }
+          ],
+          "symbolId": "iec.contact.no",
+          "x": 140,
+          "y": 60,
+          "rotation": 0,
+          "scale": 1,
+          "id": "f8d5e819-3b5a-47b4-9646-3b258ce6c496"
+        },
+        {
+          "kind": "device",
+          "reference": "-P2",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "X1",
+              "x": 0,
+              "y": -10,
+              "direction": "up"
+            },
+            {
+              "id": "X2",
+              "x": 0,
+              "y": 10,
+              "direction": "down"
+            }
+          ],
+          "symbolId": "iec.lamp",
+          "x": 140,
+          "y": 90,
+          "rotation": 0,
+          "scale": 1,
+          "id": "84d06826-340f-402b-b999-5cbb84201f33"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "dcNegative",
+          "voltage": "",
+          "description": "",
+          "x": 140,
+          "y": 120,
+          "rotation": 180,
+          "name": "0V",
+          "id": "a2215d5c-a9fe-4edd-be8d-8f9e0b77ae9e"
+        }
+      ],
+      "wireData": [
+        {
+          "a": {
+            "ownerId": "66899c22-5fb1-48c0-914c-581e94d08128",
+            "pinId": "A2"
+          },
+          "b": {
+            "ownerId": "9fb2843a-671c-472a-9eb1-355fb04a9b22",
+            "pinId": "1"
+          },
+          "number": "0V",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "c94b2183-8384-4095-b56d-e4c3b567aa6c",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "2b5d5e7c-ae20-4f1d-95a2-03855a29a715",
+            "pinId": "1"
+          },
+          "number": "22",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "2b5d5e7c-ae20-4f1d-95a2-03855a29a715",
+            "pinId": "2"
+          },
+          "b": {
+            "ownerId": "85aeeb54-bfa0-4c6c-a41a-6a4f649166a2",
+            "pinId": "11"
+          },
+          "number": "23",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "85aeeb54-bfa0-4c6c-a41a-6a4f649166a2",
+            "pinId": "12"
+          },
+          "b": {
+            "ownerId": "5d885437-08c7-4778-bfa4-5b43e956716b",
+            "pinId": "11"
+          },
+          "number": "24",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "5d885437-08c7-4778-bfa4-5b43e956716b",
+            "pinId": "12"
+          },
+          "b": {
+            "ownerId": "92d5f1a1-a67b-4912-9ab6-69749caaec9d",
+            "pinId": "95"
+          },
+          "number": "25",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "92d5f1a1-a67b-4912-9ab6-69749caaec9d",
+            "pinId": "96"
+          },
+          "b": {
+            "ownerId": "601c47be-8404-4b03-a953-ab5e36e13fd2",
+            "pinId": "13"
+          },
+          "number": "26",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "601c47be-8404-4b03-a953-ab5e36e13fd2",
+            "pinId": "14"
+          },
+          "b": {
+            "ownerId": "66899c22-5fb1-48c0-914c-581e94d08128",
+            "pinId": "A1"
+          },
+          "number": "27",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "dcd37ddf-6679-4ba0-861d-6ddc6093211d",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "f8d5e819-3b5a-47b4-9646-3b258ce6c496",
+            "pinId": "13"
+          },
+          "number": "+24V",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "f8d5e819-3b5a-47b4-9646-3b258ce6c496",
+            "pinId": "14"
+          },
+          "b": {
+            "ownerId": "84d06826-340f-402b-b999-5cbb84201f33",
+            "pinId": "X1"
+          },
+          "number": "28",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "84d06826-340f-402b-b999-5cbb84201f33",
+            "pinId": "X2"
+          },
+          "b": {
+            "ownerId": "a2215d5c-a9fe-4edd-be8d-8f9e0b77ae9e",
+            "pinId": "1"
+          },
+          "number": "0V",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        }
+      ]
+    },
+    {
+      "id": "page-0acd2807",
+      "name": "PLC girişleri",
+      "type": "schematic",
+      "format": "a3",
+      "orientation": "landscape",
+      "width": 420,
+      "height": 297,
+      "titleBlock": {},
+      "objects": [
+        {
+          "kind": "device",
+          "reference": "-A1",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "L+",
+              "x": -10,
+              "y": -25,
+              "direction": "up",
+              "function": "supplyPositive"
+            },
+            {
+              "id": "M",
+              "x": 0,
+              "y": -25,
+              "direction": "up",
+              "function": "supplyNegative"
+            },
+            {
+              "id": "PE",
+              "x": 10,
+              "y": -25,
+              "direction": "up",
+              "function": "protectiveEarth"
+            },
+            {
+              "id": "ETH",
+              "x": 35,
+              "y": -10,
+              "direction": "right",
+              "function": "communication"
+            },
+            {
+              "id": "A",
+              "x": 35,
+              "y": 0,
+              "direction": "right",
+              "function": "communication"
+            },
+            {
+              "id": "B",
+              "x": 35,
+              "y": 10,
+              "direction": "right",
+              "function": "communication"
+            }
+          ],
+          "symbolId": "iec.plc.cpu",
+          "x": 340,
+          "y": 100,
+          "rotation": 0,
+          "scale": 1,
+          "id": "76efc1bd-fa6a-466f-b03a-7e22bc2ad364"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "dcPositive",
+          "voltage": "24VDC",
+          "description": "",
+          "x": 330,
+          "y": 50,
+          "rotation": 0,
+          "name": "+24V",
+          "id": "dc2c8eb3-3d13-4582-9bd2-01d76432517d"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "dcNegative",
+          "voltage": "",
+          "description": "",
+          "x": 340,
+          "y": 50,
+          "rotation": 0,
+          "name": "0V",
+          "id": "a6469cb4-98d6-4255-9368-a314bd3ee6c8"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "pe",
+          "voltage": "",
+          "description": "",
+          "x": 350,
+          "y": 50,
+          "rotation": 0,
+          "name": "PE",
+          "id": "39f2e0e4-2674-4159-a9e3-68151924c6c5"
+        },
+        {
+          "kind": "device",
+          "reference": "-A2",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "DI0",
+              "x": -35,
+              "y": -15,
+              "direction": "up",
+              "function": "input"
+            },
+            {
+              "id": "DI1",
+              "x": -25,
+              "y": -15,
+              "direction": "up",
+              "function": "input"
+            },
+            {
+              "id": "DI2",
+              "x": -15,
+              "y": -15,
+              "direction": "up",
+              "function": "input"
+            },
+            {
+              "id": "DI3",
+              "x": -5,
+              "y": -15,
+              "direction": "up",
+              "function": "input"
+            },
+            {
+              "id": "DI4",
+              "x": 5,
+              "y": -15,
+              "direction": "up",
+              "function": "input"
+            },
+            {
+              "id": "DI5",
+              "x": 15,
+              "y": -15,
+              "direction": "up",
+              "function": "input"
+            },
+            {
+              "id": "DI6",
+              "x": 25,
+              "y": -15,
+              "direction": "up",
+              "function": "input"
+            },
+            {
+              "id": "DI7",
+              "x": 35,
+              "y": -15,
+              "direction": "up",
+              "function": "input"
+            },
+            {
+              "id": "1M",
+              "x": 0,
+              "y": 15,
+              "direction": "down",
+              "function": "supplyNegative"
+            }
+          ],
+          "symbolId": "iec.plc.di8",
+          "x": 200,
+          "y": 150,
+          "rotation": 0,
+          "scale": 1,
+          "id": "4efc4087-7164-4703-93ea-3624c75575e2"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "dcPositive",
+          "voltage": "24VDC",
+          "description": "",
+          "x": 165,
+          "y": 40,
+          "rotation": 0,
+          "name": "+24V",
+          "id": "dcedf125-2ad6-419d-8310-e0d410db6a07"
+        },
+        {
+          "kind": "device",
+          "reference": "-B1",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "13",
+              "x": 0,
+              "y": -10,
+              "direction": "up",
+              "function": "contactNo"
+            },
+            {
+              "id": "14",
+              "x": 0,
+              "y": 10,
+              "direction": "down",
+              "function": "contactNo"
+            }
+          ],
+          "symbolId": "iec.door.sensor",
+          "x": 165,
+          "y": 90,
+          "rotation": 0,
+          "scale": 1,
+          "id": "e44c5094-e215-4ea3-a0bc-146071480044"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "dcPositive",
+          "voltage": "24VDC",
+          "description": "",
+          "x": 185,
+          "y": 40,
+          "rotation": 0,
+          "name": "+24V",
+          "id": "d72db6aa-ce70-4a1b-a3ab-a51fab41fcca"
+        },
+        {
+          "kind": "device",
+          "reference": "-B2",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "13",
+              "x": 0,
+              "y": -10,
+              "direction": "up",
+              "function": "contactNo"
+            },
+            {
+              "id": "14",
+              "x": 0,
+              "y": 10,
+              "direction": "down",
+              "function": "contactNo"
+            }
+          ],
+          "symbolId": "iec.pressureswitch.no",
+          "x": 185,
+          "y": 90,
+          "rotation": 0,
+          "scale": 1,
+          "id": "be033582-4b94-471c-a2cd-ae4c0f57731c"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "dcPositive",
+          "voltage": "24VDC",
+          "description": "",
+          "x": 120,
+          "y": 70,
+          "rotation": 0,
+          "name": "+24V",
+          "id": "90ccd186-cc51-4212-9914-9d8f400b827e"
+        },
+        {
+          "kind": "device",
+          "reference": "-B3",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "BN",
+              "x": 0,
+              "y": -10,
+              "direction": "up",
+              "function": "supplyPositive",
+              "description": "+24V (kahverengi)"
+            },
+            {
+              "id": "BU",
+              "x": 0,
+              "y": 10,
+              "direction": "down",
+              "function": "supplyNegative",
+              "description": "0V (mavi)"
+            },
+            {
+              "id": "BK",
+              "x": 10,
+              "y": 0,
+              "direction": "right",
+              "function": "output",
+              "description": "Çıkış (siyah)"
+            }
+          ],
+          "symbolId": "iec.sensor.pnp",
+          "x": 120,
+          "y": 100,
+          "rotation": 0,
+          "scale": 1,
+          "id": "48b36024-dea9-4d14-8426-dc58506ffebe"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "dcNegative",
+          "voltage": "",
+          "description": "",
+          "x": 120,
+          "y": 130,
+          "rotation": 180,
+          "name": "0V",
+          "id": "b05ab32d-81aa-49e1-bb09-e4b2f363e554"
+        },
+        {
+          "kind": "junction",
+          "x": 205,
+          "y": 100,
+          "shape": "angle",
+          "rotation": 90,
+          "size": 1.2,
+          "visible": true,
+          "id": "5fd1652a-70dd-4eb7-8cf5-24e9f76286db"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "dcNegative",
+          "voltage": "",
+          "description": "",
+          "x": 200,
+          "y": 190,
+          "rotation": 180,
+          "name": "0V",
+          "id": "dfc82665-a715-493b-a0bb-746a134fd0e3"
+        },
+        {
+          "kind": "pageLink",
+          "description": "",
+          "x": 300,
+          "y": 60,
+          "rotation": 270,
+          "name": "FAZ-OK",
+          "id": "9142c1f3-81a9-4b97-b259-de2872f1b11a"
+        },
+        {
+          "kind": "device",
+          "reference": "-A1",
+          "description": "Faz sırası doğru",
+          "pinDesignations": {
+            "1": "I1.0"
+          },
+          "connectionPoints": [
+            {
+              "id": "1",
+              "x": 0,
+              "y": -10,
+              "direction": "up",
+              "function": "input"
+            }
+          ],
+          "symbolId": "iec.plc.input",
+          "x": 300,
+          "y": 80,
+          "rotation": 0,
+          "scale": 1,
+          "id": "1141b32b-4229-4734-be66-fe2c355a80ec"
+        }
+      ],
+      "wireData": [
+        {
+          "a": {
+            "ownerId": "9142c1f3-81a9-4b97-b259-de2872f1b11a",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "1141b32b-4229-4734-be66-fe2c355a80ec",
+            "pinId": "1"
+          },
+          "number": "14",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "90ccd186-cc51-4212-9914-9d8f400b827e",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "48b36024-dea9-4d14-8426-dc58506ffebe",
+            "pinId": "BN"
+          },
+          "number": "+24V",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "48b36024-dea9-4d14-8426-dc58506ffebe",
+            "pinId": "BK"
+          },
+          "b": {
+            "ownerId": "5fd1652a-70dd-4eb7-8cf5-24e9f76286db",
+            "pinId": "Left"
+          },
+          "number": "29",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "5fd1652a-70dd-4eb7-8cf5-24e9f76286db",
+            "pinId": "Down"
+          },
+          "b": {
+            "ownerId": "4efc4087-7164-4703-93ea-3624c75575e2",
+            "pinId": "DI4"
+          },
+          "number": "29",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "48b36024-dea9-4d14-8426-dc58506ffebe",
+            "pinId": "BU"
+          },
+          "b": {
+            "ownerId": "b05ab32d-81aa-49e1-bb09-e4b2f363e554",
+            "pinId": "1"
+          },
+          "number": "0V",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "dcedf125-2ad6-419d-8310-e0d410db6a07",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "e44c5094-e215-4ea3-a0bc-146071480044",
+            "pinId": "13"
+          },
+          "number": "+24V",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "e44c5094-e215-4ea3-a0bc-146071480044",
+            "pinId": "14"
+          },
+          "b": {
+            "ownerId": "4efc4087-7164-4703-93ea-3624c75575e2",
+            "pinId": "DI0"
+          },
+          "number": "30",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "d72db6aa-ce70-4a1b-a3ab-a51fab41fcca",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "be033582-4b94-471c-a2cd-ae4c0f57731c",
+            "pinId": "13"
+          },
+          "number": "+24V",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "be033582-4b94-471c-a2cd-ae4c0f57731c",
+            "pinId": "14"
+          },
+          "b": {
+            "ownerId": "4efc4087-7164-4703-93ea-3624c75575e2",
+            "pinId": "DI2"
+          },
+          "number": "31",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "4efc4087-7164-4703-93ea-3624c75575e2",
+            "pinId": "1M"
+          },
+          "b": {
+            "ownerId": "dfc82665-a715-493b-a0bb-746a134fd0e3",
+            "pinId": "1"
+          },
+          "number": "0V",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "dc2c8eb3-3d13-4582-9bd2-01d76432517d",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "76efc1bd-fa6a-466f-b03a-7e22bc2ad364",
+            "pinId": "L+"
+          },
+          "number": "+24V",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "a6469cb4-98d6-4255-9368-a314bd3ee6c8",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "76efc1bd-fa6a-466f-b03a-7e22bc2ad364",
+            "pinId": "M"
+          },
+          "number": "0V",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "39f2e0e4-2674-4159-a9e3-68151924c6c5",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "76efc1bd-fa6a-466f-b03a-7e22bc2ad364",
+            "pinId": "PE"
+          },
+          "number": "PE",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        }
+      ]
+    },
+    {
+      "id": "page-7a7484b9",
+      "name": "PLC çıkışları ve HMI",
+      "type": "schematic",
+      "format": "a3",
+      "orientation": "landscape",
+      "width": 420,
+      "height": 297,
+      "titleBlock": {},
+      "objects": [
+        {
+          "kind": "device",
+          "reference": "-A3",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "1L+",
+              "x": -5,
+              "y": -15,
+              "direction": "up",
+              "function": "supplyPositive"
+            },
+            {
+              "id": "1M",
+              "x": 5,
+              "y": -15,
+              "direction": "up",
+              "function": "supplyNegative"
+            },
+            {
+              "id": "DO0",
+              "x": -35,
+              "y": 15,
+              "direction": "down",
+              "function": "output"
+            },
+            {
+              "id": "DO1",
+              "x": -25,
+              "y": 15,
+              "direction": "down",
+              "function": "output"
+            },
+            {
+              "id": "DO2",
+              "x": -15,
+              "y": 15,
+              "direction": "down",
+              "function": "output"
+            },
+            {
+              "id": "DO3",
+              "x": -5,
+              "y": 15,
+              "direction": "down",
+              "function": "output"
+            },
+            {
+              "id": "DO4",
+              "x": 5,
+              "y": 15,
+              "direction": "down",
+              "function": "output"
+            },
+            {
+              "id": "DO5",
+              "x": 15,
+              "y": 15,
+              "direction": "down",
+              "function": "output"
+            },
+            {
+              "id": "DO6",
+              "x": 25,
+              "y": 15,
+              "direction": "down",
+              "function": "output"
+            },
+            {
+              "id": "DO7",
+              "x": 35,
+              "y": 15,
+              "direction": "down",
+              "function": "output"
+            }
+          ],
+          "symbolId": "iec.plc.do8",
+          "x": 200,
+          "y": 100,
+          "rotation": 0,
+          "scale": 1,
+          "id": "56c58fb8-cc07-4b67-8723-549b585ac871"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "dcPositive",
+          "voltage": "24VDC",
+          "description": "",
+          "x": 195,
+          "y": 60,
+          "rotation": 0,
+          "name": "+24V",
+          "id": "27c9803a-4c28-48e5-9127-5c25eadec439"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "dcNegative",
+          "voltage": "",
+          "description": "",
+          "x": 205,
+          "y": 60,
+          "rotation": 0,
+          "name": "0V",
+          "id": "299b23a8-29c0-40f4-832c-c6273e7e9d40"
+        },
+        {
+          "kind": "device",
+          "reference": "-K4",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "A1",
+              "x": 0,
+              "y": -10,
+              "direction": "up",
+              "function": "coil"
+            },
+            {
+              "id": "A2",
+              "x": 0,
+              "y": 10,
+              "direction": "down",
+              "function": "coil"
+            }
+          ],
+          "symbolId": "iec.coil",
+          "x": 165,
+          "y": 140,
+          "rotation": 0,
+          "scale": 1,
+          "id": "7bbc43a9-845f-4b94-aef3-cc0d6128630e"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "dcNegative",
+          "voltage": "",
+          "description": "",
+          "x": 165,
+          "y": 170,
+          "rotation": 180,
+          "name": "0V",
+          "id": "70a4f100-287b-489a-91e5-c69adb7c8709"
+        },
+        {
+          "kind": "device",
+          "reference": "-Y1",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "1",
+              "x": 0,
+              "y": -10,
+              "direction": "up",
+              "function": "coil"
+            },
+            {
+              "id": "2",
+              "x": 0,
+              "y": 10,
+              "direction": "down",
+              "function": "coil"
+            }
+          ],
+          "symbolId": "iec.valve.solenoid",
+          "x": 175,
+          "y": 140,
+          "rotation": 0,
+          "scale": 1,
+          "id": "9af8b606-681d-4232-b61f-115c055c6bb4"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "dcNegative",
+          "voltage": "",
+          "description": "",
+          "x": 175,
+          "y": 170,
+          "rotation": 180,
+          "name": "0V",
+          "id": "e4212afe-3bf8-4331-bbbc-8d12c4886df9"
+        },
+        {
+          "kind": "device",
+          "reference": "-A4",
+          "description": "",
+          "pinDesignations": {},
+          "connectionPoints": [
+            {
+              "id": "+24V",
+              "x": -10,
+              "y": -20,
+              "direction": "up",
+              "function": "supplyPositive"
+            },
+            {
+              "id": "0V",
+              "x": 0,
+              "y": -20,
+              "direction": "up",
+              "function": "supplyNegative"
+            },
+            {
+              "id": "PE",
+              "x": 10,
+              "y": -20,
+              "direction": "up",
+              "function": "protectiveEarth"
+            },
+            {
+              "id": "ETH",
+              "x": 30,
+              "y": -10,
+              "direction": "right",
+              "function": "communication"
+            },
+            {
+              "id": "A",
+              "x": 30,
+              "y": 0,
+              "direction": "right",
+              "function": "communication"
+            },
+            {
+              "id": "B",
+              "x": 30,
+              "y": 10,
+              "direction": "right",
+              "function": "communication"
+            }
+          ],
+          "symbolId": "iec.hmi",
+          "x": 320,
+          "y": 100,
+          "rotation": 0,
+          "scale": 1,
+          "id": "5855261d-5558-4f81-a9b6-30db2adbe0ee"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "dcPositive",
+          "voltage": "24VDC",
+          "description": "",
+          "x": 310,
+          "y": 55,
+          "rotation": 0,
+          "name": "+24V",
+          "id": "9e93df91-25c8-4d7d-a691-7521e165f472"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "dcNegative",
+          "voltage": "",
+          "description": "",
+          "x": 320,
+          "y": 55,
+          "rotation": 0,
+          "name": "0V",
+          "id": "c866da51-16b3-4722-b641-71990096d1a4"
+        },
+        {
+          "kind": "potential",
+          "potentialKind": "pe",
+          "voltage": "",
+          "description": "",
+          "x": 330,
+          "y": 55,
+          "rotation": 0,
+          "name": "PE",
+          "id": "74d78cc8-d66a-4061-af9f-2dbcec1ce604"
+        }
+      ],
+      "wireData": [
+        {
+          "a": {
+            "ownerId": "56c58fb8-cc07-4b67-8723-549b585ac871",
+            "pinId": "DO0"
+          },
+          "b": {
+            "ownerId": "7bbc43a9-845f-4b94-aef3-cc0d6128630e",
+            "pinId": "A1"
+          },
+          "number": "32",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "56c58fb8-cc07-4b67-8723-549b585ac871",
+            "pinId": "DO1"
+          },
+          "b": {
+            "ownerId": "9af8b606-681d-4232-b61f-115c055c6bb4",
+            "pinId": "1"
+          },
+          "number": "33",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "7bbc43a9-845f-4b94-aef3-cc0d6128630e",
+            "pinId": "A2"
+          },
+          "b": {
+            "ownerId": "70a4f100-287b-489a-91e5-c69adb7c8709",
+            "pinId": "1"
+          },
+          "number": "0V",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "9af8b606-681d-4232-b61f-115c055c6bb4",
+            "pinId": "2"
+          },
+          "b": {
+            "ownerId": "e4212afe-3bf8-4331-bbbc-8d12c4886df9",
+            "pinId": "1"
+          },
+          "number": "0V",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "27c9803a-4c28-48e5-9127-5c25eadec439",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "56c58fb8-cc07-4b67-8723-549b585ac871",
+            "pinId": "1L+"
+          },
+          "number": "+24V",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "299b23a8-29c0-40f4-832c-c6273e7e9d40",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "56c58fb8-cc07-4b67-8723-549b585ac871",
+            "pinId": "1M"
+          },
+          "number": "0V",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "9e93df91-25c8-4d7d-a691-7521e165f472",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "5855261d-5558-4f81-a9b6-30db2adbe0ee",
+            "pinId": "+24V"
+          },
+          "number": "+24V",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "c866da51-16b3-4722-b641-71990096d1a4",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "5855261d-5558-4f81-a9b6-30db2adbe0ee",
+            "pinId": "0V"
+          },
+          "number": "0V",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        },
+        {
+          "a": {
+            "ownerId": "74d78cc8-d66a-4061-af9f-2dbcec1ce604",
+            "pinId": "1"
+          },
+          "b": {
+            "ownerId": "5855261d-5558-4f81-a9b6-30db2adbe0ee",
+            "pinId": "PE"
+          },
+          "number": "PE",
+          "color": "",
+          "crossSection": "",
+          "cableType": "",
+          "description": "",
+          "numberLocked": false
+        }
+      ]
+    }
+  ],
+  "devices": [
+    {
+      "reference": "-F1",
+      "description": "Otomatik sigorta C63, 3P",
+      "category": "Koruma/Otomatik sigortalar",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Anma akımı": "63A",
+        "Karakteristik": "C",
+        "Kesme kapasitesi": "6kA"
+      },
+      "notes": "",
+      "templateId": "dev.mcb.c63.3p",
+      "contacts": []
+    },
+    {
+      "reference": "-T1",
+      "description": "Frekans inverteri 22 kW, 3x400 V",
+      "category": "Motor ve Sürücü/Sürücüler",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Güç": "22kW",
+        "Giriş gerilimi": "3x380-480VAC",
+        "Çıkış akımı": "45A"
+      },
+      "notes": "",
+      "templateId": "dev.vfd.22kw",
+      "contacts": [
+        {
+          "kind": "changeover",
+          "pins": [
+            "RC",
+            "RB",
+            "RA"
+          ]
+        }
+      ]
+    },
+    {
+      "reference": "-M1",
+      "description": "Asenkron motor 22 kW, 400 V, 1500 d/d",
+      "category": "Motor ve Sürücü/Motorlar",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Güç": "22kW",
+        "Gerilim": "400V Δ",
+        "Akım": "41A",
+        "Devir": "1470 d/d"
+      },
+      "notes": "",
+      "templateId": "dev.motor.22kw",
+      "contacts": []
+    },
+    {
+      "reference": "-F2",
+      "description": "Kaçak akım rölesi 2P 25 A 30 mA",
+      "category": "Koruma/Kaçak akım",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Kaçak akım": "30mA",
+        "Anma akımı": "25A"
+      },
+      "notes": "",
+      "templateId": "dev.rcd.2p.25a.30ma",
+      "contacts": []
+    },
+    {
+      "reference": "-T2",
+      "description": "Frekans inverteri 2.2 kW, 1x230 V giriş",
+      "category": "Motor ve Sürücü/Sürücüler",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Güç": "2.2kW",
+        "Giriş gerilimi": "1x220-240VAC",
+        "Çıkış akımı": "10A"
+      },
+      "notes": "",
+      "templateId": "dev.vfd.2.2kw.1ph",
+      "contacts": [
+        {
+          "kind": "changeover",
+          "pins": [
+            "RC",
+            "RB",
+            "RA"
+          ]
+        }
+      ]
+    },
+    {
+      "reference": "-M2",
+      "description": "Asenkron motor 2.2 kW, 230/400 V, 1500 d/d",
+      "category": "Motor ve Sürücü/Motorlar",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Güç": "2.2kW",
+        "Gerilim": "230V Δ / 400V Y",
+        "Akım": "4.9A",
+        "Devir": "1430 d/d"
+      },
+      "notes": "",
+      "templateId": "dev.motor.2.2kw",
+      "contacts": []
+    },
+    {
+      "reference": "-K1",
+      "description": "Faz sırası ve faz kontrol rölesi, 400 VAC",
+      "category": "Kontaktör ve Röle/İzleme röleleri",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Gerilim": "3x400VAC"
+      },
+      "notes": "",
+      "templateId": "dev.relay.phase",
+      "contacts": []
+    },
+    {
+      "reference": "-T3",
+      "description": "Akım trafosu 100/5 A",
+      "category": "Ölçüm/Akım trafoları",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Oran": "100/5A",
+        "Sınıf": "0.5"
+      },
+      "notes": "",
+      "templateId": "dev.ct.100",
+      "contacts": []
+    },
+    {
+      "reference": "-X1",
+      "description": "Sıra klemens 2.5 mm²",
+      "category": "Klemens ve Konnektör/Klemensler",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Kesit": "2.5mm²"
+      },
+      "notes": "",
+      "templateId": "dev.terminal.2.5",
+      "contacts": []
+    },
+    {
+      "reference": "-T4",
+      "description": "Akım trafosu 100/5 A",
+      "category": "Ölçüm/Akım trafoları",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Oran": "100/5A",
+        "Sınıf": "0.5"
+      },
+      "notes": "",
+      "templateId": "dev.ct.100",
+      "contacts": []
+    },
+    {
+      "reference": "-X2",
+      "description": "Sıra klemens 2.5 mm²",
+      "category": "Klemens ve Konnektör/Klemensler",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Kesit": "2.5mm²"
+      },
+      "notes": "",
+      "templateId": "dev.terminal.2.5",
+      "contacts": []
+    },
+    {
+      "reference": "-T5",
+      "description": "Akım trafosu 100/5 A",
+      "category": "Ölçüm/Akım trafoları",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Oran": "100/5A",
+        "Sınıf": "0.5"
+      },
+      "notes": "",
+      "templateId": "dev.ct.100",
+      "contacts": []
+    },
+    {
+      "reference": "-X3",
+      "description": "Sıra klemens 2.5 mm²",
+      "category": "Klemens ve Konnektör/Klemensler",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Kesit": "2.5mm²"
+      },
+      "notes": "",
+      "templateId": "dev.terminal.2.5",
+      "contacts": []
+    },
+    {
+      "reference": "-P1",
+      "description": "Enerji analizörü, 3 faz, Modbus RTU",
+      "category": "Ölçüm/Analizörler",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Model": "",
+        "CT oranı": "",
+        "Besleme": "85-265VAC",
+        "Akım girişi": "x/5A",
+        "Haberleşme": "RS485 Modbus RTU"
+      },
+      "notes": "",
+      "templateId": "dev.analyzer.modbus",
+      "contacts": []
+    },
+    {
+      "reference": "-Q1",
+      "description": "Motor koruma şalteri 4-6.3 A",
+      "category": "Koruma/Motor koruma",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Ayar aralığı": "4-6.3A",
+        "Anma akımı": ""
+      },
+      "notes": "",
+      "templateId": "dev.mpcb.4-6.3",
+      "contacts": []
+    },
+    {
+      "reference": "-F3",
+      "description": "Termik röle 9-13 A, 1NO+1NC",
+      "category": "Koruma/Motor koruma",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Ayar akımı": "",
+        "Ayar aralığı": "9-13A"
+      },
+      "notes": "",
+      "templateId": "dev.overload.9-13",
+      "contacts": [
+        {
+          "kind": "nc",
+          "pins": [
+            "95",
+            "96"
+          ]
+        },
+        {
+          "kind": "no",
+          "pins": [
+            "97",
+            "98"
+          ]
+        }
+      ]
+    },
+    {
+      "reference": "-M3",
+      "description": "Asenkron motor 2.2 kW, 230/400 V, 1500 d/d",
+      "category": "Motor ve Sürücü/Motorlar",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Güç": "2.2kW",
+        "Gerilim": "230V Δ / 400V Y",
+        "Akım": "4.9A",
+        "Devir": "1430 d/d"
+      },
+      "notes": "",
+      "templateId": "dev.motor.2.2kw",
+      "contacts": []
+    },
+    {
+      "reference": "-T6",
+      "description": "Güç kaynağı 24 VDC 10 A",
+      "category": "Enerji/Güç kaynakları",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Çıkış": "24VDC",
+        "Akım": "10A",
+        "Giriş": "100-240VAC"
+      },
+      "notes": "",
+      "templateId": "dev.psu.24v.10a",
+      "contacts": []
+    },
+    {
+      "reference": "-F4",
+      "description": "24 VDC sigortalı dağıtım bloğu, 4 çıkış",
+      "category": "Enerji/Dağıtım",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Çıkış sayısı": "4"
+      },
+      "notes": "",
+      "templateId": "dev.dist.24v",
+      "contacts": []
+    },
+    {
+      "reference": "-F5",
+      "description": "Otomatik sigorta C2, 1P",
+      "category": "Koruma/Otomatik sigortalar",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Anma akımı": "2A",
+        "Karakteristik": "C",
+        "Kesme kapasitesi": "6kA"
+      },
+      "notes": "",
+      "templateId": "dev.mcb.c2.1p",
+      "contacts": []
+    },
+    {
+      "reference": "-S1",
+      "description": "Acil stop butonu, mantar, 1NC",
+      "category": "Kumanda ve Sinyal/Butonlar",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Renk": "Kırmızı/Sarı"
+      },
+      "notes": "",
+      "templateId": "dev.button.estop",
+      "contacts": []
+    },
+    {
+      "reference": "-S2",
+      "description": "Stop butonu, kırmızı, 1NC",
+      "category": "Kumanda ve Sinyal/Butonlar",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Renk": "Kırmızı"
+      },
+      "notes": "",
+      "templateId": "dev.button.stop",
+      "contacts": []
+    },
+    {
+      "reference": "-S3",
+      "description": "Start butonu, yeşil, 1NO",
+      "category": "Kumanda ve Sinyal/Butonlar",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Renk": "Yeşil"
+      },
+      "notes": "",
+      "templateId": "dev.button.start",
+      "contacts": []
+    },
+    {
+      "reference": "-K3",
+      "description": "Kontaktör 9 A, 3P, 24 VDC bobin, 1NO+1NC",
+      "category": "Kontaktör ve Röle/Kontaktörler",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Bobin gerilimi": "24VDC",
+        "AC-3 akım": "9A",
+        "AC-3 güç (400V)": "4kW"
+      },
+      "notes": "",
+      "templateId": "dev.contactor.9a.24vdc",
+      "contacts": [
+        {
+          "kind": "power",
+          "pins": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "kind": "power",
+          "pins": [
+            "3",
+            "4"
+          ]
+        },
+        {
+          "kind": "power",
+          "pins": [
+            "5",
+            "6"
+          ]
+        },
+        {
+          "kind": "no",
+          "pins": [
+            "13",
+            "14"
+          ]
+        },
+        {
+          "kind": "nc",
+          "pins": [
+            "21",
+            "22"
+          ]
+        }
+      ]
+    },
+    {
+      "reference": "-P2",
+      "description": "Sinyal lambası LED 24 V, yeşil",
+      "category": "Kumanda ve Sinyal/Sinyal lambaları",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Renk": "Yeşil",
+        "Gerilim": "24V"
+      },
+      "notes": "",
+      "templateId": "dev.lamp.green.24v",
+      "contacts": []
+    },
+    {
+      "reference": "-A1",
+      "description": "PLC CPU, 24 VDC, Ethernet + RS485",
+      "category": "PLC ve Otomasyon/PLC",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Model": "",
+        "Firmware": "",
+        "Besleme": "24VDC"
+      },
+      "notes": "",
+      "templateId": "dev.plc.cpu",
+      "contacts": []
+    },
+    {
+      "reference": "-A2",
+      "description": "Dijital giriş modülü 8 DI, 24 VDC",
+      "category": "PLC ve Otomasyon/G-Ç modülleri",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Adres başlangıcı": "",
+        "Giriş tipi": "24VDC sink/source"
+      },
+      "notes": "",
+      "templateId": "dev.plc.di8",
+      "contacts": []
+    },
+    {
+      "reference": "-B1",
+      "description": "Manyetik kapı sensörü, 1NO",
+      "category": "Sensör ve Saha/Kapı ve emniyet",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {},
+      "notes": "",
+      "templateId": "dev.door.reed",
+      "contacts": []
+    },
+    {
+      "reference": "-B2",
+      "description": "Basınç şalteri (presostat), 1NO",
+      "category": "Sensör ve Saha/Basınç",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Ayar aralığı": ""
+      },
+      "notes": "",
+      "templateId": "dev.pressure.switch",
+      "contacts": []
+    },
+    {
+      "reference": "-B3",
+      "description": "Endüktif sensör M18, PNP NO, 8 mm",
+      "category": "Sensör ve Saha/Yaklaşım sensörleri",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Algılama mesafesi": "8mm",
+        "Çıkış": "PNP NO",
+        "Besleme": "10-30VDC"
+      },
+      "notes": "",
+      "templateId": "dev.prox.m18.pnp",
+      "contacts": []
+    },
+    {
+      "reference": "-A3",
+      "description": "Dijital çıkış modülü 8 DO, transistör 0.5 A",
+      "category": "PLC ve Otomasyon/G-Ç modülleri",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Adres başlangıcı": "",
+        "Çıkış tipi": "Transistör 24VDC 0.5A"
+      },
+      "notes": "",
+      "templateId": "dev.plc.do8",
+      "contacts": []
+    },
+    {
+      "reference": "-K4",
+      "description": "Ara röle 24 VDC, 2CO (soketli)",
+      "category": "Kontaktör ve Röle/Röleler",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Bobin gerilimi": "24VDC",
+        "Kontak akımı": "8A"
+      },
+      "notes": "",
+      "templateId": "dev.relay.2co.24vdc",
+      "contacts": [
+        {
+          "kind": "changeover",
+          "pins": [
+            "11",
+            "12",
+            "14"
+          ]
+        },
+        {
+          "kind": "changeover",
+          "pins": [
+            "21",
+            "22",
+            "24"
+          ]
+        }
+      ]
+    },
+    {
+      "reference": "-Y1",
+      "description": "",
+      "category": "Kurulum ve Diğer/Valfler",
+      "manufacturer": "",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG IEC 60617 1.0.0",
+      "properties": {
+        "Gerilim": "24VDC"
+      },
+      "notes": "",
+      "templateId": "",
+      "contacts": []
+    },
+    {
+      "reference": "-A4",
+      "description": "Dokunmatik operatör paneli 7\" (Delta DOP serisi)",
+      "category": "PLC ve Otomasyon/HMI",
+      "manufacturer": "Delta",
+      "model": "",
+      "orderNumber": "",
+      "location": "",
+      "datasheet": "",
+      "libraryVersion": "MYG Cihaz Kütüphanesi 1.0.0",
+      "properties": {
+        "Model": "",
+        "Ekran": "7\"",
+        "Besleme": "24VDC",
+        "Haberleşme": "Ethernet, RS485"
+      },
+      "notes": "",
+      "templateId": "dev.hmi.delta.7",
+      "contacts": []
+    }
+  ],
+  "resources": []
+}

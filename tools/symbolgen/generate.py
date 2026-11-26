@@ -690,8 +690,9 @@ def plc_cpu():
 def plc_module(sid, name, label, top, bottom, kw):
     n = max(len(top), len(bottom))
     w = size_for(n)
-    return box_dev(sid, name, C_PLC + "/G-Ç modülleri", "A", w, 20, label, top=top, bottom=bottom, keywords=kw,
-                   role="contact").prop("Adres başlangıcı", "")
+    # Modül ayrı bir cihazdır (kendi etiketi, ör. -A2); tek kanal G/Ç sembolleri ise CPU'nun parçasıdır.
+    return box_dev(sid, name, C_PLC + "/G-Ç modülleri", "A", w, 20, label, top=top, bottom=bottom, keywords=kw
+                   ).prop("Adres başlangıcı", "")
 
 
 def plc_single(sid, name, label, fn, direction):

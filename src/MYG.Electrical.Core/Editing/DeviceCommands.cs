@@ -19,6 +19,37 @@ public sealed class AddDeviceRecordsCommand(ProjectDocument document, IReadOnlyL
     }
 }
 
+/// <summary>Proje cihaz kayıtlarını kaldırır (geri alınınca aynı sıraya döner).</summary>
+public sealed class RemoveDeviceRecordsCommand(ProjectDocument document, IReadOnlyList<DeviceRecord> records) : IEditCommand
+{
+    private readonly List<(int Index, DeviceRecord Record)> _removed = [];
+
+    public string Description => "Cihaz kaydı kaldır";
+
+    public void Execute()
+    {
+        _removed.Clear();
+        foreach (var r in records)
+        {
+            var i = document.Devices.IndexOf(r);
+            if (i >= 0)
+            {
+                _removed.Add((i, r));
+                document.Devices.RemoveAt(i);
+            }
+        }
+    }
+
+    public void Undo()
+    {
+        for (var k = _removed.Count - 1; k >= 0; k--)
+        {
+            var (i, r) = _removed[k];
+            document.Devices.Insert(Math.Min(i, document.Devices.Count), r);
+        }
+    }
+}
+
 /// <summary>Sayfaya bağlı bileşik komut: geri alırken ilgili sayfaya geçilir.</summary>
 public sealed class PageCompositeCommand(string description, Page page, IReadOnlyList<IEditCommand> commands) : IEditCommand, IPageScopedCommand
 {
