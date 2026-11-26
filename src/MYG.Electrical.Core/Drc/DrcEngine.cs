@@ -87,6 +87,11 @@ public static class DrcEngine
                     case PotentialObject p when !connected.Contains(p.Pin.Ref):
                         f.Add(new(DrcSeverity.Warning, "DRC-PIN-02", $"'{p.Name}' potansiyeli hiçbir kabloya bağlı değil.", page, [p.Id], Loc(network, page, p)));
                         break;
+                    case DevicePinObject dp:
+                        f.Add(new(DrcSeverity.Info, "DRC-DEV-01",
+                            $"'{dp.Name}' tasarım pini henüz bir cihaza dönüştürülmedi (kutu ve pinleri seçip 'Seçimden cihaz oluştur').",
+                            page, [dp.Id], Loc(network, page, dp)));
+                        break;
                     case PageLinkObject l when !connected.Contains(l.Pin.Ref):
                         f.Add(new(DrcSeverity.Warning, "DRC-PIN-02", $"'{l.Name}' sayfa bağlantısı bu sayfada hiçbir kabloya bağlı değil.", page, [l.Id], Loc(network, page, l)));
                         break;

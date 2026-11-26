@@ -10,6 +10,10 @@ public sealed record DevicePart(Page Page, DeviceObject Placement, SymbolDefinit
 {
     public SymbolRole Role => Symbol?.Role ?? SymbolRole.Standalone;
 
+    /// <summary>Kontak mı (NO/NC/CO/güç kontağı); PLC G/Ç kutusu gibi diğer parçalar adıyla listelenir.</summary>
+    public bool IsContact => Placement.ConnectionPoints.Any(p => p.Function is PinFunction.ContactNo or PinFunction.ContactNc
+        or PinFunction.ContactCommon) || (Role == SymbolRole.Contact && Placement.ConnectionPoints.Any(p => p.Function == PinFunction.Power));
+
     /// <summary>Kontak türü kısaltması: NO, NC, CO, güç veya sembol adı.</summary>
     public string KindText
     {
@@ -70,7 +74,7 @@ public static class CrossReferences
     {
         return Parts(network, catalog, main.Reference)
             .Where(p => !ReferenceEquals(p.Placement, main) && p.Role == SymbolRole.Contact)
-            .Select(p => $"{p.KindText} {p.Paths}  {p.Location}")
+            .Select(p => p.IsContact ? $"{p.KindText} {p.Paths}  {p.Location}" : $"{p.Symbol?.Name ?? p.Placement.SymbolId}  {p.Location}")
             .ToList();
     }
 

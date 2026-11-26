@@ -43,6 +43,7 @@ public static class ObjectBounds
         {
             PotentialObject => new Rect2D(-Math.Max(2.5, textWidth / 2), -Rendering.ConnectorGeometry.PotentialHeight - Rendering.ConnectorGeometry.NameHeight - 1,
                 Math.Max(5, textWidth), Rendering.ConnectorGeometry.PotentialHeight + Rendering.ConnectorGeometry.NameHeight + 1),
+            DevicePinObject => new Rect2D(-1, -1, 2 + Math.Max(2, c.Name.Length) * Rendering.DrawingStyles.PinTextHeight * GeometryConstants.AverageCharWidthRatio + 1, DevicePinObject.LeadLength + 1),
             _ => new Rect2D(0, -2.5, Rendering.ConnectorGeometry.LinkArrowLength + 1.5 + textWidth + 8, 5),
         };
         // Metin döndürülmez; sınır yaklaşık olarak işaretle birlikte döner.

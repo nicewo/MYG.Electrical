@@ -148,6 +148,19 @@
                     <MenuItem Header="Diğer (adı sonra girin)" Command="{Binding PlacePotentialCommand}" />
                 </MenuItem>
                 <MenuItem Header="Sayfa bağlantısı (kesme noktası)" Command="{Binding PlacePageLinkCommand}" />
+                <MenuItem Header="Cihaz / PLC tasarımı">
+                    <MenuItem Header="Cihaz kutusu (kesikli)" Command="{Binding DrawDeviceBoxCommand}" />
+                    <Separator />
+                    <MenuItem Header="Giriş pini (X0.0, I0.0...)" Command="{Binding PlaceDevicePinCommand}" CommandParameter="input" />
+                    <MenuItem Header="Çıkış pini (Y0.0, Q0.0...)" Command="{Binding PlaceDevicePinCommand}" CommandParameter="output" />
+                    <MenuItem Header="Güç + pini (L+, 24V)" Command="{Binding PlaceDevicePinCommand}" CommandParameter="plus" />
+                    <MenuItem Header="Güç − pini (M, 0V)" Command="{Binding PlaceDevicePinCommand}" CommandParameter="minus" />
+                    <MenuItem Header="PE pini" Command="{Binding PlaceDevicePinCommand}" CommandParameter="pe" />
+                    <MenuItem Header="Haberleşme pini (A, B)" Command="{Binding PlaceDevicePinCommand}" CommandParameter="comm" />
+                    <MenuItem Header="Diğer pin" Command="{Binding PlaceDevicePinCommand}" />
+                    <Separator />
+                    <MenuItem Header="Seçimden cihaz oluştur (kütüphaneye ekle)…" Command="{Binding CreateDeviceCommand}" />
+                </MenuItem>
                 <Separator />
                 <MenuItem Header="Resim…" Command="{Binding InsertImageCommand}" />
             </MenuItem>
@@ -247,6 +260,19 @@
                 <Button Style="{StaticResource ToolButton}" ToolTip="Sayfa bağlantısı — aynı adlı bağlantılar sayfalar arasında birleşir" Command="{Binding PlacePageLinkCommand}">
                     <Path Style="{StaticResource ToolIcon}" Data="M0,7 H5 M5,4 H10 L13,7 L10,10 H5 Z" />
                 </Button>
+                <Button Style="{StaticResource ToolButton}" ToolTip="Cihaz / PLC kutusu (kesikli dikdörtgen)" Command="{Binding DrawDeviceBoxCommand}">
+                    <Rectangle Width="15" Height="11" Stroke="{StaticResource TextBrush}" StrokeThickness="1.3" StrokeDashArray="3 2" />
+                </Button>
+                <Button Style="{StaticResource ToolButton}" ToolTip="Giriş pini — X0.0, X0.1 ... kendiliğinden devam eder (Çıkış/Güç pinleri: Ekle → Cihaz / PLC tasarımı)" Command="{Binding PlaceDevicePinCommand}" CommandParameter="input">
+                    <Path Style="{StaticResource ToolIcon}" Data="M7,1 V12 M4,12 H10 M5.5,2.5 A1.5,1.5 0 1 1 8.5,2.5 A1.5,1.5 0 1 1 5.5,2.5" />
+                </Button>
+                <Button Style="{StaticResource ToolButton}" ToolTip="Çıkış pini — Y0.0, Y0.1 ..." Command="{Binding PlaceDevicePinCommand}" CommandParameter="output">
+                    <Path Style="{StaticResource ToolIcon}" Data="M7,2 V13 M4,2 H10 M5.5,11.5 A1.5,1.5 0 1 1 8.5,11.5 A1.5,1.5 0 1 1 5.5,11.5" />
+                </Button>
+                <Button Style="{StaticResource ToolButton}" ToolTip="Seçimden cihaz oluştur — kutu ve pinleri seçin, ad verin (ör. Delta AS228T); sol listeye eklenir" Command="{Binding CreateDeviceCommand}">
+                    <TextBlock Text="+C" FontWeight="Bold" FontSize="12" Width="18" TextAlignment="Center" />
+                </Button>
+
                 <Button Style="{StaticResource ToolButton}" ToolTip="Kabloları numaralandır (eksikler)" Command="{Binding NumberWiresCommand}" CommandParameter="missing">
                     <TextBlock Text="#" FontWeight="Bold" FontSize="14" Width="16" TextAlignment="Center" />
                 </Button>
@@ -454,6 +480,7 @@
                                     PendingImage="{Binding PendingImage}"
                                     PendingConnector="{Binding PendingConnector}"
                                     PendingDevice="{Binding PendingDevice}"
+                                    PendingPin="{Binding PendingPin}"
                                     Colors="{Binding ColorScheme}"
                                     HighlightedObjects="{Binding BottomPanel.Highlighted}">
                     <!-- Tek tuş kısayolları yalnızca çizim alanı odaktayken çalışır (metin kutularında yazmayı engellemez) -->

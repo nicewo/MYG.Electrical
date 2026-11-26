@@ -29,7 +29,7 @@ public sealed class SceneComposer(ISymbolCatalog catalog, Func<string, Resources
                 sink.DrawLine(l.Start, l.End, new StrokeStyle(DrawingStyles.Black, l.Thickness));
                 break;
             case RectangleObject r:
-                sink.DrawRectangle(r.Bounds, new StrokeStyle(DrawingStyles.Black, r.Thickness));
+                sink.DrawRectangle(r.Bounds, new StrokeStyle(r.Dashed ? Colors.Frame : DrawingStyles.Black, r.Thickness, r.Dashed));
                 break;
             case ImageObject img:
                 ComposeImage(img, sink);
@@ -42,6 +42,9 @@ public sealed class SceneComposer(ISymbolCatalog catalog, Func<string, Resources
                 break;
             case PageLinkObject link:
                 ComposePageLink(link, sink, options);
+                break;
+            case DevicePinObject pin:
+                ComposeDevicePin(pin, sink, options);
                 break;
             case JunctionObject j:
                 ComposeJunction(j, sink, options);
@@ -147,6 +150,24 @@ public sealed class SceneComposer(ISymbolCatalog catalog, Func<string, Resources
         }
     }
 
+    /// <summary>Tasarım pini: kutuya uzanan uç çizgisi, uçta küçük daire, bağlantı tanımı ve işlev rengi.</summary>
+    private void ComposeDevicePin(DevicePinObject p, ISceneSink sink, SceneComposerOptions options)
+    {
+        var color = p.Function switch
+        {
+            PinFunction.Input => Colors.Signal,
+            PinFunction.Output => Colors.Communication,
+            PinFunction.Power or PinFunction.SupplyPositive => Colors.DcPositive,
+            PinFunction.SupplyNegative => Colors.DcNegative,
+            PinFunction.ProtectiveEarth => Colors.PE,
+            _ => Colors.Symbol,
+        };
+        sink.DrawLine(p.Anchor, p.InnerEnd, new StrokeStyle(Colors.Symbol, DrawingStyles.SymbolLine));
+        sink.DrawEllipse(p.Anchor, 0.7, 0.7, new StrokeStyle(color, DrawingStyles.ThinLine), DrawingStyles.White);
+        sink.DrawText(string.IsNullOrEmpty(p.Name) ? "?" : p.Name, PinLabelPosition(p.Pin), DrawingStyles.PinTextHeight, color, TextAlign.Left, bold: true);
+        _ = options;
+    }
+
     private void ComposePageLink(PageLinkObject link, ISceneSink sink, SceneComposerOptions options)
     {
         var color = Colors.ForPotential(Network?.PotentialOf(link.Pin.Ref)?.Kind);
@@ -211,7 +232,7 @@ public sealed class SceneComposer(ISymbolCatalog catalog, Func<string, Resources
                     sink.DrawPolygon(pts, poly.Closed, stroke, poly.Filled ? stroke.Color : null);
                     break;
                 case TextPrimitive t:
-                    sink.DrawText(t.Text, s.LocalToGlobal(new(t.X, t.Y)), t.Height * s.Scale, Colors.Symbol, TextAlign.Center);
+                    sink.DrawText(t.Text, s.LocalToGlobal(new(t.X, t.Y)), t.Height * s.Scale, Colors.Symbol, t.LeftAligned ? TextAlign.Left : TextAlign.Center);
                     break;
             }
         }

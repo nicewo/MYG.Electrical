@@ -130,3 +130,33 @@ public sealed class PageLinkObject : SinglePinObject
         X = X, Y = Y, Rotation = Rotation, Name = Name, Description = Description,
     };
 }
+
+/// <summary>
+/// Cihaz tasarımı sırasında çizime konan bağlantı noktası (EPLAN "PLC bağlantı noktası" benzeri). Bir kutu ve
+/// çizgilerle birlikte seçilip "Cihaz oluştur" ile kütüphaneye kaydedilir; sembolün pini olur.
+/// <see cref="SinglePinObject.Name"/> bağlantı tanımıdır (X0, I0.0, L+...). Dönüş 0'da kablo yukarı çıkar,
+/// kısa uç çizgisi aşağıya (kutunun içine) uzanır.
+/// </summary>
+public sealed class DevicePinObject : SinglePinObject
+{
+    /// <summary>Pin ucunun kutuya doğru uzunluğu (mm).</summary>
+    public const double LeadLength = 5.0;
+
+    public PinFunction Function { get; set; } = PinFunction.General;
+
+    public string Description { get; set; } = string.Empty;
+
+    protected override PinDirection BaseDirection => PinDirection.Up;
+
+    /// <summary>Uç çizgisinin kutu tarafındaki ucu.</summary>
+    [JsonIgnore]
+    public Point2D InnerEnd => LocalToGlobal(new Point2D(0, LeadLength));
+
+    public override DrawingObject CloneWithNewId() => new DevicePinObject
+    {
+        X = X, Y = Y, Rotation = Rotation, Name = Name, Function = Function, Description = Description,
+    };
+
+    /// <summary>İşleve göre varsayılan yön: çıkışlar aşağı, diğerleri yukarı.</summary>
+    public static double DefaultRotation(PinFunction f) => f == PinFunction.Output ? 180 : 0;
+}

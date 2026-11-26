@@ -17,7 +17,7 @@ public class LoadSaveReliabilityTests
     private static readonly Dictionary<string, Func<DrawingObject>> Samples = new()
     {
         ["line"] = () => new LineObject { X1 = 1.5, Y1 = 2, X2 = 30, Y2 = 2, Thickness = 0.7 },
-        ["rectangle"] = () => new RectangleObject { X = 3, Y = 4, Width = 50, Height = 20, Thickness = 0.5 },
+        ["rectangle"] = () => new RectangleObject { X = 3, Y = 4, Width = 50, Height = 20, Thickness = 0.5, Dashed = true },
         ["text"] = () => new TextObject { X = 7, Y = 8, Text = "Çağrı ğüşıöç", Height = 5, Rotation = 90 },
         ["symbol"] = () => new SymbolObject { SymbolId = SymbolIds.Lamp, X = 9, Y = 10, Rotation = 180, Scale = 1.5 },
         ["device"] = () => BuiltInSymbolLibrary.Instance.Find(SymbolIds.Contactor)!.CreateDevice(100, 60, "-K7"),
@@ -32,6 +32,7 @@ public class LoadSaveReliabilityTests
             X = 15, Y = 16, Rotation = 270, Name = "L2", PotentialKind = PotentialKind.L2, Voltage = "400VAC", Description = "Şebeke",
         },
         ["pageLink"] = () => new PageLinkObject { X = 17, Y = 18, Rotation = 180, Name = "+24V/3", Description = "Kumanda" },
+        ["devicePin"] = () => new DevicePinObject { X = 20, Y = 25, Rotation = 180, Name = "Y0.3", Function = PinFunction.Output, Description = "Pompa" },
     };
 
     [Fact]

@@ -26,6 +26,7 @@ public partial class MainWindow : Window, ICanvasController
                 vm.OpenDeviceProperties(device);
             }
         };
+        Canvas.DevicePinRequested += (_, pin) => vm.OnDevicePinRequested(pin);
         Canvas.AllowDrop = true;
         Canvas.DragOver += OnCanvasDragOver;
         Canvas.Drop += OnCanvasDrop;

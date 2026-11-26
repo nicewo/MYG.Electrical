@@ -120,11 +120,32 @@ public sealed class DeviceLibrary
                 w.Add($"'{t.Id}' cihaz kimliği zaten tanımlı; atlandı.");
             }
         }
-        All = all;
+        _all = all;
         Warnings = w;
     }
 
-    public IReadOnlyList<DeviceTemplate> All { get; }
+    private readonly List<DeviceTemplate> _all;
+
+    public IReadOnlyList<DeviceTemplate> All => _all;
+
+    /// <summary>Kullanıcı cihazı ekler veya aynı kimlikli kullanıcı cihazını değiştirir; yerleşik olanı değiştirmez.</summary>
+    public bool AddOrReplace(DeviceTemplate template)
+    {
+        if (_byId.TryGetValue(template.Id, out var existing))
+        {
+            if (!existing.IsUserDefined)
+            {
+                return false;
+            }
+            _all[_all.IndexOf(existing)] = template;
+        }
+        else
+        {
+            _all.Add(template);
+        }
+        _byId[template.Id] = template;
+        return true;
+    }
     public IReadOnlyList<string> Warnings { get; }
     public DeviceTemplate? Find(string id) => _byId.GetValueOrDefault(id);
 

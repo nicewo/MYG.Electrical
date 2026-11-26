@@ -131,6 +131,17 @@ public sealed class PropertiesViewModel(IDialogService dialogs, Action<ImageObje
                 Rows.Add(new TextRow("Not", () => "Renk yalnızca görsel yardımdır; potansiyel adı ve türü ayrıca saklanır.", null));
                 break;
 
+            case DevicePinObject pin:
+                Header = $"Pin {pin.Name}";
+                Rows.Add(new TextRow("Bağlantı adı", () => pin.Name, v => Set("Bağlantı adı", () => pin.Name, x => pin.Name = x, v.Trim())));
+                Rows.Add(new ChoiceRow("İşlev", PinNameViewModel.AllFunctions.Select(f => f.Text).ToList(),
+                    () => PinNameViewModel.AllFunctions.FirstOrDefault(f => f.Value == pin.Function)?.Text ?? "Genel",
+                    v => Set("Pin işlevi", () => pin.Function, x => pin.Function = x, PinNameViewModel.AllFunctions.First(f => f.Text == v).Value)));
+                Rows.Add(new TextRow("Açıklama", () => pin.Description, v => Set("Açıklama", () => pin.Description, x => pin.Description = x, v.Trim())));
+                AddConnectorTransformRows(pin, Num);
+                Rows.Add(new TextRow("Not", () => "Kutu ve pinleri seçip Ekle → Cihaz / PLC tasarımı → Seçimden cihaz oluştur.", null));
+                break;
+
             case PageLinkObject link:
                 Header = $"Sayfa bağlantısı {link.Name}";
                 Rows.Add(new TextRow("Ad", () => link.Name, v => Set("Bağlantı adı", () => link.Name, x => link.Name = x, v.Trim())));
@@ -163,6 +174,7 @@ public sealed class PropertiesViewModel(IDialogService dialogs, Action<ImageObje
                 Rows.Add(Num("Genişlik", () => r.Width, v => r.Width = Math.Max(0, v)));
                 Rows.Add(Num("Yükseklik", () => r.Height, v => r.Height = Math.Max(0, v)));
                 Rows.Add(Num("Kalınlık", () => r.Thickness, v => r.Thickness = Math.Max(0.05, v)));
+                Rows.Add(new BoolRow("Kesikli (cihaz kutusu)", () => r.Dashed, v => Set("Kesikli", () => r.Dashed, x => r.Dashed = x, v)));
                 break;
 
             case TextObject t:

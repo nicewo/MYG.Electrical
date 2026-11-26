@@ -53,6 +53,9 @@ public sealed record ArcPrimitive(double CenterX, double CenterY, double Radius,
 
 public sealed record TextPrimitive(double X, double Y, string Text, double Height) : SymbolPrimitive
 {
+    /// <summary>Metin X noktasından sağa yazılır (varsayılan: X'e ortalı). Çizimden oluşturulan cihazlarda kullanılır.</summary>
+    public bool LeftAligned { get; init; }
+
     public override IEnumerable<Point2D> ExtentPoints() =>
         [new(X - Text.Length * Height * GeometryConstants.AverageCharWidthRatio / 2, Y - Height / 2),
          new(X + Text.Length * Height * GeometryConstants.AverageCharWidthRatio / 2, Y + Height / 2)];

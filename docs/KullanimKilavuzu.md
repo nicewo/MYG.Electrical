@@ -71,7 +71,31 @@ referanslar, Dokümantasyon (datasheet, notlar). Tamam tek adımda geri alınabi
 **Kendi sembol ve cihazlarınız:** `%AppData%\MYG.Electrical\Symbols\` ve `...\Devices\` klasörlerine JSON
 dosyası koyun ve programı yeniden açın (biçim: `docs/SymbolLibrary.md`).
 
-## 5a. Potansiyeller, sayfa bağlantıları, kablo numaraları
+## 5a. Kendi PLC'nizi / cihazınızı çizmek (EPLAN tarzı)
+
+Kütüphanede olmayan bir PLC'yi (ör. **Delta AS228T**) sayfada çizip kütüphaneye ekleyebilirsiniz:
+
+1. **Ekle → Cihaz / PLC tasarımı → Cihaz kutusu** (veya araç çubuğundaki kesikli kutu): iki köşeye tıklayın.
+2. **Giriş pini** aracını seçin, kutunun üst kenarının 5 mm üstüne tıklayın. Bağlantı adı penceresi açılır:
+   `X0.0` yazın, Enter. Sonraki tıklamalarda pin adları **kendiliğinden artar**: X0.1, X0.2 … X0.15, X1.0
+   (Delta AS: 16 bit). `I0.0` yazarsanız I0.7'den sonra I1.0 (Siemens), `X0` yazarsanız X1, X2, X3 gelir.
+   Sıralama biçimi pencerede seçilebilir (ondalık, sekizli X0…X7, X10, bayt.bit, word.bit).
+3. **Çıkış pini** (kutunun altına, kablo aşağı çıkar), **Güç + / Güç −** (L+, M), PE ve haberleşme pinleri aynı
+   şekilde. R ile yön değişir. Pin aracını yeniden seçince ad penceresi tekrar açılır.
+4. İsterseniz kutunun içine metin yazın (ör. "AS228T").
+5. Kutuyu ve pinleri **alan seçimiyle** seçin → **Seçimden cihaz oluştur**: ad (Delta AS228T), kategori
+   (PLC ve Otomasyon/Delta), üretici, model, tanım harfi (A).
+6. Cihaz sol listedeki **Cihazlar** sekmesinde seçtiğiniz kategoride görünür; çift tık veya sürükle-bırakla
+   istediğiniz sayfaya konur. Çizim de (işaretliyse) yeni cihazla değiştirilir, bağlı kablolar yerinde kalır.
+
+Kayıt yeri: `%AppData%\MYG.Electrical\Symbols\kullanici.json` ve `...\Devices\kullanici.json`. Proje
+kaydedilirken kullanılan kullanıcı cihazları **projeye de gömülür**; proje başka bilgisayarda açılınca çizilir.
+
+**Birden fazla sayfaya yayılan PLC:** girişleri ve çıkışları ayrı kutular olarak çizin. Birini "ana parça",
+diğerini "ek parça" olarak oluşturun; yerleştirdikten sonra ek parçaya ana parçanın etiketini verin (-A1).
+Ana parçanın etiketinin altında diğer parçaların, ek parçanın altında ana parçanın `/sayfa.kolon` konumu yazılır.
+
+## 5b. Potansiyeller, sayfa bağlantıları, kablo numaraları
 
 - **Ekle → Potansiyel** (L1, L2, L3, N, PE, +24V, 0V, diğer): hattın başına koyun. Ad ve tür bağlı kablolara geçer;
   kablolar türün rengiyle çizilir. Sigorta/klemens ve kontaklardan geçer, bobin ve yüklerde durur.
@@ -84,7 +108,7 @@ dosyası koyun ve programı yeniden açın (biçim: `docs/SymbolLibrary.md`).
 - **Araçlar → Renk ayarları:** potansiyel, sembol, çerçeve, metin, seçim ve hata renkleri. Renk yalnızca görsel
   yardımdır. **Dosya → PDF'i siyah-beyaz aktar** baskı için.
 
-## 5b. DRC ve raporlar
+## 5c. DRC ve raporlar
 
 - **Proje → DRC (F7):** sonuçlar alt paneldeki DRC sekmesinde; hatalar kırmızı, uyarılar turuncu. Satıra çift
   tıklayınca ilgili sayfa açılır ve nesneler seçilir; hatalı/uyarılı nesneler çizimde kırmızı çerçevelenir.

@@ -13,11 +13,12 @@ public sealed class ProjectDocument
     /// yerleşimde açıklama ve pin adı.</item>
     /// <item>5: potansiyel (<c>potential</c>) ve sayfa bağlantısı (<c>pageLink</c>) nesneleri.</item>
     /// <item>6: proje cihazında cihaz kütüphanesi kimliği (<c>templateId</c>) ve kontak kapasitesi (<c>contacts</c>).</item>
+    /// <item>7: tasarım pini (<c>devicePin</c>), kesikli dikdörtgen, projeye gömülü kullanıcı sembolleri (<c>symbols</c>).</item>
     /// </list>
     /// Yeni bir alan veya nesne türü eklendiğinde bu değer artırılmalı ve
     /// ProjectSerializer.Migrate içine dönüşüm adımı yazılmalıdır.
     /// </summary>
-    public const int CurrentFormatVersion = 6;
+    public const int CurrentFormatVersion = 7;
     public const string FileExtension = ".myge";
 
     public int FormatVersion { get; set; } = CurrentFormatVersion;
@@ -29,6 +30,9 @@ public sealed class ProjectDocument
 
     /// <summary>Proje cihazları (etiket başına bir kayıt). Yerleşimler sayfalardaki DeviceObject'lerdir.</summary>
     public List<Devices.DeviceRecord> Devices { get; set; } = [];
+
+    /// <summary>Projede kullanılan kullanıcı sembolleri (başka bilgisayarda da çizilebilsin diye).</summary>
+    public List<Symbols.SymbolDefinition> Symbols { get; set; } = [];
 
     /// <summary>Projeye gömülü dosyalar (resimler). JSON'da base64.</summary>
     public List<Resources.ProjectResource> Resources { get; set; } = [];

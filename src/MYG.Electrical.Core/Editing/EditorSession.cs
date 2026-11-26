@@ -326,6 +326,32 @@ public sealed class EditorSession
     }
 
     /// <summary>
+    /// Çizimden cihaz oluşturma sonrası: tasarım çizimi (kutu, çizgiler, pinler) kaldırılır, yerine yeni cihazın
+    /// bir yerleşimi aynı noktaya konur (tek geri alma adımı). Pinlere bağlı kablolar aynı yerde kalır.
+    /// </summary>
+    public DeviceObject? ReplaceWithDevice(IReadOnlyList<DrawingObject> drawn, Devices.DeviceTemplate template, Point2D origin)
+    {
+        if (Catalog.Find(template.Symbol) is not { } symbol)
+        {
+            return null;
+        }
+        var reference = ReferenceGenerator.Next(symbol, Document, ActivePageNumber);
+        var device = symbol.CreateDevice(origin.X, origin.Y, reference);
+        var commands = new List<IEditCommand>
+        {
+            new RemoveObjectsCommand(_activePage, drawn),
+            new AddObjectsCommand(_activePage, [device]),
+        };
+        if (reference.Length > 0 && Devices.DeviceRegistry.Find(Document, reference) is null)
+        {
+            commands.Add(new AddDeviceRecordsCommand(Document, [template.CreateRecord(reference, symbol)]));
+        }
+        Execute(new PageCompositeCommand("Cihaz oluştur", _activePage, commands), null);
+        Select(device);
+        return device;
+    }
+
+    /// <summary>
     /// Bütün cihazları IEC 81346 şablonuna göre yeniden numaralandırır: her sınıf harfi için ilk yerleşimin
     /// sayfa, kolon, yukarıdan aşağı sırasıyla 1'den başlar. Çok parçalı cihazın bütün parçaları birlikte değişir.
     /// Etiketi elle şablon dışı verilmiş cihazlar da sıraya girer. Değişen cihaz sayısını döndürür (tek geri alma adımı).

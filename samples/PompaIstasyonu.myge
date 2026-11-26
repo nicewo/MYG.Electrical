@@ -1,5 +1,5 @@
 {
-  "formatVersion": 6,
+  "formatVersion": 7,
   "project": {
     "name": "Hat 1 Pompa İstasyonu",
     "company": "MYG TECH",
@@ -18,7 +18,7 @@
   },
   "pages": [
     {
-      "id": "page-7ab1a5b9",
+      "id": "page-e7a9af62",
       "name": "Kapak",
       "type": "cover",
       "format": "a3",
@@ -30,7 +30,7 @@
       "wireData": []
     },
     {
-      "id": "page-d7e57c7a",
+      "id": "page-ed3eb9ce",
       "name": "Güç 1 — sürücüler",
       "type": "schematic",
       "format": "a3",
@@ -48,7 +48,7 @@
           "y": 30,
           "rotation": 0,
           "name": "L1",
-          "id": "2273c1d6-4b7c-4fd5-822a-84c7eee92e97"
+          "id": "16e34866-120e-4351-8eab-325d9b020e1e"
         },
         {
           "kind": "potential",
@@ -59,7 +59,7 @@
           "y": 30,
           "rotation": 0,
           "name": "L2",
-          "id": "5618b653-aed8-46d6-b600-2ff9ebc7ba3d"
+          "id": "ed513244-eddf-4191-af30-29ef9d23a4a0"
         },
         {
           "kind": "potential",
@@ -70,7 +70,7 @@
           "y": 30,
           "rotation": 0,
           "name": "L3",
-          "id": "e22521da-6d03-4f4c-8fb0-741d69bb2da1"
+          "id": "04075a30-fe68-4014-a83f-9c69be5e0186"
         },
         {
           "kind": "potential",
@@ -81,7 +81,7 @@
           "y": 30,
           "rotation": 0,
           "name": "PE",
-          "id": "1737faf8-8e31-434c-87af-05f35a8f109f"
+          "id": "79fcb2ca-0f8e-4c3d-95f9-c5666f028c5c"
         },
         {
           "kind": "device",
@@ -137,7 +137,7 @@
           "y": 60,
           "rotation": 0,
           "scale": 1,
-          "id": "4d2aac29-ba9b-44db-8893-25203d00703d"
+          "id": "9ecaf5c6-8b8a-4268-9da5-b13c97d5802d"
         },
         {
           "kind": "device",
@@ -207,7 +207,7 @@
           "y": 100,
           "rotation": 0,
           "scale": 1,
-          "id": "8d386472-be23-438e-95d2-755ef69693fb"
+          "id": "bb77187e-4010-4c1a-b684-00dac1f5ee21"
         },
         {
           "kind": "device",
@@ -249,7 +249,7 @@
           "y": 140,
           "rotation": 0,
           "scale": 1,
-          "id": "e128f86c-5da9-4dbf-b1bb-76cd87a1c58e"
+          "id": "116e3d47-c69b-4912-a563-c35bdc12835b"
         },
         {
           "kind": "potential",
@@ -260,7 +260,7 @@
           "y": 30,
           "rotation": 0,
           "name": "L1",
-          "id": "ea585a92-1784-4dba-975d-97aa75f9054e"
+          "id": "c303aaec-1f57-436c-92ef-8898b9891044"
         },
         {
           "kind": "potential",
@@ -271,7 +271,7 @@
           "y": 30,
           "rotation": 0,
           "name": "N",
-          "id": "81d1f3f0-884e-4a9d-bb57-c883e6042d41"
+          "id": "02ecf97a-f3ae-43d6-8e8a-004c8153c08e"
         },
         {
           "kind": "potential",
@@ -282,7 +282,7 @@
           "y": 30,
           "rotation": 0,
           "name": "PE",
-          "id": "893729e6-d775-479a-bb0c-00e9813da64f"
+          "id": "eca033e8-9aec-4bd0-85d7-366c6eac08a3"
         },
         {
           "kind": "device",
@@ -324,7 +324,7 @@
           "y": 60,
           "rotation": 0,
           "scale": 1,
-          "id": "7b296f19-65e7-4226-8784-d67b8b6acbc6"
+          "id": "0e60b7d2-5623-43e6-b6f1-9a565bb3999f"
         },
         {
           "kind": "device",
@@ -387,7 +387,7 @@
           "y": 100,
           "rotation": 0,
           "scale": 1,
-          "id": "b617fcc9-1a17-4d4c-adbb-ab22921f990b"
+          "id": "923186b4-eb7e-4e8a-a135-f5e51a93ce6f"
         },
         {
           "kind": "device",
@@ -429,7 +429,7 @@
           "y": 140,
           "rotation": 0,
           "scale": 1,
-          "id": "478b5bf6-dfed-4254-9d44-c7a8e57af5f7"
+          "id": "7b4f8eab-5f9c-436d-abe8-82a0ddc1cd3c"
         },
         {
           "kind": "potential",
@@ -440,7 +440,7 @@
           "y": 60,
           "rotation": 0,
           "name": "L1",
-          "id": "75bb55a2-98f4-4b42-9fd9-9edca560553a"
+          "id": "c1a997f6-2d99-405c-a89c-081c8e343ecd"
         },
         {
           "kind": "potential",
@@ -451,7 +451,7 @@
           "y": 60,
           "rotation": 0,
           "name": "L2",
-          "id": "3c6259a7-b11d-462b-b9ee-d3fc78af909c"
+          "id": "0dd8096c-9b32-475c-b5f3-6adf087338c9"
         },
         {
           "kind": "potential",
@@ -462,7 +462,7 @@
           "y": 60,
           "rotation": 0,
           "name": "L3",
-          "id": "fb1f7236-4937-4e3a-8b21-ec8dccdb1781"
+          "id": "741d07e9-a3d3-4b34-a41e-8756f08e982f"
         },
         {
           "kind": "device",
@@ -518,7 +518,7 @@
           "y": 90,
           "rotation": 0,
           "scale": 1,
-          "id": "ff2cfec2-a72e-4407-84fd-63ec4f0595b5"
+          "id": "d7fb4e78-70f3-4922-8844-c4f734f98727"
         },
         {
           "kind": "pageLink",
@@ -527,7 +527,7 @@
           "y": 125,
           "rotation": 90,
           "name": "FAZ-OK",
-          "id": "f850b962-e07c-49f9-b307-7d0d450e4edf"
+          "id": "67caa059-0b13-404c-917a-1a9180ddf6ad"
         },
         {
           "kind": "potential",
@@ -538,7 +538,7 @@
           "y": 30,
           "rotation": 0,
           "name": "L1",
-          "id": "8d8107d2-f405-43d3-9dd0-bd43614808e1"
+          "id": "ac138b2f-36cc-4f3e-a85d-23dba2754db0"
         },
         {
           "kind": "device",
@@ -580,7 +580,7 @@
           "y": 55,
           "rotation": 0,
           "scale": 1,
-          "id": "fbfd6fac-0374-4634-97b5-6dfa399043c7"
+          "id": "4f2d4cef-d35e-4b21-8b0c-e382c7247075"
         },
         {
           "kind": "device",
@@ -608,7 +608,7 @@
           "y": 75,
           "rotation": 0,
           "scale": 1,
-          "id": "2eef6540-e62d-4b6c-8713-e9bb59db8211"
+          "id": "89c2d536-ceec-46b9-ad9d-94b59bdd3b86"
         },
         {
           "kind": "potential",
@@ -619,7 +619,7 @@
           "y": 30,
           "rotation": 0,
           "name": "L2",
-          "id": "2354f566-9ef1-443f-90db-74d53177b7f8"
+          "id": "791aef7a-8090-4dc2-8318-cd560ffa820b"
         },
         {
           "kind": "device",
@@ -661,7 +661,7 @@
           "y": 55,
           "rotation": 0,
           "scale": 1,
-          "id": "1956a99f-1940-4dae-bfc0-2de5aa8f5404"
+          "id": "b46d43b6-dea1-4789-8b74-07603515d009"
         },
         {
           "kind": "device",
@@ -689,7 +689,7 @@
           "y": 75,
           "rotation": 0,
           "scale": 1,
-          "id": "f902ad0e-bea7-4f96-9dee-c7ad57777234"
+          "id": "99de354e-d0df-4fa6-9b61-ddfc895a8092"
         },
         {
           "kind": "potential",
@@ -700,7 +700,7 @@
           "y": 30,
           "rotation": 0,
           "name": "L3",
-          "id": "27aa450b-0943-497f-a143-5c2c89f78187"
+          "id": "0b6e1c8f-964f-466d-823d-2f7c07e1e884"
         },
         {
           "kind": "device",
@@ -742,7 +742,7 @@
           "y": 55,
           "rotation": 0,
           "scale": 1,
-          "id": "97d7fbd8-86cf-4409-b01a-fe7b41dd8e1a"
+          "id": "cf4637f8-1431-4d8d-99ba-3afa07a56d40"
         },
         {
           "kind": "device",
@@ -770,7 +770,7 @@
           "y": 75,
           "rotation": 0,
           "scale": 1,
-          "id": "625f285f-ac57-4089-8a02-4bb83200e918"
+          "id": "27f4f082-66c4-40d0-abe6-b94d31d65b42"
         },
         {
           "kind": "potential",
@@ -781,7 +781,7 @@
           "y": 155,
           "rotation": 0,
           "name": "L1",
-          "id": "ef50faef-7450-4b54-baaa-2f6f5df492d0"
+          "id": "1273ded1-0060-4742-bd27-1076b7561665"
         },
         {
           "kind": "potential",
@@ -792,7 +792,7 @@
           "y": 155,
           "rotation": 0,
           "name": "L2",
-          "id": "afd28d64-9f37-4f47-8f4b-a3dfc785f001"
+          "id": "b2a24a06-c455-4bf8-a3f8-854b64d3c83d"
         },
         {
           "kind": "potential",
@@ -803,7 +803,7 @@
           "y": 155,
           "rotation": 0,
           "name": "L3",
-          "id": "45a47010-7698-4711-a87b-b860f2176ccd"
+          "id": "d096f44b-f2c3-4122-9e25-1d42fcda0ea5"
         },
         {
           "kind": "potential",
@@ -814,7 +814,7 @@
           "y": 155,
           "rotation": 0,
           "name": "N",
-          "id": "1cf45a3a-5f86-4a00-bcd0-ca071ad58f9b"
+          "id": "9a8f6e23-9c81-493c-b756-671d275165b8"
         },
         {
           "kind": "device",
@@ -926,17 +926,17 @@
           "y": 200,
           "rotation": 0,
           "scale": 1,
-          "id": "22342e05-5c8d-454f-87d9-5fc8ee2118e5"
+          "id": "cd574cd6-9b29-4045-830c-43e9429dcd03"
         }
       ],
       "wireData": [
         {
           "a": {
-            "ownerId": "2273c1d6-4b7c-4fd5-822a-84c7eee92e97",
+            "ownerId": "16e34866-120e-4351-8eab-325d9b020e1e",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "4d2aac29-ba9b-44db-8893-25203d00703d",
+            "ownerId": "9ecaf5c6-8b8a-4268-9da5-b13c97d5802d",
             "pinId": "1"
           },
           "number": "L1",
@@ -948,11 +948,11 @@
         },
         {
           "a": {
-            "ownerId": "5618b653-aed8-46d6-b600-2ff9ebc7ba3d",
+            "ownerId": "ed513244-eddf-4191-af30-29ef9d23a4a0",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "4d2aac29-ba9b-44db-8893-25203d00703d",
+            "ownerId": "9ecaf5c6-8b8a-4268-9da5-b13c97d5802d",
             "pinId": "3"
           },
           "number": "L2",
@@ -964,11 +964,11 @@
         },
         {
           "a": {
-            "ownerId": "e22521da-6d03-4f4c-8fb0-741d69bb2da1",
+            "ownerId": "04075a30-fe68-4014-a83f-9c69be5e0186",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "4d2aac29-ba9b-44db-8893-25203d00703d",
+            "ownerId": "9ecaf5c6-8b8a-4268-9da5-b13c97d5802d",
             "pinId": "5"
           },
           "number": "L3",
@@ -980,11 +980,11 @@
         },
         {
           "a": {
-            "ownerId": "1737faf8-8e31-434c-87af-05f35a8f109f",
+            "ownerId": "79fcb2ca-0f8e-4c3d-95f9-c5666f028c5c",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "8d386472-be23-438e-95d2-755ef69693fb",
+            "ownerId": "bb77187e-4010-4c1a-b684-00dac1f5ee21",
             "pinId": "PE"
           },
           "number": "PE",
@@ -996,11 +996,11 @@
         },
         {
           "a": {
-            "ownerId": "4d2aac29-ba9b-44db-8893-25203d00703d",
+            "ownerId": "9ecaf5c6-8b8a-4268-9da5-b13c97d5802d",
             "pinId": "2"
           },
           "b": {
-            "ownerId": "8d386472-be23-438e-95d2-755ef69693fb",
+            "ownerId": "bb77187e-4010-4c1a-b684-00dac1f5ee21",
             "pinId": "L1"
           },
           "number": "1",
@@ -1012,11 +1012,11 @@
         },
         {
           "a": {
-            "ownerId": "4d2aac29-ba9b-44db-8893-25203d00703d",
+            "ownerId": "9ecaf5c6-8b8a-4268-9da5-b13c97d5802d",
             "pinId": "4"
           },
           "b": {
-            "ownerId": "8d386472-be23-438e-95d2-755ef69693fb",
+            "ownerId": "bb77187e-4010-4c1a-b684-00dac1f5ee21",
             "pinId": "L2"
           },
           "number": "2",
@@ -1028,11 +1028,11 @@
         },
         {
           "a": {
-            "ownerId": "4d2aac29-ba9b-44db-8893-25203d00703d",
+            "ownerId": "9ecaf5c6-8b8a-4268-9da5-b13c97d5802d",
             "pinId": "6"
           },
           "b": {
-            "ownerId": "8d386472-be23-438e-95d2-755ef69693fb",
+            "ownerId": "bb77187e-4010-4c1a-b684-00dac1f5ee21",
             "pinId": "L3"
           },
           "number": "3",
@@ -1044,11 +1044,11 @@
         },
         {
           "a": {
-            "ownerId": "8d386472-be23-438e-95d2-755ef69693fb",
+            "ownerId": "bb77187e-4010-4c1a-b684-00dac1f5ee21",
             "pinId": "U"
           },
           "b": {
-            "ownerId": "e128f86c-5da9-4dbf-b1bb-76cd87a1c58e",
+            "ownerId": "116e3d47-c69b-4912-a563-c35bdc12835b",
             "pinId": "U1"
           },
           "number": "4",
@@ -1060,11 +1060,11 @@
         },
         {
           "a": {
-            "ownerId": "8d386472-be23-438e-95d2-755ef69693fb",
+            "ownerId": "bb77187e-4010-4c1a-b684-00dac1f5ee21",
             "pinId": "V"
           },
           "b": {
-            "ownerId": "e128f86c-5da9-4dbf-b1bb-76cd87a1c58e",
+            "ownerId": "116e3d47-c69b-4912-a563-c35bdc12835b",
             "pinId": "V1"
           },
           "number": "5",
@@ -1076,11 +1076,11 @@
         },
         {
           "a": {
-            "ownerId": "8d386472-be23-438e-95d2-755ef69693fb",
+            "ownerId": "bb77187e-4010-4c1a-b684-00dac1f5ee21",
             "pinId": "W"
           },
           "b": {
-            "ownerId": "e128f86c-5da9-4dbf-b1bb-76cd87a1c58e",
+            "ownerId": "116e3d47-c69b-4912-a563-c35bdc12835b",
             "pinId": "W1"
           },
           "number": "6",
@@ -1092,11 +1092,11 @@
         },
         {
           "a": {
-            "ownerId": "8d386472-be23-438e-95d2-755ef69693fb",
+            "ownerId": "bb77187e-4010-4c1a-b684-00dac1f5ee21",
             "pinId": "PE2"
           },
           "b": {
-            "ownerId": "e128f86c-5da9-4dbf-b1bb-76cd87a1c58e",
+            "ownerId": "116e3d47-c69b-4912-a563-c35bdc12835b",
             "pinId": "PE"
           },
           "number": "7",
@@ -1108,11 +1108,11 @@
         },
         {
           "a": {
-            "ownerId": "b617fcc9-1a17-4d4c-adbb-ab22921f990b",
+            "ownerId": "923186b4-eb7e-4e8a-a135-f5e51a93ce6f",
             "pinId": "U"
           },
           "b": {
-            "ownerId": "478b5bf6-dfed-4254-9d44-c7a8e57af5f7",
+            "ownerId": "7b4f8eab-5f9c-436d-abe8-82a0ddc1cd3c",
             "pinId": "U1"
           },
           "number": "8",
@@ -1124,11 +1124,11 @@
         },
         {
           "a": {
-            "ownerId": "ea585a92-1784-4dba-975d-97aa75f9054e",
+            "ownerId": "c303aaec-1f57-436c-92ef-8898b9891044",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "7b296f19-65e7-4226-8784-d67b8b6acbc6",
+            "ownerId": "0e60b7d2-5623-43e6-b6f1-9a565bb3999f",
             "pinId": "1"
           },
           "number": "L1",
@@ -1140,11 +1140,11 @@
         },
         {
           "a": {
-            "ownerId": "81d1f3f0-884e-4a9d-bb57-c883e6042d41",
+            "ownerId": "02ecf97a-f3ae-43d6-8e8a-004c8153c08e",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "7b296f19-65e7-4226-8784-d67b8b6acbc6",
+            "ownerId": "0e60b7d2-5623-43e6-b6f1-9a565bb3999f",
             "pinId": "N"
           },
           "number": "N",
@@ -1156,11 +1156,11 @@
         },
         {
           "a": {
-            "ownerId": "893729e6-d775-479a-bb0c-00e9813da64f",
+            "ownerId": "eca033e8-9aec-4bd0-85d7-366c6eac08a3",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "b617fcc9-1a17-4d4c-adbb-ab22921f990b",
+            "ownerId": "923186b4-eb7e-4e8a-a135-f5e51a93ce6f",
             "pinId": "PE"
           },
           "number": "PE",
@@ -1172,11 +1172,11 @@
         },
         {
           "a": {
-            "ownerId": "7b296f19-65e7-4226-8784-d67b8b6acbc6",
+            "ownerId": "0e60b7d2-5623-43e6-b6f1-9a565bb3999f",
             "pinId": "2"
           },
           "b": {
-            "ownerId": "b617fcc9-1a17-4d4c-adbb-ab22921f990b",
+            "ownerId": "923186b4-eb7e-4e8a-a135-f5e51a93ce6f",
             "pinId": "L"
           },
           "number": "9",
@@ -1188,11 +1188,11 @@
         },
         {
           "a": {
-            "ownerId": "7b296f19-65e7-4226-8784-d67b8b6acbc6",
+            "ownerId": "0e60b7d2-5623-43e6-b6f1-9a565bb3999f",
             "pinId": "N'"
           },
           "b": {
-            "ownerId": "b617fcc9-1a17-4d4c-adbb-ab22921f990b",
+            "ownerId": "923186b4-eb7e-4e8a-a135-f5e51a93ce6f",
             "pinId": "N"
           },
           "number": "10",
@@ -1204,11 +1204,11 @@
         },
         {
           "a": {
-            "ownerId": "b617fcc9-1a17-4d4c-adbb-ab22921f990b",
+            "ownerId": "923186b4-eb7e-4e8a-a135-f5e51a93ce6f",
             "pinId": "V"
           },
           "b": {
-            "ownerId": "478b5bf6-dfed-4254-9d44-c7a8e57af5f7",
+            "ownerId": "7b4f8eab-5f9c-436d-abe8-82a0ddc1cd3c",
             "pinId": "V1"
           },
           "number": "11",
@@ -1220,11 +1220,11 @@
         },
         {
           "a": {
-            "ownerId": "b617fcc9-1a17-4d4c-adbb-ab22921f990b",
+            "ownerId": "923186b4-eb7e-4e8a-a135-f5e51a93ce6f",
             "pinId": "W"
           },
           "b": {
-            "ownerId": "478b5bf6-dfed-4254-9d44-c7a8e57af5f7",
+            "ownerId": "7b4f8eab-5f9c-436d-abe8-82a0ddc1cd3c",
             "pinId": "W1"
           },
           "number": "12",
@@ -1236,11 +1236,11 @@
         },
         {
           "a": {
-            "ownerId": "b617fcc9-1a17-4d4c-adbb-ab22921f990b",
+            "ownerId": "923186b4-eb7e-4e8a-a135-f5e51a93ce6f",
             "pinId": "PE2"
           },
           "b": {
-            "ownerId": "478b5bf6-dfed-4254-9d44-c7a8e57af5f7",
+            "ownerId": "7b4f8eab-5f9c-436d-abe8-82a0ddc1cd3c",
             "pinId": "PE"
           },
           "number": "13",
@@ -1252,11 +1252,11 @@
         },
         {
           "a": {
-            "ownerId": "75bb55a2-98f4-4b42-9fd9-9edca560553a",
+            "ownerId": "c1a997f6-2d99-405c-a89c-081c8e343ecd",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "ff2cfec2-a72e-4407-84fd-63ec4f0595b5",
+            "ownerId": "d7fb4e78-70f3-4922-8844-c4f734f98727",
             "pinId": "L1"
           },
           "number": "L1",
@@ -1268,11 +1268,11 @@
         },
         {
           "a": {
-            "ownerId": "3c6259a7-b11d-462b-b9ee-d3fc78af909c",
+            "ownerId": "0dd8096c-9b32-475c-b5f3-6adf087338c9",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "ff2cfec2-a72e-4407-84fd-63ec4f0595b5",
+            "ownerId": "d7fb4e78-70f3-4922-8844-c4f734f98727",
             "pinId": "L2"
           },
           "number": "L2",
@@ -1284,11 +1284,11 @@
         },
         {
           "a": {
-            "ownerId": "fb1f7236-4937-4e3a-8b21-ec8dccdb1781",
+            "ownerId": "741d07e9-a3d3-4b34-a41e-8756f08e982f",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "ff2cfec2-a72e-4407-84fd-63ec4f0595b5",
+            "ownerId": "d7fb4e78-70f3-4922-8844-c4f734f98727",
             "pinId": "L3"
           },
           "number": "L3",
@@ -1300,11 +1300,11 @@
         },
         {
           "a": {
-            "ownerId": "ff2cfec2-a72e-4407-84fd-63ec4f0595b5",
+            "ownerId": "d7fb4e78-70f3-4922-8844-c4f734f98727",
             "pinId": "14"
           },
           "b": {
-            "ownerId": "f850b962-e07c-49f9-b307-7d0d450e4edf",
+            "ownerId": "67caa059-0b13-404c-917a-1a9180ddf6ad",
             "pinId": "1"
           },
           "number": "14",
@@ -1316,11 +1316,11 @@
         },
         {
           "a": {
-            "ownerId": "ef50faef-7450-4b54-baaa-2f6f5df492d0",
+            "ownerId": "1273ded1-0060-4742-bd27-1076b7561665",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "22342e05-5c8d-454f-87d9-5fc8ee2118e5",
+            "ownerId": "cd574cd6-9b29-4045-830c-43e9429dcd03",
             "pinId": "V1"
           },
           "number": "L1",
@@ -1332,11 +1332,11 @@
         },
         {
           "a": {
-            "ownerId": "afd28d64-9f37-4f47-8f4b-a3dfc785f001",
+            "ownerId": "b2a24a06-c455-4bf8-a3f8-854b64d3c83d",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "22342e05-5c8d-454f-87d9-5fc8ee2118e5",
+            "ownerId": "cd574cd6-9b29-4045-830c-43e9429dcd03",
             "pinId": "V2"
           },
           "number": "L2",
@@ -1348,11 +1348,11 @@
         },
         {
           "a": {
-            "ownerId": "45a47010-7698-4711-a87b-b860f2176ccd",
+            "ownerId": "d096f44b-f2c3-4122-9e25-1d42fcda0ea5",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "22342e05-5c8d-454f-87d9-5fc8ee2118e5",
+            "ownerId": "cd574cd6-9b29-4045-830c-43e9429dcd03",
             "pinId": "V3"
           },
           "number": "L3",
@@ -1364,11 +1364,11 @@
         },
         {
           "a": {
-            "ownerId": "1cf45a3a-5f86-4a00-bcd0-ca071ad58f9b",
+            "ownerId": "9a8f6e23-9c81-493c-b756-671d275165b8",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "22342e05-5c8d-454f-87d9-5fc8ee2118e5",
+            "ownerId": "cd574cd6-9b29-4045-830c-43e9429dcd03",
             "pinId": "VN"
           },
           "number": "N",
@@ -1380,11 +1380,11 @@
         },
         {
           "a": {
-            "ownerId": "8d8107d2-f405-43d3-9dd0-bd43614808e1",
+            "ownerId": "ac138b2f-36cc-4f3e-a85d-23dba2754db0",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "fbfd6fac-0374-4634-97b5-6dfa399043c7",
+            "ownerId": "4f2d4cef-d35e-4b21-8b0c-e382c7247075",
             "pinId": "P1"
           },
           "number": "L1",
@@ -1396,11 +1396,11 @@
         },
         {
           "a": {
-            "ownerId": "fbfd6fac-0374-4634-97b5-6dfa399043c7",
+            "ownerId": "4f2d4cef-d35e-4b21-8b0c-e382c7247075",
             "pinId": "P2"
           },
           "b": {
-            "ownerId": "2eef6540-e62d-4b6c-8713-e9bb59db8211",
+            "ownerId": "89c2d536-ceec-46b9-ad9d-94b59bdd3b86",
             "pinId": "1"
           },
           "number": "L1",
@@ -1412,11 +1412,11 @@
         },
         {
           "a": {
-            "ownerId": "2354f566-9ef1-443f-90db-74d53177b7f8",
+            "ownerId": "791aef7a-8090-4dc2-8318-cd560ffa820b",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "1956a99f-1940-4dae-bfc0-2de5aa8f5404",
+            "ownerId": "b46d43b6-dea1-4789-8b74-07603515d009",
             "pinId": "P1"
           },
           "number": "L2",
@@ -1428,11 +1428,11 @@
         },
         {
           "a": {
-            "ownerId": "1956a99f-1940-4dae-bfc0-2de5aa8f5404",
+            "ownerId": "b46d43b6-dea1-4789-8b74-07603515d009",
             "pinId": "P2"
           },
           "b": {
-            "ownerId": "f902ad0e-bea7-4f96-9dee-c7ad57777234",
+            "ownerId": "99de354e-d0df-4fa6-9b61-ddfc895a8092",
             "pinId": "1"
           },
           "number": "L2",
@@ -1444,11 +1444,11 @@
         },
         {
           "a": {
-            "ownerId": "27aa450b-0943-497f-a143-5c2c89f78187",
+            "ownerId": "0b6e1c8f-964f-466d-823d-2f7c07e1e884",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "97d7fbd8-86cf-4409-b01a-fe7b41dd8e1a",
+            "ownerId": "cf4637f8-1431-4d8d-99ba-3afa07a56d40",
             "pinId": "P1"
           },
           "number": "L3",
@@ -1460,11 +1460,11 @@
         },
         {
           "a": {
-            "ownerId": "97d7fbd8-86cf-4409-b01a-fe7b41dd8e1a",
+            "ownerId": "cf4637f8-1431-4d8d-99ba-3afa07a56d40",
             "pinId": "P2"
           },
           "b": {
-            "ownerId": "625f285f-ac57-4089-8a02-4bb83200e918",
+            "ownerId": "27f4f082-66c4-40d0-abe6-b94d31d65b42",
             "pinId": "1"
           },
           "number": "L3",
@@ -1477,7 +1477,7 @@
       ]
     },
     {
-      "id": "page-90cc05b6",
+      "id": "page-29e44cf8",
       "name": "Güç 2 — DOL motor",
       "type": "schematic",
       "format": "a3",
@@ -1495,7 +1495,7 @@
           "y": 30,
           "rotation": 0,
           "name": "L1",
-          "id": "d661855f-a709-4b61-8654-c771fd462f0f"
+          "id": "209014d0-b749-4814-9a0c-41c5577958f3"
         },
         {
           "kind": "potential",
@@ -1506,7 +1506,7 @@
           "y": 30,
           "rotation": 0,
           "name": "L2",
-          "id": "4ad8a84e-f096-42b1-a5ff-662efc5ad1ce"
+          "id": "4c87276d-e19b-4bb7-9a8e-0442bba9be0a"
         },
         {
           "kind": "potential",
@@ -1517,7 +1517,7 @@
           "y": 30,
           "rotation": 0,
           "name": "L3",
-          "id": "ee3d1fc8-9117-478d-818d-48f46071e097"
+          "id": "c860e050-7c7b-44c5-8e85-065e40f69f88"
         },
         {
           "kind": "potential",
@@ -1528,7 +1528,7 @@
           "y": 30,
           "rotation": 0,
           "name": "PE",
-          "id": "a35b8b29-952f-4234-adaa-e3facd20d994"
+          "id": "0492ec57-32d2-4ee4-b562-66f1b38ab9c0"
         },
         {
           "kind": "device",
@@ -1584,7 +1584,7 @@
           "y": 60,
           "rotation": 0,
           "scale": 1,
-          "id": "872c2a96-1496-4286-a42f-1163cc44117a"
+          "id": "b8110c0e-4292-4b5c-b442-079b4b4d945a"
         },
         {
           "kind": "device",
@@ -1640,7 +1640,7 @@
           "y": 100,
           "rotation": 0,
           "scale": 1,
-          "id": "67488f7c-7d5c-403a-97b0-321b6ac1bd95"
+          "id": "7a892ebf-7361-4013-ab87-bbff996eaa26"
         },
         {
           "kind": "device",
@@ -1696,7 +1696,7 @@
           "y": 140,
           "rotation": 0,
           "scale": 1,
-          "id": "c0f32d20-a463-40dc-a89f-a0f20086c101"
+          "id": "134dcb55-c25b-4eac-ad64-d8ea279f7341"
         },
         {
           "kind": "device",
@@ -1738,17 +1738,17 @@
           "y": 180,
           "rotation": 0,
           "scale": 1,
-          "id": "b9213fae-c39e-44ea-913f-2a9d7c7d384e"
+          "id": "77107968-3293-4247-b840-e507e67291cc"
         }
       ],
       "wireData": [
         {
           "a": {
-            "ownerId": "d661855f-a709-4b61-8654-c771fd462f0f",
+            "ownerId": "209014d0-b749-4814-9a0c-41c5577958f3",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "872c2a96-1496-4286-a42f-1163cc44117a",
+            "ownerId": "b8110c0e-4292-4b5c-b442-079b4b4d945a",
             "pinId": "1"
           },
           "number": "L1",
@@ -1760,11 +1760,11 @@
         },
         {
           "a": {
-            "ownerId": "4ad8a84e-f096-42b1-a5ff-662efc5ad1ce",
+            "ownerId": "4c87276d-e19b-4bb7-9a8e-0442bba9be0a",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "872c2a96-1496-4286-a42f-1163cc44117a",
+            "ownerId": "b8110c0e-4292-4b5c-b442-079b4b4d945a",
             "pinId": "3"
           },
           "number": "L2",
@@ -1776,11 +1776,11 @@
         },
         {
           "a": {
-            "ownerId": "ee3d1fc8-9117-478d-818d-48f46071e097",
+            "ownerId": "c860e050-7c7b-44c5-8e85-065e40f69f88",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "872c2a96-1496-4286-a42f-1163cc44117a",
+            "ownerId": "b8110c0e-4292-4b5c-b442-079b4b4d945a",
             "pinId": "5"
           },
           "number": "L3",
@@ -1792,11 +1792,11 @@
         },
         {
           "a": {
-            "ownerId": "a35b8b29-952f-4234-adaa-e3facd20d994",
+            "ownerId": "0492ec57-32d2-4ee4-b562-66f1b38ab9c0",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "b9213fae-c39e-44ea-913f-2a9d7c7d384e",
+            "ownerId": "77107968-3293-4247-b840-e507e67291cc",
             "pinId": "PE"
           },
           "number": "PE",
@@ -1808,11 +1808,11 @@
         },
         {
           "a": {
-            "ownerId": "872c2a96-1496-4286-a42f-1163cc44117a",
+            "ownerId": "b8110c0e-4292-4b5c-b442-079b4b4d945a",
             "pinId": "2"
           },
           "b": {
-            "ownerId": "67488f7c-7d5c-403a-97b0-321b6ac1bd95",
+            "ownerId": "7a892ebf-7361-4013-ab87-bbff996eaa26",
             "pinId": "1"
           },
           "number": "15",
@@ -1824,11 +1824,11 @@
         },
         {
           "a": {
-            "ownerId": "872c2a96-1496-4286-a42f-1163cc44117a",
+            "ownerId": "b8110c0e-4292-4b5c-b442-079b4b4d945a",
             "pinId": "4"
           },
           "b": {
-            "ownerId": "67488f7c-7d5c-403a-97b0-321b6ac1bd95",
+            "ownerId": "7a892ebf-7361-4013-ab87-bbff996eaa26",
             "pinId": "3"
           },
           "number": "16",
@@ -1840,11 +1840,11 @@
         },
         {
           "a": {
-            "ownerId": "872c2a96-1496-4286-a42f-1163cc44117a",
+            "ownerId": "b8110c0e-4292-4b5c-b442-079b4b4d945a",
             "pinId": "6"
           },
           "b": {
-            "ownerId": "67488f7c-7d5c-403a-97b0-321b6ac1bd95",
+            "ownerId": "7a892ebf-7361-4013-ab87-bbff996eaa26",
             "pinId": "5"
           },
           "number": "17",
@@ -1856,11 +1856,11 @@
         },
         {
           "a": {
-            "ownerId": "67488f7c-7d5c-403a-97b0-321b6ac1bd95",
+            "ownerId": "7a892ebf-7361-4013-ab87-bbff996eaa26",
             "pinId": "2"
           },
           "b": {
-            "ownerId": "c0f32d20-a463-40dc-a89f-a0f20086c101",
+            "ownerId": "134dcb55-c25b-4eac-ad64-d8ea279f7341",
             "pinId": "1"
           },
           "number": "18",
@@ -1872,11 +1872,11 @@
         },
         {
           "a": {
-            "ownerId": "c0f32d20-a463-40dc-a89f-a0f20086c101",
+            "ownerId": "134dcb55-c25b-4eac-ad64-d8ea279f7341",
             "pinId": "2"
           },
           "b": {
-            "ownerId": "b9213fae-c39e-44ea-913f-2a9d7c7d384e",
+            "ownerId": "77107968-3293-4247-b840-e507e67291cc",
             "pinId": "U1"
           },
           "number": "18",
@@ -1888,11 +1888,11 @@
         },
         {
           "a": {
-            "ownerId": "67488f7c-7d5c-403a-97b0-321b6ac1bd95",
+            "ownerId": "7a892ebf-7361-4013-ab87-bbff996eaa26",
             "pinId": "4"
           },
           "b": {
-            "ownerId": "c0f32d20-a463-40dc-a89f-a0f20086c101",
+            "ownerId": "134dcb55-c25b-4eac-ad64-d8ea279f7341",
             "pinId": "3"
           },
           "number": "19",
@@ -1904,11 +1904,11 @@
         },
         {
           "a": {
-            "ownerId": "c0f32d20-a463-40dc-a89f-a0f20086c101",
+            "ownerId": "134dcb55-c25b-4eac-ad64-d8ea279f7341",
             "pinId": "4"
           },
           "b": {
-            "ownerId": "b9213fae-c39e-44ea-913f-2a9d7c7d384e",
+            "ownerId": "77107968-3293-4247-b840-e507e67291cc",
             "pinId": "V1"
           },
           "number": "19",
@@ -1920,11 +1920,11 @@
         },
         {
           "a": {
-            "ownerId": "67488f7c-7d5c-403a-97b0-321b6ac1bd95",
+            "ownerId": "7a892ebf-7361-4013-ab87-bbff996eaa26",
             "pinId": "6"
           },
           "b": {
-            "ownerId": "c0f32d20-a463-40dc-a89f-a0f20086c101",
+            "ownerId": "134dcb55-c25b-4eac-ad64-d8ea279f7341",
             "pinId": "5"
           },
           "number": "20",
@@ -1936,11 +1936,11 @@
         },
         {
           "a": {
-            "ownerId": "c0f32d20-a463-40dc-a89f-a0f20086c101",
+            "ownerId": "134dcb55-c25b-4eac-ad64-d8ea279f7341",
             "pinId": "6"
           },
           "b": {
-            "ownerId": "b9213fae-c39e-44ea-913f-2a9d7c7d384e",
+            "ownerId": "77107968-3293-4247-b840-e507e67291cc",
             "pinId": "W1"
           },
           "number": "20",
@@ -1953,7 +1953,7 @@
       ]
     },
     {
-      "id": "page-b9a0c495",
+      "id": "page-5de9f992",
       "name": "24 VDC besleme",
       "type": "schematic",
       "format": "a3",
@@ -1971,7 +1971,7 @@
           "y": 115,
           "rotation": 0,
           "name": "L1",
-          "id": "0c1e92d8-2fc9-460b-a526-11d0192c995a"
+          "id": "55da7677-1669-4712-91a6-a23527725e98"
         },
         {
           "kind": "potential",
@@ -1982,7 +1982,7 @@
           "y": 115,
           "rotation": 0,
           "name": "N",
-          "id": "cdd49792-943f-4bab-bf9f-6e5268aaf58e"
+          "id": "947880e0-b471-49d9-878f-8a266e4e9405"
         },
         {
           "kind": "potential",
@@ -1993,7 +1993,7 @@
           "y": 115,
           "rotation": 0,
           "name": "PE",
-          "id": "fd8f781b-b372-47d9-9e2d-653af3aeb0af"
+          "id": "750789ed-33e9-4ca5-9d26-be5cbc0f0dc3"
         },
         {
           "kind": "device",
@@ -2056,7 +2056,7 @@
           "y": 150,
           "rotation": 0,
           "scale": 1,
-          "id": "584c1ce0-b5e2-4e97-82a9-5b2e60f28f2b"
+          "id": "4c9855a8-db56-41b3-853d-ac8c59a8d8aa"
         },
         {
           "kind": "device",
@@ -2105,7 +2105,7 @@
           "y": 190,
           "rotation": 0,
           "scale": 1,
-          "id": "b156ff87-8918-42bf-9ee9-c361e9d04240"
+          "id": "4690352d-77f2-4af4-b8ff-afbd68a21484"
         },
         {
           "kind": "pageLink",
@@ -2114,7 +2114,7 @@
           "y": 215,
           "rotation": 90,
           "name": "+24V",
-          "id": "ff94767c-71dc-4b3b-ac23-8c1ef3375ba7"
+          "id": "99750feb-d9fe-42b8-a94a-ced3b52fb9ca"
         },
         {
           "kind": "potential",
@@ -2125,7 +2125,7 @@
           "y": 215,
           "rotation": 180,
           "name": "+24V",
-          "id": "cc7e24f4-4bd3-4398-bea3-22f80ad9aab3"
+          "id": "07529384-2039-4aeb-9853-da9436b3cb38"
         },
         {
           "kind": "potential",
@@ -2136,7 +2136,7 @@
           "y": 180,
           "rotation": 180,
           "name": "0V",
-          "id": "c74deace-cf70-49c8-9ac6-8a39dd99953e"
+          "id": "a3ac7abc-b17c-4e81-9f81-c06c2eb866ee"
         },
         {
           "kind": "pageLink",
@@ -2145,17 +2145,17 @@
           "y": 180,
           "rotation": 90,
           "name": "0V",
-          "id": "752732cb-eb6d-4d94-88e0-52b4e84c718c"
+          "id": "794ad6ff-d21a-43ee-868f-59e98599ddf3"
         }
       ],
       "wireData": [
         {
           "a": {
-            "ownerId": "0c1e92d8-2fc9-460b-a526-11d0192c995a",
+            "ownerId": "55da7677-1669-4712-91a6-a23527725e98",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "584c1ce0-b5e2-4e97-82a9-5b2e60f28f2b",
+            "ownerId": "4c9855a8-db56-41b3-853d-ac8c59a8d8aa",
             "pinId": "L"
           },
           "number": "L1",
@@ -2167,11 +2167,11 @@
         },
         {
           "a": {
-            "ownerId": "cdd49792-943f-4bab-bf9f-6e5268aaf58e",
+            "ownerId": "947880e0-b471-49d9-878f-8a266e4e9405",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "584c1ce0-b5e2-4e97-82a9-5b2e60f28f2b",
+            "ownerId": "4c9855a8-db56-41b3-853d-ac8c59a8d8aa",
             "pinId": "N"
           },
           "number": "N",
@@ -2183,11 +2183,11 @@
         },
         {
           "a": {
-            "ownerId": "584c1ce0-b5e2-4e97-82a9-5b2e60f28f2b",
+            "ownerId": "4c9855a8-db56-41b3-853d-ac8c59a8d8aa",
             "pinId": "+1"
           },
           "b": {
-            "ownerId": "b156ff87-8918-42bf-9ee9-c361e9d04240",
+            "ownerId": "4690352d-77f2-4af4-b8ff-afbd68a21484",
             "pinId": "+IN"
           },
           "number": "21",
@@ -2199,11 +2199,11 @@
         },
         {
           "a": {
-            "ownerId": "584c1ce0-b5e2-4e97-82a9-5b2e60f28f2b",
+            "ownerId": "4c9855a8-db56-41b3-853d-ac8c59a8d8aa",
             "pinId": "-1"
           },
           "b": {
-            "ownerId": "c74deace-cf70-49c8-9ac6-8a39dd99953e",
+            "ownerId": "a3ac7abc-b17c-4e81-9f81-c06c2eb866ee",
             "pinId": "1"
           },
           "number": "0V",
@@ -2215,11 +2215,11 @@
         },
         {
           "a": {
-            "ownerId": "584c1ce0-b5e2-4e97-82a9-5b2e60f28f2b",
+            "ownerId": "4c9855a8-db56-41b3-853d-ac8c59a8d8aa",
             "pinId": "-2"
           },
           "b": {
-            "ownerId": "752732cb-eb6d-4d94-88e0-52b4e84c718c",
+            "ownerId": "794ad6ff-d21a-43ee-868f-59e98599ddf3",
             "pinId": "1"
           },
           "number": "0V",
@@ -2231,11 +2231,11 @@
         },
         {
           "a": {
-            "ownerId": "b156ff87-8918-42bf-9ee9-c361e9d04240",
+            "ownerId": "4690352d-77f2-4af4-b8ff-afbd68a21484",
             "pinId": "+1"
           },
           "b": {
-            "ownerId": "ff94767c-71dc-4b3b-ac23-8c1ef3375ba7",
+            "ownerId": "99750feb-d9fe-42b8-a94a-ced3b52fb9ca",
             "pinId": "1"
           },
           "number": "22",
@@ -2247,11 +2247,11 @@
         },
         {
           "a": {
-            "ownerId": "b156ff87-8918-42bf-9ee9-c361e9d04240",
+            "ownerId": "4690352d-77f2-4af4-b8ff-afbd68a21484",
             "pinId": "+4"
           },
           "b": {
-            "ownerId": "cc7e24f4-4bd3-4398-bea3-22f80ad9aab3",
+            "ownerId": "07529384-2039-4aeb-9853-da9436b3cb38",
             "pinId": "1"
           },
           "number": "+24V",
@@ -2263,11 +2263,11 @@
         },
         {
           "a": {
-            "ownerId": "fd8f781b-b372-47d9-9e2d-653af3aeb0af",
+            "ownerId": "750789ed-33e9-4ca5-9d26-be5cbc0f0dc3",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "584c1ce0-b5e2-4e97-82a9-5b2e60f28f2b",
+            "ownerId": "4c9855a8-db56-41b3-853d-ac8c59a8d8aa",
             "pinId": "PE"
           },
           "number": "PE",
@@ -2280,7 +2280,7 @@
       ]
     },
     {
-      "id": "page-68380a58",
+      "id": "page-5610443e",
       "name": "Kumanda",
       "type": "schematic",
       "format": "a3",
@@ -2296,7 +2296,7 @@
           "y": 30,
           "rotation": 270,
           "name": "+24V",
-          "id": "c94b2183-8384-4095-b56d-e4c3b567aa6c"
+          "id": "52bedc58-07b7-4368-b622-0eb975c08305"
         },
         {
           "kind": "device",
@@ -2324,7 +2324,7 @@
           "y": 50,
           "rotation": 0,
           "scale": 1,
-          "id": "2b5d5e7c-ae20-4f1d-95a2-03855a29a715"
+          "id": "55aafe81-9453-47b8-a7c4-2d002fa93963"
         },
         {
           "kind": "device",
@@ -2352,7 +2352,7 @@
           "y": 80,
           "rotation": 0,
           "scale": 1,
-          "id": "85aeeb54-bfa0-4c6c-a41a-6a4f649166a2"
+          "id": "2df2185e-208c-41d7-88a7-bc936b70f28f"
         },
         {
           "kind": "device",
@@ -2380,7 +2380,7 @@
           "y": 110,
           "rotation": 0,
           "scale": 1,
-          "id": "5d885437-08c7-4778-bfa4-5b43e956716b"
+          "id": "8f68f57a-c926-4145-b7fc-b0d355c17031"
         },
         {
           "kind": "device",
@@ -2408,7 +2408,7 @@
           "y": 140,
           "rotation": 0,
           "scale": 1,
-          "id": "92d5f1a1-a67b-4912-9ab6-69749caaec9d"
+          "id": "c6e2da45-7ecd-463a-aa00-085c1bba67a7"
         },
         {
           "kind": "device",
@@ -2436,7 +2436,7 @@
           "y": 170,
           "rotation": 0,
           "scale": 1,
-          "id": "601c47be-8404-4b03-a953-ab5e36e13fd2"
+          "id": "13b7464c-22f8-4aa9-944d-53c715f530b2"
         },
         {
           "kind": "device",
@@ -2464,7 +2464,7 @@
           "y": 200,
           "rotation": 0,
           "scale": 1,
-          "id": "66899c22-5fb1-48c0-914c-581e94d08128"
+          "id": "ed1135e9-9f33-45f3-b867-3ebdf736ed7a"
         },
         {
           "kind": "pageLink",
@@ -2473,7 +2473,7 @@
           "y": 225,
           "rotation": 90,
           "name": "0V",
-          "id": "9fb2843a-671c-472a-9eb1-355fb04a9b22"
+          "id": "deb0d581-5fca-4e73-a043-d5c7edd71e3a"
         },
         {
           "kind": "potential",
@@ -2484,7 +2484,7 @@
           "y": 30,
           "rotation": 0,
           "name": "+24V",
-          "id": "dcd37ddf-6679-4ba0-861d-6ddc6093211d"
+          "id": "d3ddc758-c695-4c2f-81b8-28f5e95afbd1"
         },
         {
           "kind": "device",
@@ -2512,7 +2512,7 @@
           "y": 60,
           "rotation": 0,
           "scale": 1,
-          "id": "f8d5e819-3b5a-47b4-9646-3b258ce6c496"
+          "id": "f361741e-83a8-4c56-a06e-e86bd9728b55"
         },
         {
           "kind": "device",
@@ -2538,7 +2538,7 @@
           "y": 90,
           "rotation": 0,
           "scale": 1,
-          "id": "84d06826-340f-402b-b999-5cbb84201f33"
+          "id": "cb32cc46-2083-41b5-b2e3-da52d207cb9f"
         },
         {
           "kind": "potential",
@@ -2549,17 +2549,17 @@
           "y": 120,
           "rotation": 180,
           "name": "0V",
-          "id": "a2215d5c-a9fe-4edd-be8d-8f9e0b77ae9e"
+          "id": "aa63760c-e389-4732-ab83-bd02ef72d0a4"
         }
       ],
       "wireData": [
         {
           "a": {
-            "ownerId": "66899c22-5fb1-48c0-914c-581e94d08128",
+            "ownerId": "ed1135e9-9f33-45f3-b867-3ebdf736ed7a",
             "pinId": "A2"
           },
           "b": {
-            "ownerId": "9fb2843a-671c-472a-9eb1-355fb04a9b22",
+            "ownerId": "deb0d581-5fca-4e73-a043-d5c7edd71e3a",
             "pinId": "1"
           },
           "number": "0V",
@@ -2571,11 +2571,11 @@
         },
         {
           "a": {
-            "ownerId": "c94b2183-8384-4095-b56d-e4c3b567aa6c",
+            "ownerId": "52bedc58-07b7-4368-b622-0eb975c08305",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "2b5d5e7c-ae20-4f1d-95a2-03855a29a715",
+            "ownerId": "55aafe81-9453-47b8-a7c4-2d002fa93963",
             "pinId": "1"
           },
           "number": "22",
@@ -2587,11 +2587,11 @@
         },
         {
           "a": {
-            "ownerId": "2b5d5e7c-ae20-4f1d-95a2-03855a29a715",
+            "ownerId": "55aafe81-9453-47b8-a7c4-2d002fa93963",
             "pinId": "2"
           },
           "b": {
-            "ownerId": "85aeeb54-bfa0-4c6c-a41a-6a4f649166a2",
+            "ownerId": "2df2185e-208c-41d7-88a7-bc936b70f28f",
             "pinId": "11"
           },
           "number": "23",
@@ -2603,11 +2603,11 @@
         },
         {
           "a": {
-            "ownerId": "85aeeb54-bfa0-4c6c-a41a-6a4f649166a2",
+            "ownerId": "2df2185e-208c-41d7-88a7-bc936b70f28f",
             "pinId": "12"
           },
           "b": {
-            "ownerId": "5d885437-08c7-4778-bfa4-5b43e956716b",
+            "ownerId": "8f68f57a-c926-4145-b7fc-b0d355c17031",
             "pinId": "11"
           },
           "number": "24",
@@ -2619,11 +2619,11 @@
         },
         {
           "a": {
-            "ownerId": "5d885437-08c7-4778-bfa4-5b43e956716b",
+            "ownerId": "8f68f57a-c926-4145-b7fc-b0d355c17031",
             "pinId": "12"
           },
           "b": {
-            "ownerId": "92d5f1a1-a67b-4912-9ab6-69749caaec9d",
+            "ownerId": "c6e2da45-7ecd-463a-aa00-085c1bba67a7",
             "pinId": "95"
           },
           "number": "25",
@@ -2635,11 +2635,11 @@
         },
         {
           "a": {
-            "ownerId": "92d5f1a1-a67b-4912-9ab6-69749caaec9d",
+            "ownerId": "c6e2da45-7ecd-463a-aa00-085c1bba67a7",
             "pinId": "96"
           },
           "b": {
-            "ownerId": "601c47be-8404-4b03-a953-ab5e36e13fd2",
+            "ownerId": "13b7464c-22f8-4aa9-944d-53c715f530b2",
             "pinId": "13"
           },
           "number": "26",
@@ -2651,11 +2651,11 @@
         },
         {
           "a": {
-            "ownerId": "601c47be-8404-4b03-a953-ab5e36e13fd2",
+            "ownerId": "13b7464c-22f8-4aa9-944d-53c715f530b2",
             "pinId": "14"
           },
           "b": {
-            "ownerId": "66899c22-5fb1-48c0-914c-581e94d08128",
+            "ownerId": "ed1135e9-9f33-45f3-b867-3ebdf736ed7a",
             "pinId": "A1"
           },
           "number": "27",
@@ -2667,11 +2667,11 @@
         },
         {
           "a": {
-            "ownerId": "dcd37ddf-6679-4ba0-861d-6ddc6093211d",
+            "ownerId": "d3ddc758-c695-4c2f-81b8-28f5e95afbd1",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "f8d5e819-3b5a-47b4-9646-3b258ce6c496",
+            "ownerId": "f361741e-83a8-4c56-a06e-e86bd9728b55",
             "pinId": "13"
           },
           "number": "+24V",
@@ -2683,11 +2683,11 @@
         },
         {
           "a": {
-            "ownerId": "f8d5e819-3b5a-47b4-9646-3b258ce6c496",
+            "ownerId": "f361741e-83a8-4c56-a06e-e86bd9728b55",
             "pinId": "14"
           },
           "b": {
-            "ownerId": "84d06826-340f-402b-b999-5cbb84201f33",
+            "ownerId": "cb32cc46-2083-41b5-b2e3-da52d207cb9f",
             "pinId": "X1"
           },
           "number": "28",
@@ -2699,11 +2699,11 @@
         },
         {
           "a": {
-            "ownerId": "84d06826-340f-402b-b999-5cbb84201f33",
+            "ownerId": "cb32cc46-2083-41b5-b2e3-da52d207cb9f",
             "pinId": "X2"
           },
           "b": {
-            "ownerId": "a2215d5c-a9fe-4edd-be8d-8f9e0b77ae9e",
+            "ownerId": "aa63760c-e389-4732-ab83-bd02ef72d0a4",
             "pinId": "1"
           },
           "number": "0V",
@@ -2716,7 +2716,7 @@
       ]
     },
     {
-      "id": "page-0acd2807",
+      "id": "page-e283b285",
       "name": "PLC girişleri",
       "type": "schematic",
       "format": "a3",
@@ -2779,7 +2779,7 @@
           "y": 100,
           "rotation": 0,
           "scale": 1,
-          "id": "76efc1bd-fa6a-466f-b03a-7e22bc2ad364"
+          "id": "75369c7d-c6c1-4bea-a3b6-32da9c1ca2e4"
         },
         {
           "kind": "potential",
@@ -2790,7 +2790,7 @@
           "y": 50,
           "rotation": 0,
           "name": "+24V",
-          "id": "dc2c8eb3-3d13-4582-9bd2-01d76432517d"
+          "id": "6ef65dcb-1fc4-46a5-b1df-749aefa9bf73"
         },
         {
           "kind": "potential",
@@ -2801,7 +2801,7 @@
           "y": 50,
           "rotation": 0,
           "name": "0V",
-          "id": "a6469cb4-98d6-4255-9368-a314bd3ee6c8"
+          "id": "352d11d2-8cb9-4930-a119-ef07e9620fb9"
         },
         {
           "kind": "potential",
@@ -2812,7 +2812,7 @@
           "y": 50,
           "rotation": 0,
           "name": "PE",
-          "id": "39f2e0e4-2674-4159-a9e3-68151924c6c5"
+          "id": "c8bd5c73-7873-4f35-89d9-d83dd696a80e"
         },
         {
           "kind": "device",
@@ -2889,7 +2889,7 @@
           "y": 150,
           "rotation": 0,
           "scale": 1,
-          "id": "4efc4087-7164-4703-93ea-3624c75575e2"
+          "id": "ab0d6671-3183-4f5a-be3b-eb5dd7ca436d"
         },
         {
           "kind": "potential",
@@ -2900,7 +2900,7 @@
           "y": 40,
           "rotation": 0,
           "name": "+24V",
-          "id": "dcedf125-2ad6-419d-8310-e0d410db6a07"
+          "id": "37a2440d-e715-4799-bfce-86ec52d6ad74"
         },
         {
           "kind": "device",
@@ -2928,7 +2928,7 @@
           "y": 90,
           "rotation": 0,
           "scale": 1,
-          "id": "e44c5094-e215-4ea3-a0bc-146071480044"
+          "id": "f445159d-855d-4ec6-b790-586aefba337a"
         },
         {
           "kind": "potential",
@@ -2939,7 +2939,7 @@
           "y": 40,
           "rotation": 0,
           "name": "+24V",
-          "id": "d72db6aa-ce70-4a1b-a3ab-a51fab41fcca"
+          "id": "b877fc7d-cd6c-4539-a86c-aaf83a47a98d"
         },
         {
           "kind": "device",
@@ -2967,7 +2967,7 @@
           "y": 90,
           "rotation": 0,
           "scale": 1,
-          "id": "be033582-4b94-471c-a2cd-ae4c0f57731c"
+          "id": "10989efc-be92-423b-afb5-4280472ee52e"
         },
         {
           "kind": "potential",
@@ -2978,7 +2978,7 @@
           "y": 70,
           "rotation": 0,
           "name": "+24V",
-          "id": "90ccd186-cc51-4212-9914-9d8f400b827e"
+          "id": "e938204b-ee69-42fa-8c3b-7f056eb48deb"
         },
         {
           "kind": "device",
@@ -3016,7 +3016,7 @@
           "y": 100,
           "rotation": 0,
           "scale": 1,
-          "id": "48b36024-dea9-4d14-8426-dc58506ffebe"
+          "id": "8fe3cfc3-92f7-468f-91ab-f1cb095e2a8e"
         },
         {
           "kind": "potential",
@@ -3027,7 +3027,7 @@
           "y": 130,
           "rotation": 180,
           "name": "0V",
-          "id": "b05ab32d-81aa-49e1-bb09-e4b2f363e554"
+          "id": "30b9ff4d-ef88-4b57-8cff-4d7443f77a9f"
         },
         {
           "kind": "junction",
@@ -3037,7 +3037,7 @@
           "rotation": 90,
           "size": 1.2,
           "visible": true,
-          "id": "5fd1652a-70dd-4eb7-8cf5-24e9f76286db"
+          "id": "54b443e7-0001-4a2b-9c85-9cce89bc448a"
         },
         {
           "kind": "potential",
@@ -3048,7 +3048,7 @@
           "y": 190,
           "rotation": 180,
           "name": "0V",
-          "id": "dfc82665-a715-493b-a0bb-746a134fd0e3"
+          "id": "8fa89df6-3615-4907-b2b8-e9787251c7a2"
         },
         {
           "kind": "pageLink",
@@ -3057,7 +3057,7 @@
           "y": 60,
           "rotation": 270,
           "name": "FAZ-OK",
-          "id": "9142c1f3-81a9-4b97-b259-de2872f1b11a"
+          "id": "e373c7e4-c383-426d-967f-ebc15f2cc9b5"
         },
         {
           "kind": "device",
@@ -3080,17 +3080,17 @@
           "y": 80,
           "rotation": 0,
           "scale": 1,
-          "id": "1141b32b-4229-4734-be66-fe2c355a80ec"
+          "id": "babf94d3-39ec-4f1f-8b14-e2f39fc8debe"
         }
       ],
       "wireData": [
         {
           "a": {
-            "ownerId": "9142c1f3-81a9-4b97-b259-de2872f1b11a",
+            "ownerId": "e373c7e4-c383-426d-967f-ebc15f2cc9b5",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "1141b32b-4229-4734-be66-fe2c355a80ec",
+            "ownerId": "babf94d3-39ec-4f1f-8b14-e2f39fc8debe",
             "pinId": "1"
           },
           "number": "14",
@@ -3102,11 +3102,11 @@
         },
         {
           "a": {
-            "ownerId": "90ccd186-cc51-4212-9914-9d8f400b827e",
+            "ownerId": "e938204b-ee69-42fa-8c3b-7f056eb48deb",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "48b36024-dea9-4d14-8426-dc58506ffebe",
+            "ownerId": "8fe3cfc3-92f7-468f-91ab-f1cb095e2a8e",
             "pinId": "BN"
           },
           "number": "+24V",
@@ -3118,11 +3118,11 @@
         },
         {
           "a": {
-            "ownerId": "48b36024-dea9-4d14-8426-dc58506ffebe",
+            "ownerId": "8fe3cfc3-92f7-468f-91ab-f1cb095e2a8e",
             "pinId": "BK"
           },
           "b": {
-            "ownerId": "5fd1652a-70dd-4eb7-8cf5-24e9f76286db",
+            "ownerId": "54b443e7-0001-4a2b-9c85-9cce89bc448a",
             "pinId": "Left"
           },
           "number": "29",
@@ -3134,11 +3134,11 @@
         },
         {
           "a": {
-            "ownerId": "5fd1652a-70dd-4eb7-8cf5-24e9f76286db",
+            "ownerId": "54b443e7-0001-4a2b-9c85-9cce89bc448a",
             "pinId": "Down"
           },
           "b": {
-            "ownerId": "4efc4087-7164-4703-93ea-3624c75575e2",
+            "ownerId": "ab0d6671-3183-4f5a-be3b-eb5dd7ca436d",
             "pinId": "DI4"
           },
           "number": "29",
@@ -3150,11 +3150,11 @@
         },
         {
           "a": {
-            "ownerId": "48b36024-dea9-4d14-8426-dc58506ffebe",
+            "ownerId": "8fe3cfc3-92f7-468f-91ab-f1cb095e2a8e",
             "pinId": "BU"
           },
           "b": {
-            "ownerId": "b05ab32d-81aa-49e1-bb09-e4b2f363e554",
+            "ownerId": "30b9ff4d-ef88-4b57-8cff-4d7443f77a9f",
             "pinId": "1"
           },
           "number": "0V",
@@ -3166,11 +3166,11 @@
         },
         {
           "a": {
-            "ownerId": "dcedf125-2ad6-419d-8310-e0d410db6a07",
+            "ownerId": "37a2440d-e715-4799-bfce-86ec52d6ad74",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "e44c5094-e215-4ea3-a0bc-146071480044",
+            "ownerId": "f445159d-855d-4ec6-b790-586aefba337a",
             "pinId": "13"
           },
           "number": "+24V",
@@ -3182,11 +3182,11 @@
         },
         {
           "a": {
-            "ownerId": "e44c5094-e215-4ea3-a0bc-146071480044",
+            "ownerId": "f445159d-855d-4ec6-b790-586aefba337a",
             "pinId": "14"
           },
           "b": {
-            "ownerId": "4efc4087-7164-4703-93ea-3624c75575e2",
+            "ownerId": "ab0d6671-3183-4f5a-be3b-eb5dd7ca436d",
             "pinId": "DI0"
           },
           "number": "30",
@@ -3198,11 +3198,11 @@
         },
         {
           "a": {
-            "ownerId": "d72db6aa-ce70-4a1b-a3ab-a51fab41fcca",
+            "ownerId": "b877fc7d-cd6c-4539-a86c-aaf83a47a98d",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "be033582-4b94-471c-a2cd-ae4c0f57731c",
+            "ownerId": "10989efc-be92-423b-afb5-4280472ee52e",
             "pinId": "13"
           },
           "number": "+24V",
@@ -3214,11 +3214,11 @@
         },
         {
           "a": {
-            "ownerId": "be033582-4b94-471c-a2cd-ae4c0f57731c",
+            "ownerId": "10989efc-be92-423b-afb5-4280472ee52e",
             "pinId": "14"
           },
           "b": {
-            "ownerId": "4efc4087-7164-4703-93ea-3624c75575e2",
+            "ownerId": "ab0d6671-3183-4f5a-be3b-eb5dd7ca436d",
             "pinId": "DI2"
           },
           "number": "31",
@@ -3230,11 +3230,11 @@
         },
         {
           "a": {
-            "ownerId": "4efc4087-7164-4703-93ea-3624c75575e2",
+            "ownerId": "ab0d6671-3183-4f5a-be3b-eb5dd7ca436d",
             "pinId": "1M"
           },
           "b": {
-            "ownerId": "dfc82665-a715-493b-a0bb-746a134fd0e3",
+            "ownerId": "8fa89df6-3615-4907-b2b8-e9787251c7a2",
             "pinId": "1"
           },
           "number": "0V",
@@ -3246,11 +3246,11 @@
         },
         {
           "a": {
-            "ownerId": "dc2c8eb3-3d13-4582-9bd2-01d76432517d",
+            "ownerId": "6ef65dcb-1fc4-46a5-b1df-749aefa9bf73",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "76efc1bd-fa6a-466f-b03a-7e22bc2ad364",
+            "ownerId": "75369c7d-c6c1-4bea-a3b6-32da9c1ca2e4",
             "pinId": "L+"
           },
           "number": "+24V",
@@ -3262,11 +3262,11 @@
         },
         {
           "a": {
-            "ownerId": "a6469cb4-98d6-4255-9368-a314bd3ee6c8",
+            "ownerId": "352d11d2-8cb9-4930-a119-ef07e9620fb9",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "76efc1bd-fa6a-466f-b03a-7e22bc2ad364",
+            "ownerId": "75369c7d-c6c1-4bea-a3b6-32da9c1ca2e4",
             "pinId": "M"
           },
           "number": "0V",
@@ -3278,11 +3278,11 @@
         },
         {
           "a": {
-            "ownerId": "39f2e0e4-2674-4159-a9e3-68151924c6c5",
+            "ownerId": "c8bd5c73-7873-4f35-89d9-d83dd696a80e",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "76efc1bd-fa6a-466f-b03a-7e22bc2ad364",
+            "ownerId": "75369c7d-c6c1-4bea-a3b6-32da9c1ca2e4",
             "pinId": "PE"
           },
           "number": "PE",
@@ -3295,7 +3295,7 @@
       ]
     },
     {
-      "id": "page-7a7484b9",
+      "id": "page-540d68f1",
       "name": "PLC çıkışları ve HMI",
       "type": "schematic",
       "format": "a3",
@@ -3386,7 +3386,7 @@
           "y": 100,
           "rotation": 0,
           "scale": 1,
-          "id": "56c58fb8-cc07-4b67-8723-549b585ac871"
+          "id": "5c6cf65a-2757-4991-8caa-4545245f9753"
         },
         {
           "kind": "potential",
@@ -3397,7 +3397,7 @@
           "y": 60,
           "rotation": 0,
           "name": "+24V",
-          "id": "27c9803a-4c28-48e5-9127-5c25eadec439"
+          "id": "d5f7e761-93ba-4bb4-9fb4-e74ed76cc3f8"
         },
         {
           "kind": "potential",
@@ -3408,7 +3408,7 @@
           "y": 60,
           "rotation": 0,
           "name": "0V",
-          "id": "299b23a8-29c0-40f4-832c-c6273e7e9d40"
+          "id": "82cd1866-7be0-4072-bb8e-ca83ac4cc74e"
         },
         {
           "kind": "device",
@@ -3436,7 +3436,7 @@
           "y": 140,
           "rotation": 0,
           "scale": 1,
-          "id": "7bbc43a9-845f-4b94-aef3-cc0d6128630e"
+          "id": "94192efe-2a39-461c-83e9-cf4c02fb7718"
         },
         {
           "kind": "potential",
@@ -3447,7 +3447,7 @@
           "y": 170,
           "rotation": 180,
           "name": "0V",
-          "id": "70a4f100-287b-489a-91e5-c69adb7c8709"
+          "id": "feeed540-796b-45e7-aa6e-e8bcd4b13282"
         },
         {
           "kind": "device",
@@ -3475,7 +3475,7 @@
           "y": 140,
           "rotation": 0,
           "scale": 1,
-          "id": "9af8b606-681d-4232-b61f-115c055c6bb4"
+          "id": "7e100d2d-6bd9-4692-948c-36d4b46aa03c"
         },
         {
           "kind": "potential",
@@ -3486,7 +3486,7 @@
           "y": 170,
           "rotation": 180,
           "name": "0V",
-          "id": "e4212afe-3bf8-4331-bbbc-8d12c4886df9"
+          "id": "fca8c7da-c679-4c11-89d9-a62190958c88"
         },
         {
           "kind": "device",
@@ -3542,7 +3542,7 @@
           "y": 100,
           "rotation": 0,
           "scale": 1,
-          "id": "5855261d-5558-4f81-a9b6-30db2adbe0ee"
+          "id": "1a41b2bb-ce2f-48d3-a118-f26f450e78eb"
         },
         {
           "kind": "potential",
@@ -3553,7 +3553,7 @@
           "y": 55,
           "rotation": 0,
           "name": "+24V",
-          "id": "9e93df91-25c8-4d7d-a691-7521e165f472"
+          "id": "4f878dbf-3529-4e21-8880-fe2f54f2cde6"
         },
         {
           "kind": "potential",
@@ -3564,7 +3564,7 @@
           "y": 55,
           "rotation": 0,
           "name": "0V",
-          "id": "c866da51-16b3-4722-b641-71990096d1a4"
+          "id": "fdbb96ed-da03-4316-906f-02a4a0f57071"
         },
         {
           "kind": "potential",
@@ -3575,17 +3575,17 @@
           "y": 55,
           "rotation": 0,
           "name": "PE",
-          "id": "74d78cc8-d66a-4061-af9f-2dbcec1ce604"
+          "id": "53109709-7c18-4c0b-a495-95b374d365ce"
         }
       ],
       "wireData": [
         {
           "a": {
-            "ownerId": "56c58fb8-cc07-4b67-8723-549b585ac871",
+            "ownerId": "5c6cf65a-2757-4991-8caa-4545245f9753",
             "pinId": "DO0"
           },
           "b": {
-            "ownerId": "7bbc43a9-845f-4b94-aef3-cc0d6128630e",
+            "ownerId": "94192efe-2a39-461c-83e9-cf4c02fb7718",
             "pinId": "A1"
           },
           "number": "32",
@@ -3597,11 +3597,11 @@
         },
         {
           "a": {
-            "ownerId": "56c58fb8-cc07-4b67-8723-549b585ac871",
+            "ownerId": "5c6cf65a-2757-4991-8caa-4545245f9753",
             "pinId": "DO1"
           },
           "b": {
-            "ownerId": "9af8b606-681d-4232-b61f-115c055c6bb4",
+            "ownerId": "7e100d2d-6bd9-4692-948c-36d4b46aa03c",
             "pinId": "1"
           },
           "number": "33",
@@ -3613,11 +3613,11 @@
         },
         {
           "a": {
-            "ownerId": "7bbc43a9-845f-4b94-aef3-cc0d6128630e",
+            "ownerId": "94192efe-2a39-461c-83e9-cf4c02fb7718",
             "pinId": "A2"
           },
           "b": {
-            "ownerId": "70a4f100-287b-489a-91e5-c69adb7c8709",
+            "ownerId": "feeed540-796b-45e7-aa6e-e8bcd4b13282",
             "pinId": "1"
           },
           "number": "0V",
@@ -3629,11 +3629,11 @@
         },
         {
           "a": {
-            "ownerId": "9af8b606-681d-4232-b61f-115c055c6bb4",
+            "ownerId": "7e100d2d-6bd9-4692-948c-36d4b46aa03c",
             "pinId": "2"
           },
           "b": {
-            "ownerId": "e4212afe-3bf8-4331-bbbc-8d12c4886df9",
+            "ownerId": "fca8c7da-c679-4c11-89d9-a62190958c88",
             "pinId": "1"
           },
           "number": "0V",
@@ -3645,11 +3645,11 @@
         },
         {
           "a": {
-            "ownerId": "27c9803a-4c28-48e5-9127-5c25eadec439",
+            "ownerId": "d5f7e761-93ba-4bb4-9fb4-e74ed76cc3f8",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "56c58fb8-cc07-4b67-8723-549b585ac871",
+            "ownerId": "5c6cf65a-2757-4991-8caa-4545245f9753",
             "pinId": "1L+"
           },
           "number": "+24V",
@@ -3661,11 +3661,11 @@
         },
         {
           "a": {
-            "ownerId": "299b23a8-29c0-40f4-832c-c6273e7e9d40",
+            "ownerId": "82cd1866-7be0-4072-bb8e-ca83ac4cc74e",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "56c58fb8-cc07-4b67-8723-549b585ac871",
+            "ownerId": "5c6cf65a-2757-4991-8caa-4545245f9753",
             "pinId": "1M"
           },
           "number": "0V",
@@ -3677,11 +3677,11 @@
         },
         {
           "a": {
-            "ownerId": "9e93df91-25c8-4d7d-a691-7521e165f472",
+            "ownerId": "4f878dbf-3529-4e21-8880-fe2f54f2cde6",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "5855261d-5558-4f81-a9b6-30db2adbe0ee",
+            "ownerId": "1a41b2bb-ce2f-48d3-a118-f26f450e78eb",
             "pinId": "+24V"
           },
           "number": "+24V",
@@ -3693,11 +3693,11 @@
         },
         {
           "a": {
-            "ownerId": "c866da51-16b3-4722-b641-71990096d1a4",
+            "ownerId": "fdbb96ed-da03-4316-906f-02a4a0f57071",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "5855261d-5558-4f81-a9b6-30db2adbe0ee",
+            "ownerId": "1a41b2bb-ce2f-48d3-a118-f26f450e78eb",
             "pinId": "0V"
           },
           "number": "0V",
@@ -3709,11 +3709,11 @@
         },
         {
           "a": {
-            "ownerId": "74d78cc8-d66a-4061-af9f-2dbcec1ce604",
+            "ownerId": "53109709-7c18-4c0b-a495-95b374d365ce",
             "pinId": "1"
           },
           "b": {
-            "ownerId": "5855261d-5558-4f81-a9b6-30db2adbe0ee",
+            "ownerId": "1a41b2bb-ce2f-48d3-a118-f26f450e78eb",
             "pinId": "PE"
           },
           "number": "PE",
@@ -4432,5 +4432,6 @@
       "contacts": []
     }
   ],
+  "symbols": [],
   "resources": []
 }

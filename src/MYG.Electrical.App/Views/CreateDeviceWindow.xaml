@@ -1,0 +1,49 @@
+<Window x:Class="MYG.Electrical.App.Views.CreateDeviceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Seçimden cihaz oluştur" Icon="/Assets/myg-electrical.ico" SizeToContent="Height" Width="540"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False" ResizeMode="NoResize"
+        Background="{StaticResource AnthraciteBrush}" Foreground="{StaticResource TextBrush}">
+    <StackPanel Margin="14">
+        <TextBlock Text="{Binding Summary}" FontWeight="SemiBold" TextWrapping="Wrap" />
+        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource MutedTextBrush}" Margin="0,4,0,10"
+                   Text="Cihaz kullanıcı kütüphanesine kaydedilir ve soldaki listede seçilen kategoride görünür (Cihazlar sekmesi). Projeye de gömülür; başka bilgisayarda açılınca da çizilir." />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="130" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Text="Ad" VerticalAlignment="Center" />
+            <TextBox x:Name="NameBox" Grid.Column="1" Text="{Binding Name}" Margin="0,3" FontWeight="SemiBold" ToolTip="Ör. Delta AS228T" />
+            <TextBlock Grid.Row="1" Text="Kategori" VerticalAlignment="Center" />
+            <ComboBox Grid.Row="1" Grid.Column="1" IsEditable="True" ItemsSource="{Binding Categories}" Text="{Binding Category}" Margin="0,3"
+                      ToolTip="Ağaçta görüneceği yer; '/' ile alt kategori: PLC ve Otomasyon/Delta" />
+            <TextBlock Grid.Row="2" Text="Üretici" VerticalAlignment="Center" />
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Manufacturer}" Margin="0,3" />
+            <TextBlock Grid.Row="3" Text="Model" VerticalAlignment="Center" />
+            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Model}" Margin="0,3" ToolTip="Boş bırakılırsa ad kullanılır" />
+            <TextBlock Grid.Row="4" Text="Sipariş no" VerticalAlignment="Center" />
+            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding OrderNumber}" Margin="0,3" />
+            <TextBlock Grid.Row="5" Text="Tanım harfi" VerticalAlignment="Center" />
+            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Prefix}" Margin="0,3" Width="60" HorizontalAlignment="Left"
+                     ToolTip="IEC 81346-2: PLC ve modüller A, röle K, sensör B" />
+            <TextBlock Grid.Row="6" Text="Parça türü" VerticalAlignment="Center" />
+            <ComboBox Grid.Row="6" Grid.Column="1" ItemsSource="{Binding Roles}" SelectedItem="{Binding Role}" DisplayMemberPath="Text" Margin="0,3" />
+            <TextBlock Grid.Row="7" Text="Açıklama" VerticalAlignment="Center" />
+            <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Description}" Margin="0,3" />
+        </Grid>
+        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource MutedTextBrush}" Margin="0,8,0,0"
+                   Text="Çok sayfalı PLC: girişleri bir sayfada, çıkışları başka sayfada çizecekseniz iki ayrı cihaz oluşturun (biri ana parça, diğeri ek parça) ve yerleştirdikten sonra aynı etiketi verin. Etiketin altında diğer parçaların /sayfa.kolon konumları yazılır." />
+        <CheckBox Content="Çizimi kaldır, yerine yeni cihazı koy" IsChecked="{Binding ReplaceDrawing}" Margin="0,10,0,0" />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+            <TextBlock x:Name="ErrorText" Foreground="#FFD32F2F" VerticalAlignment="Center" Margin="0,0,12,0" TextWrapping="Wrap" MaxWidth="260" />
+            <Button Content="Cihazı oluştur" IsDefault="True" MinWidth="110" Margin="0,0,8,0" Click="OnOk" />
+            <Button Content="İptal" IsCancel="True" MinWidth="90" />
+        </StackPanel>
+    </StackPanel>
+</Window>

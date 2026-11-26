@@ -39,6 +39,7 @@ public static class ProjectSerializer
             Settings = document.Settings,
             Pages = document.Pages,
             Devices = document.Devices,
+            Symbols = document.Symbols,
             Resources = document.UsedResources(),
         };
         return JsonSerializer.Serialize(snapshot, Options);
@@ -165,6 +166,7 @@ public static class ProjectSerializer
         // nesneye çevrildikten sonra ProjectValidator içinde etiketlerden üretilir (DeviceRegistry.EnsureRecords).
         // v4 → v5: yalnızca yeni nesne türleri (potential, pageLink). Dönüşüm gerekmez.
         // v5 → v6: cihaz kaydına templateId ve contacts eklendi (boş varsayılan). Dönüşüm gerekmez.
+        // v6 → v7: devicePin nesnesi, dikdörtgende dashed, gömülü kullanıcı sembolleri (symbols). Dönüşüm gerekmez.
         root[FormatVersionProperty] = ProjectDocument.CurrentFormatVersion;
     }
 

@@ -211,6 +211,58 @@ public sealed class LibraryViewModel : ObservableObject
 
     public bool HasSelection => _selected is not null;
 
+    /// <summary>
+    /// Katalog ve cihaz kütüphanesine sonradan eklenenleri (çizimden oluşturulan cihaz, projeden gelen sembol)
+    /// listeye alır; aynı kimlikli eski öğe yenisiyle değişir.
+    /// </summary>
+    public void Sync(string? selectId = null)
+    {
+        foreach (var s in _catalog.All)
+        {
+            var i = _symbolItems.FindIndex(x => x.Id == s.Id);
+            if (i < 0)
+            {
+                _symbolItems.Add(new LibraryItemViewModel(s, _catalog, _settings.IsFavorite(s.Id)));
+            }
+            else if (!ReferenceEquals(_symbolItems[i].Symbol, s))
+            {
+                _symbolItems[i] = new LibraryItemViewModel(s, _catalog, _settings.IsFavorite(s.Id));
+            }
+        }
+        foreach (var t in _devices.All)
+        {
+            var i = _deviceItems.FindIndex(x => x.Id == t.Id);
+            if (i < 0)
+            {
+                _deviceItems.Add(new LibraryItemViewModel(t, _catalog, _settings.IsFavorite(t.Id)));
+            }
+            else if (!ReferenceEquals(_deviceItems[i].Template, t))
+            {
+                _deviceItems[i] = new LibraryItemViewModel(t, _catalog, _settings.IsFavorite(t.Id));
+            }
+        }
+        if (selectId is not null && FindItem(selectId) is { } item)
+        {
+            Mode = item.IsDevice ? LibraryMode.Devices : LibraryMode.Symbols;
+            Rebuild(keepExpansion: true);
+            // Yeni öğenin kategorisini aç
+            foreach (var node in Roots.OfType<LibraryNodeViewModel>().SelectMany(Flatten))
+            {
+                if (node.Children.Contains(item) || node.Children.OfType<LibraryNodeViewModel>().SelectMany(Flatten).Any(n => n.Children.Contains(item)))
+                {
+                    node.IsExpanded = true;
+                }
+            }
+            Selected = item;
+        }
+        else
+        {
+            Rebuild(keepExpansion: true);
+        }
+        OnPropertyChanged(nameof(SymbolCount));
+        OnPropertyChanged(nameof(DeviceCount));
+    }
+
     public LibraryItemViewModel? FindItem(string id) =>
         _symbolItems.FirstOrDefault(i => i.Id == id) ?? _deviceItems.FirstOrDefault(i => i.Id == id);
 

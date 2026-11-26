@@ -102,6 +102,10 @@ public sealed class MainViewModel : ObservableObject
         PlacePageLinkCommand = new RelayCommand(PlacePageLink);
         NumberWiresCommand = new RelayCommand(p => NumberWires(string.Equals(p as string, "all", StringComparison.Ordinal)));
         RenumberDevicesCommand = new RelayCommand(RenumberDevices);
+        PlaceDevicePinCommand = new RelayCommand(p => StartPinTool(p as string));
+        DrawDeviceBoxCommand = new RelayCommand(() => ActiveTool = EditorTool.DeviceBox);
+        CreateDeviceCommand = new RelayCommand(CreateDeviceFromSelection);
+        _userLibrary = new Infrastructure.Library.UserLibraryStore(AppSettingsService.AppDataFolder);
         ExportReportsCommand = new RelayCommand(ExportReportsXlsx);
         ExportReportCsvCommand = new RelayCommand(p => ExportReportCsv(p is Core.Reports.ReportKind k ? k : Enum.Parse<Core.Reports.ReportKind>(p?.ToString() ?? "DeviceList")));
         OpenColorSettingsCommand = new RelayCommand(OpenColorSettings);
@@ -176,6 +180,146 @@ public sealed class MainViewModel : ObservableObject
     public RelayCommand PlacePageLinkCommand { get; }
     public RelayCommand NumberWiresCommand { get; }
     public RelayCommand RenumberDevicesCommand { get; }
+
+    // ---------- Cihaz tasarımı (EPLAN tarzı PLC / cihaz kutusu) ----------
+
+    public RelayCommand PlaceDevicePinCommand { get; }
+    public RelayCommand DrawDeviceBoxCommand { get; }
+    public RelayCommand CreateDeviceCommand { get; }
+
+    private readonly Infrastructure.Library.UserLibraryStore _userLibrary;
+    private readonly Dictionary<PinFunction, string> _nextPinName = new()
+    {
+        [PinFunction.Input] = "X0.0",
+        [PinFunction.Output] = "Y0.0",
+        [PinFunction.SupplyPositive] = "L+",
+        [PinFunction.SupplyNegative] = "M",
+        [PinFunction.Power] = "L1",
+        [PinFunction.ProtectiveEarth] = "PE",
+        [PinFunction.Communication] = "A",
+        [PinFunction.ContactCommon] = "COM",
+        [PinFunction.General] = "1",
+    };
+    private readonly Dictionary<PinFunction, Core.Devices.PinSequence> _pinSequence = [];
+    private bool _askPinName = true;
+    private bool _pinAutoContinue = true;
+    private DevicePinObject? _pendingPin;
+
+    /// <summary>Pin aracının şablonu (sıradaki ad ve işlev); çizim alanında hayalet olarak görünür.</summary>
+    public DevicePinObject? PendingPin
+    {
+        get => _pendingPin;
+        private set => SetField(ref _pendingPin, value);
+    }
+
+    private void StartPinTool(string? kind)
+    {
+        var function = kind switch
+        {
+            "input" => PinFunction.Input,
+            "output" => PinFunction.Output,
+            "plus" => PinFunction.SupplyPositive,
+            "minus" => PinFunction.SupplyNegative,
+            "pe" => PinFunction.ProtectiveEarth,
+            "comm" => PinFunction.Communication,
+            _ => PinFunction.General,
+        };
+        PendingPin = new DevicePinObject
+        {
+            Name = _nextPinName.GetValueOrDefault(function, "1"),
+            Function = function,
+            Rotation = DevicePinObject.DefaultRotation(function),
+        };
+        _askPinName = true; // araç her seçildiğinde ilk tıklamada ad sorulur
+        ActiveTool = EditorTool.DevicePin;
+        StatusMessage = "Pin: tıklayın, bağlantı adını yazın (X0, I0.0...) · sonraki pinler kendiliğinden X1, I0.1... · R: yön · Esc: bitir";
+    }
+
+    /// <summary>Çizim alanından: pin aracıyla tıklandı. Ad sorulur (ilk pin) veya sıradaki adla eklenir.</summary>
+    public void OnDevicePinRequested(DevicePinObject pin)
+    {
+        if (_askPinName)
+        {
+            var vm = new PinNameViewModel(pin.Name, pin.Function, _pinSequence.GetValueOrDefault(pin.Function), _pinAutoContinue);
+            if (!_dialogs.ShowPinName(vm))
+            {
+                return;
+            }
+            pin.Name = vm.Name.Trim();
+            if (pin.Function != vm.Function.Value)
+            {
+                pin.Rotation = DevicePinObject.DefaultRotation(vm.Function.Value) + (pin.Rotation - DevicePinObject.DefaultRotation(pin.Function));
+            }
+            pin.Function = vm.Function.Value;
+            pin.Description = vm.Description.Trim();
+            _pinSequence[pin.Function] = vm.Sequence.Value;
+            _pinAutoContinue = vm.AutoContinue;
+            _askPinName = !vm.AutoContinue;
+        }
+
+        var duplicate = Session.ActivePage.Objects.OfType<DevicePinObject>()
+            .Any(p => string.Equals(p.Name, pin.Name, StringComparison.OrdinalIgnoreCase));
+        Session.AddObject(pin, select: false);
+        var next = Core.Devices.PinNaming.Next(pin.Name, _pinSequence.GetValueOrDefault(pin.Function));
+        _nextPinName[pin.Function] = next;
+        // Şablonun yönü işlevin varsayılanıdır; R ile yapılan döndürme çizim alanında ayrıca eklenir
+        PendingPin = new DevicePinObject { Name = next, Function = pin.Function, Rotation = DevicePinObject.DefaultRotation(pin.Function) };
+        StatusMessage = (duplicate ? $"Dikkat: '{pin.Name}' bu sayfada zaten var. " : "") + $"{pin.Name} eklendi · sıradaki: {next}";
+    }
+
+    /// <summary>Seçili kutu/çizgi/metin/pinlerden cihaz oluşturur, kullanıcı kütüphanesine ve sol listeye ekler.</summary>
+    private void CreateDeviceFromSelection()
+    {
+        var selected = Session.SelectedObjects.ToList();
+        var pins = selected.OfType<DevicePinObject>().Count();
+        if (pins == 0)
+        {
+            _dialogs.ShowInfo("Önce cihazın kutusunu ve pinlerini seçin (alan seçimiyle).\n\n" +
+                              "Pin eklemek için: Ekle → Cihaz tasarımı → Giriş / Çıkış / Güç pini.\n" +
+                              "Kutu için: Ekle → Cihaz tasarımı → Cihaz kutusu.");
+            return;
+        }
+        var categories = Devices.All.Select(d => d.Category).Concat(_catalog.All.Select(c => c.Category))
+            .Where(c => c.StartsWith("PLC", StringComparison.Ordinal) || c.Contains("Kullanıcı", StringComparison.Ordinal))
+            .Append("PLC ve Otomasyon/Kullanıcı").Distinct().Order(StringComparer.CurrentCulture).ToList();
+        var shapes = selected.Count(o => o is LineObject or RectangleObject or TextObject);
+        var vm = new CreateDeviceViewModel(categories, pins, shapes);
+        if (!_dialogs.ShowCreateDevice(vm))
+        {
+            return;
+        }
+        Core.Devices.DeviceBuildResult result;
+        try
+        {
+            result = Core.Devices.DeviceBuilder.Build(selected, vm.ToOptions(), id => _catalog.Find(id) is not null || Devices.Find(id) is not null);
+            _userLibrary.Save(result.Symbol, result.Template);
+        }
+        catch (Core.Devices.DeviceBuildException ex)
+        {
+            _dialogs.ShowError(ex.Message);
+            return;
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            _log.Error(ex, "Kullanıcı kütüphanesi yazılamadı");
+            _dialogs.ShowError($"Cihaz kütüphaneye kaydedilemedi:\n{ex.Message}");
+            return;
+        }
+        if (_catalog is SymbolCatalog catalog)
+        {
+            catalog.AddOrReplace(result.Symbol);
+        }
+        Devices.AddOrReplace(result.Template);
+        Library.Sync(result.Template.Id);
+        if (vm.ReplaceDrawing)
+        {
+            Session.ReplaceWithDevice(selected, result.Template, result.Origin);
+        }
+        ActiveTool = EditorTool.Select;
+        StatusMessage = $"'{result.Template.Name}' kütüphaneye eklendi ({result.Symbol.ConnectionPoints.Count} pin, {result.Template.Category})."
+            + (result.Warnings.Count > 0 ? " " + string.Join(" ", result.Warnings) : "");
+        _log.Information("Kullanıcı cihazı oluşturuldu: {Id} → {File}", result.Template.Id, _userLibrary.DeviceFile);
+    }
     public RelayCommand ExportReportsCommand { get; }
     public RelayCommand ExportReportCsvCommand { get; }
     public RelayCommand OpenColorSettingsCommand { get; }
@@ -609,6 +753,8 @@ public sealed class MainViewModel : ObservableObject
         }
         try
         {
+            // Çizimden oluşturulan (kullanıcı) cihaz sembolleri projeye gömülür: başka bilgisayarda da çizilsin
+            ProjectSymbols.Embed(Session.Document, _catalog);
             _files.Save(Session.Document, path);
             _filePath = path;
             Session.IsDirty = false;
@@ -871,6 +1017,10 @@ public sealed class MainViewModel : ObservableObject
 
     private EditorSession CreateSession(ProjectDocument doc)
     {
+        if (_catalog is SymbolCatalog catalog && ProjectSymbols.Register(doc, catalog) > 0)
+        {
+            Library?.Sync();
+        }
         var session = new EditorSession(doc, _catalog);
         session.SceneChanged += (_, _) => OnDocumentChanged();
         session.HistoryChanged += (_, _) => OnPropertyChanged(nameof(Title));
@@ -933,6 +1083,8 @@ public sealed class MainViewModel : ObservableObject
         EditorTool.Angle => "Dirsek: 90° dönüş noktası · yön otomatik önerilir, R ile değiştirin",
         EditorTool.Tee => "T bağlantı: 3 yollu düğüm · yön otomatik önerilir, R ile değiştirin",
         EditorTool.Image => "Resim: sol üst köşesini yerleştirmek için tıklayın (Esc: iptal)",
+        EditorTool.DevicePin => $"Pin {PendingPin?.Name}: tıklayın · sonraki ad kendiliğinden artar (X0 → X1, I0.7 → I1.0) · R: yön · Esc: bitir",
+        EditorTool.DeviceBox => "Cihaz kutusu: iki köşeye tıklayın · sonra pinleri ekleyin, hepsini seçip 'Seçimden cihaz oluştur'",
         EditorTool.Potential => $"Potansiyel {PendingConnectorName}: hattın başına tıklayın · R: yön · ad/tür sağ panelden",
         EditorTool.PageLink => $"Sayfa bağlantısı '{PendingConnectorName}': aynı adlı bağlantılar birleşir · R: yön",
         EditorTool.Cross => "Çapraz düğüm: kesişen yatay ve dikey hattı BİRLEŞTİRİR · yalnızca gerçekten bağlıysa kullanın",

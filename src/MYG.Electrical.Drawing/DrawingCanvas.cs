@@ -97,6 +97,20 @@ public sealed class DrawingCanvas : FrameworkElement
     /// <summary>Zoom veya pan değiştiğinde.</summary>
     public event EventHandler? ViewChanged;
 
+    /// <summary>Pin aracıyla tıklandı: konum ve yönü belli pin; ad ve ekleme ana pencerede yapılır.</summary>
+    public event EventHandler<DevicePinObject>? DevicePinRequested;
+
+    public static readonly DependencyProperty PendingPinProperty = DependencyProperty.Register(
+        nameof(PendingPin), typeof(DevicePinObject), typeof(DrawingCanvas),
+        new PropertyMetadata(null, (d, _) => ((DrawingCanvas)d).RedrawGhost()));
+
+    /// <summary>Pin aracının şablonu (sıradaki ad, işlev, başlangıç yönü).</summary>
+    public DevicePinObject? PendingPin
+    {
+        get => (DevicePinObject?)GetValue(PendingPinProperty);
+        set => SetValue(PendingPinProperty, value);
+    }
+
     /// <summary>Seç aracıyla bir nesneye çift tıklandı.</summary>
     public event EventHandler<DrawingObject>? ObjectDoubleClicked;
 
@@ -423,7 +437,6 @@ public sealed class DrawingCanvas : FrameworkElement
             {
                 _composer.Network = Session.Network;
                 _composer.Colors = Colors;
-            _composer.Colors = Colors;
                 _composer.ComposeWires(Session.ActivePage, Session.Wires, new WpfSceneSink(dc));
             }
         }
@@ -443,6 +456,7 @@ public sealed class DrawingCanvas : FrameworkElement
                 new JunctionObject { X = p.X, Y = p.Y, Shape = shape, Rotation = EffectivePlacementRotation() },
             EditorTool.Image => PendingImageAt(p),
             EditorTool.Potential or EditorTool.PageLink => PendingConnectorAt(p),
+            EditorTool.DevicePin => PendingPinAt(p),
             _ => PendingSymbol?.CreateDevice(p.X, p.Y, string.Empty),
         };
         if (ghost is DeviceObject d)
@@ -501,7 +515,7 @@ public sealed class DrawingCanvas : FrameworkElement
                 {
                     dc.DrawLine(PreviewPen, ToScreen(start), s);
                 }
-                else if (ActiveTool == EditorTool.Rectangle)
+                else if (ActiveTool is EditorTool.Rectangle or EditorTool.DeviceBox)
                 {
                     dc.DrawRectangle(null, PreviewPen, ScreenRect(Rect2D.FromPoints(start, snapped), 0));
                 }
@@ -619,6 +633,7 @@ public sealed class DrawingCanvas : FrameworkElement
 
             case EditorTool.Line:
             case EditorTool.Rectangle:
+            case EditorTool.DeviceBox:
                 if (_shapeStart is not { } start)
                 {
                     _shapeStart = snapped;
@@ -627,9 +642,13 @@ public sealed class DrawingCanvas : FrameworkElement
                 {
                     if (start != snapped)
                     {
-                        session.AddObject(ActiveTool == EditorTool.Line
-                            ? new LineObject { X1 = start.X, Y1 = start.Y, X2 = snapped.X, Y2 = snapped.Y }
-                            : CreateRectangle(start, snapped));
+                        DrawingObject shape = ActiveTool switch
+                        {
+                            EditorTool.Line => new LineObject { X1 = start.X, Y1 = start.Y, X2 = snapped.X, Y2 = snapped.Y },
+                            EditorTool.DeviceBox => WithDash(CreateRectangle(start, snapped)),
+                            _ => CreateRectangle(start, snapped),
+                        };
+                        session.AddObject(shape);
                     }
                     _shapeStart = null;
                 }
@@ -650,6 +669,11 @@ public sealed class DrawingCanvas : FrameworkElement
                 ActiveTool = EditorTool.Select; // resim genelde tek tek yerleştirilir
                 break;
 
+            case EditorTool.DevicePin when PendingPinAt(snapped) is { } pin:
+                // Ad sorma/numaralandırma ana pencerede yapılır (bağlantı adı penceresi, X0 → X1 ...)
+                DevicePinRequested?.Invoke(this, pin);
+                break;
+
             case EditorTool.Potential or EditorTool.PageLink when PendingConnectorAt(snapped) is { } connector:
                 session.AddObject(connector);
                 break;
@@ -662,6 +686,18 @@ public sealed class DrawingCanvas : FrameworkElement
                 session.PlaceSymbol(PendingSymbol, snapped, _placementRotation);
                 break;
         }
+    }
+
+    private DevicePinObject? PendingPinAt(Point2D p)
+    {
+        if (PendingPin?.CloneWithNewId() is not DevicePinObject pin)
+        {
+            return null;
+        }
+        pin.X = p.X;
+        pin.Y = p.Y;
+        pin.Rotation = PendingPin.Rotation + _placementRotation;
+        return pin;
     }
 
     private SinglePinObject? PendingConnectorAt(Point2D p)
@@ -685,6 +721,12 @@ public sealed class DrawingCanvas : FrameworkElement
         image.X = topLeft.X;
         image.Y = topLeft.Y;
         return image;
+    }
+
+    private static RectangleObject WithDash(RectangleObject r)
+    {
+        r.Dashed = true;
+        return r;
     }
 
     private static RectangleObject CreateRectangle(Point2D a, Point2D b)

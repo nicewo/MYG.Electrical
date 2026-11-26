@@ -95,6 +95,10 @@ Aşağıdaki görüntüler programın kendi ürettiği PDF çıktısıdır (`sam
   `/sayfa.kolon` konumu.
 - **Cihaz özellikleri** (çift tık): genel, elektriksel veri, pinler, üretici, kontaklar (kullanılan / boş /
   kapasite dışı), çapraz referanslar, dokümantasyon.
+- **Kendi PLC / cihazını çiz:** kesikli cihaz kutusu ve güç/giriş/çıkış pinleri; pin adları EPLAN gibi kendiliğinden
+  artar (X0 → X1, I0.7 → I1.0, Delta AS X0.15 → X1.0). "Seçimden cihaz oluştur" ile cihaz (ör. Delta AS228T)
+  kütüphaneye ve sol listeye eklenir, projeye de gömülür. Çok sayfalı PLC'lerde parçalar birbirinin
+  `/sayfa.kolon` konumunu gösterir.
 - **IEC 81346 etiketleri** proje şablonuyla (`-{prefix}{n}`, `={page}-{prefix}{n}`...) ve toplu yeniden
   numaralandırma.
 

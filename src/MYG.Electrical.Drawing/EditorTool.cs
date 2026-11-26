@@ -26,6 +26,12 @@ public enum EditorTool
 
     /// <summary>Sayfalar arası bağlantı (kesme noktası).</summary>
     PageLink,
+
+    /// <summary>Cihaz tasarımı: bağlantı noktası (güç/giriş/çıkış pini), ardışık adlandırma.</summary>
+    DevicePin,
+
+    /// <summary>Cihaz tasarımı: kesikli cihaz/PLC kutusu (iki köşe).</summary>
+    DeviceBox,
 }
 
 public static class EditorToolExtensions
@@ -33,7 +39,7 @@ public static class EditorToolExtensions
     /// <summary>Tıklayınca nesne yerleştiren (önizlemesi olan) araçlar.</summary>
     public static bool IsPlacementTool(this EditorTool tool) =>
         tool is EditorTool.Symbol or EditorTool.Angle or EditorTool.Tee or EditorTool.Cross or EditorTool.Image
-            or EditorTool.Potential or EditorTool.PageLink;
+            or EditorTool.Potential or EditorTool.PageLink or EditorTool.DevicePin;
 
     public static Core.Model.JunctionShape? ToJunctionShape(this EditorTool tool) => tool switch
     {

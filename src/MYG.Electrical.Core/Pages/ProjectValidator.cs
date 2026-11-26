@@ -22,6 +22,12 @@ public static class ProjectValidator
         doc.Settings.WireNumberFormat = string.IsNullOrWhiteSpace(doc.Settings.WireNumberFormat)
             ? ProjectSettings.DefaultWireNumberFormat : doc.Settings.WireNumberFormat;
         doc.Devices ??= [];
+        doc.Symbols ??= [];
+        foreach (var bad in doc.Symbols.Where(s => s is null || Symbols.SymbolLibraryLoader.Validate(s) is not null).ToList())
+        {
+            doc.Symbols.Remove(bad);
+            warnings.Add($"Projedeki '{bad?.Id}' kullanıcı sembolü bozuktu; atlandı.");
+        }
         doc.Devices.RemoveAll(d => d is null);
         foreach (var d in doc.Devices)
         {

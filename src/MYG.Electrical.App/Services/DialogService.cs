@@ -43,6 +43,12 @@ public sealed class DialogService : IDialogService
         return dlg.ShowDialog(Owner) == true ? dlg.FileName : null;
     }
 
+    public bool ShowPinName(ViewModels.PinNameViewModel vm) =>
+        new Views.PinNameWindow(vm) { Owner = Owner }.ShowDialog() == true;
+
+    public bool ShowCreateDevice(ViewModels.CreateDeviceViewModel vm) =>
+        new Views.CreateDeviceWindow(vm) { Owner = Owner }.ShowDialog() == true;
+
     public bool ShowColorSettings(ViewModels.ColorSettingsViewModel vm) =>
         new Views.ColorSettingsWindow(vm) { Owner = Owner }.ShowDialog() == true;
 

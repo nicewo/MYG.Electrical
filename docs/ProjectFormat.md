@@ -4,7 +4,7 @@ UTF-8 JSON, camelCase alan adları, enum değerleri metin. Uzantı: `.myge`.
 
 ```json
 {
-  "formatVersion": 6,
+  "formatVersion": 7,
   "project": {
     "name": "Machine01",
     "company": "MYG TECH",
@@ -116,6 +116,7 @@ UTF-8 JSON, camelCase alan adları, enum değerleri metin. Uzantı: `.myge`.
 | 4 | `devices` (proje cihazları, etiket başına bir kayıt), `projectSettings` (etiket/kablo numarası şablonu), sayfada `wireData` (kablo numarası, renk, kesit, tip), cihaz yerleşiminde `description` ve `pinDesignations`. v3 dosyalar açılırken her etiket için cihaz kaydı oluşturulur; çizim ve bağlantılar değişmez. |
 | 5 | Nesne türleri `potential` (L1, +24V... potansiyel tanımı: `name`, `potentialKind`, `voltage`, `description`, `rotation`) ve `pageLink` (sayfalar arası bağlantı: `name`, `description`, `rotation`). v4 dosyalar değişiklik gerektirmeden açılır. |
 | 6 | Proje cihazında `templateId` (cihaz kütüphanesi kaydı) ve `contacts` (kontak kapasitesi: `kind` no/nc/changeover/power, `pins`). v5 dosyalar değişiklik gerektirmeden açılır. |
+| 7 | `devicePin` nesnesi (cihaz tasarım pini: `name`, `function`, `description`, `rotation`), dikdörtgende `dashed`, kök düzeyde `symbols` (projede kullanılan kullanıcı sembollerinin tam tanımı; başka bilgisayarda açılınca kataloğa eklenir). v6 dosyalar değişiklik gerektirmeden açılır. |
 
 > **Bilinen hata (37afe6e):** Bu commit'teki derleme, sürüm sabiti 2'de kaldığı için resim içeren dosyaları
 > `"formatVersion": 2` olarak yazdı. Bu dosyalar güncel sürümde sorunsuz açılır ve bir sonraki kayıtta 3 olur.

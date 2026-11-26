@@ -10,6 +10,9 @@ public sealed class RectangleObject : DrawingObject, IRotatable
     public double Height { get; set; }
     public double Thickness { get; set; } = LineObject.DefaultThicknessMm;
 
+    /// <summary>Kesikli çizgi (EPLAN cihaz/PLC kutusu).</summary>
+    public bool Dashed { get; set; }
+
     public Rect2D Bounds => new(X, Y, Width, Height);
     public override Point2D Anchor => Bounds.Center;
     public override Point2D SnapPoint => new(X, Y);
@@ -36,5 +39,5 @@ public sealed class RectangleObject : DrawingObject, IRotatable
         X += dx; Y += dy;
     }
 
-    public override DrawingObject CloneWithNewId() => new RectangleObject { X = X, Y = Y, Width = Width, Height = Height, Thickness = Thickness };
+    public override DrawingObject CloneWithNewId() => new RectangleObject { X = X, Y = Y, Width = Width, Height = Height, Thickness = Thickness, Dashed = Dashed };
 }

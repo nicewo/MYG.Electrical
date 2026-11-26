@@ -10,6 +10,12 @@ public interface IDialogService
     /// <summary>Genel kaydetme diyaloğu (raporlar).</summary>
     string? SaveFile(string suggestedName, string filter, string title);
 
+    /// <summary>Pin aracında bağlantı adı penceresi. Ekle → true.</summary>
+    bool ShowPinName(ViewModels.PinNameViewModel vm);
+
+    /// <summary>Seçimden cihaz oluştur penceresi. Oluştur → true.</summary>
+    bool ShowCreateDevice(ViewModels.CreateDeviceViewModel vm);
+
     /// <summary>Renk ayarları penceresi. Kaydet → true.</summary>
     bool ShowColorSettings(ViewModels.ColorSettingsViewModel vm);
 
