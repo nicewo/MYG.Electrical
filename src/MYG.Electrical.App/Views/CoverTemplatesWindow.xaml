@@ -1,0 +1,34 @@
+<Window x:Class="MYG.Electrical.App.Views.CoverTemplatesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Kapak şablonları" Icon="/Assets/myg-electrical.ico"
+        Width="520" Height="520" MinHeight="420" MinWidth="440" WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
+        Background="{StaticResource AnthraciteBrush}" Foreground="{StaticResource TextBrush}">
+    <DockPanel Margin="12">
+        <TextBlock DockPanel.Dock="Top" TextWrapping="Wrap" Foreground="{StaticResource MutedTextBrush}" Margin="0,0,0,8"
+                   Text="Kapak sayfası serbestçe tasarlanır: bilgi alanlarını (firma, proje, müşteri, tarih, logo...) sürükleyin, sağ alt tutamaçla boyutlandırın, sağ panelden gösterin / gizleyin. Tasarımı şablon olarak kaydedin; ★ işaretli varsayılan şablon yeni projelerde kullanılır. Alanların değeri her projenin kendi bilgisinden gelir." />
+        <TextBlock DockPanel.Dock="Top" Text="{Binding CoverPageText}" Margin="0,0,0,8" />
+
+        <!-- Kaydet -->
+        <Border DockPanel.Dock="Bottom" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" CornerRadius="3" Padding="10" Margin="0,10,0,0">
+            <StackPanel>
+                <TextBlock Text="Etkin kapağı şablon olarak kaydet" FontWeight="SemiBold" Margin="0,0,0,6" />
+                <DockPanel>
+                    <Button DockPanel.Dock="Right" Content="Kaydet" Command="{Binding SaveCommand}" MinWidth="80" Margin="8,0,0,0" />
+                    <TextBox Text="{Binding NewName, UpdateSourceTrigger=PropertyChanged}" ToolTip="Şablon adı (ör. Data Otomasyon kapağı)" />
+                </DockPanel>
+                <CheckBox Content="Yeni projelerde varsayılan olsun" IsChecked="{Binding MakeDefault}" Margin="0,6,0,0" Foreground="{StaticResource TextBrush}" />
+            </StackPanel>
+        </Border>
+        <TextBlock DockPanel.Dock="Bottom" Text="{Binding Status}" TextWrapping="Wrap" Foreground="{StaticResource ActiveToolBrush}" Margin="0,8,0,0" />
+
+        <StackPanel DockPanel.Dock="Right" Margin="10,0,0,0" Width="150">
+            <Button Content="Kapağa uygula" Command="{Binding ApplyCommand}" Margin="0,0,0,6" />
+            <Button Content="★ Varsayılan yap" Command="{Binding SetDefaultCommand}" Margin="0,0,0,6" />
+            <Button Content="Sil" Command="{Binding DeleteCommand}" Margin="0,0,0,6" />
+            <Button Content="Klasörü aç" Command="{Binding OpenFolderCommand}" Margin="0,12,0,6" ToolTip="Şablon dosyaları (.mygk) başka bilgisayara kopyalanabilir" />
+            <Button Content="Kapat" IsCancel="True" Margin="0,12,0,0" Click="OnCloseClick" />
+        </StackPanel>
+        <ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding Selected}" DisplayMemberPath="Display" MouseDoubleClick="OnDoubleClick" />
+    </DockPanel>
+</Window>

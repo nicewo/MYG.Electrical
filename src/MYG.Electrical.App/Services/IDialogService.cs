@@ -24,6 +24,9 @@ public interface IDialogService
 
     void ShowAbout(ViewModels.AboutViewModel vm);
 
+    /// <summary>Kapak şablonları penceresi.</summary>
+    void ShowCoverTemplates(ViewModels.CoverTemplatesViewModel vm);
+
     /// <summary>Cihaz özellikleri penceresi. Tamam → true (değişiklikler uygulanmıştır).</summary>
     bool ShowDeviceProperties(ViewModels.DevicePropertiesViewModel vm, Core.Symbols.ISymbolCatalog catalog, Action<string> open);
     void ShowShortcuts();

@@ -15,11 +15,13 @@ public sealed class ProjectDocument
     /// <item>6: proje cihazında cihaz kütüphanesi kimliği (<c>templateId</c>) ve kontak kapasitesi (<c>contacts</c>).</item>
     /// <item>7: tasarım pini (<c>devicePin</c>), kesikli dikdörtgen, projeye gömülü kullanıcı sembolleri (<c>symbols</c>).</item>
     /// <item>8: gömülü sembolde etiket bloğunun yeri (<c>referencePosition</c>: right, left, top).</item>
+    /// <item>9: tasarlanabilir kapak: bilgi alanı (<c>field</c>), metinde hizalama ve kalınlık. Kapak artık
+    /// otomatik çizilmez; eski dosyalardaki boş kapak sayfalarına Standart şablon yerleştirilir.</item>
     /// </list>
     /// Yeni bir alan veya nesne türü eklendiğinde bu değer artırılmalı ve
     /// ProjectSerializer.Migrate içine dönüşüm adımı yazılmalıdır.
     /// </summary>
-    public const int CurrentFormatVersion = 8;
+    public const int CurrentFormatVersion = 9;
     public const string FileExtension = ".myge";
 
     public int FormatVersion { get; set; } = CurrentFormatVersion;
@@ -65,11 +67,13 @@ public sealed class ProjectDocument
         return Resources.Where(r => used.Contains(r.Id)).ToList();
     }
 
-    /// <summary>Kapak + bir şema sayfası içeren yeni proje.</summary>
-    public static ProjectDocument CreateNew(string name = "Yeni Proje")
+    /// <summary>Kapak + bir şema sayfası içeren yeni proje. Kapak, verilen şablonla (yoksa Standart) başlar.</summary>
+    public static ProjectDocument CreateNew(string name = "Yeni Proje", CoverTemplate? cover = null)
     {
         var doc = new ProjectDocument { Project = new ProjectInfo { Name = name, MachineName = name } };
-        doc.Pages.Add(Page.Create("Kapak", PageType.Cover));
+        var coverPage = Page.Create("Kapak", PageType.Cover);
+        (cover ?? CoverTemplate.Standard()).ApplyTo(doc, coverPage);
+        doc.Pages.Add(coverPage);
         doc.Pages.Add(Page.Create("Güç Devresi", PageType.Schematic));
         return doc;
     }

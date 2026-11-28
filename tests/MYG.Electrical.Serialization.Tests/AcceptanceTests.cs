@@ -325,6 +325,11 @@ public class AcceptanceTests
     public void Bundled_sample_project_is_current_and_has_no_drc_errors()
     {
         var path = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "..", "samples", "PompaIstasyonu.myge");
+        if (Environment.GetEnvironmentVariable("MYG_WRITE_SAMPLES") is { Length: > 0 })
+        {
+            // Format yükseltmesinden sonra örneği güncel sürüme çevir (açıp kaydetmekle aynı)
+            File.WriteAllText(path, ProjectSerializer.Serialize(ProjectSerializer.Deserialize(File.ReadAllText(path))));
+        }
         var json = File.ReadAllText(path);
         Assert.Contains($"\"formatVersion\": {ProjectDocument.CurrentFormatVersion}", json);
         var doc = ProjectSerializer.Deserialize(json);

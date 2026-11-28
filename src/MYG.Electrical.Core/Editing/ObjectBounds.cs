@@ -15,6 +15,7 @@ public static class ObjectBounds
         RectangleObject r => r.Bounds,
         ImageObject i => i.Bounds,
         TextObject t => TextBounds(t),
+        FieldObject f => FieldBounds(f, null),
         JunctionObject j => JunctionBounds(j),
         SinglePinObject c => ConnectorBounds(c),
         SymbolObject s => SymbolBounds(s, catalog),
@@ -50,13 +51,38 @@ public static class ObjectBounds
         return CoordinateTransform.TransformBounds(local, c.Anchor, c.Rotation);
     }
 
-    /// <summary>Metin sınırı tahmini: (X,Y) sol-orta referans noktası.</summary>
+    /// <summary>Metin sınırı tahmini: (X,Y) hizalamaya göre sol / orta / sağ uç, dikeyde orta.</summary>
     public static Rect2D TextBounds(TextObject t)
     {
         var width = Math.Max(1, t.Text.Length) * t.Height * GeometryConstants.AverageCharWidthRatio;
-        var local = new Rect2D(0, -t.Height / 2, width, t.Height);
+        var local = new Rect2D(AlignedLeft(t.Align, width), -t.Height / 2, width, t.Height);
         return CoordinateTransform.TransformBounds(local, t.Anchor, t.Rotation);
     }
+
+    /// <summary>
+    /// Bilgi alanı sınırı. Metin uzunluğu proje bilinmiyorsa en az etiket adı kadar sayılır; logo alanı
+    /// yüksekliği kadar kare bir kutudur.
+    /// </summary>
+    public static Rect2D FieldBounds(FieldObject f, Pages.ProjectDocument? doc)
+    {
+        if (f.IsLogo)
+        {
+            return new Rect2D(f.X + AlignedLeft(f.Align, f.Height), f.Y - f.Height / 2, f.Height, f.Height);
+        }
+        var value = doc is null ? string.Empty : Pages.TitleBlockFields.ResolveField(doc, null, f.Field);
+        var text = doc is null && f.RenderedText is { Length: > 0 } rendered
+            ? rendered
+            : f.Compose(value.Length > 0 ? value : $"[{Pages.TitleBlockFields.LabelOf(f.Field)}]");
+        var width = Math.Max(4, text.Length) * f.Height * GeometryConstants.AverageCharWidthRatio * (f.Bold ? 1.08 : 1);
+        return new Rect2D(f.X + AlignedLeft(f.Align, width), f.Y - f.Height / 2, width, f.Height);
+    }
+
+    private static double AlignedLeft(Rendering.TextAlign align, double width) => align switch
+    {
+        Rendering.TextAlign.Center => -width / 2,
+        Rendering.TextAlign.Right => -width,
+        _ => 0,
+    };
 
     /// <summary>Noktanın nesneye isabet edip etmediği (tolerans mm).</summary>
     public static bool HitTest(DrawingObject obj, Point2D p, double tolerance, ISymbolCatalog catalog) => obj switch

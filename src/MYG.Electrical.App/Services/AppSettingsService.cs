@@ -11,6 +11,9 @@ public sealed class AppSettings
     /// <summary>Arayüz dili ("tr" varsayılan; "en" = İngilizce).</summary>
     public string Language { get; set; } = "tr";
 
+    /// <summary>Yeni projelerin kapak şablonu (boş = yerleşik Standart).</summary>
+    public string DefaultCoverTemplate { get; set; } = string.Empty;
+
     public List<string> Favorites { get; set; } = [];
     public List<string> Recent { get; set; } = [];
 
@@ -48,6 +51,7 @@ public sealed class AppSettingsService
                 s.Favorites ??= [];
                 s.Recent ??= [];
                 s.Colors ??= [];
+                s.DefaultCoverTemplate ??= string.Empty;
                 return s;
             }
         }

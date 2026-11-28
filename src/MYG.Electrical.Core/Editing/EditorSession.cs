@@ -508,6 +508,46 @@ public sealed class EditorSession
         IsDirty = true;
     }
 
+    /// <summary>Boyutlandırma sırasında canlı önizleme (geçmişe yazılmaz).</summary>
+    public void PreviewResize(DrawingObject obj, double[] original, Rect2D originalBounds, Point2D corner)
+    {
+        ObjectResize.Apply(obj, original, originalBounds, corner);
+        AfterChange([obj.Id], markDirty: false);
+    }
+
+    /// <summary>Boyutlandırmayı tek geri alma adımı olarak kaydeder.</summary>
+    public void CommitResize(DrawingObject obj, double[] before)
+    {
+        var after = ObjectResize.Capture(obj);
+        if (after.SequenceEqual(before))
+        {
+            return;
+        }
+        History.Push(new SetPropertyCommand<double[]>("Boyutlandır", v => ObjectResize.Restore(obj, v), before, after, obj, _activePage));
+        IsDirty = true;
+    }
+
+    /// <summary>
+    /// Kapak şablonunu sayfaya uygular: sayfadaki nesnelerin yerini şablonun nesneleri alır, format şablondan gelir.
+    /// Tek adımda geri alınabilir.
+    /// </summary>
+    public void ApplyCoverTemplate(CoverTemplate template, Page page)
+    {
+        var objects = template.Instantiate(Document);
+        var format = (page.Format, page.Orientation);
+        var commands = new List<IEditCommand>
+        {
+            new RemoveObjectsCommand(page, page.Objects.ToList()),
+            new SetPropertyCommand<(PageFormat, PageOrientation)>("Sayfa formatı", v => page.SetFormat(v.Item1, v.Item2), format,
+                (template.Format, template.Orientation), page: page),
+            new AddObjectsCommand(page, objects),
+        };
+        ActivePage = page;
+        ClearSelection();
+        Execute(new PageCompositeCommand($"Kapak şablonu: {template.Name}", page, commands), null);
+        PagesChanged?.Invoke(this, EventArgs.Empty);
+    }
+
     public void CopySelection() => _clipboard = SelectedObjects.Select(o => o.CloneWithNewId()).ToList();
 
     public bool CanPaste => _clipboard.Count > 0;

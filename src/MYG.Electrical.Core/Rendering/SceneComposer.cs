@@ -21,6 +21,45 @@ public sealed class SceneComposer(ISymbolCatalog catalog, Func<string, Resources
 
     public ColorScheme Colors { get; set; } = ColorScheme.Default;
 
+    /// <summary>Bilgi alanlarının değerleri için proje. Yoksa alan anahtarı yazılır.</summary>
+    public Pages.ProjectDocument? Document { get; set; }
+
+    /// <summary>Bilgi alanı: proje bilgisinden değer; logo alanında resim. Gizli alan yalnızca editörde, soluk.</summary>
+    private void ComposeField(FieldObject f, ISceneSink sink, SceneComposerOptions options)
+    {
+        if (!f.Visible && !options.ShowHiddenFields)
+        {
+            return;
+        }
+        var color = f.Visible ? Colors.Text : DrawingStyles.MidGray;
+        var page = Document?.Pages.FirstOrDefault(p => p.Objects.Contains(f));
+        var value = Document is null ? $"{{{f.Field}}}" : Pages.TitleBlockFields.ResolveField(Document, page, f.Field);
+        if (f.IsLogo)
+        {
+            var box = Editing.ObjectBounds.FieldBounds(f, Document);
+            if (!string.IsNullOrWhiteSpace(value) && f.Visible)
+            {
+                sink.DrawImage(value, box);
+            }
+            else if (options.ShowHiddenFields)
+            {
+                // Logo yok veya gizli: editörde yer tutucu
+                sink.DrawRectangle(box, new StrokeStyle(DrawingStyles.MidGray, DrawingStyles.ThinLine, Dashed: true));
+                sink.DrawText("LOGO", box.Center, Math.Min(5, f.Height / 4), DrawingStyles.MidGray, TextAlign.Center);
+            }
+            return;
+        }
+        var text = f.Compose(value);
+        if (value.Length == 0 && options.ShowHiddenFields)
+        {
+            // Boş alan editörde görünür (adıyla ya da "[boş]"); çıktıda yalnız etiket kalır
+            text = f.ShowLabel && f.Label.Length > 0 ? f.Compose("[boş]") : $"[{Pages.TitleBlockFields.LabelOf(f.Field)}]";
+            color = DrawingStyles.MidGray;
+        }
+        f.RenderedText = text;
+        sink.DrawText(text, f.Anchor, f.Height, color, f.Align, f.Bold);
+    }
+
     public void ComposeObject(DrawingObject obj, ISceneSink sink, SceneComposerOptions options)
     {
         switch (obj)
@@ -35,7 +74,10 @@ public sealed class SceneComposer(ISymbolCatalog catalog, Func<string, Resources
                 ComposeImage(img, sink);
                 break;
             case TextObject t:
-                sink.DrawText(t.Text, t.Anchor, t.Height, Colors.Text);
+                sink.DrawText(t.Text, t.Anchor, t.Height, Colors.Text, t.Align, t.Bold);
+                break;
+            case FieldObject f:
+                ComposeField(f, sink, options);
                 break;
             case PotentialObject pot:
                 ComposePotential(pot, sink, options);

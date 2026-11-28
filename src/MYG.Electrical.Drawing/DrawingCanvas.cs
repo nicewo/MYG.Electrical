@@ -22,6 +22,7 @@ public sealed class DrawingCanvas : FrameworkElement
     private const double SnapMarkerPixels = 6.0;
     private const double GhostOpacity = 0.45;
     private const double MinRubberBandPixels = 3.0;
+    private const double ResizeHandlePixels = 9.0;
 
     private static readonly Brush PageBrush = Frozen(new SolidColorBrush(System.Windows.Media.Colors.White));
     private static readonly Brush ShadowBrush = Frozen(new SolidColorBrush(Color.FromArgb(0x60, 0, 0, 0)));
@@ -63,6 +64,11 @@ public sealed class DrawingCanvas : FrameworkElement
     private bool _rubberAdditive;
     private Point2D? _shapeStart;
     private Point2D _cursorWorld;
+
+    // Boyutlandırma (seçim çerçevesinin sağ alt tutamacı)
+    private DrawingObject? _resizeTarget;
+    private double[] _resizeOriginal = [];
+    private Rect2D _resizeBounds;
 
     // Yerleştirme önizlemesi: kullanıcı R ile döndürene kadar junction yönü otomatik önerilir.
     private double _placementRotation;
@@ -279,7 +285,7 @@ public sealed class DrawingCanvas : FrameworkElement
             oldSession.ActivePageChanged -= OnActivePageChanged;
         }
         WpfSceneSink.ClearResourceCache();
-        _composer = newSession is null ? null : new SceneComposer(newSession.Catalog, newSession.Document.FindResource);
+        _composer = newSession is null ? null : new SceneComposer(newSession.Catalog, newSession.Document.FindResource) { Document = newSession.Document };
         if (newSession is not null)
         {
             newSession.SceneChanged += OnSceneChanged;
@@ -381,7 +387,10 @@ public sealed class DrawingCanvas : FrameworkElement
     }
 
     private SceneComposerOptions EditorOptions =>
-        Session?.Settings.ShowConnectionPoints == false ? SceneComposerOptions.Print : SceneComposerOptions.Editor;
+        Session?.Settings.ShowConnectionPoints == false ? EditorWithoutPins : SceneComposerOptions.Editor;
+
+    /// <summary>Bağlantı noktaları kapalı editör görünümü (gizli bilgi alanları yine soluk görünür).</summary>
+    private static readonly SceneComposerOptions EditorWithoutPins = new() { ShowConnectionPoints = false };
 
     private void RedrawPage()
     {
@@ -491,6 +500,10 @@ public sealed class DrawingCanvas : FrameworkElement
             var b = ObjectBounds.Get(obj, Session.Catalog);
             dc.DrawRectangle(SelectionFill, SelectionPen, ScreenRect(b, SelectionPaddingPixels));
         }
+        if (ResizeHandle() is { } handle)
+        {
+            dc.DrawRectangle(SelectionBrush, null, handle);
+        }
 
         if (Session.SelectedWire is { } wire)
         {
@@ -522,6 +535,19 @@ public sealed class DrawingCanvas : FrameworkElement
             }
         }
     }
+
+    /// <summary>Tek boyutlandırılabilir nesne seçiliyse sağ alt köşedeki tutamacın ekran dikdörtgeni.</summary>
+    private Rect? ResizeHandle()
+    {
+        if (Session is not { SelectedObjects: [var obj] } || !ObjectResize.CanResize(obj) || _dragObjects is not null)
+        {
+            return null;
+        }
+        var r = ScreenRect(ObjectBounds.Get(obj, Session.Catalog), SelectionPaddingPixels);
+        return new Rect(r.Right - ResizeHandlePixels / 2, r.Bottom - ResizeHandlePixels / 2, ResizeHandlePixels, ResizeHandlePixels);
+    }
+
+    private bool IsOverResizeHandle(Point screen) => ResizeHandle() is { } h && Rect.Inflate(h, 2, 2).Contains(screen);
 
     private Point ToScreen(Point2D world) => WpfConvert.ToPoint(View.WorldToScreen(world));
 
@@ -601,6 +627,13 @@ public sealed class DrawingCanvas : FrameworkElement
         var snapped = session.Snap(world);
         switch (ActiveTool)
         {
+            case EditorTool.Select when !ctrl && IsOverResizeHandle(ToScreen(world)) && session.SelectedObjects is [var target]:
+                _resizeTarget = target;
+                _resizeOriginal = ObjectResize.Capture(target);
+                _resizeBounds = ObjectBounds.Get(target, session.Catalog);
+                CaptureMouse();
+                break;
+
             case EditorTool.Select:
                 var hit = session.HitTest(world, View.ScreenLengthToWorld(GeometryConstants.HitTolerancePixels));
                 if (hit is not null)
@@ -748,6 +781,17 @@ public sealed class DrawingCanvas : FrameworkElement
             return;
         }
 
+        if (_resizeTarget is not null && Session is not null)
+        {
+            Session.PreviewResize(_resizeTarget, _resizeOriginal, _resizeBounds, _cursorWorld);
+            RedrawOverlay();
+            return;
+        }
+        if (ActiveTool == EditorTool.Select)
+        {
+            Cursor = IsOverResizeHandle(screen) ? Cursors.SizeNWSE : Cursors.Arrow;
+        }
+
         if (_dragObjects is not null && Session is not null)
         {
             var total = _cursorWorld - _dragStart;
@@ -787,7 +831,13 @@ public sealed class DrawingCanvas : FrameworkElement
             return;
         }
 
-        if (_dragObjects is not null)
+        if (_resizeTarget is not null)
+        {
+            Session.CommitResize(_resizeTarget, _resizeOriginal);
+            _resizeTarget = null;
+            RedrawOverlay();
+        }
+        else if (_dragObjects is not null)
         {
             Session.CommitMove(_dragObjects, _dragApplied.X, _dragApplied.Y);
             _dragObjects = null;
@@ -845,6 +895,12 @@ public sealed class DrawingCanvas : FrameworkElement
             Session.PreviewMove(_dragObjects, -_dragApplied.X, -_dragApplied.Y);
         }
         _dragObjects = null;
+        if (_resizeTarget is not null && Session is not null)
+        {
+            ObjectResize.Restore(_resizeTarget, _resizeOriginal);
+            Session.NotifyPageChanged();
+            _resizeTarget = null;
+        }
         _rubberStart = null;
         _shapeStart = null;
         if (IsMouseCaptured)

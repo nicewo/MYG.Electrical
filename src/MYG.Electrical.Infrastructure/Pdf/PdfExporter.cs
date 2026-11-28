@@ -46,7 +46,7 @@ public sealed class PdfExporter(ISymbolCatalog catalog, ILogger logger)
         var warnings = new List<string>();
 
         var network = Core.Network.ProjectNetwork.Build(document, catalog, _wireEngine);
-        var composer = new SceneComposer(catalog, document.FindResource) { Network = network, Colors = options.Colors };
+        var composer = new SceneComposer(catalog, document.FindResource) { Network = network, Colors = options.Colors, Document = document };
         using var pdf = new PdfDocument();
         pdf.Info.Title = document.Project.Name;
         pdf.Info.Author = document.Project.PreparedBy;

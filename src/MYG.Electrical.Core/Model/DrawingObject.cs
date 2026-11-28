@@ -15,6 +15,7 @@ namespace MYG.Electrical.Core.Model;
 [JsonDerivedType(typeof(PotentialObject), "potential")]
 [JsonDerivedType(typeof(PageLinkObject), "pageLink")]
 [JsonDerivedType(typeof(DevicePinObject), "devicePin")]
+[JsonDerivedType(typeof(FieldObject), "field")]
 public abstract class DrawingObject
 {
     public Guid Id { get; set; } = Guid.NewGuid();

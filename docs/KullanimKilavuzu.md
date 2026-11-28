@@ -31,8 +31,30 @@ Bu kılavuz programın **şu anki sürümünde çalışan** özelliklerini anlat
 - **Sıra, silme:** Sol paneldeki ▲ ▼ ✕ düğmeleri. Sayfa silme dahil bütün sayfa işlemleri Ctrl+Z ile geri alınır.
 - **Sayfa ayarları:** Çizim alanında boş bir yere tıklayın (seçim olmasın); sağ panelde sayfa adı, türü
   (kapak/şema), formatı (A4–A1) ve yönelimi (yatay/dikey) değiştirilir.
-- **Kapak ve antet:** Aynı panelde proje adı, firma, makine adı, proje no, müşteri, hazırlayan, kontrol eden,
-  tarih, revizyon ve logo. Bu bilgiler kapak sayfasına ve her sayfanın antedine otomatik yazılır.
+- **Proje bilgileri ve antet:** Aynı panelde proje adı, firma, makine adı, proje no, müşteri, hazırlayan,
+  kontrol eden, tarih, revizyon ve logo. Bu bilgiler her sayfanın antedine ve kapaktaki bilgi alanlarına yazılır.
+
+### 3a. Kapak tasarımı ve şablonlar
+
+Kapak sayfası serbestçe tasarlanır; içindeki her şey seçilebilir, taşınabilir ve silinebilir.
+
+- **Bilgi alanı:** değeri proje bilgisinden gelen metin (firma, başlık, proje adı, makine, proje no, müşteri,
+  hazırlayan, kontrol eden, tarih, revizyon, sayfa sayısı) ya da logo. Proje bilgisi değişince kapak kendiliğinden
+  güncellenir. Eklemek: **Ekle → Bilgi alanı** (şema sayfalarına da konabilir).
+- **Göster / gizle:** kapak sayfasında boş bir yere tıklayın; sağ paneldeki **Kapak tasarımı** listesinde her
+  alanın kutusu var. Gizlenen alan yerini korur, çıktıda görünmez, editörde soluk görünür. Kapakta olmayan bir
+  alanı işaretlerseniz sol üste eklenir.
+- **Taşı / boyutlandır:** sürükleyin; seçili metin, bilgi alanı, resim veya dikdörtgenin sağ alt köşesindeki
+  turuncu tutamaçla boyutlandırın (resimde en/boy oranı korunur). Sağ panelde yazı boyu, hizalama (sol/orta/sağ),
+  kalın, etiket ("Müşteri: …") ayarları.
+- **Sabit metin, çizgi, çerçeve, resim:** normal çizim araçlarıyla (Metin, Çizgi, Dikdörtgen, Resim).
+- **Şablon:** **Sayfa → Kapak şablonları…** penceresinde etkin kapağı ad vererek kaydedin. "Yeni projelerde
+  varsayılan olsun" işaretliyse yeni projeler ve yeni kapak sayfaları bu tasarımla başlar; alanlar yeni projenin
+  bilgileriyle dolar. Aynı pencereden bir şablonu açık projenin kapağına uygulayabilir (Ctrl+Z ile geri alınır),
+  varsayılanı değiştirebilir (★), silebilirsiniz. **Standart** yerleşik şablondur, silinmez.
+- Şablonlar `%AppData%\MYG.Electrical\Templates\Cover\*.mygk` dosyalarıdır (içindeki resimlerle birlikte);
+  başka bilgisayara kopyalanabilir. Pencerede **Klasörü aç**.
+
 - **Örnek projeler:** Yardım → Örnek projeler → *Pompa istasyonu* veya *Kamara fırını* (17 sayfa, EPLAN'dan
   yeniden çizim). Örnek, kaydedilmemiş yeni proje olarak açılır.
 

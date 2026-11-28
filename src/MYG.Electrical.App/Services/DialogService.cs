@@ -52,6 +52,9 @@ public sealed class DialogService : IDialogService
     public bool ShowColorSettings(ViewModels.ColorSettingsViewModel vm) =>
         new Views.ColorSettingsWindow(vm) { Owner = Owner }.ShowDialog() == true;
 
+    public void ShowCoverTemplates(ViewModels.CoverTemplatesViewModel vm) =>
+        new Views.CoverTemplatesWindow(vm) { Owner = Owner }.ShowDialog();
+
     public void ShowAbout(ViewModels.AboutViewModel vm) => new Views.AboutWindow(vm) { Owner = Owner }.ShowDialog();
 
     public bool ShowDeviceProperties(ViewModels.DevicePropertiesViewModel vm, Core.Symbols.ISymbolCatalog catalog, Action<string> open) =>

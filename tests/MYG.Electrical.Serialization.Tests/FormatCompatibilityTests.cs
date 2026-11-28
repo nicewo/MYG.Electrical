@@ -16,10 +16,10 @@ public class FormatCompatibilityTests
         File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Fixtures", name + ProjectDocument.FileExtension));
 
     [Fact]
-    public void Current_format_version_is_8() => Assert.Equal(8, ProjectDocument.CurrentFormatVersion);
+    public void Current_format_version_is_9() => Assert.Equal(9, ProjectDocument.CurrentFormatVersion);
 
     [Fact]
-    public void Project_with_image_is_written_as_version_8()
+    public void Project_with_image_is_written_as_version_9()
     {
         var doc = ProjectDocument.CreateNew();
         var res = doc.AddResource(TestPng.Create(2, 2, (_, _) => 0xFF000000), "a.png");
@@ -27,7 +27,7 @@ public class FormatCompatibilityTests
 
         var json = ProjectSerializer.Serialize(doc);
 
-        Assert.Contains("\"formatVersion\": 8", json);
+        Assert.Contains("\"formatVersion\": 9", json);
         Assert.Contains("\"kind\": \"image\"", json);
         Assert.Contains("\"resources\"", json);
     }
@@ -40,7 +40,7 @@ public class FormatCompatibilityTests
         var j = Assert.Single(doc.Pages[0].Objects.OfType<JunctionObject>());
         Assert.Equal(JunctionShape.Cross, j.Shape);
         Assert.Equal(2, new AutoWireEngine().Compute(doc.Pages[0].Objects).Count); // -K1 → ┼ → -K2
-        Assert.Equal(8, doc.FormatVersion);
+        Assert.Equal(9, doc.FormatVersion);
     }
 
     [Fact]
@@ -78,7 +78,7 @@ public class FormatCompatibilityTests
         var saved = ProjectSerializer.Serialize(original);
         var reopened = ProjectSerializer.Deserialize(saved);
 
-        Assert.Contains("\"formatVersion\": 8", saved);
+        Assert.Contains("\"formatVersion\": 9", saved);
         Assert.Equal(original.Pages.SelectMany(p => p.Objects).Select(o => (o.Id, o.GetType())),
                      reopened.Pages.SelectMany(p => p.Objects).Select(o => (o.Id, o.GetType())));
         Assert.Equal(original.Resources.Select(r => r.Id), reopened.Resources.Select(r => r.Id));

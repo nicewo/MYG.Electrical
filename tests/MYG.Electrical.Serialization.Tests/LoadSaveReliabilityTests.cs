@@ -18,7 +18,7 @@ public class LoadSaveReliabilityTests
     {
         ["line"] = () => new LineObject { X1 = 1.5, Y1 = 2, X2 = 30, Y2 = 2, Thickness = 0.7 },
         ["rectangle"] = () => new RectangleObject { X = 3, Y = 4, Width = 50, Height = 20, Thickness = 0.5, Dashed = true },
-        ["text"] = () => new TextObject { X = 7, Y = 8, Text = "Çağrı ğüşıöç", Height = 5, Rotation = 90 },
+        ["text"] = () => new TextObject { X = 7, Y = 8, Text = "Çağrı ğüşıöç", Height = 5, Rotation = 90, Align = Core.Rendering.TextAlign.Right, Bold = true },
         ["symbol"] = () => new SymbolObject { SymbolId = SymbolIds.Lamp, X = 9, Y = 10, Rotation = 180, Scale = 1.5 },
         ["device"] = () => BuiltInSymbolLibrary.Instance.Find(SymbolIds.Contactor)!.CreateDevice(100, 60, "-K7"),
         ["junction"] = () => new JunctionObject { X = 11, Y = 12, Shape = JunctionShape.Tee, Rotation = 270, Size = 2, Visible = false },
@@ -33,6 +33,11 @@ public class LoadSaveReliabilityTests
         },
         ["pageLink"] = () => new PageLinkObject { X = 17, Y = 18, Rotation = 180, Name = "+24V/3", Description = "Kumanda" },
         ["devicePin"] = () => new DevicePinObject { X = 20, Y = 25, Rotation = 180, Name = "Y0.3", Function = PinFunction.Output, Description = "Pompa" },
+        ["field"] = () => new FieldObject
+        {
+            X = 21, Y = 26, Field = TitleBlockFields.Customer, Label = "Müşteri", ShowLabel = true, Height = 6,
+            Align = Core.Rendering.TextAlign.Center, Bold = true, Visible = false,
+        },
     };
 
     [Fact]

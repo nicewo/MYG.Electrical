@@ -4,7 +4,7 @@ UTF-8 JSON, camelCase alan adları, enum değerleri metin. Uzantı: `.myge`.
 
 ```json
 {
-  "formatVersion": 8,
+  "formatVersion": 9,
   "project": {
     "name": "Machine01",
     "company": "MYG TECH",
@@ -118,6 +118,7 @@ UTF-8 JSON, camelCase alan adları, enum değerleri metin. Uzantı: `.myge`.
 | 6 | Proje cihazında `templateId` (cihaz kütüphanesi kaydı) ve `contacts` (kontak kapasitesi: `kind` no/nc/changeover/power, `pins`). v5 dosyalar değişiklik gerektirmeden açılır. |
 | 7 | `devicePin` nesnesi (cihaz tasarım pini: `name`, `function`, `description`, `rotation`), dikdörtgende `dashed`, kök düzeyde `symbols` (projede kullanılan kullanıcı sembollerinin tam tanımı; başka bilgisayarda açılınca kataloğa eklenir). v6 dosyalar değişiklik gerektirmeden açılır. |
 | 8 | Gömülü sembolde `referencePosition` (etiket, işlev metni ve çapraz referansın yeri: `right` varsayılan, `left`, `top`). v7 dosyalar değişiklik gerektirmeden açılır. |
+| 9 | Tasarlanabilir kapak: bilgi alanı nesnesi (`field`: `field` anahtarı, `label`, `showLabel`, `height`, `align`, `bold`, `visible`), metinde `align` ve `bold`. Kapak artık otomatik çizilmez; v8 ve öncesindeki boş kapak sayfalarına açılışta Standart şablon yerleştirilir. Kapak şablonu dosyası `.mygk`: aynı nesne biçimiyle `formatVersion`, `name`, `format`, `orientation`, `objects`, `resources`. |
 
 > **Bilinen hata (37afe6e):** Bu commit'teki derleme, sürüm sabiti 2'de kaldığı için resim içeren dosyaları
 > `"formatVersion": 2` olarak yazdı. Bu dosyalar güncel sürümde sorunsuz açılır ve bir sonraki kayıtta 3 olur.

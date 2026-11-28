@@ -175,6 +175,15 @@
                 </MenuItem>
                 <Separator />
                 <MenuItem Header="Resim…" Command="{Binding InsertImageCommand}" />
+                <MenuItem Header="Bilgi alanı (proje bilgisinden)" ItemsSource="{Binding PlaceableFields}">
+                    <MenuItem.ItemContainerStyle>
+                        <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                            <Setter Property="Header" Value="{Binding Header}" />
+                            <Setter Property="Command" Value="{Binding Command}" />
+                            <Setter Property="CommandParameter" Value="{Binding Parameter}" />
+                        </Style>
+                    </MenuItem.ItemContainerStyle>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="Çi_zim">
                 <MenuItem Header="Seç" Command="{Binding SetToolCommand}" CommandParameter="Select" InputGestureText="S" />
@@ -184,6 +193,7 @@
             <MenuItem Header="_Sayfa">
                 <MenuItem Header="Yeni şema sayfası" Command="{Binding AddSchematicPageCommand}" />
                 <MenuItem Header="Yeni kapak sayfası" Command="{Binding AddCoverPageCommand}" />
+                <MenuItem Header="Kapak şablonları…" Command="{Binding CoverTemplatesCommand}" />
                 <Separator />
                 <MenuItem Header="Yukarı taşı" Command="{Binding MovePageUpCommand}" />
                 <MenuItem Header="Aşağı taşı" Command="{Binding MovePageDownCommand}" />

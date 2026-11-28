@@ -140,8 +140,10 @@ Ayrıntı: [docs/AutoWiring.md](docs/AutoWiring.md)
 
 ### Proje ve sayfa yönetimi
 - Kapak ve şema sayfaları, sayfa ekleme/silme/sıralama
-- Kapak sayfası ve düzenlenebilir antet: firma, logo, makine adı, proje no, müşteri, hazırlayan,
-  kontrol eden, tarih, revizyon, sayfa `n / N`, 0–9 kolon numaraları
+- Tasarlanabilir kapak: proje bilgisinden dolan bilgi alanları (göster/gizle, taşı, tutamaçla boyutlandır),
+  kapak şablonları ve yeni projeler için varsayılan şablon
+- Düzenlenebilir antet: firma, logo, makine adı, proje no, müşteri, hazırlayan, kontrol eden, tarih, revizyon,
+  sayfa `n / N`, 0–9 kolon numaraları
 - `.myge` JSON proje dosyası; güvenli kayıt (doğrulama + `.bak` yedeği), açılışta onarım
 
 ### Görsel ekleme

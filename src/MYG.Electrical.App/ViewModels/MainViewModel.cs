@@ -55,10 +55,10 @@ public sealed class MainViewModel : ObservableObject
         _pdf = pdf;
         _log = log;
         _catalog = catalog;
-        Properties = new PropertiesViewModel(dialogs, EditImage, () => Canvas?.InvalidateFileImages(), d => OpenDeviceProperties(d));
+        Properties = new PropertiesViewModel(dialogs, EditImage, () => Canvas?.InvalidateFileImages(), d => OpenDeviceProperties(d), OpenCoverTemplates);
+        _coverTemplates = new Infrastructure.Library.CoverTemplateStore(AppSettingsService.AppDataFolder);
 
-
-        _session = CreateSession(ProjectDocument.CreateNew());
+        _session = CreateSession(NewDocument());
         AttachSession(_session);
 
         NewCommand = new RelayCommand(NewProject);
@@ -82,7 +82,7 @@ public sealed class MainViewModel : ObservableObject
         SetToolCommand = new RelayCommand(p => ActiveTool = p is EditorTool t ? t : Enum.Parse<EditorTool>(p?.ToString() ?? nameof(EditorTool.Select)));
         InsertImageCommand = new RelayCommand(InsertImage);
         AddSchematicPageCommand = new RelayCommand(() => Session.AddPage(PageType.Schematic));
-        AddCoverPageCommand = new RelayCommand(() => Session.AddPage(PageType.Cover));
+        AddCoverPageCommand = new RelayCommand(AddCoverPage);
         DeletePageCommand = new RelayCommand(DeleteActivePage, () => Session.Document.Pages.Count > 1);
         MovePageUpCommand = new RelayCommand(() => Session.MovePage(Session.ActivePage, -1));
         MovePageDownCommand = new RelayCommand(() => Session.MovePage(Session.ActivePage, +1));
@@ -110,6 +110,64 @@ public sealed class MainViewModel : ObservableObject
         ExportReportCsvCommand = new RelayCommand(p => ExportReportCsv(p is Core.Reports.ReportKind k ? k : Enum.Parse<Core.Reports.ReportKind>(p?.ToString() ?? "DeviceList")));
         OpenColorSettingsCommand = new RelayCommand(OpenColorSettings);
         RunDrcCommand = new RelayCommand(() => BottomPanel.RunDrc());
+        CoverTemplatesCommand = new RelayCommand(OpenCoverTemplates);
+        InsertFieldCommand = new RelayCommand(p => InsertField(p as string));
+    }
+
+    // ---------- Kapak / bilgi alanları ----------
+
+    private readonly Infrastructure.Library.CoverTemplateStore _coverTemplates;
+
+    public RelayCommand CoverTemplatesCommand { get; }
+    public RelayCommand InsertFieldCommand { get; }
+
+    /// <summary>Menüdeki "Bilgi alanı" listesi (her öğe kendi komutunu taşır: alt menü açılır pencerede olduğu için).</summary>
+    public IReadOnlyList<MenuCommandItem> PlaceableFields => _placeableFields ??=
+        TitleBlockFields.Placeable.Select(f => new MenuCommandItem(f.Label, InsertFieldCommand, f.Key)).ToList();
+
+    private IReadOnlyList<MenuCommandItem>? _placeableFields;
+
+    /// <summary>Yeni proje: varsayılan kapak şablonuyla (okunamazsa Standart, durum çubuğunda bildirilir).</summary>
+    private ProjectDocument NewDocument()
+    {
+        var (template, error) = _coverTemplates.Load(Settings.Settings.DefaultCoverTemplate);
+        if (error is not null)
+        {
+            _log.Warning("Kapak şablonu: {Error}", error);
+            StatusMessage = error;
+        }
+        return ProjectDocument.CreateNew(cover: template);
+    }
+
+    /// <summary>Yeni kapak sayfası varsayılan şablonla başlar.</summary>
+    private void AddCoverPage()
+    {
+        var page = Session.AddPage(PageType.Cover);
+        var (template, error) = _coverTemplates.Load(Settings.Settings.DefaultCoverTemplate);
+        Session.ApplyCoverTemplate(template, page);
+        StatusMessage = error ?? $"Kapak sayfası eklendi ({template.Name} şablonu)";
+    }
+
+    private void OpenCoverTemplates() =>
+        _dialogs.ShowCoverTemplates(new CoverTemplatesViewModel(_coverTemplates, Settings, () => Session, _dialogs));
+
+    /// <summary>Bilgi alanını sayfanın ortasına koyar ve seçer (sürükleyip yerleştirilir).</summary>
+    private void InsertField(string? key)
+    {
+        if (string.IsNullOrEmpty(key))
+        {
+            return;
+        }
+        var area = Core.Rendering.PageLayout.DrawingArea(Session.ActivePage);
+        var center = Session.Snap(area.Center);
+        var logo = key == TitleBlockFields.Logo;
+        Session.AddObject(new FieldObject
+        {
+            X = center.X, Y = center.Y, Field = key, Label = TitleBlockFields.LabelOf(key), ShowLabel = !logo,
+            Height = logo ? 30 : FieldObject.DefaultHeightMm, Align = Core.Rendering.TextAlign.Center,
+        });
+        ActiveTool = EditorTool.Select;
+        StatusMessage = $"Bilgi alanı eklendi: {TitleBlockFields.LabelOf(key)} — sürükleyerek taşıyın, sağ alt tutamaçla boyutlandırın";
     }
 
     // ---------- Kütüphane ----------
@@ -702,7 +760,7 @@ public sealed class MainViewModel : ObservableObject
             return;
         }
         _filePath = null;
-        Session = CreateSession(ProjectDocument.CreateNew());
+        Session = CreateSession(NewDocument());
         StatusMessage = "Yeni proje oluşturuldu";
     }
 

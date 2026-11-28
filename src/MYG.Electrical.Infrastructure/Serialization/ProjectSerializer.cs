@@ -47,6 +47,49 @@ public static class ProjectSerializer
 
     public static ProjectDocument Deserialize(string json) => DeserializeWithReport(json).Document;
 
+    /// <summary>Kapak şablonu dosyası (.mygk): şablon + kullandığı resimler, proje ile aynı nesne biçimi.</summary>
+    public static string SerializeCoverTemplate(CoverTemplate template)
+    {
+        ArgumentNullException.ThrowIfNull(template);
+        var node = JsonSerializer.SerializeToNode(template, Options)!.AsObject();
+        node.Insert(0, FormatVersionProperty, ProjectDocument.CurrentFormatVersion);
+        return node.ToJsonString(Options);
+    }
+
+    public static CoverTemplate DeserializeCoverTemplate(string json)
+    {
+        JsonObject root;
+        try
+        {
+            root = JsonNode.Parse(json) as JsonObject ?? throw new ProjectFormatException("Şablon dosyası boş.");
+        }
+        catch (JsonException ex)
+        {
+            throw new ProjectFormatException("Şablon dosyası geçerli bir JSON değil.", ex);
+        }
+        var version = root[FormatVersionProperty] is JsonValue v && v.TryGetValue<int>(out var n) ? n : 0;
+        if (version > ProjectDocument.CurrentFormatVersion)
+        {
+            throw new ProjectFormatException($"Şablon daha yeni bir MYG Electrical sürümüyle kaydedilmiş (format {version}). Programı güncelleyin.");
+        }
+        root.Remove(FormatVersionProperty);
+        foreach (var kind in (root["objects"] as JsonArray ?? []).OfType<JsonObject>().Select(o => (string?)o["kind"]))
+        {
+            if (kind is null || !KnownObjectKinds.Contains(kind))
+            {
+                throw new ProjectFormatException($"Şablonda tanınmayan nesne türü: '{kind ?? "(tür yok)"}'.");
+            }
+        }
+        try
+        {
+            return root.Deserialize<CoverTemplate>(Options) ?? throw new ProjectFormatException("Şablon dosyası boş.");
+        }
+        catch (JsonException ex)
+        {
+            throw new ProjectFormatException($"Şablon okunamadı ({ex.Path}): {ex.Message}", ex);
+        }
+    }
+
     /// <summary>Dosyayı okur, eski sürümleri yükseltir, onarılabilir sorunları düzeltip uyarı olarak döndürür.</summary>
     public static ProjectLoadResult DeserializeWithReport(string json)
     {
@@ -91,6 +134,14 @@ public static class ProjectSerializer
             throw new ProjectFormatException($"Proje dosyası okunamadı ({ex.Path}): {ex.Message}", ex);
         }
         doc.FormatVersion = ProjectDocument.CurrentFormatVersion;
+        if (version < 9)
+        {
+            // v8 → v9: kapak önceden otomatik çiziliyordu; boş kapak sayfası aynı görünümdeki Standart şablonu alır
+            foreach (var page in doc.Pages.Where(p => p.Type == PageType.Cover && p.Objects.Count == 0))
+            {
+                CoverTemplate.Standard(page.Format, page.Orientation).ApplyTo(doc, page);
+            }
+        }
         warnings.AddRange(ProjectValidator.Repair(doc));
         return new ProjectLoadResult(doc, warnings);
     }
@@ -168,6 +219,7 @@ public static class ProjectSerializer
         // v5 → v6: cihaz kaydına templateId ve contacts eklendi (boş varsayılan). Dönüşüm gerekmez.
         // v6 → v7: devicePin nesnesi, dikdörtgende dashed, gömülü kullanıcı sembolleri (symbols). Dönüşüm gerekmez.
         // v7 → v8: gömülü sembolde etiket yeri (referencePosition, varsayılan right). Dönüşüm gerekmez.
+        // v8 → v9: bilgi alanı (field), metinde align/bold. Boş kapaklara Standart şablon nesneye çevirdikten sonra eklenir.
         root[FormatVersionProperty] = ProjectDocument.CurrentFormatVersion;
     }
 

@@ -10,7 +10,7 @@ namespace MYG.Electrical.App.ViewModels;
 
 /// <summary>Sağ panel: seçili nesne, yoksa sayfa ve proje (kapak/antet) özellikleri.</summary>
 public sealed class PropertiesViewModel(IDialogService dialogs, Action<ImageObject> editImage, Action fileImagesChanged,
-    Action<DeviceObject> openDevice) : ObservableObject
+    Action<DeviceObject> openDevice, Action openCoverTemplates) : ObservableObject
 {
     private static readonly IReadOnlyList<string> Rotations = ["0", "90", "180", "270"];
     private static readonly IReadOnlyList<string> Formats = Enum.GetNames<PageFormat>();
@@ -23,6 +23,13 @@ public sealed class PropertiesViewModel(IDialogService dialogs, Action<ImageObje
     {
         [PageType.Cover] = "Kapak",
         [PageType.Schematic] = "Şema",
+    };
+
+    private static readonly Dictionary<Core.Rendering.TextAlign, string> AlignNames = new()
+    {
+        [Core.Rendering.TextAlign.Left] = "Sol",
+        [Core.Rendering.TextAlign.Center] = "Orta",
+        [Core.Rendering.TextAlign.Right] = "Sağ",
     };
 
     private EditorSession? _session;
@@ -81,6 +88,10 @@ public sealed class PropertiesViewModel(IDialogService dialogs, Action<ImageObje
             case 0:
                 Header = "Sayfa ve Proje";
                 BuildPageRows(_session.ActivePage);
+                if (_session.ActivePage.Type == PageType.Cover)
+                {
+                    BuildCoverRows(_session.ActivePage);
+                }
                 BuildProjectRows(_session.Document.Project);
                 break;
             case 1:
@@ -183,6 +194,31 @@ public sealed class PropertiesViewModel(IDialogService dialogs, Action<ImageObje
                 Rows.Add(Num("X", () => t.X, v => t.X = v));
                 Rows.Add(Num("Y", () => t.Y, v => t.Y = v));
                 Rows.Add(Num("Yükseklik", () => t.Height, v => t.Height = Math.Max(0.5, v)));
+                Rows.Add(new ChoiceRow("Hizalama", AlignNames.Values.ToList(), () => AlignNames[t.Align],
+                    v => Set("Hizalama", () => t.Align, x => t.Align = x, AlignNames.First(k => k.Value == v).Key)));
+                Rows.Add(new BoolRow("Kalın", () => t.Bold, v => Set("Kalın", () => t.Bold, x => t.Bold = x, v)));
+                Rows.Add(new TextRow("İpucu", () => "Boyut: seçim çerçevesinin sağ alt tutamacını sürükleyin.", null));
+                break;
+
+            case FieldObject f:
+                Header = "Bilgi alanı";
+                var fieldLabels = TitleBlockFields.Placeable.Select(x => x.Label).ToList();
+                Rows.Add(new ChoiceRow("Alan", fieldLabels, () => TitleBlockFields.LabelOf(f.Field),
+                    v => Set("Bilgi alanı", () => f.Field, x => f.Field = x, TitleBlockFields.Placeable.First(x => x.Label == v).Key)));
+                Rows.Add(new TextRow("Değer", () => f.IsLogo ? s.Document.Project.LogoPath : TitleBlockFields.ResolveField(s.Document, s.ActivePage, f.Field), null));
+                Rows.Add(new BoolRow("Görünür", () => f.Visible, v => Set("Görünür", () => f.Visible, x => f.Visible = x, v)));
+                if (!f.IsLogo)
+                {
+                    Rows.Add(new BoolRow("Etiketi yaz", () => f.ShowLabel, v => Set("Etiketi yaz", () => f.ShowLabel, x => f.ShowLabel = x, v)));
+                    Rows.Add(new TextRow("Etiket", () => f.Label, v => Set("Etiket", () => f.Label, x => f.Label = x, v.Trim())));
+                    Rows.Add(new BoolRow("Kalın", () => f.Bold, v => Set("Kalın", () => f.Bold, x => f.Bold = x, v)));
+                }
+                Rows.Add(Num(f.IsLogo ? "Logo boyu" : "Yazı boyu", () => f.Height, v => f.Height = Math.Clamp(v, 0.5, 200)));
+                Rows.Add(new ChoiceRow("Hizalama", AlignNames.Values.ToList(), () => AlignNames[f.Align],
+                    v => Set("Hizalama", () => f.Align, x => f.Align = x, AlignNames.First(k => k.Value == v).Key)));
+                Rows.Add(Num("X", () => f.X, v => f.X = v));
+                Rows.Add(Num("Y", () => f.Y, v => f.Y = v));
+                Rows.Add(new TextRow("İpucu", () => "Değer proje bilgisinden gelir (boş sayfa seçiliyken sağ panel). Boyut: sağ alt tutamaç.", null));
                 break;
 
             case ImageObject img:
@@ -392,6 +428,49 @@ public sealed class PropertiesViewModel(IDialogService dialogs, Action<ImageObje
         Rows.Add(new ChoiceRow("Yönelim", OrientationNames.Values.ToList(), () => OrientationNames[page.Orientation],
             v => s.SetDocumentProperty("Sayfa yönelimi", () => page.Orientation, x => page.SetFormat(page.Format, x), OrientationNames.First(k => k.Value == v).Key, page)));
         Rows.Add(new TextRow("Boyut (mm)", () => string.Create(CultureInfo.CurrentCulture, $"{page.Width:0} × {page.Height:0}"), null));
+    }
+
+    // ---------- Kapak tasarımı ----------
+
+    /// <summary>Kapaktaki bilgi alanlarını aç/kapat (gizlenen alanın yeri korunur), şablonlar.</summary>
+    private void BuildCoverRows(Page page)
+    {
+        Rows.Add(new SectionRow("Kapak tasarımı"));
+        Rows.Add(new ButtonRow("Kapak şablonları… (kaydet, uygula, varsayılan)", openCoverTemplates));
+        Rows.Add(new TextRow("İpucu", () => "Alanları sürükleyerek taşıyın, sağ alt tutamaçla boyutlandırın. Ekle → Bilgi alanı ile yenisini koyun.", null));
+        foreach (var (key, label) in TitleBlockFields.Placeable.Where(f => f.Key != TitleBlockFields.PageTitle))
+        {
+            var k = key;
+            Rows.Add(new BoolRow(label,
+                () => page.Objects.OfType<FieldObject>().Any(f => f.Field == k && f.Visible),
+                v => SetCoverFieldVisible(page, k, v)));
+        }
+    }
+
+    private void SetCoverFieldVisible(Page page, string key, bool visible)
+    {
+        var s = _session!;
+        var fields = page.Objects.OfType<FieldObject>().Where(f => f.Field == key).ToList();
+        if (fields.Count == 0)
+        {
+            if (visible)
+            {
+                // Kapakta hiç yoksa sol üstte yeni alan; kullanıcı istediği yere taşır
+                var frame = Core.Rendering.PageLayout.Frame(page);
+                var stacked = page.Objects.OfType<FieldObject>().Count(f => f.X == frame.Left + 15);
+                var field = new FieldObject
+                {
+                    X = frame.Left + 15, Y = frame.Top + 15 + 8 * stacked, Field = key, Label = TitleBlockFields.LabelOf(key), ShowLabel = key != TitleBlockFields.Logo,
+                    Height = key == TitleBlockFields.Logo ? 30 : FieldObject.DefaultHeightMm,
+                };
+                s.AddObject(field);
+            }
+            return;
+        }
+        foreach (var f in fields)
+        {
+            s.SetProperty(f, visible ? "Alanı göster" : "Alanı gizle", () => f.Visible, x => f.Visible = x, visible);
+        }
     }
 
     // ---------- Proje / kapak / antet ----------
