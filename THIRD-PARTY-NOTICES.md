@@ -8,6 +8,7 @@ Her bileşen kendi lisansına tabidir; bu liste MYG Electrical'ın kendi lisans�
 |---|---|---|---|
 | .NET Runtime, Windows Desktop (WPF) | 10.0 | MIT | https://github.com/dotnet/runtime, https://github.com/dotnet/wpf |
 | PDFsharp (PdfSharp ve yardımcı derlemeleri) | 6.2.4 | MIT | https://github.com/empira/PDFsharp |
+| Dirkster.AvalonDock, .Core, .Themes.VS, .Themes.VS2013, .Serializer.Xml (yerleştirilebilir paneller) | 5.1.0 | Ms-PL | https://github.com/Dirkster99/AvalonDock |
 | DocumentFormat.OpenXml, DocumentFormat.OpenXml.Framework (Open XML SDK, rapor .xlsx çıktısı) | 3.5.1 | MIT | https://github.com/dotnet/Open-XML-SDK |
 | Serilog | 4.4.0 | Apache-2.0 | https://github.com/serilog/serilog |
 | Serilog.Sinks.File | 7.0.0 | Apache-2.0 | https://github.com/serilog/serilog-sinks-file |

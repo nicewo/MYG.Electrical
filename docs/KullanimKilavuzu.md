@@ -44,6 +44,21 @@ Bu kılavuz programın **şu anki sürümünde çalışan** özelliklerini anlat
 - **Döndürme:** R (90° adımlar). Sağ tık menüsünde de vardır.
 - **Kopyala / yapıştır:** Yapıştırılan cihazlar yeni tanım numarası alır (-K1 → -K2).
 
+## 4a. Paneller
+
+Proje gezgini (sayfalar), Kütüphane, Özellikler, DRC, Mesajlar, Çapraz referanslar ve Proje bilgisi
+Visual Studio'daki gibi **yerleştirilebilir panellerdir**:
+
+- Başlıktaki **×** paneli gizler; **Görünüm → Paneller** menüsünden tekrar açılır.
+- Başlıktan **sürükleyin**: ekranda çıkan hedeflere bırakarak sola/sağa/alta yerleştirin, başka panelle aynı
+  sekme grubuna koyun veya boşa bırakıp **ayrı pencere** yapın (ikinci monitöre taşınabilir).
+- Başlıktaki **raptiye** paneli kenara gizler (üstüne gelince açılır).
+- Düzen kapanışta kaydedilir ve sonraki açılışta aynen gelir. **Görünüm → Paneller → Varsayılan düzene dön**
+  ilk haline getirir.
+
+Proje gezgini, projeyi ve sayfaları tek ağaçta gösterir; üstteki + ▲ ▼ ✕ düğmeleri sayfa ekler, taşır, siler.
+Sayfaya tıklayınca açılır.
+
 ## 5. Semboller ve cihazlar
 
 Sol alttaki **Kütüphane** iki sekmelidir:

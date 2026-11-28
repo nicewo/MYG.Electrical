@@ -23,6 +23,9 @@
     <Content Include="..\..\samples\PompaIstasyonu.myge" Link="Samples\PompaIstasyonu.myge" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Dirkster.AvalonDock" />
+    <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" />
+    <PackageReference Include="Dirkster.AvalonDock.Serializer.Xml" />
     <PackageReference Include="Serilog" />
     <PackageReference Include="Velopack" />
   </ItemGroup>

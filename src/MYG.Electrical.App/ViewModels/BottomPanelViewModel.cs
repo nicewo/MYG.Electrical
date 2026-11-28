@@ -55,6 +55,9 @@ public sealed class BottomPanelViewModel : ObservableObject
 
     public string Disclaimer => DrcEngine.Disclaimer;
 
+    /// <summary>Bir alt panelin görünür ve önde olması istendi (ör. DRC çalışınca); panel kimliği.</summary>
+    public event EventHandler<string>? ShowRequested;
+
     public bool IsOpen
     {
         get => _isOpen;
@@ -118,6 +121,7 @@ public sealed class BottomPanelViewModel : ObservableObject
         AddMessage(DrcSummary);
         SelectedTab = 0;
         IsOpen = true;
+        ShowRequested?.Invoke(this, "drc");
         RefreshProjectViews();
     }
 

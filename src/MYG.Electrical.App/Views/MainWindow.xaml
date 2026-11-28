@@ -5,6 +5,8 @@
         xmlns:conv="clr-namespace:MYG.Electrical.App.Converters"
         xmlns:draw="clr-namespace:MYG.Electrical.Drawing;assembly=MYG.Electrical.Drawing"
         xmlns:sym="clr-namespace:MYG.Electrical.Core.Symbols;assembly=MYG.Electrical.Core"
+        xmlns:ad="https://github.com/Dirkster99/AvalonDock"
+        xmlns:adt="clr-namespace:AvalonDock.Themes;assembly=AvalonDock.Themes.VS2013"
         Title="{Binding Title}"
         Icon="/Assets/myg-electrical.ico"
         Width="1600" Height="950" MinWidth="1000" MinHeight="600"
@@ -126,7 +128,17 @@
                 <MenuItem Header="Grid" IsCheckable="True" IsChecked="{Binding GridVisible}" />
                 <MenuItem Header="Snap (grid'e yapış)" IsCheckable="True" IsChecked="{Binding SnapEnabled}" />
                 <MenuItem Header="Bağlantı noktası işaretleri" IsCheckable="True" IsChecked="{Binding ShowConnectionPoints}" />
-                <MenuItem Header="Alt panel (DRC, mesajlar)" IsCheckable="True" IsChecked="{Binding BottomPanel.IsOpen}" />
+                <MenuItem Header="Paneller" SubmenuOpened="OnPanelsMenuOpened">
+                    <MenuItem Header="Proje gezgini" Tag="explorer" Click="OnTogglePanel" IsCheckable="True" />
+                    <MenuItem Header="Kütüphane" Tag="library" Click="OnTogglePanel" IsCheckable="True" />
+                    <MenuItem Header="Özellikler" Tag="properties" Click="OnTogglePanel" IsCheckable="True" />
+                    <MenuItem Header="DRC" Tag="drc" Click="OnTogglePanel" IsCheckable="True" />
+                    <MenuItem Header="Mesajlar" Tag="messages" Click="OnTogglePanel" IsCheckable="True" />
+                    <MenuItem Header="Çapraz referanslar" Tag="xref" Click="OnTogglePanel" IsCheckable="True" />
+                    <MenuItem Header="Proje bilgisi" Tag="projectinfo" Click="OnTogglePanel" IsCheckable="True" />
+                    <Separator />
+                    <MenuItem Header="Varsayılan düzene dön" Click="OnResetLayout" />
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="_Ekle">
                 <MenuItem Header="Sembol (kütüphaneden seçin)" Command="{Binding SetToolCommand}" CommandParameter="Symbol" />
@@ -338,279 +350,274 @@
             </DockPanel>
         </Border>
 
-        <!-- ===== Ana alan + alt panel ===== -->
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" MinHeight="200" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="270" MinWidth="180" />
-                <ColumnDefinition Width="4" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="4" />
-                <ColumnDefinition Width="300" MinWidth="200" />
-            </Grid.ColumnDefinitions>
+        <!-- ===== Yerleştirilebilir paneller (Visual Studio gibi): kapat, aç, sürükle, yüzdür, otomatik gizle ===== -->
+        <ad:DockingManager x:Name="Dock" AllowMixedOrientation="True">
+            <ad:DockingManager.Theme>
+                <adt:Vs2013DarkTheme />
+            </ad:DockingManager.Theme>
+            <ad:LayoutRoot>
+                <ad:LayoutPanel Orientation="Horizontal">
+                    <ad:LayoutAnchorablePaneGroup Orientation="Vertical" DockWidth="280">
+                        <ad:LayoutAnchorablePane DockHeight="1*">
+                            <ad:LayoutAnchorable ContentId="explorer" Title="Proje gezgini" CanClose="False" CanHide="True">
+                                <DockPanel x:Name="ExplorerPanel" Background="{StaticResource PanelBrush}">
+                                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="4,2">
+                                        <Button Style="{StaticResource ToolButton}" Content="+" FontWeight="Bold" ToolTip="Yeni şema sayfası" Command="{Binding AddSchematicPageCommand}" />
+                                        <Button Style="{StaticResource ToolButton}" Content="▲" ToolTip="Sayfayı yukarı taşı" Command="{Binding MovePageUpCommand}" />
+                                        <Button Style="{StaticResource ToolButton}" Content="▼" ToolTip="Sayfayı aşağı taşı" Command="{Binding MovePageDownCommand}" />
+                                        <Button Style="{StaticResource ToolButton}" Content="✕" ToolTip="Aktif sayfayı sil" Command="{Binding DeletePageCommand}" />
+                                    </StackPanel>
+                                    <TreeView ItemsSource="{Binding ProjectTree}" BorderThickness="0" Background="Transparent"
+                                              SelectedItemChanged="OnTreeSelectedItemChanged">
+                                        <TreeView.Resources>
+                                            <HierarchicalDataTemplate DataType="{x:Type vm:ProjectNodeViewModel}" ItemsSource="{Binding Pages}">
+                                                <TextBlock Text="{Binding Name}" FontWeight="SemiBold" />
+                                            </HierarchicalDataTemplate>
+                                            <DataTemplate DataType="{x:Type vm:PageItemViewModel}">
+                                                <StackPanel Margin="0,1">
+                                                    <TextBlock Text="{Binding Display}" />
+                                                    <TextBlock Text="{Binding Details}" FontSize="11" Foreground="{StaticResource MutedTextBrush}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </TreeView.Resources>
+                                        <TreeView.ItemContainerStyle>
+                                            <Style TargetType="TreeViewItem" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+                                                <Setter Property="IsExpanded" Value="True" />
+                                                <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                            </Style>
+                                        </TreeView.ItemContainerStyle>
+                                    </TreeView>
+                                </DockPanel>
+                            </ad:LayoutAnchorable>
+                        </ad:LayoutAnchorablePane>
+                        <ad:LayoutAnchorablePane DockHeight="2*">
+                            <ad:LayoutAnchorable ContentId="library" Title="Kütüphane" CanClose="False" CanHide="True">
+                                <DockPanel x:Name="LibraryPanel" Background="{StaticResource PanelBrush}">
+                                    <!-- Kütüphane: semboller ve cihazlar ayrı -->
+                                    <StackPanel DockPanel.Dock="Top" DataContext="{Binding Library}">
+                                        <DockPanel>
+                                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Margin="0,4,6,0">
+                                                <RadioButton Content="Semboller" IsChecked="{Binding IsSymbolMode}" Margin="0,0,8,0" ToolTip="IEC 60617 sembol kütüphanesi" />
+                                                <RadioButton Content="Cihazlar" IsChecked="{Binding IsDeviceMode}" ToolTip="Ürün bilgili cihaz kütüphanesi (sembolden ayrı)" />
+                                            </StackPanel>
+                                            <TextBlock Text="Semboller ve cihazlar" Foreground="{StaticResource MutedTextBrush}" Margin="8,6,0,0" />
+                                        </DockPanel>
+                                        <TextBox Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Margin="8,0,8,4"
+                                                 ToolTip="Ara: ad, kimlik, kategori, anahtar kelime, üretici, model (birden çok kelime)" />
+                                        <ComboBox ItemsSource="{Binding Manufacturers}" SelectedItem="{Binding Manufacturer}" Margin="8,0,8,4"
+                                                  Visibility="{Binding IsDeviceMode, Converter={StaticResource BoolToVis}}" ToolTip="Üretici süzgeci" />
+                                    </StackPanel>
+                                    <Grid DataContext="{Binding Library}">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <TreeView ItemsSource="{Binding Roots}" BorderThickness="0" Background="Transparent"
+                                                  SelectedItemChanged="OnLibrarySelectedItemChanged"
+                                                  PreviewMouseLeftButtonDown="OnLibraryMouseDown" PreviewMouseMove="OnLibraryMouseMove">
+                                            <TreeView.Resources>
+                                                <HierarchicalDataTemplate DataType="{x:Type vm:LibraryNodeViewModel}" ItemsSource="{Binding Children}">
+                                                    <TextBlock Text="{Binding Header}" FontWeight="SemiBold" Foreground="{StaticResource SelectionBrush}" />
+                                                </HierarchicalDataTemplate>
+                                                <DataTemplate DataType="{x:Type vm:LibraryItemViewModel}">
+                                                    <StackPanel Orientation="Horizontal" ToolTip="{Binding Details}" Background="Transparent">
+                                                        <Border Width="22" Height="22" Background="White" CornerRadius="2" Margin="0,1,6,1">
+                                                            <Image Source="{Binding Preview}" Stretch="Uniform" Margin="1" />
+                                                        </Border>
+                                                        <TextBlock Text="★" Foreground="#FFFFB300" Margin="0,0,3,0" VerticalAlignment="Center"
+                                                                   Visibility="{Binding IsFavorite, Converter={StaticResource BoolToVis}}" />
+                                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </TreeView.Resources>
+                                            <TreeView.ItemContainerStyle>
+                                                <Style TargetType="TreeViewItem" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+                                                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay, FallbackValue=False}" />
+                                                </Style>
+                                            </TreeView.ItemContainerStyle>
+                                        </TreeView>
+                                        <!-- Önizleme ve ayrıntı -->
+                                        <Border Grid.Row="1" BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,0" Padding="8,6"
+                                                Visibility="{Binding HasSelection, Converter={StaticResource BoolToVis}}">
+                                            <DockPanel DataContext="{Binding Selected}">
+                                                <Border DockPanel.Dock="Left" Width="84" Height="84" Background="White" CornerRadius="3" Margin="0,0,8,0">
+                                                    <Image Source="{Binding Preview}" Stretch="Uniform" Margin="4" />
+                                                </Border>
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold" TextWrapping="Wrap" />
+                                                    <TextBlock Text="{Binding Category}" Foreground="{StaticResource MutedTextBrush}" FontSize="11" TextWrapping="Wrap" />
+                                                    <TextBlock Text="{Binding Details}" Foreground="{StaticResource MutedTextBrush}" FontSize="11" TextWrapping="Wrap" Margin="0,2,0,4" />
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Button Content="Yerleştir" Padding="8,1" Margin="0,0,6,0"
+                                                                Command="{Binding DataContext.Library.PlaceCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" />
+                                                        <Button Content="★ Favori" Padding="8,1" ToolTip="Favorilere ekle / çıkar"
+                                                                Command="{Binding DataContext.Library.ToggleFavoriteCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" />
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </DockPanel>
+                                        </Border>
+                                    </Grid>
+                                </DockPanel>
+                            </ad:LayoutAnchorable>
+                        </ad:LayoutAnchorablePane>
+                    </ad:LayoutAnchorablePaneGroup>
 
-            <!-- Sol panel -->
-            <Grid Background="{StaticResource PanelBrush}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" MaxHeight="140" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="2*" MinHeight="90" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="3*" MinHeight="120" />
-                </Grid.RowDefinitions>
+                    <ad:LayoutPanel Orientation="Vertical">
+                        <ad:LayoutDocumentPane>
+                            <ad:LayoutDocument ContentId="canvas" Title="Çizim alanı" CanClose="False" CanFloat="False">
+                                <Border x:Name="CanvasPanel" Background="{StaticResource WorkspaceBrush}">
+                                <draw:DrawingCanvas x:Name="Canvas"
+                                                    Session="{Binding Session}"
+                                                    ActiveTool="{Binding ActiveTool, Mode=TwoWay}"
+                                                    PendingSymbol="{Binding SelectedSymbol}"
+                                                    PendingImage="{Binding PendingImage}"
+                                                    PendingConnector="{Binding PendingConnector}"
+                                                    PendingDevice="{Binding PendingDevice}"
+                                                    PendingPin="{Binding PendingPin}"
+                                                    Colors="{Binding ColorScheme}"
+                                                    HighlightedObjects="{Binding BottomPanel.Highlighted}">
+                                    <!-- Tek tuş kısayolları yalnızca çizim alanı odaktayken çalışır (metin kutularında yazmayı engellemez) -->
+                                    <draw:DrawingCanvas.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="Kes" Command="{Binding CutCommand}" InputGestureText="Ctrl+X" />
+                                            <MenuItem Header="Kopyala" Command="{Binding CopyCommand}" InputGestureText="Ctrl+C" />
+                                            <MenuItem Header="Yapıştır" Command="{Binding PasteCommand}" InputGestureText="Ctrl+V" />
+                                            <MenuItem Header="Sil" Command="{Binding DeleteCommand}" InputGestureText="Del" />
+                                            <Separator />
+                                            <MenuItem Header="Döndür 90°" Command="{Binding RotateCommand}" InputGestureText="R" />
+                                            <Separator />
+                                            <MenuItem Header="Tümünü seç" Command="{Binding SelectAllCommand}" InputGestureText="Ctrl+A" />
+                                            <MenuItem Header="Sayfaya sığdır" Command="{Binding ZoomFitCommand}" InputGestureText="F" />
+                                        </ContextMenu>
+                                    </draw:DrawingCanvas.ContextMenu>
+                                    <draw:DrawingCanvas.InputBindings>
+                                        <KeyBinding Key="Left" Command="{Binding NudgeCommand}" CommandParameter="Left" />
+                                        <KeyBinding Key="Right" Command="{Binding NudgeCommand}" CommandParameter="Right" />
+                                        <KeyBinding Key="Up" Command="{Binding NudgeCommand}" CommandParameter="Up" />
+                                        <KeyBinding Key="Down" Command="{Binding NudgeCommand}" CommandParameter="Down" />
+                                        <KeyBinding Key="Left" Modifiers="Shift" Command="{Binding NudgeCommand}" CommandParameter="Left:fine" />
+                                        <KeyBinding Key="Right" Modifiers="Shift" Command="{Binding NudgeCommand}" CommandParameter="Right:fine" />
+                                        <KeyBinding Key="Up" Modifiers="Shift" Command="{Binding NudgeCommand}" CommandParameter="Up:fine" />
+                                        <KeyBinding Key="Down" Modifiers="Shift" Command="{Binding NudgeCommand}" CommandParameter="Down:fine" />
+                                        <KeyBinding Key="Delete" Command="{Binding DeleteCommand}" />
+                                        <KeyBinding Key="R" Command="{Binding RotateCommand}" />
+                                        <KeyBinding Key="F" Command="{Binding ZoomFitCommand}" />
+                                        <KeyBinding Key="PageDown" Command="{Binding NextPageCommand}" />
+                                        <KeyBinding Key="PageUp" Command="{Binding PreviousPageCommand}" />
+                                        <KeyBinding Key="S" Command="{Binding SetToolCommand}" CommandParameter="Select" />
+                                        <KeyBinding Key="L" Command="{Binding SetToolCommand}" CommandParameter="Line" />
+                                        <KeyBinding Key="T" Command="{Binding SetToolCommand}" CommandParameter="Text" />
+                                        <KeyBinding Key="J" Command="{Binding SetToolCommand}" CommandParameter="Tee" />
+                                        <KeyBinding Key="D" Command="{Binding SetToolCommand}" CommandParameter="Angle" />
+                                    </draw:DrawingCanvas.InputBindings>
+                                </draw:DrawingCanvas>
+                                </Border>
+                            </ad:LayoutDocument>
+                        </ad:LayoutDocumentPane>
+                        <ad:LayoutAnchorablePane DockHeight="220">
+                            <ad:LayoutAnchorable ContentId="drc" Title="DRC" CanClose="False" CanHide="True">
+                                <Grid x:Name="DrcPanel" Background="{StaticResource PanelBrush}">
+                                    <Grid DataContext="{Binding BottomPanel}">
+                                <DockPanel>
+                                    <DockPanel DockPanel.Dock="Top" Margin="6,4">
+                                        <Button Content="DRC çalıştır (F7)" Command="{Binding RunDrcCommand}" Padding="10,2" Margin="0,0,6,0" />
+                                        <Button Content="Temizle" Command="{Binding ClearDrcCommand}" Padding="10,2" Margin="0,0,12,0" />
+                                        <TextBlock Text="{Binding DrcSummary}" FontWeight="SemiBold" VerticalAlignment="Center" />
+                                    </DockPanel>
+                                    <TextBlock DockPanel.Dock="Bottom" Text="{Binding Disclaimer}" TextWrapping="Wrap" FontSize="11"
+                                               Foreground="#FFFFB74D" Margin="6,2,6,4" />
+                                    <DataGrid ItemsSource="{Binding Findings}" SelectedItem="{Binding SelectedFinding}" AutoGenerateColumns="False" IsReadOnly="True"
+                                              HeadersVisibility="Column" GridLinesVisibility="Horizontal" MouseDoubleClick="OnFindingDoubleClick"
+                                              ToolTip="Çift tık: ilgili sayfaya git ve nesneleri seç">
+                                        <DataGrid.RowStyle>
+                                            <Style TargetType="DataGridRow">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding SeverityText}" Value="Hata">
+                                                        <Setter Property="Foreground" Value="#FFD32F2F" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding SeverityText}" Value="Uyarı">
+                                                        <Setter Property="Foreground" Value="#FFE68A00" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </DataGrid.RowStyle>
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Önem" Binding="{Binding SeverityText}" Width="60" />
+                                            <DataGridTextColumn Header="Kod" Binding="{Binding Code}" Width="100" />
+                                            <DataGridTextColumn Header="Konum" Binding="{Binding Location}" Width="70" />
+                                            <DataGridTextColumn Header="Açıklama" Binding="{Binding Message}" Width="*" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </DockPanel>
+                                    </Grid>
+                                </Grid>
+                            </ad:LayoutAnchorable>
+                            <ad:LayoutAnchorable ContentId="messages" Title="Mesajlar" CanClose="False" CanHide="True">
+                                <Grid x:Name="MessagesPanel" Background="{StaticResource PanelBrush}">
+                                    <Grid DataContext="{Binding BottomPanel}">
+                                <DockPanel>
+                                    <Button DockPanel.Dock="Top" HorizontalAlignment="Left" Content="Temizle" Command="{Binding ClearMessagesCommand}" Padding="10,2" Margin="6,4" />
+                                    <ListView ItemsSource="{Binding Messages}" BorderThickness="0">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Time}" Foreground="{StaticResource MutedTextBrush}" Width="64" />
+                                                    <TextBlock Text="{Binding Text}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </DockPanel>
+                                    </Grid>
+                                </Grid>
+                            </ad:LayoutAnchorable>
+                            <ad:LayoutAnchorable ContentId="xref" Title="Çapraz referanslar" CanClose="False" CanHide="True">
+                                <Grid x:Name="XrefPanel" Background="{StaticResource PanelBrush}">
+                                    <Grid DataContext="{Binding BottomPanel}">
+                                <DockPanel>
+                                    <Button DockPanel.Dock="Top" HorizontalAlignment="Left" Content="Yenile" Command="{Binding RefreshCommand}" Padding="10,2" Margin="6,4" />
+                                    <DataGrid ItemsSource="{Binding CrossReferences}" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" GridLinesVisibility="Horizontal">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Etiket" Binding="{Binding Reference}" Width="80" />
+                                            <DataGridTextColumn Header="Açıklama" Binding="{Binding Description}" Width="200" />
+                                            <DataGridTextColumn Header="Parçalar" Binding="{Binding Parts}" Width="*" />
+                                            <DataGridTextColumn Header="Konumlar" Binding="{Binding Locations}" Width="160" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </DockPanel>
+                                    </Grid>
+                                </Grid>
+                            </ad:LayoutAnchorable>
+                            <ad:LayoutAnchorable ContentId="projectinfo" Title="Proje bilgisi" CanClose="False" CanHide="True">
+                                <Grid x:Name="InfoPanel" Background="{StaticResource PanelBrush}">
+                                    <Grid DataContext="{Binding BottomPanel}">
+                                <DockPanel>
+                                    <Button DockPanel.Dock="Top" HorizontalAlignment="Left" Content="Yenile" Command="{Binding RefreshCommand}" Padding="10,2" Margin="6,4" />
+                                    <DataGrid ItemsSource="{Binding ProjectInfo}" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="None" GridLinesVisibility="Horizontal">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Binding="{Binding Key}" Width="180" />
+                                            <DataGridTextColumn Binding="{Binding Value}" Width="*" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </DockPanel>
+                                    </Grid>
+                                </Grid>
+                            </ad:LayoutAnchorable>
+                        </ad:LayoutAnchorablePane>
+                    </ad:LayoutPanel>
 
-                <TextBlock Text="PROJE AĞACI" Style="{StaticResource PanelHeader}" />
-                <TreeView Grid.Row="1" ItemsSource="{Binding ProjectTree}" BorderThickness="0" Background="Transparent"
-                          SelectedItemChanged="OnTreeSelectedItemChanged">
-                    <TreeView.Resources>
-                        <HierarchicalDataTemplate DataType="{x:Type vm:ProjectNodeViewModel}" ItemsSource="{Binding Pages}">
-                            <TextBlock Text="{Binding Name}" FontWeight="SemiBold" />
-                        </HierarchicalDataTemplate>
-                        <DataTemplate DataType="{x:Type vm:PageItemViewModel}">
-                            <TextBlock Text="{Binding Display}" />
-                        </DataTemplate>
-                    </TreeView.Resources>
-                    <TreeView.ItemContainerStyle>
-                        <Style TargetType="TreeViewItem" BasedOn="{StaticResource {x:Type TreeViewItem}}">
-                            <Setter Property="IsExpanded" Value="True" />
-                        </Style>
-                    </TreeView.ItemContainerStyle>
-                </TreeView>
-
-                <DockPanel Grid.Row="2">
-                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Margin="0,4,6,0">
-                        <Button Style="{StaticResource ToolButton}" Content="+" FontWeight="Bold" ToolTip="Yeni şema sayfası" Command="{Binding AddSchematicPageCommand}" />
-                        <Button Style="{StaticResource ToolButton}" Content="▲" ToolTip="Yukarı taşı" Command="{Binding MovePageUpCommand}" />
-                        <Button Style="{StaticResource ToolButton}" Content="▼" ToolTip="Aşağı taşı" Command="{Binding MovePageDownCommand}" />
-                        <Button Style="{StaticResource ToolButton}" Content="✕" ToolTip="Aktif sayfayı sil" Command="{Binding DeletePageCommand}" />
-                    </StackPanel>
-                    <TextBlock Text="SAYFALAR" Style="{StaticResource PanelHeader}" />
-                </DockPanel>
-                <ListBox Grid.Row="3" ItemsSource="{Binding Pages}" SelectedItem="{Binding SelectedPage}" BorderThickness="0" Background="Transparent">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="2,1">
-                                <TextBlock Text="{Binding Display}" />
-                                <TextBlock Text="{Binding Details}" FontSize="11" Foreground="{StaticResource MutedTextBrush}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-
-                <!-- Kütüphane: semboller ve cihazlar ayrı -->
-                <StackPanel Grid.Row="4" DataContext="{Binding Library}">
-                    <DockPanel>
-                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Margin="0,4,6,0">
-                            <RadioButton Content="Semboller" IsChecked="{Binding IsSymbolMode}" Margin="0,0,8,0" ToolTip="IEC 60617 sembol kütüphanesi" />
-                            <RadioButton Content="Cihazlar" IsChecked="{Binding IsDeviceMode}" ToolTip="Ürün bilgili cihaz kütüphanesi (sembolden ayrı)" />
-                        </StackPanel>
-                        <TextBlock Text="KÜTÜPHANE" Style="{StaticResource PanelHeader}" />
-                    </DockPanel>
-                    <TextBox Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Margin="8,0,8,4"
-                             ToolTip="Ara: ad, kimlik, kategori, anahtar kelime, üretici, model (birden çok kelime)" />
-                    <ComboBox ItemsSource="{Binding Manufacturers}" SelectedItem="{Binding Manufacturer}" Margin="8,0,8,4"
-                              Visibility="{Binding IsDeviceMode, Converter={StaticResource BoolToVis}}" ToolTip="Üretici süzgeci" />
-                </StackPanel>
-                <Grid Grid.Row="5" DataContext="{Binding Library}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <TreeView ItemsSource="{Binding Roots}" BorderThickness="0" Background="Transparent"
-                              SelectedItemChanged="OnLibrarySelectedItemChanged"
-                              PreviewMouseLeftButtonDown="OnLibraryMouseDown" PreviewMouseMove="OnLibraryMouseMove">
-                        <TreeView.Resources>
-                            <HierarchicalDataTemplate DataType="{x:Type vm:LibraryNodeViewModel}" ItemsSource="{Binding Children}">
-                                <TextBlock Text="{Binding Header}" FontWeight="SemiBold" Foreground="{StaticResource SelectionBrush}" />
-                            </HierarchicalDataTemplate>
-                            <DataTemplate DataType="{x:Type vm:LibraryItemViewModel}">
-                                <StackPanel Orientation="Horizontal" ToolTip="{Binding Details}" Background="Transparent">
-                                    <Border Width="22" Height="22" Background="White" CornerRadius="2" Margin="0,1,6,1">
-                                        <Image Source="{Binding Preview}" Stretch="Uniform" Margin="1" />
-                                    </Border>
-                                    <TextBlock Text="★" Foreground="#FFFFB300" Margin="0,0,3,0" VerticalAlignment="Center"
-                                               Visibility="{Binding IsFavorite, Converter={StaticResource BoolToVis}}" />
-                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </TreeView.Resources>
-                        <TreeView.ItemContainerStyle>
-                            <Style TargetType="TreeViewItem" BasedOn="{StaticResource {x:Type TreeViewItem}}">
-                                <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay, FallbackValue=False}" />
-                            </Style>
-                        </TreeView.ItemContainerStyle>
-                    </TreeView>
-                    <!-- Önizleme ve ayrıntı -->
-                    <Border Grid.Row="1" BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,0" Padding="8,6"
-                            Visibility="{Binding HasSelection, Converter={StaticResource BoolToVis}}">
-                        <DockPanel DataContext="{Binding Selected}">
-                            <Border DockPanel.Dock="Left" Width="84" Height="84" Background="White" CornerRadius="3" Margin="0,0,8,0">
-                                <Image Source="{Binding Preview}" Stretch="Uniform" Margin="4" />
-                            </Border>
-                            <StackPanel>
-                                <TextBlock Text="{Binding Name}" FontWeight="SemiBold" TextWrapping="Wrap" />
-                                <TextBlock Text="{Binding Category}" Foreground="{StaticResource MutedTextBrush}" FontSize="11" TextWrapping="Wrap" />
-                                <TextBlock Text="{Binding Details}" Foreground="{StaticResource MutedTextBrush}" FontSize="11" TextWrapping="Wrap" Margin="0,2,0,4" />
-                                <StackPanel Orientation="Horizontal">
-                                    <Button Content="Yerleştir" Padding="8,1" Margin="0,0,6,0"
-                                            Command="{Binding DataContext.Library.PlaceCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" />
-                                    <Button Content="★ Favori" Padding="8,1" ToolTip="Favorilere ekle / çıkar"
-                                            Command="{Binding DataContext.Library.ToggleFavoriteCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" />
-                                </StackPanel>
-                            </StackPanel>
-                        </DockPanel>
-                    </Border>
-                </Grid>
-            </Grid>
-
-            <GridSplitter Grid.Column="1" Style="{StaticResource PanelSplitter}" />
-
-            <!-- Orta: çizim alanı -->
-            <Border Grid.Column="2" Background="{StaticResource WorkspaceBrush}">
-                <draw:DrawingCanvas x:Name="Canvas"
-                                    Session="{Binding Session}"
-                                    ActiveTool="{Binding ActiveTool, Mode=TwoWay}"
-                                    PendingSymbol="{Binding SelectedSymbol}"
-                                    PendingImage="{Binding PendingImage}"
-                                    PendingConnector="{Binding PendingConnector}"
-                                    PendingDevice="{Binding PendingDevice}"
-                                    PendingPin="{Binding PendingPin}"
-                                    Colors="{Binding ColorScheme}"
-                                    HighlightedObjects="{Binding BottomPanel.Highlighted}">
-                    <!-- Tek tuş kısayolları yalnızca çizim alanı odaktayken çalışır (metin kutularında yazmayı engellemez) -->
-                    <draw:DrawingCanvas.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="Kes" Command="{Binding CutCommand}" InputGestureText="Ctrl+X" />
-                            <MenuItem Header="Kopyala" Command="{Binding CopyCommand}" InputGestureText="Ctrl+C" />
-                            <MenuItem Header="Yapıştır" Command="{Binding PasteCommand}" InputGestureText="Ctrl+V" />
-                            <MenuItem Header="Sil" Command="{Binding DeleteCommand}" InputGestureText="Del" />
-                            <Separator />
-                            <MenuItem Header="Döndür 90°" Command="{Binding RotateCommand}" InputGestureText="R" />
-                            <Separator />
-                            <MenuItem Header="Tümünü seç" Command="{Binding SelectAllCommand}" InputGestureText="Ctrl+A" />
-                            <MenuItem Header="Sayfaya sığdır" Command="{Binding ZoomFitCommand}" InputGestureText="F" />
-                        </ContextMenu>
-                    </draw:DrawingCanvas.ContextMenu>
-                    <draw:DrawingCanvas.InputBindings>
-                        <KeyBinding Key="Left" Command="{Binding NudgeCommand}" CommandParameter="Left" />
-                        <KeyBinding Key="Right" Command="{Binding NudgeCommand}" CommandParameter="Right" />
-                        <KeyBinding Key="Up" Command="{Binding NudgeCommand}" CommandParameter="Up" />
-                        <KeyBinding Key="Down" Command="{Binding NudgeCommand}" CommandParameter="Down" />
-                        <KeyBinding Key="Left" Modifiers="Shift" Command="{Binding NudgeCommand}" CommandParameter="Left:fine" />
-                        <KeyBinding Key="Right" Modifiers="Shift" Command="{Binding NudgeCommand}" CommandParameter="Right:fine" />
-                        <KeyBinding Key="Up" Modifiers="Shift" Command="{Binding NudgeCommand}" CommandParameter="Up:fine" />
-                        <KeyBinding Key="Down" Modifiers="Shift" Command="{Binding NudgeCommand}" CommandParameter="Down:fine" />
-                        <KeyBinding Key="Delete" Command="{Binding DeleteCommand}" />
-                        <KeyBinding Key="R" Command="{Binding RotateCommand}" />
-                        <KeyBinding Key="F" Command="{Binding ZoomFitCommand}" />
-                        <KeyBinding Key="PageDown" Command="{Binding NextPageCommand}" />
-                        <KeyBinding Key="PageUp" Command="{Binding PreviousPageCommand}" />
-                        <KeyBinding Key="S" Command="{Binding SetToolCommand}" CommandParameter="Select" />
-                        <KeyBinding Key="L" Command="{Binding SetToolCommand}" CommandParameter="Line" />
-                        <KeyBinding Key="T" Command="{Binding SetToolCommand}" CommandParameter="Text" />
-                        <KeyBinding Key="J" Command="{Binding SetToolCommand}" CommandParameter="Tee" />
-                        <KeyBinding Key="D" Command="{Binding SetToolCommand}" CommandParameter="Angle" />
-                    </draw:DrawingCanvas.InputBindings>
-                </draw:DrawingCanvas>
-            </Border>
-
-            <GridSplitter Grid.Column="3" Style="{StaticResource PanelSplitter}" />
-
-            <!-- Sağ panel: özellikler -->
-            <DockPanel Grid.Column="4" Background="{StaticResource PanelBrush}">
-                <TextBlock DockPanel.Dock="Top" Text="ÖZELLİKLER" Style="{StaticResource PanelHeader}" />
-                <TextBlock DockPanel.Dock="Top" Text="{Binding Properties.Header}" FontSize="15" FontWeight="SemiBold" Margin="10,0,10,6" />
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding Properties.Rows}" Margin="10,0,10,10" KeyboardNavigation.TabNavigation="Cycle" />
-                </ScrollViewer>
-            </DockPanel>
-        </Grid>
-
-        <Border Grid.Row="1" Height="1" Background="{StaticResource BorderBrush}"
-                Visibility="{Binding BottomPanel.IsOpen, Converter={StaticResource BoolToVis}}" />
-
-        <!-- Alt panel: DRC, mesajlar, çapraz referanslar, proje bilgisi -->
-        <TabControl Grid.Row="2" Height="210" DataContext="{Binding BottomPanel}" SelectedIndex="{Binding SelectedTab}"
-                    Visibility="{Binding IsOpen, Converter={StaticResource BoolToVis}}" Background="{StaticResource PanelBrush}">
-            <TabItem Header="DRC">
-                <DockPanel>
-                    <DockPanel DockPanel.Dock="Top" Margin="6,4">
-                        <Button Content="DRC çalıştır (F7)" Command="{Binding RunDrcCommand}" Padding="10,2" Margin="0,0,6,0" />
-                        <Button Content="Temizle" Command="{Binding ClearDrcCommand}" Padding="10,2" Margin="0,0,12,0" />
-                        <TextBlock Text="{Binding DrcSummary}" FontWeight="SemiBold" VerticalAlignment="Center" />
-                    </DockPanel>
-                    <TextBlock DockPanel.Dock="Bottom" Text="{Binding Disclaimer}" TextWrapping="Wrap" FontSize="11"
-                               Foreground="#FFFFB74D" Margin="6,2,6,4" />
-                    <DataGrid ItemsSource="{Binding Findings}" SelectedItem="{Binding SelectedFinding}" AutoGenerateColumns="False" IsReadOnly="True"
-                              HeadersVisibility="Column" GridLinesVisibility="Horizontal" MouseDoubleClick="OnFindingDoubleClick"
-                              ToolTip="Çift tık: ilgili sayfaya git ve nesneleri seç">
-                        <DataGrid.RowStyle>
-                            <Style TargetType="DataGridRow">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding SeverityText}" Value="Hata">
-                                        <Setter Property="Foreground" Value="#FFD32F2F" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding SeverityText}" Value="Uyarı">
-                                        <Setter Property="Foreground" Value="#FFE68A00" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGrid.RowStyle>
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Önem" Binding="{Binding SeverityText}" Width="60" />
-                            <DataGridTextColumn Header="Kod" Binding="{Binding Code}" Width="100" />
-                            <DataGridTextColumn Header="Konum" Binding="{Binding Location}" Width="70" />
-                            <DataGridTextColumn Header="Açıklama" Binding="{Binding Message}" Width="*" />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </DockPanel>
-            </TabItem>
-            <TabItem Header="Mesajlar">
-                <DockPanel>
-                    <Button DockPanel.Dock="Top" HorizontalAlignment="Left" Content="Temizle" Command="{Binding ClearMessagesCommand}" Padding="10,2" Margin="6,4" />
-                    <ListView ItemsSource="{Binding Messages}" BorderThickness="0">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Time}" Foreground="{StaticResource MutedTextBrush}" Width="64" />
-                                    <TextBlock Text="{Binding Text}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </DockPanel>
-            </TabItem>
-            <TabItem Header="Çapraz referanslar">
-                <DockPanel>
-                    <Button DockPanel.Dock="Top" HorizontalAlignment="Left" Content="Yenile" Command="{Binding RefreshCommand}" Padding="10,2" Margin="6,4" />
-                    <DataGrid ItemsSource="{Binding CrossReferences}" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" GridLinesVisibility="Horizontal">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Etiket" Binding="{Binding Reference}" Width="80" />
-                            <DataGridTextColumn Header="Açıklama" Binding="{Binding Description}" Width="200" />
-                            <DataGridTextColumn Header="Parçalar" Binding="{Binding Parts}" Width="*" />
-                            <DataGridTextColumn Header="Konumlar" Binding="{Binding Locations}" Width="160" />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </DockPanel>
-            </TabItem>
-            <TabItem Header="Proje bilgisi">
-                <DockPanel>
-                    <Button DockPanel.Dock="Top" HorizontalAlignment="Left" Content="Yenile" Command="{Binding RefreshCommand}" Padding="10,2" Margin="6,4" />
-                    <DataGrid ItemsSource="{Binding ProjectInfo}" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="None" GridLinesVisibility="Horizontal">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Key}" Width="180" />
-                            <DataGridTextColumn Binding="{Binding Value}" Width="*" />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </DockPanel>
-            </TabItem>
-        </TabControl>
-        </Grid>
+                    <ad:LayoutAnchorablePane DockWidth="310">
+                        <ad:LayoutAnchorable ContentId="properties" Title="Özellikler" CanClose="False" CanHide="True">
+                            <DockPanel x:Name="PropertiesPanel" Background="{StaticResource PanelBrush}">
+                            <TextBlock DockPanel.Dock="Top" Text="{Binding Properties.Header}" FontSize="15" FontWeight="SemiBold" Margin="10,0,10,6" />
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <ItemsControl ItemsSource="{Binding Properties.Rows}" Margin="10,0,10,10" KeyboardNavigation.TabNavigation="Cycle" />
+                            </ScrollViewer>
+                            </DockPanel>
+                        </ad:LayoutAnchorable>
+                    </ad:LayoutAnchorablePane>
+                </ad:LayoutPanel>
+            </ad:LayoutRoot>
+        </ad:DockingManager>
     </DockPanel>
 </Window>

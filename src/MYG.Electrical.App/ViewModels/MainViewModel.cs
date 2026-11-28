@@ -1067,6 +1067,10 @@ public sealed class MainViewModel : ObservableObject
     private void SyncSelectedPage()
     {
         _selectedPage = Pages.FirstOrDefault(p => ReferenceEquals(p.Page, Session.ActivePage));
+        foreach (var p in Pages)
+        {
+            p.IsSelected = ReferenceEquals(p, _selectedPage);
+        }
         OnPropertyChanged(nameof(SelectedPage));
         OnPropertyChanged(nameof(ActivePageText));
         OnPropertyChanged(nameof(WireCountText));

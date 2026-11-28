@@ -16,6 +16,7 @@ public partial class MainWindow : Window, ICanvasController
         InitializeComponent();
         _vm = vm;
         DataContext = vm;
+        CollectPanels();
         vm.Canvas = this;
         Canvas.CursorMoved += (_, p) => vm.OnCursorMoved(p);
         Canvas.ViewChanged += (_, _) => vm.OnViewChanged(Canvas.View);
@@ -31,7 +32,11 @@ public partial class MainWindow : Window, ICanvasController
         Canvas.DragOver += OnCanvasDragOver;
         Canvas.Drop += OnCanvasDrop;
         PreviewKeyDown += OnPreviewKeyDown;
-        Loaded += (_, _) => Canvas.Focus();
+        Loaded += (_, _) =>
+        {
+            InitializeDocking();
+            Canvas.Focus();
+        };
     }
 
     // ICanvasController
@@ -52,6 +57,10 @@ public partial class MainWindow : Window, ICanvasController
         if (!_vm.ConfirmDiscardChanges())
         {
             e.Cancel = true;
+        }
+        else
+        {
+            SaveLayout();
         }
         base.OnClosing(e);
     }

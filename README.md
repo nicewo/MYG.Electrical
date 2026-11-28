@@ -124,6 +124,11 @@ Ayrıntı: [docs/AutoWiring.md](docs/AutoWiring.md)
 - **Otomatik kablo numaralandırma:** iletken (net) başına tek numara, potansiyele bağlı hatlarda potansiyel adı,
   kilitli numaralar korunur.
 
+### Arayüz
+- Visual Studio benzeri **yerleştirilebilir paneller**: Proje gezgini, Kütüphane, Özellikler, DRC, Mesajlar,
+  Çapraz referanslar, Proje bilgisi. Kapat/aç (Görünüm → Paneller), sürükle-bırak ile yer değiştir, ayrı
+  pencere yap, otomatik gizle; düzen hatırlanır.
+
 ### Denetim ve raporlar
 - **DRC (F7):** bağlantısız pin, boşta kalan bağlantı kolu, çift etiket, tanımsız sembol/pin, tekrar eden
   kontak/klemens numarası, eksik cihaz bilgisi, potansiyel çakışması ve **kısa devre**, kontak kapasitesi,

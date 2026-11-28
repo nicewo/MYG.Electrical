@@ -5,6 +5,15 @@ namespace MYG.Electrical.App.ViewModels;
 
 public sealed class PageItemViewModel(Page page, int number) : ObservableObject
 {
+    private bool _isSelected;
+
+    /// <summary>Proje gezgininde seçili (aktif sayfa).</summary>
+    public bool IsSelected
+    {
+        get => _isSelected;
+        set => SetField(ref _isSelected, value);
+    }
+
     public Page Page { get; } = page;
     public int Number { get; } = number;
     public string Name => Page.Name;
@@ -24,6 +33,14 @@ public sealed class PageItemViewModel(Page page, int number) : ObservableObject
 /// <summary>Proje ağacının kök düğümü.</summary>
 public sealed class ProjectNodeViewModel(string name, IEnumerable<PageItemViewModel> pages) : ObservableObject
 {
+    private bool _isSelected;
+
     public string Name { get; } = name;
     public IEnumerable<PageItemViewModel> Pages { get; } = pages;
+
+    public bool IsSelected
+    {
+        get => _isSelected;
+        set => SetField(ref _isSelected, value);
+    }
 }
