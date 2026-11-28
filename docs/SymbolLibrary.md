@@ -76,6 +76,21 @@ Kullanıcı dosyası yerleşik bir sembolün kimliğini (`id`) yeniden tanımlar
 | `contact` | Aynı etiketli ana cihaza ait parça (kontak, kontaktör ana kontakları, G/Ç kanalı). |
 | `graphic` | Etiket almayan işaret (toprak, ekran). `referencePrefix` boş olmalıdır. |
 
+### Etiket yeri (`referencePosition`)
+
+Etiket (ör. `-K1`), işlev metni ve çapraz referanslar (kontak aynası, `/2.3`) sembolün neresine yazılır:
+
+| Değer | Kullanım |
+|---|---|
+| `right` (varsayılan) | Sembolün sağı. |
+| `left` | Sembolün solu, sağa hizalı. EPLAN'daki gibi dikey bobin, kontak, klemens şeridi. |
+| `top` | Sembolün üstü, ortalı. Yan yana dizilen dar modüller. |
+| `inSymbol` | Dışarıya yazılmaz; sembol kendi metin alanlarıyla gösterir (EPLAN PLC kutusu). |
+
+Metin şekillerinde (`text`) şu alanlar yerleşimin değeriyle doldurulur: `{Reference}` (etiket), `{Description}`
+(işlev metni), `{Pin:1}` (pinin bağlantı tanımı, ör. PLC adresi `I2.0`), `{CrossReference}` (çapraz referans).
+Örnek: `samples/KamaraFirin.myge` içindeki `user.kamara-plc-giris-t` PLC kanal kutusu.
+
 ### İç bağlantılar (`internalConnections`)
 
 `{ "a": "13", "b": "14" }` iki pin arasında iletken yol tanımlar. `kind` verilmezse `switched` kabul edilir (kontak, kesici). Klemens, sigorta ve köprü için `"kind": "permanent"` kullanın. Potansiyel her iki türden de geçer. Kısa devre kontrolü yalnız `permanent` bağlantıları dikkate alır.

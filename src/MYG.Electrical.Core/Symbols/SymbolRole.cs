@@ -31,3 +31,25 @@ public enum InternalConnectionKind
 
 /// <summary>Sembol içinde iki pin arasındaki iletken yol.</summary>
 public sealed record InternalConnection(string A, string B, InternalConnectionKind Kind = InternalConnectionKind.Switched);
+
+/// <summary>
+/// Etiket bloğunun (etiket, işlev metni, çapraz referans) sembole göre yeri. Varsayılan (0) sağdır; JSON yazımında
+/// varsayılanlar atlandığı için sıra değiştirilmemelidir.
+/// </summary>
+public enum ReferencePosition
+{
+    /// <summary>Sembolün sağında (yatay hatlardaki cihazlar).</summary>
+    Right,
+
+    /// <summary>Sembolün solunda (EPLAN'daki gibi dikey bobin, kontak, klemens).</summary>
+    Left,
+
+    /// <summary>Sembolün üstünde, ortalı (yan yana dizilen dar PLC modülleri).</summary>
+    Top,
+
+    /// <summary>
+    /// Dışarıya yazılmaz: sembol kendi metin alanlarıyla gösterir (EPLAN PLC kutusu). Metin şekillerinde
+    /// {Reference}, {Description}, {Pin:1}, {CrossReference} alanları yerleşimin değeriyle doldurulur.
+    /// </summary>
+    InSymbol,
+}

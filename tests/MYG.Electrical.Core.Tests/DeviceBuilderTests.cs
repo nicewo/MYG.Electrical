@@ -129,7 +129,7 @@ public class DeviceBuilderTests
         var part = s.PlaceDevice(outputs.Template, new Point2D(250, 100))!;
         s.RenameReference(part, main.Reference);
 
-        Assert.Equal(["AS228T Çıkışlar  /3.5"], CrossReferences.ContactMirror(s.Network, catalog, main));
+        Assert.Equal(["AS228T Çıkışlar /3.5"], CrossReferences.ContactMirror(s.Network, catalog, main));
         Assert.Equal("/2.2", CrossReferences.MainLocation(s.Network, catalog, part));
         var findings = DrcEngine.Run(doc, s.Network, catalog);
         Assert.DoesNotContain(findings, f => f.Code is "DRC-TAG-01" or "DRC-TERM-01" && f.Message.Contains("-A1", StringComparison.Ordinal)

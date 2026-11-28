@@ -25,6 +25,9 @@ public sealed class SymbolDefinition
 
     public SymbolRole Role { get; init; } = SymbolRole.Standalone;
 
+    /// <summary>Etiket bloğunun yeri (sağ, sol, üst).</summary>
+    public ReferencePosition ReferencePosition { get; init; } = ReferencePosition.Right;
+
     public IReadOnlyList<SymbolPrimitive> Primitives { get; init; } = [];
 
     [JsonPropertyName("pins")]

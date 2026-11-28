@@ -176,10 +176,18 @@ Ayrıntı: [docs/AutoWiring.md](docs/AutoWiring.md)
 
 Program açılışta internet varsa güncellemeyi kendisi denetler. Elle: **Yardım → Güncellemeleri denetle**.
 
-## Örnek proje
+## Örnek projeler
 
-Programda **Yardım → Örnek projeyi aç**, ya da depodaki
-[`samples/PompaIstasyonu.myge`](samples/PompaIstasyonu.myge): 7 sayfalık pompa istasyonu — 22 kW ve 2.2 kW
+Programda **Yardım → Örnek projeler**:
+
+- [`samples/KamaraFirin.myge`](samples/KamaraFirin.myge): Data Otomasyon'un EPLAN'da çizdiği 17 sayfalık gaz
+  brülörlü kamara fırını panosunun MYG Electrical ile yeniden çizimi. Ana besleme (4P sigorta, akım trafoları,
+  Entes güç analizörü, faz sırası rölesi), dağıtım sigortaları, 24 VDC dağıtım klemensleri, Ethernet switch,
+  pano kumandası (ışıklı butonlar, acil stop, ışıklı ikaz), panel PC, Siemens S7-1200 + Beijer G serisi uzak G/Ç
+  (12 modül), iki frekans inverteri, 12 brülör grubu (ateşleme röleleri, yandı/arıza girişleri, saha klemensleri),
+  servo valfler ve saha analog/dijital girişleri. EPLAN tarzı PLC kanal kutuları, sayfa.kolon çapraz referansları
+  ve kablo numaralarıyla. DRC, özgün projedeki bir hatayı da gösterir: `I7.3` adresi iki farklı girişe verilmiş.
+- [`samples/PompaIstasyonu.myge`](samples/PompaIstasyonu.myge): 7 sayfalık pompa istasyonu — 22 kW ve 2.2 kW
 sürücüler, kontaktörle yol verilen motor (motor koruma, termik), faz sırası rölesi, akım trafoları ve enerji
 analizörü, 24 VDC güç kaynağı ve dağıtım, start/stop/acil stop kumandası, PLC CPU + DI/DO modülleri, kapı ve
 basınç şalteri, endüktif sensör, Delta HMI; potansiyeller, sayfa bağlantıları ve numaralı kablolarla.

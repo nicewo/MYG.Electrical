@@ -234,6 +234,42 @@ public sealed class ProjectNetwork
             .ToList();
     }
 
+    /// <summary>
+    /// Sayfa bağlantısının yanında gösterilecek karşı uç (EPLAN kesme noktası mantığı). Aynı adlı bağlantı ikiden
+    /// fazlaysa (ör. N hattı birçok sayfadan geçer) hepsini yazmak yerine akış yönündeki komşu gösterilir: kablo
+    /// soldan/üstten gelen (ok ileri bakan) bağlantı için sonraki, diğerleri için önceki konum.
+    /// </summary>
+    public IReadOnlyList<PageLocation> LinkDisplayTargets(PageLinkObject link)
+    {
+        var all = LinkTargets(link);
+        if (all.Count <= 1 || LocationOf(link) is not { } here)
+        {
+            return all;
+        }
+        var forward = IsForward(link);
+        // Önce karşı yöndeki (giden ↔ gelen) bağlantılar; yoksa hepsi
+        var others = Document.Pages
+            .SelectMany(p => p.Objects.OfType<PageLinkObject>().Select(l => (Page: p, Link: l)))
+            .Where(x => x.Link.Id != link.Id && string.Equals(x.Link.Name.Trim(), link.Name.Trim(), StringComparison.OrdinalIgnoreCase))
+            .ToList();
+        var opposite = others.Where(x => IsForward(x.Link) != forward).ToList();
+        var ordered = (opposite.Count > 0 ? opposite : others)
+            .Select(x => LocationOf(x.Page, x.Link.X))
+            .Order(LocationComparer)
+            .ToList();
+        PageLocation? pick = forward
+            ? ordered.Where(t => LocationComparer.Compare(t, here) > 0).Select(t => (PageLocation?)t).FirstOrDefault()
+            : ordered.Where(t => LocationComparer.Compare(t, here) < 0).Select(t => (PageLocation?)t).LastOrDefault();
+        pick ??= forward ? ordered[^1] : ordered[0];
+        return [pick.Value];
+
+        // Kablo soldan/üstten geliyorsa ok ileri bakar: giden bağlantı
+        static bool IsForward(PageLinkObject l) => l.Direction is PinDirection.Left or PinDirection.Up;
+    }
+
+    private static readonly Comparer<PageLocation> LocationComparer =
+        Comparer<PageLocation>.Create((a, b) => a.PageNumber != b.PageNumber ? a.PageNumber.CompareTo(b.PageNumber) : a.Column.CompareTo(b.Column));
+
     /// <summary>Nesnenin sayfa.kolon konumu.</summary>
     public PageLocation LocationOf(Page page, double x) =>
         new(Document.Pages.IndexOf(page) + 1, Rendering.PageLayout.ColumnAt(page, x));

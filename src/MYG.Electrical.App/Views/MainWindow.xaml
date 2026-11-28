@@ -217,7 +217,10 @@
             <MenuItem Header="_Yardım">
                 <MenuItem Header="Kullanım kılavuzu" Command="{Binding UserGuideCommand}" InputGestureText="F1" />
                 <MenuItem Header="Klavye kısayolları" Command="{Binding ShortcutsCommand}" />
-                <MenuItem Header="Örnek projeyi aç" Command="{Binding OpenSampleCommand}" />
+                <MenuItem Header="Örnek projeler">
+                    <MenuItem Header="Pompa istasyonu (7 sayfa)" Command="{Binding OpenSampleCommand}" CommandParameter="PompaIstasyonu.myge" />
+                    <MenuItem Header="Kamara fırını, gaz brülörlü (17 sayfa)" Command="{Binding OpenSampleCommand}" CommandParameter="KamaraFirin.myge" />
+                </MenuItem>
                 <Separator />
                 <MenuItem Header="GitHub kaynak kodu" Command="{Binding SourceCodeCommand}" />
                 <MenuItem Header="Hata bildir / öneri" Command="{Binding ReportIssueCommand}" />

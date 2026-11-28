@@ -50,8 +50,8 @@ public class AcceptanceTests
         Assert.Equal(3, parts.Count);                                  // ana kontaklar (s.3), bobin + yardımcı (s.5)
         Assert.Equal([3, 5, 5], parts.Select(p => p.Location.PageNumber).ToArray());
         var mirror = CrossReferences.ContactMirror(m.Session.Network, Lib, m.Coil);
-        Assert.Contains(mirror, l => l.StartsWith("Güç 1-2 3-4 5-6  /3.", StringComparison.Ordinal));
-        Assert.Contains(mirror, l => l.StartsWith("NO 13-14  /5.", StringComparison.Ordinal));
+        Assert.Contains(mirror, l => l.StartsWith("Güç 1-2 3-4 5-6 /3.", StringComparison.Ordinal));
+        Assert.Contains(mirror, l => l.StartsWith("NO 13-14 /5.", StringComparison.Ordinal));
         Assert.StartsWith("/5.", CrossReferences.MainLocation(m.Session.Network, Lib, m.MainContacts));
     }
 

@@ -178,7 +178,7 @@ public sealed class SceneComposer(ISymbolCatalog catalog, Func<string, Resources
             link.LocalToGlobal(new(0, -half)), link.LocalToGlobal(new(len - half, -half)), link.LocalToGlobal(new(len, 0)),
             link.LocalToGlobal(new(len - half, half)), link.LocalToGlobal(new(0, half)),
         ], closed: true, stroke);
-        var targets = Network?.LinkTargets(link) ?? [];
+        var targets = Network?.LinkDisplayTargets(link) ?? [];
         var text = targets.Count == 0 ? link.Name : $"{link.Name}  {string.Join(" ", targets)}";
         var textPos = link.LocalToGlobal(new(len + 1.5, 0));
         var align = link.Direction switch
@@ -232,7 +232,8 @@ public sealed class SceneComposer(ISymbolCatalog catalog, Func<string, Resources
                     sink.DrawPolygon(pts, poly.Closed, stroke, poly.Filled ? stroke.Color : null);
                     break;
                 case TextPrimitive t:
-                    sink.DrawText(t.Text, s.LocalToGlobal(new(t.X, t.Y)), t.Height * s.Scale, Colors.Symbol, t.LeftAligned ? TextAlign.Left : TextAlign.Center);
+                    var text = s is DeviceObject device && t.Text.Contains('{') ? ResolveFields(t.Text, device) : t.Text;
+                    sink.DrawText(text, s.LocalToGlobal(new(t.X, t.Y)), t.Height * s.Scale, Colors.Symbol, t.LeftAligned ? TextAlign.Left : TextAlign.Center);
                     break;
             }
         }
@@ -243,9 +244,7 @@ public sealed class SceneComposer(ISymbolCatalog catalog, Func<string, Resources
         var bounds = Editing.ObjectBounds.SymbolBounds(d, catalog);
         if (!string.IsNullOrWhiteSpace(d.Reference))
         {
-            var pos = new Point2D(bounds.Right + ReferenceGap, bounds.Center.Y);
-            sink.DrawText(d.Reference, pos, DrawingStyles.ReferenceTextHeight, Colors.Text, TextAlign.Left, bold: true);
-            ComposeCrossReferences(d, bounds, pos, sink);
+            ComposeReferenceBlock(d, bounds, sink);
         }
 
         foreach (var pin in d.GetGlobalPins())
@@ -263,35 +262,87 @@ public sealed class SceneComposer(ISymbolCatalog catalog, Func<string, Resources
     }
 
     /// <summary>
+    /// Etiket bloğu: etiket (kalın), işlev metni ve çapraz referanslar alt alta. Sembolün tanımladığı konuma yazılır:
+    /// sağda (varsayılan), solda (EPLAN'daki gibi dikey bobin/kontak) veya üstte (dar ve uzun PLC modülleri).
+    /// </summary>
+    private void ComposeReferenceBlock(DeviceObject d, Rect2D bounds, ISceneSink sink)
+    {
+        const double h = ConnectorGeometry.CrossReferenceHeight;
+        var lines = new List<(string Text, double Height, bool Bold)> { (d.Reference, DrawingStyles.ReferenceTextHeight, true) };
+        if (!string.IsNullOrWhiteSpace(d.Description))
+        {
+            // İşlev metni (EPLAN "işlev tanımı"): PLC kanalının görevi, cihazın adı...
+            lines.Add((d.Description, h, false));
+        }
+        lines.AddRange(CrossReferenceLines(d).Select(t => (t, h, false)));
+
+        var position = catalog.Find(d.SymbolId)?.ReferencePosition ?? ReferencePosition.Right;
+        if (position == ReferencePosition.InSymbol)
+        {
+            return; // sembolün metin alanları gösteriyor
+        }
+        // Satır aralığı: etiketten sonra yarım mm, küçük satırlar arasında yazı boyunun %30'u
+        static double Step((string Text, double Height, bool Bold) line) => line.Bold ? line.Height + 0.5 : line.Height * 1.3;
+        Point2D start;
+        TextAlign align;
+        switch (position)
+        {
+            case ReferencePosition.Left:
+                start = new Point2D(bounds.Left - ReferenceGap, bounds.Center.Y);
+                align = TextAlign.Right;
+                break;
+            case ReferencePosition.Top:
+                var total = lines.Take(lines.Count - 1).Sum(Step);
+                start = new Point2D(bounds.Center.X, bounds.Top - 2.0 - total);
+                align = TextAlign.Center;
+                break;
+            default:
+                start = new Point2D(bounds.Right + ReferenceGap, bounds.Center.Y);
+                align = TextAlign.Left;
+                break;
+        }
+        var y = start.Y;
+        foreach (var line in lines)
+        {
+            sink.DrawText(line.Text, new Point2D(start.X, y), line.Height, Colors.Text, align, bold: line.Bold);
+            y += Step(line);
+        }
+    }
+
+    /// <summary>Sembol metnindeki {Reference}, {Description}, {Pin:id}, {CrossReference} alanlarını doldurur.</summary>
+    private string ResolveFields(string text, DeviceObject d) =>
+        FieldPattern.Replace(text, m => m.Groups[1].Value switch
+        {
+            "Reference" => d.Reference,
+            "Description" => d.Description,
+            "Pin" when m.Groups[2].Success => d.PinLabel(m.Groups[2].Value),
+            "CrossReference" => string.Join(" ", CrossReferenceLines(d)),
+            _ => m.Value,
+        });
+
+    private static readonly System.Text.RegularExpressions.Regex FieldPattern =
+        new(@"\{(Reference|Description|Pin|CrossReference)(?::([^}]+))?\}", System.Text.RegularExpressions.RegexOptions.Compiled);
+
+    /// <summary>
     /// Çapraz referans: ana fonksiyonun (bobin, PLC CPU...) etiketi altında parçalarının listesi (kontak aynası),
     /// kontak/parçanın etiketinin altında ana fonksiyonun sayfa.kolon konumu.
     /// </summary>
-    private void ComposeCrossReferences(DeviceObject d, Rect2D bounds, Point2D referencePos, ISceneSink sink)
+    private IReadOnlyList<string> CrossReferenceLines(DeviceObject d)
     {
         if (Network is null || catalog.Find(d.SymbolId) is not { } def)
         {
-            return;
+            return [];
         }
-        const double h = ConnectorGeometry.CrossReferenceHeight;
         if (def.Role == SymbolRole.Main)
         {
-            var lines = Core.Network.CrossReferences.ContactMirror(Network, catalog, d);
-            // Etiketin altında, kablonun geçtiği eksenin yanında (yazı hattın üstüne binmesin)
-            var y = referencePos.Y + DrawingStyles.ReferenceTextHeight + 0.5;
-            foreach (var line in lines)
-            {
-                sink.DrawText(line, new Point2D(referencePos.X, y), h, Colors.Text);
-                y += h * 1.3;
-            }
+            return Core.Network.CrossReferences.ContactMirror(Network, catalog, d);
         }
-        else if (def.Role == SymbolRole.Contact)
+        if (def.Role == SymbolRole.Contact)
         {
             var main = Core.Network.CrossReferences.MainLocation(Network, catalog, d);
-            if (main.Length > 0)
-            {
-                sink.DrawText(main, referencePos + new Point2D(0, DrawingStyles.ReferenceTextHeight + 0.5), h, Colors.Text);
-            }
+            return main.Length > 0 ? [main] : [];
         }
+        return [];
     }
 
     /// <summary>Pin numarasını, pinin baktığı yönün tersine (sembolün içine doğru) ve yanına yerleştirir.</summary>

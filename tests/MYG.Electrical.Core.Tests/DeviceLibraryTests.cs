@@ -93,7 +93,7 @@ public class DeviceLibraryTests
         s.RenameReference(no, coil.Reference);
 
         var mirror = CrossReferences.ContactMirror(s.Network, Lib, coil);
-        Assert.Equal(["NO 13-14  /2.2", "Güç 1-2 3-4 5-6  /3.1"], mirror);
+        Assert.Equal(["NO 13-14 /2.2", "Güç 1-2 3-4 5-6 /3.1"], mirror);
         Assert.Equal("/2.7", CrossReferences.MainLocation(s.Network, Lib, main));
     }
 

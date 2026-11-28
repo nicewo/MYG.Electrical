@@ -33,7 +33,8 @@ Bu kılavuz programın **şu anki sürümünde çalışan** özelliklerini anlat
   (kapak/şema), formatı (A4–A1) ve yönelimi (yatay/dikey) değiştirilir.
 - **Kapak ve antet:** Aynı panelde proje adı, firma, makine adı, proje no, müşteri, hazırlayan, kontrol eden,
   tarih, revizyon ve logo. Bu bilgiler kapak sayfasına ve her sayfanın antedine otomatik yazılır.
-- **Örnek proje:** Yardım → Örnek projeyi aç. Örnek, kaydedilmemiş yeni proje olarak açılır.
+- **Örnek projeler:** Yardım → Örnek projeler → *Pompa istasyonu* veya *Kamara fırını* (17 sayfa, EPLAN'dan
+  yeniden çizim). Örnek, kaydedilmemiş yeni proje olarak açılır.
 
 ## 4. Çizim
 

@@ -23,6 +23,7 @@
     <Resource Include="Assets\myg-electrical.png" />
     <Content Include="..\..\samples\Demo.myge" Link="Samples\Demo.myge" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
     <Content Include="..\..\samples\PompaIstasyonu.myge" Link="Samples\PompaIstasyonu.myge" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="..\..\samples\KamaraFirin.myge" Link="Samples\KamaraFirin.myge" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Dirkster.AvalonDock" />

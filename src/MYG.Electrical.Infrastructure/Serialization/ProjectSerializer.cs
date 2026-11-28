@@ -167,6 +167,7 @@ public static class ProjectSerializer
         // v4 → v5: yalnızca yeni nesne türleri (potential, pageLink). Dönüşüm gerekmez.
         // v5 → v6: cihaz kaydına templateId ve contacts eklendi (boş varsayılan). Dönüşüm gerekmez.
         // v6 → v7: devicePin nesnesi, dikdörtgende dashed, gömülü kullanıcı sembolleri (symbols). Dönüşüm gerekmez.
+        // v7 → v8: gömülü sembolde etiket yeri (referencePosition, varsayılan right). Dönüşüm gerekmez.
         root[FormatVersionProperty] = ProjectDocument.CurrentFormatVersion;
     }
 

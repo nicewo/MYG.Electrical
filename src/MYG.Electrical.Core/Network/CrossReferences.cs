@@ -74,9 +74,15 @@ public static class CrossReferences
     {
         return Parts(network, catalog, main.Reference)
             .Where(p => !ReferenceEquals(p.Placement, main) && p.Role == SymbolRole.Contact)
-            .Select(p => p.IsContact ? $"{p.KindText} {p.Paths}  {p.Location}" : $"{p.Symbol?.Name ?? p.Placement.SymbolId}  {p.Location}")
+            .Select(p => p.IsContact ? $"{p.KindText} {p.Paths} {p.Location}" : $"{PartName(p)} {p.Location}")
             .ToList();
     }
+
+    /// <summary>Kontak olmayan parçanın aynadaki adı: PLC kanalında adres (I0.3), yoksa sembol adı.</summary>
+    private static string PartName(DevicePart p) =>
+        p.Placement.PinDesignations.Count > 0
+            ? string.Join(" ", p.Placement.ConnectionPoints.Select(cp => p.Placement.PinLabel(cp.Id)))
+            : p.Symbol?.Name ?? p.Placement.SymbolId;
 
     /// <summary>Kontağın yanında yazılacak ana fonksiyon konum(lar)ı: "/2.3".</summary>
     public static string MainLocation(ProjectNetwork network, ISymbolCatalog catalog, DeviceObject contact) =>

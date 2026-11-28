@@ -97,7 +97,7 @@ public sealed class MainViewModel : ObservableObject
         SourceCodeCommand = new RelayCommand(() => _shell.OpenUrl(BrandInfo.RepositoryUrl));
         WebsiteCommand = new RelayCommand(() => _shell.OpenUrl(BrandInfo.WebsiteUrl));
         ReportIssueCommand = new RelayCommand(() => _shell.OpenUrl(BrandInfo.IssuesUrl));
-        OpenSampleCommand = new RelayCommand(() => _ = OpenSampleAsync(), () => File.Exists(SamplePath));
+        OpenSampleCommand = new RelayCommand(p => _ = OpenSampleAsync(SamplePath(p)), p => File.Exists(SamplePath(p)));
         PlacePotentialCommand = new RelayCommand(p => PlacePotential(p as string));
         PlacePageLinkCommand = new RelayCommand(PlacePageLink);
         NumberWiresCommand = new RelayCommand(p => NumberWires(string.Equals(p as string, "all", StringComparison.Ordinal)));
@@ -666,7 +666,9 @@ public sealed class MainViewModel : ObservableObject
 
     /// <summary>Kurulumla gelen örnek proje.</summary>
     /// <summary>Örnek proje: sürücüler, PLC, potansiyeller, sayfa bağlantıları ve numaralı kablolarla pompa istasyonu.</summary>
-    private static string SamplePath => Path.Combine(AppContext.BaseDirectory, "Samples", "PompaIstasyonu.myge");
+    /// <summary>Örnek projenin yolu; parametre dosya adıdır (menüden), yoksa pompa istasyonu.</summary>
+    private static string SamplePath(object? fileName) =>
+        Path.Combine(AppContext.BaseDirectory, "Samples", fileName as string is { Length: > 0 } name ? Path.GetFileName(name) : "PompaIstasyonu.myge");
 
     // ---------- Canvas geri bildirimleri ----------
 
@@ -949,7 +951,7 @@ public sealed class MainViewModel : ObservableObject
     /// Örnek projeyi kaydedilmemiş yeni proje olarak açar: kaydederken konum sorulur, böylece program klasörüne
     /// (güncellemede silinir) yazılmaz.
     /// </summary>
-    private async Task OpenSampleAsync()
+    private async Task OpenSampleAsync(string path)
     {
         if (!ConfirmDiscardChanges())
         {
@@ -957,7 +959,7 @@ public sealed class MainViewModel : ObservableObject
         }
         try
         {
-            var result = await _files.OpenAsync(SamplePath);
+            var result = await _files.OpenAsync(path);
             _filePath = null;
             Session = CreateSession(result.Document);
             StatusMessage = "Örnek proje açıldı (kaydederken yeni konum seçin)";
