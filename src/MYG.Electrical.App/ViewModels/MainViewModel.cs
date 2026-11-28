@@ -597,7 +597,7 @@ public sealed class MainViewModel : ObservableObject
     }
 
     public string GridText => string.Create(CultureInfo.CurrentCulture,
-        $"Grid {Session.Settings.GridSpacing:0.#} mm · {(GridVisible ? "görünür" : "gizli")} · Snap {(SnapEnabled ? "açık" : "kapalı")}");
+        $"Izgara {Session.Settings.GridSpacing:0.#} mm · {(GridVisible ? "görünür" : "gizli")} · Yakalama {(SnapEnabled ? "açık" : "kapalı")}");
 
     public string ActivePageText
     {

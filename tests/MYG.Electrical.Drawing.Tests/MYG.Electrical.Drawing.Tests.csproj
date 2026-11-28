@@ -16,6 +16,10 @@
     <Using Include="Xunit" />
   </ItemGroup>
   <ItemGroup>
+    <!-- Uygulama projesine bağımlı olmadan panel çevirisini sınamak için kaynak dosya bağlanır -->
+    <Compile Include="..\..\src\MYG.Electrical.App\Localization\DockingLocalization.cs" Link="Linked\DockingLocalization.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\src\MYG.Electrical.Drawing\MYG.Electrical.Drawing.csproj" />
     <ProjectReference Include="..\..\src\MYG.Electrical.Symbols\MYG.Electrical.Symbols.csproj" />
   </ItemGroup>

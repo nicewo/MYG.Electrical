@@ -36,9 +36,23 @@
 - [ ] L/Z (90°) otomatik kablo yönlendirme (dirsekleri kendisi koyan kablo aracı)
 - [ ] Grafik sembol editörü (JSON üretir)
 - [ ] Klemens şeridi, çok damarlı kablo nesnesi ve kablo planı
-- [ ] Kayan/ayrılabilir paneller
+- [x] Kayan/ayrılabilir paneller (VS tarzı, v0.2.17)
+- [x] Tamamen Türkçe arayüz: panel menüleri dahil, tr-TR kültürü (v0.2.18)
+- [ ] Çok dilli arayüz (aşağıya bakın)
 - [ ] Sayfa şablonları, özelleştirilebilir antet düzeni
 - [ ] Ayna (flip) ve serbest açılı döndürme
 - [ ] Doğrudan yazdırma, PDF içinde sayfa yer imleri
 - [ ] Son açılan dosyalar, otomatik yedekleme
 - [ ] `.myge` dosya ilişkilendirmesi ve kurulum paketi (MSIX)
+
+## Çok dilli arayüz planı
+
+Altyapı hazır: `settings.json` içinde `"Language": "tr"` (varsayılan) okunur, .NET/WPF kültürü buna göre kurulur,
+panel kütüphanesinin (AvalonDock) metinleri `App/Localization/DockingLocalization.cs` içindeki dil tablosundan
+gelir. Sonraki adımlar:
+
+1. Arayüz metinlerini `App/Localization/Strings.resx` (Türkçe, ana dil) dosyasına taşımak; XAML'de
+   `{loc:Tr Key=Menu_File}` biçiminde bir işaretleme uzantısıyla okumak.
+2. `Strings.en.resx` ile İngilizce çeviri; `DockingLocalization` için de `"en"` = özgün metinler.
+3. **Ayarlar → Dil** menüsü (değişiklik yeniden başlatınca uygulanır).
+4. Rapor/PDF başlıkları ve DRC iletileri için aynı kaynak dosyası; proje dosyası dilden bağımsız kalır.

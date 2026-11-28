@@ -1,6 +1,9 @@
+using System.Globalization;
 using System.IO;
 using System.Windows;
+using System.Windows.Markup;
 using System.Windows.Threading;
+using MYG.Electrical.App.Localization;
 using MYG.Electrical.App.Services;
 using MYG.Electrical.App.ViewModels;
 using MYG.Electrical.App.Views;
@@ -49,6 +52,7 @@ public partial class App : Application
             _log.Warning("Sembol kütüphanesi: {Warning}", warning);
         }
         var settings = new AppSettingsService(_log);
+        ApplyLanguage(settings.Settings.Language);
         var devices = BuiltInDeviceLibrary.Create(catalog, Path.Combine(AppSettingsService.AppDataFolder, "Devices"));
         _log.Information("Cihaz kütüphanesi: {Count} cihaz", devices.All.Count);
         foreach (var warning in devices.Warnings)
@@ -70,6 +74,22 @@ public partial class App : Application
         if (fileArg is not null)
         {
             _ = vm.OpenProjectAsync(fileArg);
+        }
+    }
+
+    /// <summary>Arayüz dilini uygular: .NET/WPF kültürü (sayı, tarih, standart iletişim kutuları) + panel menüleri.</summary>
+    private void ApplyLanguage(string language)
+    {
+        var culture = CultureInfo.GetCultureInfo(language == "en" ? "en-US" : "tr-TR");
+        CultureInfo.DefaultThreadCurrentCulture = culture;
+        CultureInfo.DefaultThreadCurrentUICulture = culture;
+        Thread.CurrentThread.CurrentCulture = culture;
+        Thread.CurrentThread.CurrentUICulture = culture;
+        FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement),
+            new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(culture.IetfLanguageTag)));
+        if (language != "en" && !DockingLocalization.Apply(language))
+        {
+            _log.Warning("Panel menüleri çevrilemedi (AvalonDock iç yapısı değişmiş olabilir)");
         }
     }
 

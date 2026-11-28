@@ -125,8 +125,8 @@
                 <MenuItem Header="Uzaklaştır" Command="{Binding ZoomOutCommand}" InputGestureText="Ctrl+-" />
                 <MenuItem Header="Sayfaya sığdır" Command="{Binding ZoomFitCommand}" InputGestureText="F" />
                 <Separator />
-                <MenuItem Header="Grid" IsCheckable="True" IsChecked="{Binding GridVisible}" />
-                <MenuItem Header="Snap (grid'e yapış)" IsCheckable="True" IsChecked="{Binding SnapEnabled}" />
+                <MenuItem Header="Izgara" IsCheckable="True" IsChecked="{Binding GridVisible}" />
+                <MenuItem Header="Izgaraya yakala" IsCheckable="True" IsChecked="{Binding SnapEnabled}" />
                 <MenuItem Header="Bağlantı noktası işaretleri" IsCheckable="True" IsChecked="{Binding ShowConnectionPoints}" />
                 <MenuItem Header="Paneller" SubmenuOpened="OnPanelsMenuOpened">
                     <MenuItem Header="Proje gezgini" Tag="explorer" Click="OnTogglePanel" IsCheckable="True" />
@@ -322,10 +322,10 @@
 
                 <Rectangle Width="1" Margin="6,4" Fill="{StaticResource BorderBrush}" />
 
-                <ToggleButton Style="{StaticResource ToolToggle}" ToolTip="Grid göster/gizle" IsChecked="{Binding GridVisible}">
+                <ToggleButton Style="{StaticResource ToolToggle}" ToolTip="Izgarayı göster/gizle" IsChecked="{Binding GridVisible}">
                     <Path Style="{StaticResource ToolIcon}" Data="M1,1 H13 V13 H1 Z M5,1 V13 M9,1 V13 M1,5 H13 M1,9 H13" StrokeThickness="1" />
                 </ToggleButton>
-                <ToggleButton Style="{StaticResource ToolToggle}" ToolTip="Snap aç/kapat" IsChecked="{Binding SnapEnabled}">
+                <ToggleButton Style="{StaticResource ToolToggle}" ToolTip="Izgaraya yakalamayı aç/kapat" IsChecked="{Binding SnapEnabled}">
                     <Path Style="{StaticResource ToolIcon}" Data="M3,1 V8 A4,4 0 0 0 11,8 V1 M3,4 H6 M8,4 H11" />
                 </ToggleButton>
 

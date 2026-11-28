@@ -8,6 +8,9 @@ namespace MYG.Electrical.App.Services;
 /// <summary>Kullanıcıya özel uygulama ayarları (%AppData%\MYG.Electrical\settings.json).</summary>
 public sealed class AppSettings
 {
+    /// <summary>Arayüz dili ("tr" varsayılan; "en" = İngilizce).</summary>
+    public string Language { get; set; } = "tr";
+
     public List<string> Favorites { get; set; } = [];
     public List<string> Recent { get; set; } = [];
 

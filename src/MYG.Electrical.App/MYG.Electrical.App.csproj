@@ -8,6 +8,8 @@
     <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
     <!-- Velopack kurulum/güncelleme kancaları uygulama başlamadan çalışmalı -->
     <StartupObject>MYG.Electrical.App.Program</StartupObject>
+    <!-- Yayında yalnız Türkçe ve İngilizce WPF/.NET kaynakları (menü, iletişim kutusu metinleri) -->
+    <SatelliteResourceLanguages>tr;en</SatelliteResourceLanguages>
     <ApplicationIcon>Assets\myg-electrical.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>

@@ -53,6 +53,8 @@ Visual Studio'daki gibi **yerleştirilebilir panellerdir**:
 - Başlıktan **sürükleyin**: ekranda çıkan hedeflere bırakarak sola/sağa/alta yerleştirin, başka panelle aynı
   sekme grubuna koyun veya boşa bırakıp **ayrı pencere** yapın (ikinci monitöre taşınabilir).
 - Başlıktaki **raptiye** paneli kenara gizler (üstüne gelince açılır).
+- Panel başlığına sağ tıklayınca çıkan menü: **Kayan** (serbest pencere), **Ayrı pencere**, **Yerleştir**,
+  **Sekmeli belge olarak yerleştir**, **Otomatik gizle**, **Gizle**.
 - Düzen kapanışta kaydedilir ve sonraki açılışta aynen gelir. **Görünüm → Paneller → Varsayılan düzene dön**
   ilk haline getirir.
 
